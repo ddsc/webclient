@@ -11,11 +11,17 @@ We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facili
 This list might need updating.
 
 sudo apt-get install python-software-properties
+
 sudo add-apt-repository ppa:chris-lea/node.js
+
 sudo apt-get update
+
 sudo apt-get install nodejs npm phantomjs
+
 sudo npm install -g yeoman
+
 cd webclient
+
 yeoman server
 
 And point a browser to localhost 3051.
