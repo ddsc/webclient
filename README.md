@@ -5,9 +5,24 @@
 
 We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
 
+## Installation
+
+* Install yeoman (in a vagrant environment) with the following commands.
+This list might need updating.
+
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs npm phantomjs
+sudo npm install -g yeoman
+cd webclient
+yeoman server
+
+And point a browser to localhost 3051.
+
 
 ## Technology choices
- 
+
  * All of the choices have one set of philosophies in common: They don't try to do everything, they're explicit (as opposed to magical), they're close enough to the DOM to understand and thus debug/expand. Also, most of them are used in production all over the web.
 
  * Why Marionette? Because it provides Backbone with a View layer, which it is intentionally lacking by default. We tried Ember, Knockout, ExtJS4, but Backbone.Marionette seems to have the proper balance when it comes to the aforementioned philosophies.
