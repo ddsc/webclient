@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>DDSC</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        
+        <link rel="stylesheet" href="styles/main.css">
+        <link href="styles/bootstrap.css" rel="stylesheet">
+        <style>
+            body {
+              padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+
+        <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+        <link rel="stylesheet" href="styles/leaflet.css" />
+        <!--[if lte IE 8]>
+          <link rel="stylesheet" href="styles/leaflet.ie.css" />
+        <![endif]-->
+        <script src="scripts/vendor/modernizr.min.js"></script>
+
+        <!-- Template definitions -->
+        <script type="text/template" id="home-template">
+          <header class="jumbotron subhead">
+          <div class="container">
+            <h1>Dijk Data Service Center</h1>
+            <h2 class="lead">Gateway to realtime sensor aggregation</h2>
+          </div>
+        </header>
+        </script>
+
+        <script type="text/template" id="map-template">
+          <div class="row-fluid">
+
+            <div class="span2" id="iconsRegion">
+              <h4>App Icons</h4>
+            </div>
+
+            <div class="span10" id="mapRegion">
+             <h4>Kaart</h4>
+              <div id="map"></div>
+            </div>
+
+          </div>
+        </script>
+        
+        <script type="text/template" id="graphs-template">
+          <div class="row-fluid">
+
+            <div class="span2">
+              <h4>App Icons</h4>
+            </div>
+
+            <div class="span10">
+             <h4>Grafieken</h4>
+              <div id="graphs">
+
+
+              </div>
+            </div>
+
+          </div>
+        </script>
+
+        <script type="text/template" id="overview-template">
+          <h4>Overzichten</h4>
+        </script>
+
+        <script type="text/template" id="account-template">
+          <h4>Uw gegevens</h4>
+        </script>
+
+        <script type="text/template" id="help-template">
+          <h4>Help</h4>
+        </script>
+
+    </head>
+    <body>
+    
+      <div id="header">
+        <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">DDSC</a>
+
+                    <div class="nav-collapse collapse">
+
+                        <ul class="nav" id="menu">
+                            <li class="home-menu"><a href="#">Home</a></li>
+                            <li class="map-menu"><a href="#map">Kaart</a></li>
+                            <li class="graphs-menu"><a href="#graphs">Grafieken</a></li>
+                            <li class="overview-menu"><a href="#overview">Overzichten</a></li>
+                            <!-- <li class="manage-menu"><a href="#manage">Beheer</a></li> -->
+                        </ul>
+
+                        <ul class="nav pull-right">
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bastiaan Roos <i class="icon-user icon-white"></i><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                <li class="about-menu"><a href="#logout"></a></li>
+                                    <li><a href="#account" target="">Uw gegevens</a></li>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">DDSC</li>
+                                    <li><a href="#help">Help</a></li>
+                                    <li><a href="#">Uitloggen</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+      </div>
+    
+      
+      <div class="container" id="content"></div>
+    
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->        
+        
+        <!-- Loading JS at the end of the file -->
+        <!-- <script src="http://use.edgefonts.net/andika.js"></script> -->
+        <!-- <script src="http://use.edgefonts.net/arvo.js"></script> -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/vendor/crossfilter.js"></script>
+        <script src="scripts/vendor/leaflet.js"></script>
+        <script src="scripts/vendor/d3.v2.js"></script>
+        <script src="scripts/vendor/tile.stamen.js"></script>
+        <script src="scripts/vendor/Three.js"></script>
+        <script src="scripts/vendor/heyoffline.js"></script>
+        <script src="scripts/vendor/dat.gui.min.js"></script>
+        <script src="scripts/vendor/json2.js"></script>
+        <script src="scripts/vendor/underscore.js"></script>
+        <script src="scripts/vendor/backbone.js"></script>
+        <script src="scripts/vendor/backbone.babysitter.js"></script>
+        <script src="scripts/vendor/backbone.marionette.js"></script>
+        <script src="scripts/vendor/bootstrap.js"></script>
+        <script src="scripts/mapping.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/lizard.home.js"></script>
+        <script src="scripts/lizard.help.js"></script>
+        <script src="scripts/lizard.account.js"></script>
+        <script src="scripts/lizard.map.js"></script>
+        <script src="scripts/lizard.graphs.js"></script>
+        <script src="scripts/lizard.overview.js"></script>
+        <script type="text/javascript">
+          Lizard.start();
+        </script>
+        
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>
