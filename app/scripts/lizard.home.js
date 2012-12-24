@@ -7,7 +7,8 @@ Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
 
 Lizard.Home.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
-      '': 'home'
+      '': 'home',
+      'home': 'home'
     }
 });
 
