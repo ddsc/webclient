@@ -9,9 +9,9 @@ Not much to see here yet, as we're mostly experimenting with Backbone, Marionett
 [http://ddsc.github.com/webclient/](http://ddsc.github.com/webclient/)
 
 
-We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
-
 ## Installation
+
+We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
 
  * Install yeoman (in a vagrant environment) with the following commands. (This list might need updating)
 
