@@ -83,3 +83,16 @@ We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facili
  * [The relationship between regions and layouts](https://github.com/marionettejs/backbone.marionette/wiki/The-relationship-between-regions-and-layouts)
 
  * [What's the difference between a Marionette Layout and a Region?](http://stackoverflow.com/questions/10521266/whats-the-difference-between-a-marionette-layout-and-a-region)
+
+
+ ## Far Future Philosophy
+
+ If this API centered and Javascript powered approach proves to be a successful way of implementing an application, we'll continue down this path. Examples of other companies in the same domain who've taken this approach are:
+
+
+ * Mapbox with [mapbox.js](http://mapbox.com/mapbox.js/)
+
+ * CartoDB with [cartodb.js](https://github.com/CartoDB/cartodb.js)
+ 
+ * [Google](https://code.google.com/p/google-api-javascript-client/source/browse/samples/authSample.html)
+ 
