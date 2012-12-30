@@ -2,30 +2,36 @@
 
 **DDSC Webclient** is a javascript application built with [Backbone](http://backbonejs.org/), [Backbone-Marionette](http://marionettejs.com/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/), [Leaflet](http://leafletjs.com/) and [more](https://github.com/ddsc/webclient/tree/master/app/scripts/vendor)...
 
+## Demo
+
+Not much to see here yet, as we're mostly experimenting with Backbone, Marionette and Modelbinder.
+
+[http://ddsc.github.com/webclient/](http://ddsc.github.com/webclient/)
+
+
 We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
 
 ## Installation
 
-* Install yeoman (in a vagrant environment) with the following commands.
-This list might need updating.
+ * Install yeoman (in a vagrant environment) with the following commands. (This list might need updating)
 
-sudo apt-get install python-software-properties
+ * sudo apt-get install python-software-properties
 
-sudo add-apt-repository ppa:chris-lea/node.js
+ * sudo add-apt-repository ppa:chris-lea/node.js
 
-sudo apt-get update
+ * sudo apt-get update
 
-sudo apt-get install nodejs npm phantomjs
+ * sudo apt-get install nodejs npm phantomjs
 
-sudo npm install -g yeoman
+ * sudo npm install -g yeoman
 
-sudo gem install compass
+ * sudo gem install compass
 
-cd webclient
+ * cd webclient
 
-yeoman server
+ * yeoman server (optional, you can also serve with $ python -m SimpleHTTPServer or nginx etc)
 
-And point a browser to localhost 3051.
+ * And point a browser to localhost 3051.
 
 
 ## Technology choices
