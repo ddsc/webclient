@@ -2,7 +2,11 @@ Lizard.Home = {};
 
 Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
   template: '#home-template',
-  className: 'home'
+  className: 'home',
+  onShow: function() {
+    console.log('onShow()');
+    $('.search-query').focus();
+  }
 });
 
 Lizard.Home.Router = Backbone.Marionette.AppRouter.extend({
@@ -16,6 +20,7 @@ Lizard.Home.home = function(){
   console.log('Lizard.Home.home()');
   
   var homeView = new Lizard.Home.DefaultView();
+
   Lizard.content.show(homeView);
   Backbone.history.navigate('home');
 };

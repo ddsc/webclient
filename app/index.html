@@ -12,7 +12,11 @@
 
         
         <link rel="stylesheet" href="styles/main.css">
+        <link href="styles/ui-darkness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
         <link href="styles/bootstrap.css" rel="stylesheet">
+        <link href="styles/bootstrap-notify.css" rel="stylesheet">
+        <link href="styles/alert-blackgloss.css" rel="stylesheet">
+        <link href="styles/jquery.gridster.css" rel="stylesheet">
         <style>
             body {
               padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -28,29 +32,201 @@
 
         <!-- Template definitions -->
         <script type="text/template" id="home-template">
-          <header class="jumbotron subhead">
-          <div class="container">
-            <h1>Dijk Data Service Center</h1>
-            <h2 class="lead">Gateway to realtime sensor aggregation</h2>
+          <header class="jumbotron subhead hidden-phone hidden-tablet">
+              <div class="container">
+                <h1>Dijk Data Service Center</h1>
+                <h2 class="lead">Gateway to realtime sensor aggregation</h2>
+              </div>
+          </header>
+
+          <div class="row-fluid" id="home-search-wrapper">
+             <div class="span6">
+                <form class="form-search">
+                  <input type="text" class="input-medium search-query" placeholder="Doorzoek het DDSC">
+                </form>
+             </div>
+             <div class="span1 search-or-divider"><p>&nbsp;&nbsp;...of</p></div>
+             <div class="span5">
+                <button type="button" class="btn">
+                    Zoek geavanaceerd
+                </button>
+                <button type="button" class="btn">
+                    Data catalogus
+                </button>                
+             </div>
           </div>
-        </header>
+
+          <div class="row-fluid" id="threecol-wrapper">
+            <section class="span4" id="leftpane">
+
+                <h3>Top locaties <button type="button" class="btn btn-mini">Alles op de kaart tonen</button></h3>
+
+                <ol>
+                    <li>Eemshaven</li>
+                    <li>Utrecht</li>
+                    <li>De Veenderij</li>
+                    <li>Noorderzijlvest</li>
+                    <li>Locatie 5</li>
+                    <li>Locatie 6</li>
+                    <li>Locatie 7</li>
+                    <li>Locatie 8</li>
+                    <li>Locatie 8</li>
+                    <li>Locatie 8</li>
+                </ol>
+            </section>
+            <section class="span4" id="midpane">
+                <div class="row">
+                    <h3>Alarmen</h3>
+                </div>
+                <div class="row">
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                </div>
+            </section>
+            <section class="span4" id="rightpane">
+                <div class="row">
+                    <h3>Sensoren</h3>
+                </div>
+                <div class="row">
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>
+                    <span><img src="http://lorempixel.com/50/50/"/></span>                
+                </div>
+            </section>            
+          </div>
         </script>
 
         <script type="text/template" id="map-template">
           <div class="row-fluid">
 
-            <div class="span2" id="iconsRegion">
-              <h4>App Icons</h4>
-            </div>
+            <div class="span2" id="sidebarRegion"></div>
 
-            <div class="span10" id="mapRegion">
-             <h4>Kaart</h4>
-              <div id="map"></div>
-            </div>
+            <div class="span10" id="leafletRegion"></div>
 
           </div>
         </script>
+
         
+        <script type="text/template" id="icon-template">
+            Some icon
+        </script>
+        
+        <script type="text/template" id="show-no-items-message-template">
+            <h4>&nbsp;</h4>
+            <p>...</p>
+        </script>
+        
+        <script type="text/template" id="iconsview-template">
+            <h4>Icons</h4>
+        </script>
+
+
+        <script type="text/template" id="leaflet-template">
+            <h4>Kaart</h4>
+            <div id="map"></div>
+        </script>
+
+
+        <script type="text/template" id="layersview-template">
+            <h4><%=title%></h4>
+            <ol class="drawer-group ui-sortable" id="drawer-queue-group">
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 1</h4>
+                        <h5>Dijk 21</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 2</h4>
+                        <h5>Dijk 22</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 3</h4>
+                        <h5>Dijk 23</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 4</h4>
+                        <h5>Dijk 24</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 5</h4>
+                        <h5>Dijk 25</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+
+                <li id="" data-id="" class="">
+
+                    <div class="meta">
+                        <h4>WMS laag 6</h4>
+                        <h5>Dijk 26</h5>
+                    </div>
+
+                    <div class="mini-drop">
+                    </div>
+                </li>
+            </ol> 
+        </script>
+
         <script type="text/template" id="graphs-template">
           <div class="row-fluid">
 
@@ -69,8 +245,19 @@
           </div>
         </script>
 
+        <script type="text/template" id="dashboard-template">
+            <div class="gridster">
+              <ul>
+                
+                <li class="try" data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
+              </ul>
+            </div>
+        </script>
+
         <script type="text/template" id="overview-template">
-          <h4>Overzichten</h4>
+          <div class="row-fluid">
+            <div class="span12" id="dashboardRegion"></div>
+          </div>          
         </script>
 
         <script type="text/template" id="account-template">
@@ -129,7 +316,14 @@
       </div>
     
       
-      <div class="container" id="content"></div>
+      <div class="container">
+        <div class='notifications top-right'></div>
+        <div id="content">
+        </div>
+        <div class="row-fluid footer">
+            <span class="pull-right">&copy; 2012-2013 Stichting IJkdijk en partners</span>
+        </div>
+      </div>
     
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
@@ -138,21 +332,102 @@
         <!-- Loading JS at the end of the file -->
         <!-- <script src="http://use.edgefonts.net/andika.js"></script> -->
         <!-- <script src="http://use.edgefonts.net/arvo.js"></script> -->
-        <script src="scripts/vendor/jquery.min.js"></script>
-        <script src="scripts/vendor/crossfilter.js"></script>
+        
+        <!-- jQuery -->
+        <script src="scripts/vendor/jquery-1.8.3.js"></script>
+
+        <!-- jQuery UI and touch support -->
+        <script src="scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
+        <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
+
+        <!-- jQuery-based i18n -->
+        <script src="scripts/vendor/globalize.js"></script>
+        <script src="scripts/vendor/cultures/globalize.cultures.js"></script>
+
+        <!-- Slippy map rendering alternative to OpenLayers -->
         <script src="scripts/vendor/leaflet.js"></script>
-        <script src="scripts/vendor/d3.v2.js"></script>
+        <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
+
+        <!-- The most versatile graph library around -->
+        <script src="scripts/vendor/d3.v2.js"></script>
+
+        <!-- Powerful time-series filtering tool -->
+        <script src="scripts/vendor/crossfilter.js"></script>
+
+        <!-- Higher level D3-based graphing library with Crossfilter support  -->
+        <script src="scripts/vendor/dc.min.js"></script>
+
+        <!-- The most versatile graph library around -->
+        <script src="scripts/vendor/raphael.js"></script>
+        
+        <!-- The most versatile graph library around, depends on Raphael.js -->
+        <script src="scripts/vendor/morris.min.js"></script>
+
+        <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
+        <script src="scripts/vendor/gauge.min.js"></script>
+
+        <!-- Regexp library -->
+        <script src="scripts/vendor/holder.js"></script>
+
+        <!-- Clientside placeholder images (during development only!) -->
+        <script src="scripts/vendor/matches.min.js"></script>
+
+        <!-- Keyboard shortcut defining and dispatching -->
+        <script src="scripts/vendor/keymaster.min.js"></script>
+
+        <!-- The go-to library for anything WebGL/Canvas related -->
         <script src="scripts/vendor/Three.js"></script>
+
+        <!-- Drop-in script for detecting offline state -->
         <script src="scripts/vendor/heyoffline.js"></script>
+
+        <!-- Drop-in script for persisting form state -->
+        <script src="scripts/vendor/garlic.min.js"></script>
+
+        <!-- Adds duration to datetime -->
+        <script src="scripts/vendor/xsduration.js"></script>
+
+        <!-- Async -->
+        <script src="scripts/vendor/async.min.js"></script>
+
+        <!-- Quick javascript controller Widget -->
         <script src="scripts/vendor/dat.gui.min.js"></script>
+
+        <!-- JSON library by Douglas Crockford -->
         <script src="scripts/vendor/json2.js"></script>
+
+        <!-- Javascript utilities. Consider lodash instead? -->
         <script src="scripts/vendor/underscore.js"></script>
+        <!-- <script src="scripts/vendor/lodash.min.js"></script> -->
+
+        <!-- Library for number formatting -->
+        <script src="scripts/vendor/numeral.js"></script>
+
+        <!-- CSS like selectors for JSON -->
+        <script src="scripts/vendor/jsonselect.js"></script>        
+
+        <!-- XPATH-like library for JSON -->
+        <script src="scripts/vendor/jspath.min.js"></script>        
+
+        <!-- Grid/dashboard library by Ducksboard.com -->
+        <script src="scripts/vendor/jquery.gridster.js"></script>        
+
+
+
+        <!-- Backbone -->
         <script src="scripts/vendor/backbone.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
         <script src="scripts/vendor/backbone.marionette.js"></script>
+        <script src="scripts/vendor/backbone.modelbinder.js"></script>
+        <script src="scripts/vendor/backbone.collectionbinder.js"></script>
+
+        <!-- Twitter Bootstrap base javascript -->
         <script src="scripts/vendor/bootstrap.js"></script>
+        <script src="scripts/vendor/bootstrap-notify.js"></script>
+
+        <!-- Application code, split into files -->
         <script src="scripts/mapping.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/lizard.home.js"></script>
@@ -161,16 +436,14 @@
         <script src="scripts/lizard.map.js"></script>
         <script src="scripts/lizard.graphs.js"></script>
         <script src="scripts/lizard.overview.js"></script>
+
+        <!-- Backbone Application bootstrapping -->
         <script type="text/javascript">
+        $(document).ready(function() {
           Lizard.start();
+        });    
         </script>
         
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+
     </body>
 </html>

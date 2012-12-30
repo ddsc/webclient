@@ -7,46 +7,28 @@ if(typeof(console) === 'undefined') {
 // Instantiate the Application()
 Lizard = new Backbone.Marionette.Application();
 
-// Add regions
+// Add regions for Lizards main interface (menu + content)
 Lizard.addRegions({
   content: '#content',
   menu: '#menu'
 });
 
-Lizard.MenuView = Backbone.Marionette.View.extend({
-  el: '#menu',
-  
-  events: {
-    'click #menu .map-menu': 'mapApp'
-  },
-  
-  mapApp: function(e) {
-    console.log('clicked!');
-    e.preventDefault();
-    Lizard.Map.map();
-  }
-});
-
-Lizard.vent.on('layout:rendered', function(){
-  console.log('layout:rendered');
-  var menu = new Lizard.MenuView();
-  Lizard.menu.attachView(menu);
-});
-
-
+// Start Backbone's url router
 Lizard.on('initialize:after', function() {
   Backbone.history.start();
 });
 
 
-Lizard.content.on("show", function(view){
-  console.log("content show()", view);
-});
 
-Lizard.content.on("close", function(view){
-  console.log("content close()", view);
-});
 
+
+// Lizard.content.on('show', function(view){
+//   console.log('content.show()', view);
+// });
+
+// Lizard.content.on('close', function(view){
+//   console.log('content.close()', view);
+// });
 
 // Lizard.vent.on('routing:started', function(){
 //   if( ! Backbone.History.started) Backbone.history.start();
