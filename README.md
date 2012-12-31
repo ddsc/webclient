@@ -21,9 +21,11 @@ We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facili
 
  * sudo apt-get update
 
- * sudo apt-get install nodejs npm phantomjs
+ * sudo apt-get install nodejs npm
 
  * sudo npm install -g yeoman
+ 
+ * sudo npm install phantomjs
 
  * sudo gem install compass
 
