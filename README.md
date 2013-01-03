@@ -12,28 +12,22 @@ Not much to see here yet, as we're mostly experimenting with Backbone, Marionett
 ## Installation
 
 We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
+Run the following commands to install yeoman. We prefer to install it in a [Vagrant](http://vagrantup.com/) environment:
 
- * Install yeoman (in a vagrant environment) with the following commands. (This list might need updating)
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs npm
+    sudo npm install -g yeoman
+    sudo npm install phantomjs
+    sudo gem install compass
 
- * sudo apt-get install python-software-properties
+Start the webserver after the installation:
 
- * sudo add-apt-repository ppa:chris-lea/node.js
+    cd webclient
+    yeoman server (optional, you can also serve with $ python -m SimpleHTTPServer or nginx etc)
 
- * sudo apt-get update
-
- * sudo apt-get install nodejs npm
-
- * sudo npm install -g yeoman
- 
- * sudo npm install phantomjs
-
- * sudo gem install compass
-
- * cd webclient
-
- * yeoman server (optional, you can also serve with $ python -m SimpleHTTPServer or nginx etc)
-
- * And point a browser to localhost 3051.
+And point a browser to localhost 3051.
 
 
 ## Technology choices
