@@ -20,6 +20,46 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
 
 
 
+// Model definitions
+
+var Layer = Backbone.Model.extend({
+  initialize: function() {
+    console.log('LayerModel initializing');
+  }
+});
+
+var layer1 = new Layer({
+  id:1,
+  layerName: 'AHN25',
+  layerType: 'WMS',
+  layerDescription: 'Actuele Hoogtekaart Nederland'
+});
+
+var layer2 = new Layer({
+  id:2,
+  layerName: 'Gemeentegrenzen (WMS)',
+  layerType: 'WMS',
+  layerDescription: 'Actuele Hoogtekaart Nederland'
+});
+
+var layer3 = new Layer({
+  id:3,
+  layerName: 'Waternet - Projecten - Amstel - 4.2.2. - Temperatuur',
+  layerType: 'Interactive',
+  layerDescription: 'Interactieve kaartlaag'
+});
+
+var layer4 = new Layer({
+  id:4,
+  layerName: 'HHNK - Dijken - 26.9 - Saturatie',
+  layerType: 'Interactive',
+  layerDescription: 'Interactieve kaartlaag'
+});
+
+var Layers = Backbone.Collection.extend();
+var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
+
+
 
 Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
@@ -39,24 +79,37 @@ Lizard.Map.NoItemsView = Backbone.Marionette.ItemView.extend({
 });
 
 
-// Model definitions
-Lizard.Map.Icon = Backbone.Model.extend();
-
-
-// Collection definitions
-Lizard.Map.IconCollection = Backbone.Collection.extend({
-  model: Lizard.Map.Icon,
-  url: 'http://33.33.33.25:3000/api/v1/portals/'
+LayerItemView = Backbone.Marionette.ItemView.extend({
+  template: '#layeritem-template',
+  tagName: 'li',
+  className: 'drawer-item',
+  model: Layer,
+  initialize: function() {
+    console.log('LayerItemView() initializing');
+  }
 });
 
-
+LayersCollectionView = Backbone.Marionette.CollectionView.extend({
+  collection: layerCollection,
+  itemView: LayerItemView,
+  tagName: 'ol',
+  className: 'ui-sortable drawer-group',
+  onDomRefresh: function() {
+    $('.drawer-group').sortable({
+      'forcePlaceholderSize': true,
+      'handle': '.handle',
+      'axis': 'y'
+    });
+    $('.drawer-group').disableSelection();
+  }
+});
 
 
 
 
 Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   template: '#icon-template',
-  tagName: 'li',
+  tagName: 'li'
 });
 
 Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
@@ -80,9 +133,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     var bounds = new L.LatLngBounds(new L.LatLng(53.74, 3.2849), new L.LatLng(50.9584, 7.5147));
     var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' });
     var map = L.map('map', { layers: [cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: bounds});
-
-    $('#drawer-queue-group').sortable({forcePlaceholderSize: true});
-    $('#drawer-queue-group').disableSelection();
   },
   template: '#leaflet-template'
 });
@@ -99,27 +149,33 @@ Lizard.Map.map = function(){
   Lizard.content.show(mapView);
 
 
-  var iconCollection = new Lizard.Map.IconCollection();
-  var iconCollectionView = new Lizard.Map.IconCollectionView({
-      collection: iconCollection
-  });
-
-  iconCollection.fetch({
-    success: function() {
-      mapView.sidebarRegion.show(iconCollectionView);
-    }
-  });
-
-  // Instantiate the views we want to show
-  // var iconsView = new Lizard.Map.IconsView();
-  var layersView = new Lizard.Map.LayersView();
+  var layersView = new LayersCollectionView();
   var leafletView = new Lizard.Map.LeafletView();
+
+
+  var tree = new TreeNodeCollection(filterTreeData);
+  var treeView = new TreeRoot({
+      collection: tree
+  });
+  treeView.on('render', function() {
+    console.log("Rendering tree in mapview..");
+    $('.jsTree').jstree('open_all');
+  });
+  // mapView.sidebarRegion.show(treeView);
+
 
 
   // And show them in their divs
   // mapView.sidebarRegion.show(iconsView.render());
-  // mapView.sidebarRegion.show(layersView.render());
+  mapView.sidebarRegion.show(layersView.render());
   mapView.leafletRegion.show(leafletView.render());
+
+  $('.drawer-item').popover({
+    html: true,
+    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+  });
+
+
 
   // Then tell backbone to set the navigation to #map
   Backbone.history.navigate('map');

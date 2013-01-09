@@ -19,6 +19,7 @@ Lizard.Overview.Router = Backbone.Marionette.AppRouter.extend({
 
 
 Lizard.Overview.DashboardView = Backbone.Marionette.ItemView.extend({
+  template: '#dashboard-template',
   initialize: function(){
     console.log('DashboardView.initialize()');
   },
@@ -32,10 +33,10 @@ Lizard.Overview.DashboardView = Backbone.Marionette.ItemView.extend({
             widget_base_dimensions: [140, 140],
             draggable: {
               stop: function(event, ui) {
-                console.log('Syncing: ', gridster.serialize());
+                console.log('Syncing dashboard: ', gridster.serialize());
                 $('.top-right').notify({
                     message: {
-                      text: 'Synchronizing your dashboard layout!'
+                      text: 'Saving your dashboard layout!'
                     }
                   }).show();
               }
@@ -44,11 +45,8 @@ Lizard.Overview.DashboardView = Backbone.Marionette.ItemView.extend({
 
         gridster.add_widget(
           '<li class="new">' +
-          '<div id="gauge-preview">' +
-          '<div id="preview-textfield" style="color:#000;font-size:1.1em;padding:20px;"><strong>Waternet</strong></div>' +
-          '<canvas id="canvas-preview1"></canvas>' +
-          '<div id="preview-textfield" style="color:#ccc;font-size:.9em;padding:20px;">Amstel, sectie 2.4.2, Waterstand</div>' +
-          '</div></li>',
+          '<div id="g1"></div>' +
+          '</li>',
           2,
           2,
           1,
@@ -57,63 +55,59 @@ Lizard.Overview.DashboardView = Backbone.Marionette.ItemView.extend({
 
         gridster.add_widget(
           '<li class="new">' +
-          '<div id="gauge-preview">' +
-          '<div id="preview-textfield" style="color:#000;font-size:1.1em;padding:20px;"><strong>Waternet</strong></div>' +
-          '<canvas id="canvas-preview2"></canvas>' +
-          '<div id="preview-textfield" style="color:#ccc;font-size:.9em;padding:20px;">Amstel, sectie 2.4.2, Verplaatsing</div>' +
-          '</div></li>',
+          '<div id="g2"></div>' +
+          '</li>',
           2,
           2,
           1,
           3
         );
 
-
-        var opts1 = {
-          lines: 13, // The number of lines to draw
-          angle: 0.05, // The length of each line
-          lineWidth: 0.44, // The line thickness
-          pointer: {
-            length: 0.9, // The radius of the inner circle
-            strokeWidth: 0.053, // The rotation offset
-            color: '#000000' // Fill color
-          },
-          colorStart: '#6FADCF',   // Colors
-          colorStop: '#8FC0DA',    // just experiment with them
-          strokeColor: '#E0E0E0',   // to see which ones work best for you
-          generateGradient: true
-        };
-        var target1 = document.getElementById('canvas-preview1'); // your canvas element
-        var gauge1 = new Gauge(target1).setOptions(opts1); // create sexy gauge!
-        gauge1.maxValue = 3000; // set max gauge value
-        gauge1.animationSpeed = 32; // set animation speed (32 is default value)
-        gauge1.set(1250); // set actual value
+        gridster.add_widget(
+          '<li class="new">' +
+          '<div id="g3"></div>' +
+          '</li>',
+          2,
+          2,
+          3,
+          1
+        );
 
 
+        var g1 = new JustGage({
+          id: "g1", 
+          value: getRandomInt(650, 980), 
+          min: 350,
+          max: 980,
+          title: "Amstel",
+          label: "Verplaatsing (m3/s)"
+        });
 
+        var g2 = new JustGage({
+          id: "g2", 
+          value: 70, 
+          min: 0,
+          max: 100,
+          title: "Amstel 4-2-21",
+          label: "Waterstand (NAP)"
+        });
+        
+        var g3 = new JustGage({
+          id: "g3", 
+          value: 80, 
+          min: 0,
+          max: 100,
+          title: "Amstel 4-2-20",
+          label: "Waterstand (NAP)"
+        });
 
-        var opts2 = {
-          lines: 13, // The number of lines to draw
-          angle: 0.05, // The length of each line
-          lineWidth: 0.44, // The line thickness
-          pointer: {
-            length: 0.9, // The radius of the inner circle
-            strokeWidth: 0.053, // The rotation offset
-            color: '#000000' // Fill color
-          },
-          colorStart: '#6FADCF',   // Colors
-          colorStop: '#8FC0DA',    // just experiment with them
-          strokeColor: '#E0E0E0',   // to see which ones work best for you
-          generateGradient: true
-        };
-        var target2 = document.getElementById('canvas-preview2'); // your canvas element
-        var gauge2 = new Gauge(target2).setOptions(opts2); // create sexy gauge!
-        gauge2.maxValue = 3000; // set max gauge value
-        gauge2.animationSpeed = 32; // set animation speed (32 is default value)
-        gauge2.set(679); // set actual value
+        setInterval(function() {
+          g1.refresh(getRandomInt(350, 980));
+          g2.refresh(getRandomInt(80, 90));          
+          g3.refresh(getRandomInt(80, 90));          
+        }, 2500);        
 
-  },
-  template: '#dashboard-template'
+  }
 });
 
 

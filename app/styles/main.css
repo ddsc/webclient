@@ -51,33 +51,62 @@ a {
 }
 
 
-.drawer-group {
-    /* border-top: 1px solid rgba(255,255,255,.09); */
-    /* border-bottom: 1px solid rgba(0,0,0,.26); */
-    margin: 0px;
-    position: relative;
-    font-size: 13px;
-
+ol.drawer-group{
+    font-size: .8em;
+}
+ol.drawer-group span{
+    list-style: none;
 }
 
-.drawer-group li {
-    border-top: 1px solid rgba(255,255,255,.09);
-    border-bottom: 1px solid rgba(0,0,0,.26);
+ol.drawer-group {
     padding: 8px 10px;
     position: relative;
+    margin: 0;
+}
+ol.drawer-group li{
+    list-style: none;
+    position: relative;
+    border: none;
+    margin: 0 0 1px 0;
+    padding: 5px 30px 5px 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    background: #f3f3f3;    
     cursor: pointer;
-
-    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#0b3564), color-stop(100%,#114c92));
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
-    box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
 }
 
-.drawer-group div.meta {
-    min-height: 39px;
-    text-shadow: rgba(0,0,0,.34) 0 -1px 0;
+ol.drawer-group li.active{
+    background: -webkit-linear-gradient(top,#e7e7e7 0%,#e7e7e7 0%,#dbdbdb 100%);
 }
 
-.drawer-group h4 {
+ol.drawer-group span.handle {
+    position: absolute;
+    cursor: pointer;
+    left: 0px;
+    top: 0px;
+    background: url(../images/layer-handle.png) no-repeat center center;
+    cursor: url(http://maps.gstatic.com/intl/en_us/mapfiles/openhand_8_8.cur) 10 10,move;
+    width: 11px;
+    height: 28px;
+    border-right: 1px solid #fff;
+}
+ol.drawer-group span a {
+    text-decoration: none;
+    color: #000;
+}
+
+ol.drawer-group span.indicator {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 19px;
+    height: 19px;
+}
+
+ol.drawer-group h4 {
     color: #fff;
     font-size: 12px;
     font-weight: bold;
@@ -94,19 +123,6 @@ a {
 }
 
 
-.drawer-group h5 {
-    color: #999;
-    font-size: 11px;
-    font-weight: normal;
-    line-height: 1.1;
-    margin-bottom: 3px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-p.meta {
-    color: #999;
-}
 
 #home-search-wrapper {
     margin: 50px 0px 50px 0px;
@@ -244,3 +260,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     border-radius: 10px;
     clear: both;    
 }
+
+#g1, #g2, #g3 {
+    width:200px; height:160px;
+    display: inline-block;
+    margin: 50px 0px 0px 46px;
+}
+
+
+
+
+
+
+
+ul {
+  list-style: disc;
+  padding-left: 10px;
+  margin-left: 10px;    
+}​
+
+
+.layersview-popover {
+    border: 1px solid red;
+    background-color: blue;
+    width:500px;
+    height:500px;
+}
+

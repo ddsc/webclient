@@ -5,6 +5,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="DDSC" />
+                
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>DDSC</title>
         <meta name="description" content="">
@@ -128,9 +133,9 @@
         <script type="text/template" id="map-template">
           <div class="row-fluid">
 
-            <div class="span2" id="sidebarRegion"></div>
+            <div class="span3" id="sidebarRegion"></div>
 
-            <div class="span10" id="leafletRegion"></div>
+            <div class="span9" id="leafletRegion"></div>
 
           </div>
         </script>
@@ -156,92 +161,61 @@
         </script>
 
 
+        <script type="text/template" id="layeritem-template">
+            <span class="handle"></span>
+            <span class="content"><%= layerName %> (<%= layerType %>)</span>
+            <span class="indicator">
+                <i class="icon-eye-open"></i>
+            </span>
+        </script>
+
         <script type="text/template" id="layersview-template">
             <h4><%=title%></h4>
-            <ol class="drawer-group ui-sortable" id="drawer-queue-group">
-                <li id="" data-id="" class="">
+        </script>
 
-                    <div class="meta">
-                        <h4>WMS laag 1</h4>
-                        <h5>Dijk 21</h5>
+
+        <script type="text/template" id="testview-template">
+            <span id="summary">
+                <h5>Modelbinder example</h5>
+                <p>Dit is een voorbeeld van <a href="https://github.com/theironcook/Backbone.ModelBinder">model binding met de de-facto standaard</a> voor Backbone.</p>
+                <p>Verander de voor/achternaam. Het object wordt (op het blur event) bi-directioneel aangepast.</p>
+                <blockquote>
+                    <code style="white-space: pre;" />
+                </blockquote>
+            </span>
+
+            <div id="personFields">
+                <form class="form-horizontal">
+                  <div class="control-group">
+                    <label class="control-label" for="firstName">First Name</label>
+                    <div class="controls">
+                      <input type="text" name="firstName" id="firstName" placeholder="John">
                     </div>
-
-                    <div class="mini-drop">
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="lastName">Last Name</label>
+                    <div class="controls">
+                      <input type="text" name="lastName" id="lastName" placeholder="Doe">
                     </div>
-                </li>
+                  </div>
+                </form>   
+            </div>
+        </script>
 
-                <li id="" data-id="" class="">
-
-                    <div class="meta">
-                        <h4>WMS laag 2</h4>
-                        <h5>Dijk 22</h5>
-                    </div>
-
-                    <div class="mini-drop">
-                    </div>
-                </li>
-
-                <li id="" data-id="" class="">
-
-                    <div class="meta">
-                        <h4>WMS laag 3</h4>
-                        <h5>Dijk 23</h5>
-                    </div>
-
-                    <div class="mini-drop">
-                    </div>
-                </li>
-
-                <li id="" data-id="" class="">
-
-                    <div class="meta">
-                        <h4>WMS laag 4</h4>
-                        <h5>Dijk 24</h5>
-                    </div>
-
-                    <div class="mini-drop">
-                    </div>
-                </li>
-
-                <li id="" data-id="" class="">
-
-                    <div class="meta">
-                        <h4>WMS laag 5</h4>
-                        <h5>Dijk 25</h5>
-                    </div>
-
-                    <div class="mini-drop">
-                    </div>
-                </li>
-
-                <li id="" data-id="" class="">
-
-                    <div class="meta">
-                        <h4>WMS laag 6</h4>
-                        <h5>Dijk 26</h5>
-                    </div>
-
-                    <div class="mini-drop">
-                    </div>
-                </li>
-            </ol> 
+        <script id="node-template" type="text/template">
+            <li><a href="<%= name %>"><%= nodeName %></a></li>
         </script>
 
         <script type="text/template" id="graphs-template">
           <div class="row-fluid">
-
-            <div class="span2">
+            <div class="span2" id="sidebarRegion">
               <h4>App Icons</h4>
             </div>
 
-            <div class="span10">
+            <div class="span10" id="mainRegion">
              <h4>Grafieken</h4>
-              <div id="graphs">
-
-
-              </div>
+              <div id="graphs"></div>
             </div>
-
           </div>
         </script>
 
@@ -249,7 +223,7 @@
             <div class="gridster">
               <ul>
                 
-                <li class="try" data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
+                <li class="try" data-row="2" data-col="3" data-sizex="1" data-sizey="1"></li>
               </ul>
             </div>
         </script>
@@ -335,10 +309,14 @@
         
         <!-- jQuery -->
         <script src="scripts/vendor/jquery-1.8.3.js"></script>
+        <script src="scripts/vendor/jquerypp.js"></script>
 
         <!-- jQuery UI and touch support -->
         <script src="scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
+
+        <!-- jsTree -->
+        <script src="scripts/vendor/jstree.js"></script>        
 
         <!-- jQuery-based i18n -->
         <script src="scripts/vendor/globalize.js"></script>
@@ -360,17 +338,20 @@
 
         <!-- The most versatile graph library around -->
         <script src="scripts/vendor/raphael.js"></script>
-        
+
+        <!-- Gauges lib based on raphael -->
+        <script src="scripts/vendor/justgage.1.0.1.js"></script>        
+                        
         <!-- The most versatile graph library around, depends on Raphael.js -->
         <script src="scripts/vendor/morris.min.js"></script>
 
         <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
         <script src="scripts/vendor/gauge.min.js"></script>
 
-        <!-- Regexp library -->
+        <!-- Client side image placeholders -->
         <script src="scripts/vendor/holder.js"></script>
 
-        <!-- Clientside placeholder images (during development only!) -->
+        <!-- Regexp lib -->
         <script src="scripts/vendor/matches.min.js"></script>
 
         <!-- Keyboard shortcut defining and dispatching -->
@@ -423,13 +404,28 @@
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
 
+
+
+
+        <!-- Visualsearch.js by Documentcloud -->
+        <script src="scripts/vendor/visualsearch.js" type="text/javascript"></script>
+        <!--[if (!IE)|(gte IE 8)]><!-->
+          <link href="styles/visualsearch-datauri.css" media="screen" rel="stylesheet" type="text/css" />
+        <!--<![endif]-->
+        <!--[if lte IE 7]><!-->
+          <link href="styles/visualsearch.css" media="screen" rel="stylesheet" type="text/css" />
+        <!--<![endif]-->        
+
         <!-- Twitter Bootstrap base javascript -->
         <script src="scripts/vendor/bootstrap.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
+
+        <script src="scripts/lizard.layerbubble.js"></script>
+
         <!-- Application code, split into files -->
         <script src="scripts/mapping.js"></script>
-        <script src="scripts/main.js"></script>
+        <script src="scripts/lizard.js"></script>
         <script src="scripts/lizard.home.js"></script>
         <script src="scripts/lizard.help.js"></script>
         <script src="scripts/lizard.account.js"></script>
@@ -442,6 +438,7 @@
         $(document).ready(function() {
           Lizard.start();
         });    
+
         </script>
         
 

@@ -6,6 +6,9 @@ Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
   onShow: function() {
     console.log('onShow()');
     $('.search-query').focus();
+  },
+  onDomRefresh: function() {
+    console.log('onDomRefresh');
   }
 });
 
