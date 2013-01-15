@@ -1,5 +1,3 @@
-// http://33.33.33.25:3000/api/v1/portals/50dd76c469380c5506000001/apps/
-
 Lizard.Map = {};
 
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
@@ -133,6 +131,29 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     var bounds = new L.LatLngBounds(new L.LatLng(53.74, 3.2849), new L.LatLng(50.9584, 7.5147));
     var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' });
     var map = L.map('map', { layers: [cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: bounds});
+    
+    var markers = new L.MarkerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      maxClusterRadius: 200
+    });
+
+    d3.csv('data/4pp.csv', function(postcodes) {
+      for (var i = postcodes.length - 1; i >= 0; i--) {
+        var pc = postcodes[i];
+        console.log(pc);
+        var title = pc.Woonplaats;
+        
+        var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), { title: title });
+        marker.bindPopup(title);
+        markers.addLayer(marker);
+      }
+    });
+
+    map.addLayer(markers);
+
+
+    $('#map').css('height', $(window).height()-100);
   },
   template: '#leaflet-template'
 });

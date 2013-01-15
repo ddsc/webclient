@@ -7,6 +7,44 @@ if(typeof(console) === 'undefined') {
 
 
 
+var FilterModel = Backbone.Model.extend({
+  initialize: function() {
+    console.log('FilterModel initializing');
+  }
+});
+
+var LocationModel = Backbone.Model.extend({
+  initialize: function() {
+    console.log('LocationModel initializing');
+  }
+});
+
+var ParameterModel = Backbone.Model.extend({
+  initialize: function() {
+    console.log('ParameterModel initializing');
+  }
+});
+
+var FilterCollection = Backbone.Collection.extend({
+  url: '',
+  model: FilterModel
+});
+
+var LocationCollection = Backbone.Collection.extend({
+  url: '',
+  model: LocationModel
+});
+
+var ParameterCollection = Backbone.Collection.extend({
+  url: 'http://test.api.dijkdata.nl/api/v0/timeseries/?format=json',
+  model: ParameterModel,
+  parse: function(res, xhr) {
+    console.log(res.results);
+    return res.results;
+  }
+});
+
+
 
 
 

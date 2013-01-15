@@ -5,7 +5,8 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
     'sidebarRegion': '#sidebarRegion',
-    'mainRegion': '#mainRegion'
+    'mainRegion': '#mainRegion',
+    'parametersRegion': 'p#parametersRegion'
   }
 });
 
@@ -39,10 +40,38 @@ Lizard.Graphs.TestView = Backbone.Marionette.ItemView.extend({
     this._modelBinder.unbind();
   },
   onShow: function() {
-    // console.log('onSHOW!');
     this._modelBinder.bind(personModel, this.el);
   }
 });
+
+
+
+
+var ParameterView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('ParameterView.initialize()');
+  },
+  tagName: 'li',
+
+  template: '#parameterview-template'
+});
+
+var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
+      collection: new ParameterCollection(),
+      tagName: 'ul',
+      
+      itemView: ParameterView,
+      initialize: function(){
+          this.collection.fetch();
+          this.bindTo(this.collection, 'reset', this.render, this)
+      }
+  });
+
+
+
+
+
+
 
 Lizard.Graphs.graphs = function(){
   console.log('Lizard.Graphs.graphs()');
@@ -62,12 +91,15 @@ Lizard.Graphs.graphs = function(){
     $('.jsTree').jstree('open_all');
   });
 
-  graphsView.sidebarRegion.show(treeView);
+  // graphsView.sidebarRegion.show(treeView);
+  var parametercollectionview = new ParameterCollectionView();
+  graphsView.parametersRegion.show(parametercollectionview.render());
 
 
   var testView = new Lizard.Graphs.TestView();
   graphsView.mainRegion.show(testView.render());
 
+  
 
   Backbone.history.navigate('graphs');
 };

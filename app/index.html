@@ -33,6 +33,11 @@
         <!--[if lte IE 8]>
           <link rel="stylesheet" href="styles/leaflet.ie.css" />
         <![endif]-->
+        
+        <link rel="stylesheet" href="styles/MarkerCluster.css" />
+        <link rel="stylesheet" href="styles/MarkerCluster.Default.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="styles/MarkerCluster.Default.ie.css" /><![endif]-->
+                
         <script src="scripts/vendor/modernizr.min.js"></script>
 
         <!-- Template definitions -->
@@ -156,7 +161,6 @@
 
 
         <script type="text/template" id="leaflet-template">
-            <h4>Kaart</h4>
             <div id="map"></div>
         </script>
 
@@ -175,6 +179,8 @@
 
 
         <script type="text/template" id="testview-template">
+
+            <div class="visible-phone"><div style="height:20px;"></div></div>
             <span id="summary">
                 <h5>Modelbinder example</h5>
                 <p>Dit is een voorbeeld van <a href="https://github.com/theironcook/Backbone.ModelBinder">model binding met de de-facto standaard</a> voor Backbone.</p>
@@ -206,13 +212,39 @@
             <li><a href="<%= name %>"><%= nodeName %></a></li>
         </script>
 
+
+
+        <script id="parameterview-template" type="text/template">
+            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= latest_value %> <i class=""></i></a>
+        </script>
+
         <script type="text/template" id="graphs-template">
           <div class="row-fluid">
-            <div class="span2" id="sidebarRegion">
-              <h4>App Icons</h4>
+            <div class="span3" id="sidebarRegion">
+
+               <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+
+                        <li class="metrics-dropdown">
+                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Filters</a>
+                            <p data-group="filters" class="hide"></p>
+                        </li>
+                        <li class="metrics-dropdown">
+                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
+                            <p data-group="locations" class="hide"></p>
+                        </li>
+                        <li class="metrics-dropdown">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
+                            
+                            <p data-group="parameters" id="parametersRegion" class="">
+                            </p>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                        </li>
+                    </ul>
             </div>
 
-            <div class="span10" id="mainRegion">
+            <div class="span9" id="mainRegion">
              <h4>Grafieken</h4>
               <div id="graphs"></div>
             </div>
@@ -222,7 +254,6 @@
         <script type="text/template" id="dashboard-template">
             <div class="gridster">
               <ul>
-                
                 <li class="try" data-row="2" data-col="3" data-sizex="1" data-sizey="1"></li>
               </ul>
             </div>
@@ -245,6 +276,35 @@
     </head>
     <body>
     
+    <!-- Modals - not shown on page load -->
+    <div class="modal hide fade" id="modalHelp">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Help</h3>
+        </div>
+        <div class="modal-body">
+            <div class="textcenter">
+                <iframe width="480" height="360" src="http://www.youtube.com/embed/rl002LdQZis" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p>
+                <h4>Aanvullende informatie</h4>
+                <ul>
+                    <li><a href="#" target="_blank">Gebruikershandleiding DDSC (pdf)</a></li>
+                    <li><a href="#" class="talkback">Rapporteer een problem</a></li>
+                </ul>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        </div>
+    </div>    
+    
+    
+    
+    
+    
+    
+    
       <div id="header">
         <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
             <div class="navbar-inner">
@@ -259,14 +319,20 @@
                     <div class="nav-collapse collapse">
 
                         <ul class="nav" id="menu">
-                            <li class="home-menu"><a href="#">Home</a></li>
-                            <li class="map-menu"><a href="#map">Kaart</a></li>
-                            <li class="graphs-menu"><a href="#graphs">Grafieken</a></li>
-                            <li class="overview-menu"><a href="#overview">Overzichten</a></li>
+                            <li class="home-menu"><a href="#"><em class="icon-home icon-white"></em>&nbsp;Home</a></li>
+                            
+                            <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
+                            <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
+                            <li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
                             <!-- <li class="manage-menu"><a href="#manage">Beheer</a></li> -->
                         </ul>
 
                         <ul class="nav pull-right">
+                            
+                            <form class="navbar-form pull-right">
+                            <label for="searchbox" class="hide">Zoeken</label>
+                            <input id="searchbox" class="input span3 transition ui-autocomplete-input" type="text" placeholder="Search" autocomplete="off">
+                            </form>
                             
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bastiaan Roos <i class="icon-user icon-white"></i><b class="caret"></b></a>
@@ -276,7 +342,7 @@
                                     </li>
                                     <li class="divider"></li>
                                     <li class="nav-header">DDSC</li>
-                                    <li><a href="#help">Help</a></li>
+                                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
                                     <li><a href="#">Uitloggen</a></li>
                                 </ul>
                             </li>
@@ -299,7 +365,7 @@
         </div>
       </div>
     
-        <!--[if lt IE 7]>
+        <!--[if lt IE 10]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->        
         
@@ -324,6 +390,7 @@
 
         <!-- Slippy map rendering alternative to OpenLayers -->
         <script src="scripts/vendor/leaflet.js"></script>
+        <script src="scripts/vendor/leaflet.markercluster-src.js"></script>
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
 
@@ -437,8 +504,11 @@
         <script type="text/javascript">
         $(document).ready(function() {
           Lizard.start();
-        });    
+        });
 
+        $(window).resize(function() {
+            $('#map').css('height', $(window).height()-100);
+        });
         </script>
         
 

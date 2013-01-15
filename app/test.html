@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="DDSC" />
+                
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>DDSC</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        
+        <link rel="stylesheet" href="styles/main.css">
+        <link href="styles/ui-darkness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+        <link href="styles/bootstrap.css" rel="stylesheet">
+        <link href="styles/bootstrap-notify.css" rel="stylesheet">
+        <link href="styles/alert-blackgloss.css" rel="stylesheet">
+        <link href="styles/jquery.gridster.css" rel="stylesheet">
+        <style>
+            body {
+              padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <style>
+
+        @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);
+
+        body {
+          font-family: "Helvetica Neue";
+          margin: 40px auto;
+          width: 960px;
+          min-height: 2000px;
+        }
+
+        #body {
+          position: relative;
+        }
+
+        footer {
+          padding: 2em 0 1em 0;
+          font-size: 12px;
+        }
+
+        h1 {
+          font-size: 96px;
+          margin-top: .3em;
+          margin-bottom: 0;
+        }
+
+        h1 + h2 {
+          margin-top: 0;
+        }
+
+        h2 {
+          font-weight: 400;
+          font-size: 28px;
+        }
+
+        h1, h2 {
+          font-family: "Yanone Kaffeesatz";
+          text-rendering: optimizeLegibility;
+        }
+
+        #body > p {
+          line-height: 1.5em;
+          width: 640px;
+          text-rendering: optimizeLegibility;
+        }
+
+        #charts {
+          padding: 10px 0;
+        }
+
+        .chart {
+          display: inline-block;
+          height: 151px;
+          margin-bottom: 20px;
+        }
+
+        .reset {
+          padding-left: 1em;
+          font-size: smaller;
+          color: #ccc;
+        }
+
+        .background.bar {
+          fill: #ccc;
+        }
+
+        .foreground.bar {
+          fill: steelblue;
+        }
+
+        .axis path, .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .axis text {
+          font: 10px sans-serif;
+        }
+
+        .brush rect.extent {
+          fill: steelblue;
+          fill-opacity: .125;
+        }
+
+        .brush .resize path {
+          fill: #eee;
+          stroke: #666;
+        }
+
+        #hour-chart {
+          width: 260px;
+        }
+
+        #delay-chart {
+          width: 230px;
+        }
+
+        #distance-chart {
+          width: 420px;
+        }
+
+        #date-chart {
+          width: 920px;
+        }
+
+        #values-list {
+          min-height: 1024px;
+        }
+
+        #values-list .date,
+        #values-list .day {
+          margin-bottom: .4em;
+        }
+
+        #values-list .flight {
+          line-height: 1.5em;
+          background: #eee;
+          width: 640px;
+          margin-bottom: 1px;
+        }
+
+        #values-list .time {
+          color: #999;
+        }
+
+        #values-list .flight div {
+          display: inline-block;
+          width: 100px;
+        }
+
+        #values-list div.distance,
+        #values-list div.delay {
+          width: 160px;
+          padding-right: 10px;
+          text-align: right;
+        }
+
+        #values-list .early {
+          color: green;
+        }
+
+        aside {
+          position: absolute;
+          left: 740px;
+          font-size: smaller;
+          width: 220px;
+        }
+
+        </style>        
+
+        <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+        <link rel="stylesheet" href="styles/leaflet.css" />
+        <!--[if lte IE 8]>
+          <link rel="stylesheet" href="styles/leaflet.ie.css" />
+        <![endif]-->
+        <script src="scripts/vendor/modernizr.min.js"></script>
+
+    </head>
+    <body>
+    
+      <div id="header">
+        <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">DDSC</a>
+
+                    <div class="nav-collapse collapse">
+
+                        <ul class="nav" id="menu">
+                            <li class="home-menu"><a href="#">Home</a></li>
+                            <li class="map-menu"><a href="#map">Kaart</a></li>
+                            <li class="graphs-menu"><a href="#graphs">Grafieken</a></li>
+                            <li class="overview-menu"><a href="#overview">Overzichten</a></li>
+                            <!-- <li class="manage-menu"><a href="#manage">Beheer</a></li> -->
+                        </ul>
+
+                        <ul class="nav pull-right">
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bastiaan Roos <i class="icon-user icon-white"></i><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                <li class="about-menu"><a href="#logout"></a></li>
+                                    <li><a href="#account" target="">Uw gegevens</a></li>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">DDSC</li>
+                                    <li><a href="#help">Help</a></li>
+                                    <li><a href="#">Uitloggen</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+      </div>
+    
+      
+      <div class="container">
+        <div class='notifications top-right'></div>
+        <div id="content">
+        
+        
+        
+        
+        
+        
+        <h3>Timeseries - Temperatuur</h3>
+        
+        
+        <div id="charts">
+          <div id="hour-chart" class="chart">
+            <div class="title">Tijd</div>
+          </div>
+          <div id="value-chart" class="chart">
+            <div class="title">Waarde</div>
+          </div>
+          
+<!--           <div id="distance-chart" class="chart">
+  <div class="title">Distance (mi.)</div>
+</div>
+<div id="date-chart" class="chart">
+  <div class="title">Date</div>
+</div> -->
+          
+        </div>
+        
+        
+        <div id="lists">
+          <div id="values-list" class="list"></div>
+        </div>        
+        
+        
+        </div>
+        <div class="row-fluid footer">
+            <span class="pull-right">&copy; 2012-2013 Stichting IJkdijk en partners</span>
+        </div>
+      </div>
+    
+        <!--[if lt IE 10]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->        
+        
+        <!-- Loading JS at the end of the file -->
+        <!-- <script src="http://use.edgefonts.net/andika.js"></script> -->
+        <!-- <script src="http://use.edgefonts.net/arvo.js"></script> -->
+        
+        <!-- jQuery -->
+        <script src="scripts/vendor/jquery-1.8.3.js"></script>
+        <script src="scripts/vendor/jquerypp.js"></script>
+
+        <!-- jQuery UI and touch support -->
+        <script src="scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
+        <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
+
+        <!-- jsTree -->
+        <script src="scripts/vendor/jstree.js"></script>        
+
+        <!-- jQuery-based i18n -->
+        <script src="scripts/vendor/globalize.js"></script>
+        <script src="scripts/vendor/cultures/globalize.cultures.js"></script>
+
+        <!-- Slippy map rendering alternative to OpenLayers -->
+        <script src="scripts/vendor/leaflet.js"></script>
+        <script src="scripts/vendor/proj4js-combined.js"></script>
+        <script src="scripts/vendor/tile.stamen.js"></script>
+
+        <!-- The most versatile graph library around -->
+        <script src="scripts/vendor/d3.v2.js"></script>
+
+        <!-- Powerful time-series filtering tool -->
+        <script src="scripts/vendor/crossfilter.js"></script>
+
+        <!-- Higher level D3-based graphing library with Crossfilter support  -->
+        <script src="scripts/vendor/dc.min.js"></script>
+
+        <!-- The most versatile graph library around -->
+        <script src="scripts/vendor/raphael.js"></script>
+
+        <!-- Gauges lib based on raphael -->
+        <script src="scripts/vendor/justgage.1.0.1.js"></script>        
+                        
+        <!-- The most versatile graph library around, depends on Raphael.js -->
+        <script src="scripts/vendor/morris.min.js"></script>
+
+        <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
+        <script src="scripts/vendor/gauge.min.js"></script>
+
+        <!-- Client side image placeholders -->
+        <script src="scripts/vendor/holder.js"></script>
+
+        <!-- Regexp lib -->
+        <script src="scripts/vendor/matches.min.js"></script>
+
+        <!-- Keyboard shortcut defining and dispatching -->
+        <script src="scripts/vendor/keymaster.min.js"></script>
+
+        <!-- The go-to library for anything WebGL/Canvas related -->
+        <script src="scripts/vendor/Three.js"></script>
+
+        <!-- Drop-in script for detecting offline state -->
+        <script src="scripts/vendor/heyoffline.js"></script>
+
+        <!-- Drop-in script for persisting form state -->
+        <script src="scripts/vendor/garlic.min.js"></script>
+
+        <!-- Adds duration to datetime -->
+        <script src="scripts/vendor/xsduration.js"></script>
+
+        <!-- Async -->
+        <script src="scripts/vendor/async.min.js"></script>
+
+        <!-- Quick javascript controller Widget -->
+        <script src="scripts/vendor/dat.gui.min.js"></script>
+
+        <!-- JSON library by Douglas Crockford -->
+        <script src="scripts/vendor/json2.js"></script>
+
+        <!-- Javascript utilities. Consider lodash instead? -->
+        <script src="scripts/vendor/underscore.js"></script>
+        <!-- <script src="scripts/vendor/lodash.min.js"></script> -->
+
+        <!-- Library for number formatting -->
+        <script src="scripts/vendor/numeral.js"></script>
+
+        <!-- CSS like selectors for JSON -->
+        <script src="scripts/vendor/jsonselect.js"></script>        
+
+        <!-- XPATH-like library for JSON -->
+        <script src="scripts/vendor/jspath.min.js"></script>        
+
+
+        <!-- Backbone -->
+        <script src="scripts/vendor/backbone.js"></script>
+        <script src="scripts/vendor/backbone-localstorage.js"></script>
+        <script src="scripts/vendor/backbone.babysitter.js"></script>
+        <script src="scripts/vendor/backbone.marionette.js"></script>
+        <script src="scripts/vendor/backbone.modelbinder.js"></script>
+        <script src="scripts/vendor/backbone.collectionbinder.js"></script>
+
+
+        <script src="test.js"></script>
+            
+
+    </body>
+</html>
