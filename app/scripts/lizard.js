@@ -26,16 +26,25 @@ var ParameterModel = Backbone.Model.extend({
 });
 
 var FilterCollection = Backbone.Collection.extend({
+  initialize: function() {
+    console.log('FilterCollection initializing');
+  },
   url: '',
   model: FilterModel
 });
 
 var LocationCollection = Backbone.Collection.extend({
+  initialize: function() {
+    console.log('LocationCollection initializing');
+  },
   url: '',
   model: LocationModel
 });
 
 var ParameterCollection = Backbone.Collection.extend({
+  initialize: function() {
+    console.log('ParameterCollection initializing');
+  },
   url: 'http://test.api.dijkdata.nl/api/v0/timeseries/?format=json',
   model: ParameterModel,
   parse: function(res, xhr) {
@@ -43,6 +52,8 @@ var ParameterCollection = Backbone.Collection.extend({
     return res.results;
   }
 });
+
+
 
 
 

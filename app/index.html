@@ -178,6 +178,13 @@
         </script>
 
 
+
+    
+
+
+
+
+
         <script type="text/template" id="testview-template">
 
             <div class="visible-phone"><div style="height:20px;"></div></div>
@@ -212,6 +219,9 @@
             <li><a href="<%= name %>"><%= nodeName %></a></li>
         </script>
 
+        <script id="timeserieview-template" type="text/template">
+            <div id="demo"></div>
+        </script>
 
 
         <script id="parameterview-template" type="text/template">
@@ -395,6 +405,7 @@
         <script src="scripts/vendor/tile.stamen.js"></script>
 
         <!-- The most versatile graph library around -->
+            <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
         <script src="scripts/vendor/d3.v2.js"></script>
 
         <!-- Powerful time-series filtering tool -->
@@ -411,6 +422,9 @@
                         
         <!-- The most versatile graph library around, depends on Raphael.js -->
         <script src="scripts/vendor/morris.min.js"></script>
+
+        <!-- Timeserie visualization lib -->
+        <script src="scripts/vendor/cubism.js"></script>        
 
         <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
         <script src="scripts/vendor/gauge.min.js"></script>
