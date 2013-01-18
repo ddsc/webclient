@@ -45,12 +45,13 @@ var ParameterCollection = Backbone.Collection.extend({
   initialize: function() {
     console.log('ParameterCollection initializing');
   },
-  url: 'http://test.api.dijkdata.nl/api/v0/timeseries/?format=json',
-  model: ParameterModel,
-  parse: function(res, xhr) {
-    console.log(res.results);
-    return res.results;
-  }
+  // url: 'http://test.api.dijkdata.nl/api/v0/timeseries/?format=json',
+  url: 'http://33.33.33.25:3000/api/v1/parameters',
+  model: ParameterModel
+  // parse: function(res, xhr) {
+  //   console.log(res.results);
+  //   return res.results;
+  // }
 });
 
 

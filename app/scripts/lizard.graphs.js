@@ -111,7 +111,6 @@ var ParameterView = Backbone.Marionette.ItemView.extend({
     console.log('ParameterView.initialize()');
   },
   tagName: 'li',
-
   template: '#parameterview-template'
 });
 
