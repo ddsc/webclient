@@ -169,6 +169,8 @@ Lizard.Graphs.graphs = function(){
   });
 
   // graphsView.sidebarRegion.show(treeView);
+  var locationscollectionview = new LocationsCollectionView();
+  graphsView.parametersRegion.show(locationscollectionview.render());
   var parametercollectionview = new ParameterCollectionView();
   graphsView.parametersRegion.show(parametercollectionview.render());
 
