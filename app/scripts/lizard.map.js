@@ -144,13 +144,41 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         console.log(pc);
         var title = pc.Woonplaats;
         
-        var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), { title: title });
-        marker.bindPopup(title);
+        var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), {
+            clickable:true,
+            title: title, 
+            provincie:pc.Provincie
+        });
+        marker.on('mouseover', highlightFeature);
         markers.addLayer(marker);
       }
     });
 
     map.addLayer(markers);
+
+    //add custom control, to show information on hover
+    // taken from http://leafletjs.com/examples/choropleth.html
+    function highlightFeature(e) {
+        var marker = e.target;
+        info.update(marker.valueOf().options);
+    };
+
+    info = L.control();
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'infobox'); // create info div
+        this.update();
+        return this._div;
+    };
+
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Postcode</h4>' + (props ?
+                '<b>' + props.title + '</b><br>' +
+                'Provincie: ' + props.provincie
+                : 'Zweef over de punten');    
+    };
+    
+    info.addTo(map);
 
 
     $('#map').css('height', $(window).height()-100);
