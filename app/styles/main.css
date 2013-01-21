@@ -376,7 +376,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 .chart { margin-bottom: 20px; }
 
 
-
+/* Information panel */
+.infobox{
+    padding: 1em;
+    background-color: #fff;
+    width: 120px;
+}
 
 
 

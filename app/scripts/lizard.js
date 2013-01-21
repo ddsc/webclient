@@ -46,7 +46,7 @@ var ParameterCollection = Backbone.Collection.extend({
     console.log('ParameterCollection initializing');
   },
   // url: 'http://test.api.dijkdata.nl/api/v0/timeseries/?format=json',
-  url: 'http://localhost:3000/api/v1/parameters',
+  url: local_settings.mock_api, 
   model: ParameterModel
   // parse: function(res, xhr) {
   //   console.log(res.results);

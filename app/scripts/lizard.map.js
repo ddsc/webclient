@@ -149,20 +149,24 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
             title: title, 
             provincie:pc.Provincie
         });
-        marker.on('mouseover', highlightFeature);
+        // tell the marker what to do when hovering
+        marker.on('mouseover', updateInfo);
         markers.addLayer(marker);
       }
     });
 
     map.addLayer(markers);
 
-    //add custom control, to show information on hover
-    // taken from http://leafletjs.com/examples/choropleth.html
-    function highlightFeature(e) {
+    // Event listener for updating the information in the 
+    // upper right corner.
+    // only works for L.Marker objects
+    function updateInfo(e) {
         var marker = e.target;
         info.update(marker.valueOf().options);
     };
 
+    //add custom control, to show information on hover
+    // taken from http://leafletjs.com/examples/choropleth.html
     info = L.control();
 
     info.onAdd = function (map) {
