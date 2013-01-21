@@ -108,6 +108,7 @@ And point a browser to localhost 3051.
 
  * [What's the difference between a Marionette Layout and a Region?](http://stackoverflow.com/questions/10521266/whats-the-difference-between-a-marionette-layout-and-a-region)
 
+ * [Loads of Backbone.js plugins](https://github.com/documentcloud/backbone/wiki/Extensions,-Plugins,-Resources)
 
  ## Far Future Philosophy
 
