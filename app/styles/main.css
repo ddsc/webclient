@@ -1,3 +1,12 @@
+body {
+    /*background-image: url('../images/tiny_grid.png');*/
+    /*background-image: url('../images/diagonales_decalees.png');*/
+    /*background-image: url('../images/furley_bg.png');*/
+    /*background-image: url('../images/graphy.png');*/
+    /*background-image: url('../images/noisy_grid.png');*/
+    /*background-image: url('../images/project_papper.png');*/
+    /*background-image: url('../images/subtle_freckles.png');*/
+}
 
 /* Will be compiled down to a single stylesheet with your sass files */
 a {
@@ -6,6 +15,7 @@ a {
 
 
 #map {
+    height: 100%;
     box-shadow: 0 8px 16px -8px #222;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -13,9 +23,6 @@ a {
     border: 1px solid #E5E5E5;
     border-radius: 6px;
 }
-#map, #mapRegion {
-    height: 600px;
-}    
 
 .footer {
     background-color: #fff;

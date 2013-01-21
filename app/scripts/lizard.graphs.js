@@ -60,7 +60,7 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
         .stop();
 
     d3.select('#demo').selectAll('.axis')
-        .data(['top', 'bottom'])
+        .data(['bottom'])
       .enter().append('div')
         .attr('class', function(d) { return d + ' axis'; })
         .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
