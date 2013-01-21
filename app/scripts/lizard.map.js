@@ -184,7 +184,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(map);
 
 
-    $('#map').css('height', $(window).height()-100);
+    // $('#map').css('height', $(window).height()-100);
   },
   template: '#leaflet-template'
 });
