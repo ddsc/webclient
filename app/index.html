@@ -230,9 +230,22 @@
             <div id="demo"></div>
         </script>
 
+        <script id="filterview-template" type="text/template">
+            <label class="checkbox">
+            <input type="checkbox"> <%= filtername %>
+            </label>
+        </script>
+
+        <script id="locationview-template" type="text/template">
+            <label class="checkbox">
+            <input type="checkbox"> <%= name %>
+            </label>        
+        </script>
 
         <script id="parameterview-template" type="text/template">
-            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= parameter %> <i class=""></i></a>
+            <label class="checkbox">
+            <input type="checkbox"> <%= parameter %>
+            </label>                
         </script>
 
         <script type="text/template" id="graphs-template">
@@ -240,19 +253,17 @@
             <div class="span3" id="sidebarRegion">
 
                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-
-                        <li class="metrics-dropdown">
-                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Filters</a>
-                            <p data-group="filters" class="hide"></p>
+                        <li class="metrics-dropdown" id="filters">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
+                            <p data-group="filters" id="filtersRegion" class="hide"></p>
                         </li>
-                        <li class="metrics-dropdown">
+                        <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
-                            <p data-group="locations" class="hide"></p>
+                            <p data-group="locations" id="locationsRegion" class="hide"></p>
                         </li>
-                        <li class="metrics-dropdown">
+                        <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
-                            
-                            <p data-group="parameters" id="parametersRegion" class="">
+                            <p data-group="parameters" id="parametersRegion" class="hide">
                             </p>
                         </li>
                         <li>
@@ -410,6 +421,7 @@
         <script src="scripts/vendor/leaflet.markercluster-src.js"></script>
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
+
         <!-- Legend kind of possible with Wax -->
         <script src="scripts/vendor/wax.leaf.min.js"></script>
 
@@ -519,7 +531,7 @@
         <script src="scripts/lizard.layerbubble.js"></script>
 
         <!-- Application code, split into files -->
-        <script src="scripts/mapping.js"></script>
+        <script src="scripts/utilities.js"></script>
         <script src="localsettings.js"></script>
         <script src="scripts/lizard.js"></script>
         <script src="scripts/lizard.home.js"></script>

@@ -6,7 +6,9 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'mainRegion': '#mainRegion',
-    'parametersRegion': 'p#parametersRegion'
+    'parametersRegion': 'p#parametersRegion',
+    'filtersRegion': 'p#filtersRegion',
+    'locationsRegion': 'p#locationsRegion'
   }
 });
 
@@ -101,8 +103,43 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
 
 
 
+var FilterView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('FilterView.initialize()');
+  },
+  tagName: 'li',
+  template: '#filterview-template'
+});
 
+var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
+  collection: new FilterCollection(),
+  tagName: 'ul',
+  
+  itemView: FilterView,
+  initialize: function(){
+      this.collection.fetch();
+      this.bindTo(this.collection, 'reset', this.render, this);
+  }
+});
 
+var LocationView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('LocationView.initialize()');
+  },
+  tagName: 'li',
+  template: '#locationview-template'
+});
+
+var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
+  collection: new LocationCollection(),
+  tagName: 'ul',
+  
+  itemView: LocationView,
+  initialize: function(){
+      this.collection.fetch();
+      this.bindTo(this.collection, 'reset', this.render, this);
+  }
+});
 
 
 
@@ -115,15 +152,16 @@ var ParameterView = Backbone.Marionette.ItemView.extend({
 });
 
 var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-      collection: new ParameterCollection(),
-      tagName: 'ul',
-      
-      itemView: ParameterView,
-      initialize: function(){
-          this.collection.fetch();
-          this.bindTo(this.collection, 'reset', this.render, this);
-      }
-  });
+  collection: new ParameterCollection(),
+  tagName: 'ul',
+  
+  itemView: ParameterView,
+  initialize: function(){
+      this.collection.fetch();
+      this.bindTo(this.collection, 'reset', this.render, this);
+  }
+});
+
 
 
 
@@ -141,19 +179,16 @@ Lizard.Graphs.graphs = function(){
   Lizard.content.show(graphsView);
 
 
-  var tree = new TreeNodeCollection(filterTreeData);
-  var treeView = new TreeRoot({
-      collection: tree
-  });
+  var filtercollectionview = new FilterCollectionView();
+  graphsView.filtersRegion.show(filtercollectionview.render());
 
-  treeView.on('render', function() {
-    console.log('Rendering tree in graphs view..');
-    $('.jsTree').jstree('open_all');
-  });
+  var locationcollectionview = new LocationCollectionView();
+  graphsView.locationsRegion.show(locationcollectionview.render());
 
-  // graphsView.sidebarRegion.show(treeView);
   var parametercollectionview = new ParameterCollectionView();
   graphsView.parametersRegion.show(parametercollectionview.render());
+
+
 
 
   // var testView = new Lizard.Graphs.TestView();

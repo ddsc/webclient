@@ -205,17 +205,6 @@ Lizard.Map.map = function(){
   var leafletView = new Lizard.Map.LeafletView();
 
 
-  var tree = new TreeNodeCollection(filterTreeData);
-  var treeView = new TreeRoot({
-      collection: tree
-  });
-  treeView.on('render', function() {
-    console.log("Rendering tree in mapview..");
-    $('.jsTree').jstree('open_all');
-  });
-  // mapView.sidebarRegion.show(treeView);
-
-
 
   // And show them in their divs
   // mapView.sidebarRegion.show(iconsView.render());
