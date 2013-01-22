@@ -169,12 +169,11 @@ Lizard.Graphs.graphs = function(){
   });
 
   // graphsView.sidebarRegion.show(treeView);
-  //var parametercollectionview = new ParameterCollectionView();
-  //graphsView.parametersRegion.show(parametercollectionview.render());
-
-  var locationcollectionview = new LocationCollectionView();
-  graphsView.parametersRegion.show(locationcollectionview.render());
-
+  var locationscollectionview = new LocationsCollectionView();
+  graphsView.parametersRegion.show(locationscollectionview.render());
+  var parametercollectionview = new ParameterCollectionView();
+  graphsView.parametersRegion.show(parametercollectionview.render());
+  
   // var testView = new Lizard.Graphs.TestView();
   // graphsView.mainRegion.show(testView.render());
 
