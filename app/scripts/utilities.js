@@ -9,7 +9,6 @@ if(typeof(console) === 'undefined') {
 $('li#filters a em').live("click", function(e){ 
   e.preventDefault();
   var el = $(this).parent().next();
-  console.log(el);
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
