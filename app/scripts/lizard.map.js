@@ -57,6 +57,17 @@ var layer4 = new Layer({
 var Layers = Backbone.Collection.extend();
 var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
 
+var WorkspaceDocument = Backbone.Model.extend({
+  initialize: function() {
+    console.log('WorkspaceDocumentModel initializing');
+  }
+});
+
+var WorkspaceDocuments = Backbone.Collection.extend();
+var Workspace = new WorkspaceDocuments();
+function addtoWorkspace(w) {
+  WorkspaceDocuments.add(w);      
+};
 
 
 Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
@@ -151,6 +162,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         });
         // tell the marker what to do when hovering
         marker.on('mouseover', updateInfo);
+        marker.on('mouseclick', selectforWorkspace);
         markers.addLayer(marker);
       }
     });
@@ -164,7 +176,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         var marker = e.target;
         info.update(marker.valueOf().options);
     };
-
+    
     //add custom control, to show information on hover
     // taken from http://leafletjs.com/examples/choropleth.html
     info = L.control();
@@ -185,10 +197,17 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(map);
 
 
+    function selectforWorkspace(e) {
+        var marker = e.target;
+        workspace.add(marker.valueOf().options);
+    };
+
+
     $('#map').css('height', $(window).height()-100);
   },
   template: '#leaflet-template'
 });
+
 
 
 
