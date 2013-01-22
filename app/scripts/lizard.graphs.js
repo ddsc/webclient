@@ -62,7 +62,7 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
         .stop();
 
     d3.select('#demo').selectAll('.axis')
-        .data(['bottom'])
+        .data(['top', 'bottom'])
       .enter().append('div')
         .attr('class', function(d) { return d + ' axis'; })
         .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
@@ -164,7 +164,24 @@ var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 
+var LocationView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('LocationView.initialize()');
+  },
+  tagName: 'li',
+  template: '#parameterview-template'
+});
 
+var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
+    collection: new LocationCollection(),
+      tagName: 'ul',
+      
+      itemView: LocationView,
+      initialize: function(){
+          this.collection.fetch();
+          this.bindTo(this.collection, 'reset', this.render, this);
+      }
+  });
 
 
 
@@ -187,8 +204,6 @@ Lizard.Graphs.graphs = function(){
 
   var parametercollectionview = new ParameterCollectionView();
   graphsView.parametersRegion.show(parametercollectionview.render());
-
-
 
 
   // var testView = new Lizard.Graphs.TestView();

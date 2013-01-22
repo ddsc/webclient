@@ -243,9 +243,13 @@
         </script>
 
         <script id="parameterview-template" type="text/template">
+<<<<<<< HEAD
             <label class="checkbox">
             <input type="checkbox"> <%= parameter %>
             </label>                
+=======
+            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= name %> <i class=""></i></a>
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
         </script>
 
         <script type="text/template" id="graphs-template">
@@ -259,11 +263,20 @@
                         </li>
                         <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
+<<<<<<< HEAD
                             <p data-group="locations" id="locationsRegion" class="hide"></p>
+=======
+                            <p data-group="locations" id="parametersRegion" class=""></p>
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                         </li>
                         <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
+<<<<<<< HEAD
                             <p data-group="parameters" id="parametersRegion" class="hide">
+=======
+                            
+                            <p data-group="parameters" id="" class="">
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                             </p>
                         </li>
                         <li>
@@ -421,10 +434,6 @@
         <script src="scripts/vendor/leaflet.markercluster-src.js"></script>
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
-
-        <!-- Legend kind of possible with Wax -->
-        <script src="scripts/vendor/wax.leaf.min.js"></script>
-
 
         <!-- The most versatile graph library around -->
             <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
