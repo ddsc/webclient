@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html lang="en" class="fuelux">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -20,10 +20,12 @@
         <link href="styles/ui-darkness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
         <link href="styles/bootstrap.css" rel="stylesheet">
         <link href="styles/bootstrap-notify.css" rel="stylesheet">
+
         <link href="styles/fontawesome/css/font-awesome.min.css" rel="stylesheet">
         <!--[if IE7]>
         <link href="styles/fontawesome/css/font-awesome-ie7.min.css" rel="stylesheet">
         <![endif]-->
+
         <link href="styles/alert-blackgloss.css" rel="stylesheet">
         <link href="styles/jquery.gridster.css" rel="stylesheet">
         <style>
@@ -33,6 +35,7 @@
         </style>
 
         <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+        <link href="styles/fuelux-responsive.css" rel="stylesheet">
         <link rel="stylesheet" href="styles/leaflet.css" />
         <!--[if lte IE 8]>
           <link rel="stylesheet" href="styles/leaflet.ie.css" />
@@ -62,7 +65,7 @@
              <div class="span1 search-or-divider"><p>&nbsp;&nbsp;...of</p></div>
              <div class="span5">
                 <button type="button" class="btn">
-                    Zoek geavanaceerd
+                    Zoek geavanceerd
                 </button>
                 <button type="button" class="btn">
                     Data catalogus
@@ -227,9 +230,26 @@
             <div id="demo"></div>
         </script>
 
+        <script id="filterview-template" type="text/template">
+            <label class="checkbox">
+            <input type="checkbox"> <%= filtername %>
+            </label>
+        </script>
+
+        <script id="locationview-template" type="text/template">
+            <label class="checkbox">
+            <input type="checkbox"> <%= name %>
+            </label>        
+        </script>
 
         <script id="parameterview-template" type="text/template">
-            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= parameter %> <i class=""></i></a>
+<<<<<<< HEAD
+            <label class="checkbox">
+            <input type="checkbox"> <%= parameter %>
+            </label>                
+=======
+            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= name %> <i class=""></i></a>
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
         </script>
 
         <script type="text/template" id="graphs-template">
@@ -237,19 +257,26 @@
             <div class="span3" id="sidebarRegion">
 
                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-
-                        <li class="metrics-dropdown">
-                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Filters</a>
-                            <p data-group="filters" class="hide"></p>
+                        <li class="metrics-dropdown" id="filters">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
+                            <p data-group="filters" id="filtersRegion" class="hide"></p>
                         </li>
-                        <li class="metrics-dropdown">
+                        <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
+<<<<<<< HEAD
+                            <p data-group="locations" id="locationsRegion" class="hide"></p>
+=======
                             <p data-group="locations" id="parametersRegion" class=""></p>
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                         </li>
-                        <li class="metrics-dropdown">
+                        <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
+<<<<<<< HEAD
+                            <p data-group="parameters" id="parametersRegion" class="hide">
+=======
                             
-                            <p data-group="parameters" id="parametersRegion" class="">
+                            <p data-group="parameters" id="" class="">
+>>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                             </p>
                         </li>
                         <li>
@@ -345,7 +372,7 @@
                             
                             <form class="navbar-form pull-right">
                             <label for="searchbox" class="hide">Zoeken</label>
-                            <input id="searchbox" class="input span3 transition ui-autocomplete-input" type="text" placeholder="Search" autocomplete="off">
+                            <input id="searchbox" class="input-large" style="height:30px;" type="text" placeholder="Zoeken" autocomplete="off">
                             </form>
                             
                             <li class="dropdown">
@@ -366,7 +393,6 @@
                 </div>
             </div>
         </div>
-
       </div>
     
       
@@ -375,6 +401,7 @@
         <div id="content">
         </div>
         <div class="row-fluid footer">
+            <span class="warning">VIEWING IN <p class="visible-desktop">DESKTOP MODE</p><p class="visible-tablet">TABLET MODE</p><p class="visible-phone">PHONE MODE</p></span>
             <span class="pull-right">&copy; 2012-2013 Stichting IJkdijk en partners</span>
         </div>
       </div>
@@ -479,6 +506,8 @@
         <!-- Grid/dashboard library by Ducksboard.com -->
         <script src="scripts/vendor/jquery.gridster.js"></script>        
 
+        <!-- Viewport management, from https://github.com/pazguille/viewport -->
+        <script src="scripts/vendor/viewport.js"></script>        
 
 
         <!-- Backbone -->
@@ -503,13 +532,15 @@
 
         <!-- Twitter Bootstrap base javascript -->
         <script src="scripts/vendor/bootstrap.js"></script>
+        <!-- <script src="scripts/vendor/fuelux/loader.js"></script> -->
+        
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
 
         <script src="scripts/lizard.layerbubble.js"></script>
 
         <!-- Application code, split into files -->
-        <script src="scripts/mapping.js"></script>
+        <script src="scripts/utilities.js"></script>
         <script src="localsettings.js"></script>
         <script src="scripts/lizard.js"></script>
         <script src="scripts/lizard.home.js"></script>
@@ -523,10 +554,6 @@
         <script type="text/javascript">
         $(document).ready(function() {
           Lizard.start();
-        });
-
-        $(window).resize(function() {
-            $('#map').css('height', $(window).height()-100);
         });
         </script>
         

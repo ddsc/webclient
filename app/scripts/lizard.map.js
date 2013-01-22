@@ -152,12 +152,11 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     d3.csv('data/4pp.csv', function(postcodes) {
       for (var i = postcodes.length - 1; i >= 0; i--) {
         var pc = postcodes[i];
-        console.log(pc);
         var title = pc.Woonplaats;
         
         var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), {
             clickable:true,
-            title: title, 
+            title: title,
             provincie:pc.Provincie
         });
         // tell the marker what to do when hovering
@@ -169,13 +168,13 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 
     map.addLayer(markers);
 
-    // Event listener for updating the information in the 
+    // Event listener for updating the information in the
     // upper right corner.
     // only works for L.Marker objects
     function updateInfo(e) {
         var marker = e.target;
         info.update(marker.valueOf().options);
-    };
+    }
     
     //add custom control, to show information on hover
     // taken from http://leafletjs.com/examples/choropleth.html
@@ -191,7 +190,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         this._div.innerHTML = '<h4>Postcode</h4>' + (props ?
                 '<b>' + props.title + '</b><br>' +
                 'Provincie: ' + props.provincie
-                : 'Zweef over de punten');    
+                : 'Zweef over de punten');
     };
     
     info.addTo(map);
@@ -223,17 +222,6 @@ Lizard.Map.map = function(){
 
   var layersView = new LayersCollectionView();
   var leafletView = new Lizard.Map.LeafletView();
-
-
-  var tree = new TreeNodeCollection(filterTreeData);
-  var treeView = new TreeRoot({
-      collection: tree
-  });
-  treeView.on('render', function() {
-    console.log("Rendering tree in mapview..");
-    $('.jsTree').jstree('open_all');
-  });
-  // mapView.sidebarRegion.show(treeView);
 
 
 

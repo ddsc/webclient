@@ -25,9 +25,26 @@ Run the following commands to install yeoman. We prefer to install it in a [Vagr
 Start the webserver after the installation:
 
     cd webclient
-    yeoman server (optional, you can also serve with $ python -m SimpleHTTPServer or nginx etc)
+    yeoman server
 
 And point a browser to localhost 3051.
+The 'yeoman server' step is optional, you can also serve it with nginx, apache or just: 
+    
+    $ python -m SimpleHTTPServer
+
+
+### Mock API
+
+Because of parallel front-end and back-end development, at some point we're in need of a fake/mock/stub API, so we can create a responsive interface.
+This API was hacked together using node.js/PostGIS and lives here: https://github.com/ddsc/ddsc-node-mock-api
+
+ * Clone that repo somewhere you like
+ * Install node.js and npm (you probably have those already, see above)
+ * Install PostGIS (ask around if you don't know where to start), load the file dumpddsc.sql
+ * Run 'npm install -d' to install the packages required such as Express.js and the non-blocking node-postgres library
+ * Run 'node app.js' to run the API on port 3000
+ * Make sure to reference the proper IP and port in app/localsettings.js (this is just during development)
+ * Enjoy
 
 
 ## Technology choices
