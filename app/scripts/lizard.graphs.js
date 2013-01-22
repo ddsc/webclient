@@ -163,38 +163,12 @@ var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
-
-var LocationView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('LocationView.initialize()');
-  },
-  tagName: 'li',
-  template: '#parameterview-template'
-});
-
-var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-    collection: new LocationCollection(),
-      tagName: 'ul',
-      
-      itemView: LocationView,
-      initialize: function(){
-          this.collection.fetch();
-          this.bindTo(this.collection, 'reset', this.render, this);
-      }
-  });
-
-
-
-
-
-
 Lizard.Graphs.graphs = function(){
   console.log('Lizard.Graphs.graphs()');
 
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
   Lizard.content.show(graphsView);
-
 
   var filtercollectionview = new FilterCollectionView();
   graphsView.filtersRegion.show(filtercollectionview.render());
@@ -206,14 +180,8 @@ Lizard.Graphs.graphs = function(){
   graphsView.parametersRegion.show(parametercollectionview.render());
 
 
-  // var testView = new Lizard.Graphs.TestView();
-  // graphsView.mainRegion.show(testView.render());
-
-
   var timeserieView = new Lizard.Graphs.TimeserieView();
   graphsView.mainRegion.show(timeserieView.render());
-  
-  
 
   Backbone.history.navigate('graphs');
 };
