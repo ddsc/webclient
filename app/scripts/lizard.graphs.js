@@ -62,7 +62,7 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
         .stop();
 
     d3.select('#demo').selectAll('.axis')
-        .data(['top', 'bottom'])
+        .data(['bottom'])
       .enter().append('div')
         .attr('class', function(d) { return d + ' axis'; })
         .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
@@ -104,11 +104,23 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
 
 
 var FilterView = Backbone.Marionette.ItemView.extend({
+  _modelBinder: undefined,
   initialize: function(){
     console.log('FilterView.initialize()');
+    this._modelBinder = new Backbone.ModelBinder();
+  },
+  onRender: function() {
+    console.log('filterview rendering!! ');
+    this._modelBinder.bind(this.model, this.el);
   },
   tagName: 'li',
-  template: '#filterview-template'
+  template: '#filterview-template',
+  events: {
+    'click input': 'toggle'
+  },
+  toggle: function() {
+    console.log('toggling!!!!!!!!!!!');
+  }
 });
 
 var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
