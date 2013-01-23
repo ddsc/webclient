@@ -6,7 +6,7 @@ if(typeof(console) === 'undefined') {
 
 
 // Click handlers for toggling the filter/location/parameter UI
-$('li#filters a em').live("click", function(e){ 
+$('li#filters a em').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {
@@ -15,7 +15,7 @@ $('li#filters a em').live("click", function(e){
     el.removeClass('hide');
   }
 });
-$('li#locations a em').live("click", function(e){ 
+$('li#locations a em').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {
@@ -24,7 +24,7 @@ $('li#locations a em').live("click", function(e){
     el.removeClass('hide');
   }
 });
-$('li#parameters a em').live("click", function(e){ 
+$('li#parameters a em').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {

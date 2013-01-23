@@ -19,36 +19,6 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 
-
-var personModel = new Backbone.Model();
-personModel.set({
-  firstName: 'John',
-  lastName: 'Doe',
-  city: 'Utrecht',
-  street: 'Neude'
-});
-personModel.bind('change', function() {
-  $('#summary blockquote code').html(JSON.stringify(personModel.toJSON(), null, 4));
-});
-
-Lizard.Graphs.TestView = Backbone.Marionette.ItemView.extend({
-  _modelBinder: undefined,
-  template: '#testview-template',
-  initialize: function(){
-    console.log('TestView.initialize()');
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  close: function() {
-    this._modelBinder.unbind();
-  },
-  onShow: function() {
-    this._modelBinder.bind(personModel, this.el);
-  }
-});
-
-
-
-
 Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
   template: '#timeserieview-template',
   initialize: function(){
@@ -81,7 +51,7 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
     context.on('focus', function(i) {
       // d3.selectAll('.value').style('right', i == null ? null : context.size() - i*2 + 'px'); // commented because it's hard to get the value-slider to work in a responsive site..
     });
-    // Replace this with context.graphite and graphite.metric!
+    
     function stock(name) {
       var format = d3.time.format('%d-%b-%y');
       return context.metric(function(start, stop, step, callback) {
@@ -101,80 +71,6 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
 
 
 
-
-
-var FilterView = Backbone.Marionette.ItemView.extend({
-  _modelBinder: undefined,
-  initialize: function(){
-    console.log('FilterView.initialize()');
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  onRender: function() {
-    console.log('filterview rendering!! ');
-    this._modelBinder.bind(this.model, this.el);
-  },
-  tagName: 'li',
-  template: '#filterview-template',
-  events: {
-    'click input': 'toggle'
-  },
-  toggle: function() {
-    console.log('toggling!!!!!!!!!!!');
-  }
-});
-
-var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new FilterCollection(),
-  tagName: 'ul',
-  
-  itemView: FilterView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-var LocationView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('LocationView.initialize()');
-  },
-  tagName: 'li',
-  template: '#locationview-template'
-});
-
-var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new LocationCollection(),
-  tagName: 'ul',
-  
-  itemView: LocationView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-
-
-var ParameterView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('ParameterView.initialize()');
-  },
-  tagName: 'li',
-  template: '#parameterview-template'
-});
-
-var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new ParameterCollection(),
-  tagName: 'ul',
-  
-  itemView: ParameterView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-
 Lizard.Graphs.graphs = function(){
   console.log('Lizard.Graphs.graphs()');
 
@@ -182,19 +78,17 @@ Lizard.Graphs.graphs = function(){
   var graphsView = new Lizard.Graphs.DefaultLayout();
   Lizard.content.show(graphsView);
 
-  var filtercollectionview = new FilterCollectionView();
+
+
+
   graphsView.filtersRegion.show(filtercollectionview.render());
-
-  var locationcollectionview = new LocationCollectionView();
   graphsView.locationsRegion.show(locationcollectionview.render());
-
-  var parametercollectionview = new ParameterCollectionView();
   graphsView.parametersRegion.show(parametercollectionview.render());
-
 
   var timeserieView = new Lizard.Graphs.TimeserieView();
   graphsView.mainRegion.show(timeserieView.render());
 
+  // And set URL to #graphs
   Backbone.history.navigate('graphs');
 };
 

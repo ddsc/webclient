@@ -59,7 +59,7 @@
           <div class="row-fluid" id="home-search-wrapper">
              <div class="span6">
                 <form class="form-search">
-                  <input type="text" class="input-medium search-query" placeholder="Doorzoek het DDSC">
+                  <input type="text" class="input-medium search-query" autocomplete="off" placeholder="Doorzoek het DDSC" x-webkit-speech="">
                 </form>
              </div>
              <div class="span1 search-or-divider"><p>&nbsp;&nbsp;...of</p></div>
@@ -232,24 +232,20 @@
 
         <script id="filterview-template" type="text/template">
             <label class="checkbox">
-            <input type="checkbox"> <%= filtername %>
+                <input type="checkbox" <%if(selected){%>CHECKED<%}%>> <%= filtername %> <span class="state hide"><%= selected %></span>
             </label>
         </script>
 
         <script id="locationview-template" type="text/template">
             <label class="checkbox">
-            <input type="checkbox"> <%= name %>
+                <input type="checkbox"> <%= name %>
             </label>        
         </script>
 
         <script id="parameterview-template" type="text/template">
-<<<<<<< HEAD
             <label class="checkbox">
-            <input type="checkbox"> <%= parameter %>
+                <input type="checkbox"> <%= parameter %>
             </label>                
-=======
-            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= name %> <i class=""></i></a>
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
         </script>
 
         <script type="text/template" id="graphs-template">
@@ -259,25 +255,15 @@
                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                         <li class="metrics-dropdown" id="filters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
-                            <p data-group="filters" id="filtersRegion" class="hide"></p>
+                            <p data-group="filters" id="filtersRegion" class="-hide"></p>
                         </li>
                         <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
-<<<<<<< HEAD
                             <p data-group="locations" id="locationsRegion" class="hide"></p>
-=======
-                            <p data-group="locations" id="parametersRegion" class=""></p>
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                         </li>
                         <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
-<<<<<<< HEAD
-                            <p data-group="parameters" id="parametersRegion" class="hide">
-=======
-                            
-                            <p data-group="parameters" id="" class="">
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
-                            </p>
+                            <p data-group="parameters" id="parametersRegion" class="hide"></p>
                         </li>
                         <li>
                             <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
@@ -511,7 +497,7 @@
 
 
         <!-- Backbone -->
-        <script src="scripts/vendor/backbone.js"></script>
+        <script src="scripts/vendor/backbone-0.9.10.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
         <script src="scripts/vendor/backbone.marionette.js"></script>
