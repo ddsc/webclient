@@ -4,7 +4,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
   regions: {
     'sidebarRegion': '#sidebarRegion',
-    'leafletRegion': '#leafletRegion'
+    'leafletRegion': '#leafletRegion',
+    'workspaceRegion': '#workspaceRegion'
   }
 });
 
@@ -57,18 +58,44 @@ var layer4 = new Layer({
 var Layers = Backbone.Collection.extend();
 var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
 
-var WorkspaceDocument = Backbone.Model.extend({
+var WorkspaceItem = Backbone.Model.extend({
   initialize: function() {
-    console.log('WorkspaceDocumentModel initializing');
   }
 });
 
-var WorkspaceDocuments = Backbone.Collection.extend();
-var Workspace = new WorkspaceDocuments();
+var WorkspaceItems = Backbone.Collection.extend();
+var Workspace = new WorkspaceItems();
 function addtoWorkspace(w) {
-  WorkspaceDocuments.add(w);      
+  Workspace.add(w);
+  console.log(w.attributes.title + ' added to Workspace');
 };
 
+WorkspaceItemView = Backbone.Marionette.ItemView.extend({
+  template: '#workspaceitem-template',
+  tagName: 'li',
+  className: 'drawer-item workspace-item',
+  model: WorkspaceItem,
+  events: {
+    "click .remove" : "removeItem",
+    "click .toggle" : "toggleItem",
+  },
+  removeItem: function() {
+    this.model.destroy();
+  },
+  toggleItem: function() {
+    console.log(this.model.attributes.title);
+  }
+})
+;
+WorkspaceView = Backbone.Marionette.CollectionView.extend({
+  collection: Workspace,
+  itemView: WorkspaceItemView,
+  tagName:'ol',
+  className: 'ui-sortable workspace-group drawer-group',
+  initialize: function() {
+    
+  },
+});
 
 Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
@@ -161,12 +188,14 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         });
         // tell the marker what to do when hovering
         marker.on('mouseover', updateInfo);
-        marker.on('mouseclick', selectforWorkspace);
+        marker.on('click', selectforWorkspace);
         markers.addLayer(marker);
       }
     });
 
-    map.addLayer(markers);
+    // map.addLayer(markers);
+
+    
 
     // Event listener for updating the information in the
     // upper right corner.
@@ -198,7 +227,13 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 
     function selectforWorkspace(e) {
         var marker = e.target;
-        workspace.add(marker.valueOf().options);
+        var properties = marker.valueOf().options;
+        var wsitem = new WorkspaceItem({
+            title: properties.title,
+            layerName: properties.title,
+            layerType: properties.title
+        });
+        addtoWorkspace(wsitem);
     };
 
 
@@ -206,8 +241,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   },
   template: '#leaflet-template'
 });
-
-
 
 
 Lizard.Map.map = function(){
@@ -222,12 +255,12 @@ Lizard.Map.map = function(){
 
   var layersView = new LayersCollectionView();
   var leafletView = new Lizard.Map.LeafletView();
-
+  var workspaceView = new WorkspaceView();
 
 
   // And show them in their divs
-  // mapView.sidebarRegion.show(iconsView.render());
   mapView.sidebarRegion.show(layersView.render());
+  mapView.workspaceRegion.show(workspaceView.render());
   mapView.leafletRegion.show(leafletView.render());
 
   $('.drawer-item').popover({

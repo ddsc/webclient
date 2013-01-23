@@ -164,25 +164,6 @@ var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 
-var LocationView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('LocationView.initialize()');
-  },
-  tagName: 'li',
-  template: '#parameterview-template'
-});
-
-var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-    collection: new LocationCollection(),
-      tagName: 'ul',
-      
-      itemView: LocationView,
-      initialize: function(){
-          this.collection.fetch();
-          this.bindTo(this.collection, 'reset', this.render, this);
-      }
-  });
-
 
 
 

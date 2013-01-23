@@ -97,14 +97,17 @@ ol.drawer-group li.active{
     background: -webkit-linear-gradient(top,#e7e7e7 0%,#e7e7e7 0%,#dbdbdb 100%);
 }
 
-ol.drawer-group span.handle {
-    position: absolute;
+ol.drawer-group span.handle{
     cursor: pointer;
-    left: 0px;
-    top: 0px;
-    background: url(../images/layer-handle.png) no-repeat center center;
     cursor: url(http://maps.gstatic.com/intl/en_us/mapfiles/openhand_8_8.cur) 10 10,move;
-    width: 11px;
+}
+
+ol.drawer-group span.action {
+    position: absolute;
+    left: 0px;
+    top: 35%;
+    /*background: url(../images/layer-handle.png) no-repeat center center;*/
+    width: 14px;
     height: 28px;
     border-right: 1px solid #fff;
 }

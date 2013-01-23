@@ -145,7 +145,10 @@
         <script type="text/template" id="map-template">
           <div class="row-fluid">
 
-            <div class="span3" id="sidebarRegion"></div>
+            <div class="span3" id="sidebar">
+                <div class="" id="sidebarRegion"></div>
+                <div class="" id="workspaceRegion"></div>
+            </div>
 
             <div class="span9" id="leafletRegion"></div>
 
@@ -173,10 +176,22 @@
 
 
         <script type="text/template" id="layeritem-template">
-            <span class="handle"></span>
+            <span class="action handle">
+                <i class="icon-move"></i>
+            </span>
             <span class="content"><%= layerName %> (<%= layerType %>)</span>
             <span class="indicator">
                 <i class="icon-eye-open"></i>
+            </span>
+        </script>
+
+        <script type="text/template" id="workspaceitem-template">
+            <span class="action remove">
+                <i class="icon-remove"></i>
+            </span>
+            <span class="content"><%= title %></span>
+            <span class="indicator toggle">
+                <i class="icon-ok"></i>
             </span>
         </script>
 
@@ -243,13 +258,9 @@
         </script>
 
         <script id="parameterview-template" type="text/template">
-<<<<<<< HEAD
             <label class="checkbox">
             <input type="checkbox"> <%= parameter %>
             </label>                
-=======
-            <a href="javascript:void(0)" class="measure-link" data-measure="p1"><%= name %> <i class=""></i></a>
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
         </script>
 
         <script type="text/template" id="graphs-template">
@@ -263,20 +274,11 @@
                         </li>
                         <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
-<<<<<<< HEAD
                             <p data-group="locations" id="locationsRegion" class="hide"></p>
-=======
-                            <p data-group="locations" id="parametersRegion" class=""></p>
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                         </li>
                         <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
-<<<<<<< HEAD
                             <p data-group="parameters" id="parametersRegion" class="hide">
-=======
-                            
-                            <p data-group="parameters" id="" class="">
->>>>>>> b7aff1d7eb44e7553a8306650028c3f8c6f86846
                             </p>
                         </li>
                         <li>
