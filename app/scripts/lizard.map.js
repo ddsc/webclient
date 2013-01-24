@@ -215,7 +215,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       }
     });
 
-    this.mapCanvas.addLayer(markers);
+//    this.mapCanvas.addLayer(markers);
 
 
 
@@ -264,7 +264,12 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template'
 });
 
-Lizard.Map.mapCanvas = new Lizard.Map.LeafletView();
+// Instantiate the Leaflet Marionnette View. 
+// This way you can talk with Leaflet after
+// initializing the map. 
+// To talk with the Leaflet instance talk to -->
+// Lizard.Map.Leaflet.mapCanvas
+Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
 Lizard.Map.map = function(){
   console.log('Lizard.Map.map()');
@@ -277,14 +282,13 @@ Lizard.Map.map = function(){
 
 
   var layersView = new LayersCollectionView();
-  var leafletView = Lizard.Map.mapCanvas;
   var workspaceView = new WorkspaceView();
 
 
   // And show them in their divs
   mapView.sidebarRegion.show(layersView.render());
   mapView.workspaceRegion.show(workspaceView.render());
-  mapView.leafletRegion.show(leafletView.render());
+  mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
 
   $('.drawer-item').popover({
     html: true,
