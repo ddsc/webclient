@@ -157,18 +157,40 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
+var LMarkerView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('LocationView.initialize()');
+  },
+});
+
+
+
+
+
+var LMarkerCollectionView = Backbone.Marionette.CollectionView.extend({
+  collection: new LocationCollection(),
+  itemView: LMarkerView,
+  initialize: function(){
+      this.collection.fetch();
+  }
+});
+
 
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
+  bounds: new L.LatLngBounds(
+              new L.LatLng(53.74, 3.2849), 
+              new L.LatLng(50.9584, 7.5147)
+          ),
+  cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attributesrbution: 'Map data &copy;' }),
+  mapCanvas: null,
   initialize: function(){
-    console.log('LeafletView.initialize()');
+    console.log('LeafletView.initialize()' + this.bounds );
   },
   onDomRefresh: function() {
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     console.log('onDomRefresh()');
 
-    var bounds = new L.LatLngBounds(new L.LatLng(53.74, 3.2849), new L.LatLng(50.9584, 7.5147));
-    var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' });
-    var map = L.map('map', { layers: [cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: bounds});
+    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
     
     var markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
@@ -193,9 +215,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       }
     });
 
-    // map.addLayer(markers);
+    this.mapCanvas.addLayer(markers);
 
-    
+
 
     // Event listener for updating the information in the
     // upper right corner.
@@ -222,7 +244,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
                 : 'Zweef over de punten');
     };
     
-    info.addTo(map);
+    info.addTo(this.mapCanvas);
 
 
     function selectforWorkspace(e) {
@@ -242,6 +264,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template'
 });
 
+Lizard.Map.mapCanvas = new Lizard.Map.LeafletView();
 
 Lizard.Map.map = function(){
   console.log('Lizard.Map.map()');
@@ -254,7 +277,7 @@ Lizard.Map.map = function(){
 
 
   var layersView = new LayersCollectionView();
-  var leafletView = new Lizard.Map.LeafletView();
+  var leafletView = Lizard.Map.mapCanvas;
   var workspaceView = new WorkspaceView();
 
 
