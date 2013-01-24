@@ -1,1 +1,5 @@
 localsettings.js
+.DS_Store
+.jshintrc
+.gitattributes
+.editorconfig
