@@ -176,6 +176,10 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 
 //   markers.addTo(Lizard.Map.Leaflet.mapCanvas);
 
+Lizard.Map.LocationItemView = Backbone.Marionette.ItemView.extend({
+  model: LocationModel,
+});
+
 
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   collection: new LocationCollection(),
@@ -183,33 +187,42 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
               new L.LatLng(53.74, 3.2849), 
               new L.LatLng(50.9584, 7.5147)
           ),
+  //itemView: Lizard.Map.LocationItemView,
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
+  markers: null,
   initialize: function(){
-    console.log('LeafletView.initialize()');
-    this.collection.fetch({succes: this.whatis});
+    console.log('LeafletView.initialize()');    
   },
-  whatis: function(succes){console.log('aj')},
   onDomRefresh: function() {
     // Best moment to initialize Leaflet and other DOM-dependent stuff
-    console.log('onDomRefresh()');
-
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
-    
-
-    d3.csv('data/4pp.csv', function(postcodes) {
-      for (var i = postcodes.length - 1; i >= 0; i--) {
-        var pc = postcodes[i];
-        var title = pc.Woonplaats;
-        
-        var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), {
-            clickable:true,
-            title: title,
-            provincie:pc.Provincie
-        });
-        // tell the marker what to do when hovering
-      }
+    this.markers = new L.MarkerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      maxClusterRadius: 200
     });
+    this.collection.fetch({async: false, success: _.bind(this.drawonMap, this)});
+  },
+  drawonMap: function(collection, objects){
+    var models = collection.models;
+    for (var i in models){
+      var model = models[i];
+      model.fetch({async: false});
+      var attributes = model.attributes;
+      console.log(attributes);
+      var point = attributes.point_geometry;
+      var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
+        clickable: true,
+        name: attributes.name,
+        cid: model.cid,
+        code: attributes.code
+      });
+      marker.on('mouseover', updateInfo);
+      marker.on('click', selectforWorkspace)
+      this.markers.addLayer(marker);
+    };
+    this.mapCanvas.addLayer(this.markers);
 
     // Event listener for updating the information in the
     // upper right corner.
@@ -231,8 +244,8 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 
     info.update = function (props) {
         this._div.innerHTML = '<h4>Postcode</h4>' + (props ?
-                '<b>' + props.title + '</b><br>' +
-                'Provincie: ' + props.provincie
+                '<b>' + props.name + '</b><br>' +
+                'Punt: ' + props.code
                 : 'Zweef over de punten');
     };
     
@@ -243,9 +256,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         var marker = e.target;
         var properties = marker.valueOf().options;
         var wsitem = new WorkspaceItem({
-            title: properties.title,
-            layerName: properties.title,
-            layerType: properties.title
+            title: properties.name,
+            cid: properties.cid,
+            code: properties.code
         });
         addtoWorkspace(wsitem);
     };

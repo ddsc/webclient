@@ -13,9 +13,11 @@ var FilterModel = Backbone.Model.extend({
 });
 
 var LocationModel = Backbone.Model.extend({
-  initialize: function() {
+  initialize: function(model) {
     console.log('LocationModel initializing');
-  }
+    this.url = model.url;
+    this.fetch();
+  },
 });
 
 var ParameterModel = Backbone.Model.extend({
@@ -37,7 +39,10 @@ var LocationCollection = Backbone.Collection.extend({
     console.log('LocationCollection initializing');
   },
   url: local_settings.locations_url,
-  model: LocationModel
+  model: LocationModel,
+  parse: function(res, xhr) {
+    return res.results;
+  }
 });
 
 var ParameterCollection = Backbone.Collection.extend({
