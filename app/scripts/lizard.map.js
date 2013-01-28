@@ -157,37 +157,18 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-
-// var markers = new L.MarkerClusterGroup({
-//       spiderfyOnMaxZoom: true,
-//       showCoverageOnHover: false,
-//       maxClusterRadius: 200
-//     });
-// function addtoMap(model) {
-//         var geoJson = JSON.parse(model.attributes.location_geojson);
-//         console.log(geoJson)
-//         marker = new L.geoJson(geoJson);
-//         marker.on('mouseover', Lizard.Map.Leaflet.updateInfo);
-//         marker.on('click', Lizard.Map.Leaflet.selectforWorkspace);
-//         markers.addLayer(marker);
-//  };
-// collection.fetch({succes: function(data){console.log}});
-// collection.each(addtoMap);
-
-//   markers.addTo(Lizard.Map.Leaflet.mapCanvas);
-
-Lizard.Map.LocationItemView = Backbone.Marionette.ItemView.extend({
-  model: LocationModel,
-});
-
-
+// It is highly debatable if this should be Marionnette Itemview.
+// The functionality now allows:
+// * Location models are loaded and added to a Leaflet map. 
+// * The infobox is update on "hover"
+// * The items and their cid's (a Backbone identifier) are added to
+// a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   collection: new LocationCollection(),
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849), 
               new L.LatLng(50.9584, 7.5147)
           ),
-  //itemView: Lizard.Map.LocationItemView,
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
   markers: null,
@@ -202,15 +183,18 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       showCoverageOnHover: false,
       maxClusterRadius: 200
     });
-    this.collection.fetch({async: false, success: _.bind(this.drawonMap, this)});
+    // The collection is loaded and the scope "this" is bound to the 
+    // drawonMap function.
+    this.collection.fetch({success: _.bind(this.drawonMap, this)});
   },
+  // drawonMap takes the collection and goes through the models in it
+  // 'drawing' them on the map.
   drawonMap: function(collection, objects){
     var models = collection.models;
     for (var i in models){
       var model = models[i];
       model.fetch({async: false});
       var attributes = model.attributes;
-      console.log(attributes);
       var point = attributes.point_geometry;
       var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
         clickable: true,
@@ -243,7 +227,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     };
 
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Postcode</h4>' + (props ?
+        this._div.innerHTML = '<h4>Datapunt</h4>' + (props ?
                 '<b>' + props.name + '</b><br>' +
                 'Punt: ' + props.code
                 : 'Zweef over de punten');
@@ -270,8 +254,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 });
 
 // Instantiate the Leaflet Marionnette View. 
-// This way you can talk with Leaflet after
-// initializing the map. 
+// This way you can talk with Leaflet after initializing the map. 
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
