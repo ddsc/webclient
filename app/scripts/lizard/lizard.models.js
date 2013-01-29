@@ -26,3 +26,8 @@ Lizard.Models.ParameterModel = Backbone.Model.extend({
     console.log('ParameterModel initializing');
   }
 });
+
+Lizard.Models.CollageModel = Backbone.Model.extend({
+  initialize: function() {
+  }
+});

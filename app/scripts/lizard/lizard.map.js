@@ -5,7 +5,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
-    'workspaceRegion': '#workspaceRegion'
+    'collageRegion': '#collageRegion'
   }
 });
 
@@ -57,42 +57,6 @@ var layer4 = new Layer({
 
 var Layers = Backbone.Collection.extend();
 var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
-
-var WorkspaceItem = Backbone.Model.extend({
-  initialize: function() {
-  }
-});
-
-var WorkspaceItems = Backbone.Collection.extend();
-var Workspace = new WorkspaceItems();
-
-
-WorkspaceItemView = Backbone.Marionette.ItemView.extend({
-  template: '#workspaceitem-template',
-  tagName: 'li',
-  className: 'drawer-item workspace-item',
-  model: WorkspaceItem,
-  events: {
-    "click .remove" : "removeItem",
-    "click .toggle" : "toggleItem",
-  },
-  removeItem: function() {
-    this.model.destroy();
-  },
-  toggleItem: function() {
-    'ja'
-  }
-})
-;
-WorkspaceView = Backbone.Marionette.CollectionView.extend({
-  collection: Workspace,
-  itemView: WorkspaceItemView,
-  tagName:'ol',
-  className: 'ui-sortable workspace-group drawer-group',
-  initialize: function() {
-    
-  },
-});
 
 Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
@@ -196,11 +160,11 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
         clickable: true,
         name: attributes.name,
-        cid: model.cid,
+        bbModel: model,
         code: attributes.code
       });
       marker.on('mouseover', updateInfo);
-      marker.on('click', selectforWorkspace)
+      marker.on('click', selectforCollage)
       this.markers.addLayer(marker);
     };
     this.mapCanvas.addLayer(this.markers);
@@ -233,15 +197,12 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(this.mapCanvas);
 
 
-    function selectforWorkspace(e) {
+    function selectforCollage(e) {
         var marker = e.target;
         var properties = marker.valueOf().options;
-        var wsitem = new WorkspaceItem({
-            title: properties.name,
-            cid: properties.cid,
-            code: properties.code
-        });
-        Workspace.add(wsitem);
+        var wsitem = properties.bbModel;
+        wsitem.set({title: wsitem.attributes.name})
+        Collage.add(wsitem);
     };
 
 
@@ -267,20 +228,16 @@ Lizard.Map.map = function(){
 
 
   var layersView = new LayersCollectionView();
-  var workspaceView = new WorkspaceView();
-
 
   // And show them in their divs
   mapView.sidebarRegion.show(layersView.render());
-  mapView.workspaceRegion.show(workspaceView.render());
+  mapView.collageRegion.show(collageView.render());
   mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
 
   $('.drawer-item').popover({
     html: true,
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
-
-
 
   // Then tell backbone to set the navigation to #map
   Backbone.history.navigate('map');

@@ -30,3 +30,5 @@ Lizard.Collections.ParameterCollection = Backbone.Collection.extend({
   url: local_settings.parameters_url,
   model: Lizard.Models.ParameterModel
 });
+
+Lizard.Collections.Collage = Backbone.Collection.extend();
