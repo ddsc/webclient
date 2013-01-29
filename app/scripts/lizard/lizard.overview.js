@@ -117,7 +117,7 @@ Lizard.Overview.overview = function(){
 
   // Instantiate Overview's default layout
   var overviewView = new Lizard.Overview.DefaultLayout();
-  Lizard.content.show(overviewView);
+  Lizard.App.content.show(overviewView);
   
 
   var dashboardView = new Lizard.Overview.DashboardView();
@@ -126,12 +126,12 @@ Lizard.Overview.overview = function(){
   Backbone.history.navigate('overview');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Overview.router = new Lizard.Overview.Router({
     controller: Lizard.Overview
   });
   
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });
 
 

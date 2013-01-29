@@ -14,14 +14,14 @@ Lizard.Account.Router = Backbone.Marionette.AppRouter.extend({
 Lizard.Account.account = function(){
   console.log('Lizard.Account.account()');
   var accountView = new Lizard.Account.DefaultView();
-  Lizard.content.show(accountView);
+  Lizard.App.content.show(accountView);
   Backbone.history.navigate('account');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Account.router = new Lizard.Account.Router({
     controller: Lizard.Account
   });
   
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });

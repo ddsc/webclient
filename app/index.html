@@ -538,23 +538,32 @@
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
 
-        <script src="scripts/lizard.layerbubble.js"></script>
+        <script src="scripts/lizard/lizard.layerbubble.js"></script>
 
-        <!-- Application code, split into files -->
+        <!-- Refactoring some elements, order matters -->
         <script src="scripts/utilities.js"></script>
         <script src="localsettings.js"></script>
-        <script src="scripts/lizard.js"></script>
-        <script src="scripts/lizard.home.js"></script>
-        <script src="scripts/lizard.help.js"></script>
-        <script src="scripts/lizard.account.js"></script>
-        <script src="scripts/lizard.map.js"></script>
-        <script src="scripts/lizard.graphs.js"></script>
-        <script src="scripts/lizard.overview.js"></script>
+        <script src="scripts/lizard/lizard.js"></script>
+        <script src="scripts/lizard/lizard.models.js"></script>
+        <script src="scripts/lizard/lizard.collections.js"></script>
+        <script src="scripts/lizard/lizard.views.js"></script>
+        <script src="scripts/lizard/lizard.app.js"></script>
+
+
+
+
+        <!-- Application code, split into files -->
+        <script src="scripts/lizard/lizard.home.js"></script>
+        <script src="scripts/lizard/lizard.help.js"></script>
+        <script src="scripts/lizard/lizard.account.js"></script>
+        <script src="scripts/lizard/lizard.map.js"></script>
+        <script src="scripts/lizard/lizard.graph.js"></script>
+        <script src="scripts/lizard/lizard.overview.js"></script>
 
         <!-- Backbone Application bootstrapping -->
         <script type="text/javascript">
         $(document).ready(function() {
-          Lizard.start();
+          Lizard.App.start();
         });
         </script>
         

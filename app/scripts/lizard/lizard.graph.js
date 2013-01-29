@@ -81,7 +81,7 @@ var FilterView = Backbone.Marionette.ItemView.extend({
 });
 
 var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new FilterCollection(),
+  collection: new Lizard.Collections.FilterCollection(),
   tagName: 'ul',
   
   itemView: FilterView,
@@ -100,7 +100,7 @@ var LocationView = Backbone.Marionette.ItemView.extend({
 });
 
 var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new LocationCollection(),
+  collection: new Lizard.Collections.LocationCollection(),
   tagName: 'ul',
   
   itemView: LocationView,
@@ -121,7 +121,7 @@ var ParameterView = Backbone.Marionette.ItemView.extend({
 });
 
 var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new ParameterCollection(),
+  collection: new Lizard.Collections.ParameterCollection(),
   tagName: 'ul',
   
   itemView: ParameterView,
@@ -139,7 +139,7 @@ Lizard.Graphs.graphs = function(){
 
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
-  Lizard.content.show(graphsView);
+  Lizard.App.content.show(graphsView);
 
 
 
@@ -155,12 +155,12 @@ Lizard.Graphs.graphs = function(){
   Backbone.history.navigate('graphs');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Graphs.router = new Lizard.Graphs.Router({
     controller: Lizard.Graphs
   });
   
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });
 
 

@@ -14,14 +14,14 @@ Lizard.Help.Router = Backbone.Marionette.AppRouter.extend({
 Lizard.Help.help = function(){
   console.log('Lizard.Help.help()');
   var helpView = new Lizard.Help.DefaultView();
-  Lizard.content.show(helpView);
+  Lizard.App.content.show(helpView);
   Backbone.history.navigate('help');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Help.router = new Lizard.Help.Router({
     controller: Lizard.Help
   });
   
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });
