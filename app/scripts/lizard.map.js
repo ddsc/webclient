@@ -65,10 +65,7 @@ var WorkspaceItem = Backbone.Model.extend({
 
 var WorkspaceItems = Backbone.Collection.extend();
 var Workspace = new WorkspaceItems();
-function addtoWorkspace(w) {
-  Workspace.add(w);
-  console.log(w.attributes.title + ' added to Workspace');
-};
+
 
 WorkspaceItemView = Backbone.Marionette.ItemView.extend({
   template: '#workspaceitem-template',
@@ -83,7 +80,7 @@ WorkspaceItemView = Backbone.Marionette.ItemView.extend({
     this.model.destroy();
   },
   toggleItem: function() {
-    console.log(this.model.attributes.title);
+    'ja'
   }
 })
 ;
@@ -244,7 +241,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
             cid: properties.cid,
             code: properties.code
         });
-        addtoWorkspace(wsitem);
+        Workspace.add(wsitem);
     };
 
 
