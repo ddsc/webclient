@@ -1,6 +1,5 @@
 Example.Graphs = {};
 
-
 Example.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
@@ -13,6 +12,12 @@ Example.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'graphs': 'graphs'
     }
+});
+
+Example.views = {};
+Example.views.Collage = Backbone.Marionette.ItemView.extend({
+	tagName: 'li',
+	template: '#name-template'
 });
 
 collage = new Lizard.collections.Collage();
