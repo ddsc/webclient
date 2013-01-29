@@ -15,6 +15,9 @@ Example.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
+collage = new Lizard.collection.Collage();
+collage.fetch();
+
 Example.Graphs.graphs = function(){
   console.log('Example.Graphs.graphs()');
 
@@ -26,10 +29,10 @@ Example.Graphs.graphs = function(){
   Backbone.history.navigate('graphs');
 };
 
-Example.addInitializer(function(){
+Example.App.addInitializer(function(){
   Example.Graphs.router = new Example.Graphs.Router({
     controller: Example.Graphs
   });
 
-  Example.vent.trigger('routing:started');
+  Example.App.vent.trigger('routing:started');
 });

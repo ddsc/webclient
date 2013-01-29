@@ -1,4 +1,4 @@
-Lizard.models.Collage = Backbone.Models.extend({
+Lizard.models.Collage = Backbone.Model.extend({
 	urlRoot: 'localhost:8080/v0/collages/',
 	defaults: {
 		name: '',

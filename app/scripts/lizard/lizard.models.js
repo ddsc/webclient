@@ -2,7 +2,7 @@
 Models
 */
 
-Lizard.Models = {};
+Lizard.models = Lizard.Models = {};
 
 Lizard.Models.FilterModel = Backbone.Model.extend({
   initialize: function() {

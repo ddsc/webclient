@@ -17,8 +17,6 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 
-
-
 // Model definitions
 
 var Layer = Backbone.Model.extend({
@@ -93,7 +91,7 @@ WorkspaceView = Backbone.Marionette.CollectionView.extend({
   tagName:'ol',
   className: 'ui-sortable workspace-group drawer-group',
   initialize: function() {
-    
+
   },
 });
 
@@ -178,7 +176,7 @@ var LMarkerCollectionView = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   bounds: new L.LatLngBounds(
-              new L.LatLng(53.74, 3.2849), 
+              new L.LatLng(53.74, 3.2849),
               new L.LatLng(50.9584, 7.5147)
           ),
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attributesrbution: 'Map data &copy;' }),
@@ -191,7 +189,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     console.log('onDomRefresh()');
 
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
-    
+
     var markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
@@ -202,7 +200,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       for (var i = postcodes.length - 1; i >= 0; i--) {
         var pc = postcodes[i];
         var title = pc.Woonplaats;
-        
+
         var marker = new L.Marker(new L.LatLng(pc.Latitude, pc.Longitude), {
             clickable:true,
             title: title,
@@ -226,7 +224,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         var marker = e.target;
         info.update(marker.valueOf().options);
     }
-    
+
     //add custom control, to show information on hover
     // taken from http://leafletjs.com/examples/choropleth.html
     info = L.control();
@@ -243,7 +241,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
                 'Provincie: ' + props.provincie
                 : 'Zweef over de punten');
     };
-    
+
     info.addTo(this.mapCanvas);
 
 
@@ -264,9 +262,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template'
 });
 
-// Instantiate the Leaflet Marionnette View. 
+// Instantiate the Leaflet Marionnette View.
 // This way you can talk with Leaflet after
-// initializing the map. 
+// initializing the map.
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
@@ -310,4 +308,3 @@ Lizard.addInitializer(function(){
   });
   Lizard.vent.trigger('routing:started');
 });
-

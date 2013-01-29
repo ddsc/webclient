@@ -2,7 +2,7 @@
 Collections
 */
 
-Lizard.Collections = {};
+Lizard.collections = Lizard.Collections = {};
 
 Lizard.Collections.FilterCollection = Backbone.Collection.extend({
   initialize: function() {
