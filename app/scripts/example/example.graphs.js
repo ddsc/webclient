@@ -20,15 +20,27 @@ Example.views.Collage = Backbone.Marionette.ItemView.extend({
 	template: '#name-template'
 });
 
+Example.views.CollageList = Backbone.Marionette.CollectionView.extend({
+	itemView: Example.views.Collage
+});
+
 collage = new Lizard.collections.Collage();
+
+collageList = new Example.views.CollageList({
+	collection: collage
+});
 collage.fetch();
 
 Example.Graphs.graphs = function(){
-  console.log('Example.Graphs.graphs()');
+	console.log('Example.Graphs.graphs()');
 
-  // Instantiate Graphs's default layout
-  var graphsView = new Example.Graphs.DefaultLayout();
-  Example.App.content.show(graphsView);
+	// Instantiate Graphs's default layout
+	var graphsView = new Example.Graphs.DefaultLayout();
+	Example.App.content.show(graphsView);
+	graphsView.collageList.show(
+		collageList.render()
+	);
+
 
   // And set URL to #graphs
   Backbone.history.navigate('graphs');
