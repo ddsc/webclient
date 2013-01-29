@@ -1,7 +1,7 @@
 Lizard.models.Collage = Backbone.Model.extend({
-	urlRoot: 'localhost:8080/v0/collages/',
+	urlRoot: local_settings.collages_url,
 	defaults: {
 		name: '',
 		id: null
-		}
+	}
 });
