@@ -1,7 +1,7 @@
-Lizard.Graphs = {};
+Example.Graphs = {};
 
 
-Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
+Example.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
     'collageList': '#collageList',
@@ -9,27 +9,27 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   }
 });
 
-Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
+Example.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'graphs': 'graphs'
     }
 });
 
-Lizard.Graphs.graphs = function(){
-  console.log('Lizard.Graphs.graphs()');
+Example.Graphs.graphs = function(){
+  console.log('Example.Graphs.graphs()');
 
   // Instantiate Graphs's default layout
-  var graphsView = new Lizard.Graphs.DefaultLayout();
-  Lizard.content.show(graphsView);
+  var graphsView = new Example.Graphs.DefaultLayout();
+  Example.content.show(graphsView);
 
   // And set URL to #graphs
   Backbone.history.navigate('graphs');
 };
 
-Lizard.addInitializer(function(){
-  Lizard.Graphs.router = new Lizard.Graphs.Router({
-    controller: Lizard.Graphs
+Example.addInitializer(function(){
+  Example.Graphs.router = new Example.Graphs.Router({
+    controller: Example.Graphs
   });
 
-  Lizard.vent.trigger('routing:started');
+  Example.vent.trigger('routing:started');
 });
