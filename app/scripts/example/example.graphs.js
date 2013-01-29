@@ -23,7 +23,7 @@ Example.Graphs.graphs = function(){
 
   // Instantiate Graphs's default layout
   var graphsView = new Example.Graphs.DefaultLayout();
-  Example.content.show(graphsView);
+  Example.App.content.show(graphsView);
 
   // And set URL to #graphs
   Backbone.history.navigate('graphs');
