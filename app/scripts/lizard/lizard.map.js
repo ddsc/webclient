@@ -65,10 +65,7 @@ var WorkspaceItem = Backbone.Model.extend({
 
 var WorkspaceItems = Backbone.Collection.extend();
 var Workspace = new WorkspaceItems();
-function addtoWorkspace(w) {
-  Workspace.add(w);
-  console.log(w.attributes.title + ' added to Workspace');
-};
+
 
 WorkspaceItemView = Backbone.Marionette.ItemView.extend({
   template: '#workspaceitem-template',
@@ -83,7 +80,7 @@ WorkspaceItemView = Backbone.Marionette.ItemView.extend({
     this.model.destroy();
   },
   toggleItem: function() {
-    console.log(this.model.attributes.title);
+    'ja'
   }
 })
 ;
@@ -157,14 +154,14 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-// It is highly debatable if this should be Marionnette Itemview.
+// It is highly debatable if this should be a Marionnette Itemview.
 // The functionality now allows:
 // * Location models are loaded and added to a Leaflet map. 
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
-  collection: new LocationCollection(),
+  collection: new Lizard.Collections.LocationCollection(),
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849), 
               new L.LatLng(50.9584, 7.5147)
@@ -244,7 +241,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
             cid: properties.cid,
             code: properties.code
         });
-        addtoWorkspace(wsitem);
+        Workspace.add(wsitem);
     };
 
 
@@ -266,7 +263,7 @@ Lizard.Map.map = function(){
   var mapView = new Lizard.Map.DefaultLayout();
 
   // And add it to the #content div
-  Lizard.content.show(mapView);
+  Lizard.App.content.show(mapView);
 
 
   var layersView = new LayersCollectionView();
@@ -289,10 +286,10 @@ Lizard.Map.map = function(){
   Backbone.history.navigate('map');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Map.router = new Lizard.Map.Router({
     controller: Lizard.Map
   });
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });
 

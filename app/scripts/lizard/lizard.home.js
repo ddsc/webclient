@@ -24,14 +24,14 @@ Lizard.Home.home = function(){
   
   var homeView = new Lizard.Home.DefaultView();
 
-  Lizard.content.show(homeView);
+  Lizard.App.content.show(homeView);
   Backbone.history.navigate('home');
 };
 
-Lizard.addInitializer(function(){
+Lizard.App.addInitializer(function(){
   Lizard.Home.router = new Lizard.Home.Router({
     controller: Lizard.Home
   });
   
-  Lizard.vent.trigger('routing:started');
+  Lizard.App.vent.trigger('routing:started');
 });
