@@ -134,7 +134,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   mapCanvas: null,
   markers: null,
   initialize: function(){
-    console.log('LeafletView.initialize()');    
+    console.log('LeafletView.initialize()');
+    console.log(this.trigger);
+    this.trigger("dom:refresh");
   },
   onDomRefresh: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
@@ -215,7 +217,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 // This way you can talk with Leaflet after initializing the map. 
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
-Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
 Lizard.Map.map = function(){
   console.log('Lizard.Map.map()');
@@ -226,8 +227,9 @@ Lizard.Map.map = function(){
   // And add it to the #content div
   Lizard.App.content.show(mapView);
 
-
+  var collageView = new CollageView();
   var layersView = new LayersCollectionView();
+  Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
   // And show them in their divs
   mapView.sidebarRegion.show(layersView.render());

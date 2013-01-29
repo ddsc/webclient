@@ -10,14 +10,16 @@ CollageItemView = Backbone.Marionette.ItemView.extend({
     "click .toggle" : "toggleItem",
   },
   removeItem: function() {
-    
-    console.log(this.close());
+    this.close();
   },
   toggleItem: function() {
-    'ja'
+    (this.model.attributes.incollage ? 
+      this.model.set({incollage: false}) : 
+      this.model.set({incollage: true}));
+    this.$('.icon-ok').toggleClass('hidden');
   }
-})
-;
+});
+
 CollageView = Backbone.Marionette.CollectionView.extend({
   collection: Collage,
   itemView: CollageItemView,
@@ -27,5 +29,3 @@ CollageView = Backbone.Marionette.CollectionView.extend({
     
   },
 });
-
-collageView = new CollageView();

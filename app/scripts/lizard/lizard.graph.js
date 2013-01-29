@@ -9,7 +9,7 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'parametersRegion': 'p#parametersRegion',
     'filtersRegion': 'p#filtersRegion',
     'locationsRegion': 'p#locationsRegion',
-    'collageRegion' : '#collageRegion'
+    'collagegraphRegion' : '#collageRegion'
   }
 });
 
@@ -141,11 +141,12 @@ Lizard.Graphs.graphs = function(){
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
   Lizard.App.content.show(graphsView);
+  var collageView = new CollageView();
 
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());
   graphsView.parametersRegion.show(parametercollectionview.render());
-  graphsView.collageRegion.show(collageView.render());
+  graphsView.collagegraphRegion.show(collageView.render());
 
   var timeserieView = new Lizard.Graphs.TimeserieView();
   graphsView.mainRegion.show(timeserieView.render());
