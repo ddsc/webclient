@@ -238,15 +238,27 @@
         <!-- Application code, split into files -->
         <script src="scripts/utilities.js"></script>
         <script src="localsettings.js"></script>
-        <script src="scripts/lizard.js"></script>
-        <script src="scripts/lizard.map.js"></script>
-        <script src="scripts/lizard.graphs.js"></script>
+        <script src="scripts/Lizard/lizard.js"></script>
+
+		<!-- Models -->
+        <script src="scripts/Lizard/lizard.models.js"></script>
+        <script src="scripts/Lizard/lizard/models/Collage.js"></script>
+
+
+		<!-- Collections -->
+        <script src="scripts/Lizard/lizard.collections.js"></script>
+        <script src="scripts/Lizard/lizard/collections/Collage.js"></script>
+
+		<!-- Pages -->
+        <script src="scripts/Lizard/lizard.map.js"></script>
+        <script src="scripts/Lizard/lizard.graph.js"></script>
+
 
         <!-- Backbone Application bootstrapping -->
         <script type="text/javascript">
-        $(document).ready(function() {
-          Lizard.start();
-        });
+          $(document).ready(function() {
+            Lizard.start();
+          });
         </script>
     </body>
 </html>
