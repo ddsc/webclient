@@ -15,7 +15,7 @@ Example.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-collage = new Lizard.collection.Collage();
+collage = new Lizard.collections.Collage();
 collage.fetch();
 
 Example.Graphs.graphs = function(){
