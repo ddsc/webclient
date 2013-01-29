@@ -136,7 +136,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     console.log('LeafletView.initialize()');    
   },
-  onDomRefresh: function() {
+  onDomRefresh: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
     this.markers = new L.MarkerClusterGroup({
