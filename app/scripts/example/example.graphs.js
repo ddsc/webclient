@@ -26,15 +26,11 @@ activeCollageItems = new Lizard.collections.CollageItem();
 //activeCollageCollection = new
 
 activeCollageView = new Lizard.views.ActiveCollage({
-    model: collageModel,
-    collection: activeCollageItems
+	model: collageModel,
+	collection: activeCollageItems
 });
 
 collageModel.on('change', activeCollageView.render())
-
-
-
-
 
 collageListView = new Lizard.views.CollageList({
 	collection: collageCollection
