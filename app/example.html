@@ -55,20 +55,60 @@
 
         <script type="text/template" id="graphs-template">
           <div class="row-fluid">
-            <div class="span3" id="collageList">
-			  <h2>Collage lijst</h2>
+
+            <div class="span3 well" id="collageListBlock">
+              <h4>Collage lijst</h4>
+              <div id="collageList">
+			    <i>laden...</i>
+              </div>
 			</div>
 
-            <div class="span9" id="selectedCollage">
-             <h4>Geselecteerde collage</h4>
+            <div class="span3 well" id="selectedCollageBlock">
+              <h4>Geselecteerde collage</h4>
+              <div id="selectedCollage">
+                  <i>selecteer collage</i>
+              </div>
+            </div>
+            <div class="span6 well" id="graphsBlock">
+              <h4>Grafieken</h4>
+              <div id="graphStack">
+                  <i>grafieken</i>
+              </div>
             </div>
           </div>
+          <div class="row-fluid">
+
+
+            <div class="span3 well" id="timeseriesSelectionBlock">
+                <h4>Tijdserie selectie blok</h4>
+                <div id="timeseriesSelection">
+                    <i>selectie....</i>
+                </div>
+            </div>
+          </div>
+
         </script>
 
 
+        <script type="text/template" id="activecollage">
+          <div id="active_collage_header">selecteer een item...</div>
+          items:
+          <div id="collage_item_list">....</div>
+        </script>
+
 		<script type="text/template" id="name-template">
-		  <%= name %>
+		  <div class='collageItem'> <%= name %> </div>
 		</script>
+
+        <script type="text/template" id="graph-template">
+            <div class='graph'> grafiek van <%= name %> </div>
+            ___/----\____
+        </script>
+
+        <script type="text/template" id="name-checkbox">
+            <input type="checkbox"> <%= name %> </input>
+        </script>
+
 
     </head>
     <body>
@@ -228,6 +268,7 @@
         <script src="scripts/vendor/backbone.marionette.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
+        <script src="scripts/vendor/backbone-associations.js"></script>
 
 
         <!-- Visualsearch.js by Documentcloud -->
@@ -245,12 +286,21 @@
 
 		<!-- Models -->
         <script src="scripts/lizard/lizard.models.js"></script>
+        <script src="scripts/lizard/models/CollageItem.js"></script>
         <script src="scripts/lizard/models/Collage.js"></script>
 
 
 		<!-- Collections -->
         <script src="scripts/lizard/lizard.collections.js"></script>
+        <script src="scripts/lizard/collections/CollageItem.js"></script>
         <script src="scripts/lizard/collections/Collage.js"></script>
+
+        <!-- Views -->
+        <script src="scripts/lizard/lizard.views.js"></script>
+        <script src="scripts/lizard/views/ActiveCollage.js"></script>
+        <script src="scripts/lizard/views/CollageList.js"></script>
+        <script src="scripts/lizard/views/Graph.js"></script>
+        <script src="scripts/lizard/views/GraphStack.js"></script>
 
 		<!-- App -->
 		<script src="scripts/example/example.app.js"></script>
