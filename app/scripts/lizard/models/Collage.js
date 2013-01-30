@@ -1,5 +1,4 @@
 Lizard.models.Collage = Backbone.AssociatedModel.extend({
-	urlRoot: local_settings.collages_url,
     relations: [{
         type: Backbone.Many, //nature of the relationship
         key: 'items', //attribute of collage relating to workspaceItems
