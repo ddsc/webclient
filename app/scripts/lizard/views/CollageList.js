@@ -12,4 +12,3 @@ Lizard.views.Collage = Backbone.Marionette.ItemView.extend({
 Lizard.views.CollageList = Backbone.Marionette.CollectionView.extend({
     itemView: Lizard.views.Collage
 });
-
