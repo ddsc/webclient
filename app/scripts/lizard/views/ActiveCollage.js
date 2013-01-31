@@ -32,7 +32,7 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
         this._header.model = collage;
         this.header.show(this._header.render());
         this.collection.reset();
-        this.collection.add(collage.get('items').models);
+        this.collection.add(collage.get('collageitems').models);
         this.collage_item_list.show(this._collage_item_list.render());
     },
     initialize: function () {

@@ -43,6 +43,7 @@ Lizard.Views.FilterView = Backbone.Marionette.ItemView.extend({
   }
 });
 
+
 Lizard.Views.LocationView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     console.log('LocationView.initialize()');
@@ -67,7 +68,7 @@ CollectionViews
 Lizard.Views.FilterCollectionView = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.FilterCollection(),
   tagName: 'ul',
-  
+
   itemView: Lizard.Views.FilterView,
   initialize: function(){
       this.collection.fetch();
@@ -78,7 +79,7 @@ Lizard.Views.FilterCollectionView = Backbone.Marionette.CollectionView.extend({
 Lizard.Views.LocationCollectionView = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.LocationCollection(),
   tagName: 'ul',
-  
+
   itemView: Lizard.Views.LocationView,
   initialize: function(){
       this.collection.fetch();
@@ -89,7 +90,7 @@ Lizard.Views.LocationCollectionView = Backbone.Marionette.CollectionView.extend(
 Lizard.Views.ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.ParameterCollection(),
   tagName: 'ul',
-  
+
   itemView: Lizard.Views.ParameterView,
   initialize: function(){
       this.collection.fetch();
