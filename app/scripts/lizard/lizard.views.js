@@ -2,7 +2,7 @@
 Itemviews
 */
 
-Lizard.Views = Lizard.views = {};
+Lizard.views = {};
 
 Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
