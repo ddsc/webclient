@@ -46,7 +46,7 @@ graphStackView = new Lizard.views.GraphStack({
     collection: activeCollageItems
 });
 
-locationList = new Lizard.Views.LocationCollectionView({
+locationList = new Lizard.views.LocationCollection({
 
 });
 
