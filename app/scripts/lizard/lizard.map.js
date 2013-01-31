@@ -5,7 +5,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
-    'workspaceRegion': '#workspaceRegion'
+    'collageRegion': '#collageRegion'
   }
 });
 
@@ -58,42 +58,6 @@ var layer4 = new Layer({
 var Layers = Backbone.Collection.extend();
 var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
 
-var WorkspaceItem = Backbone.Model.extend({
-  initialize: function() {
-  }
-});
-
-var WorkspaceItems = Backbone.Collection.extend();
-var Workspace = new WorkspaceItems();
-
-
-WorkspaceItemView = Backbone.Marionette.ItemView.extend({
-  template: '#workspaceitem-template',
-  tagName: 'li',
-  className: 'drawer-item workspace-item',
-  model: WorkspaceItem,
-  events: {
-    "click .remove" : "removeItem",
-    "click .toggle" : "toggleItem",
-  },
-  removeItem: function() {
-    this.model.destroy();
-  },
-  toggleItem: function() {
-    'ja'
-  }
-})
-;
-WorkspaceView = Backbone.Marionette.CollectionView.extend({
-  collection: Workspace,
-  itemView: WorkspaceItemView,
-  tagName:'ol',
-  className: 'ui-sortable workspace-group drawer-group',
-  initialize: function() {
-    
-  },
-});
-
 Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     console.log('LayersView.initialize()');
@@ -139,7 +103,6 @@ LayersCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 
-
 Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   template: '#icon-template',
   tagName: 'li'
@@ -154,14 +117,14 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-// It is highly debatable if this should be a Marionnette Itemview.
+// It is highly debatable if this should be a Marionette Itemview.
 // The functionality now allows:
 // * Location models are loaded and added to a Leaflet map. 
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
-  collection: new Lizard.Collections.LocationCollection(),
+  collection: new Lizard.collections.Location(),
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849), 
               new L.LatLng(50.9584, 7.5147)
@@ -170,9 +133,10 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   mapCanvas: null,
   markers: null,
   initialize: function(){
-    console.log('LeafletView.initialize()');    
+    console.log('LeafletView.initialize()');
+    this.trigger("dom:refresh");
   },
-  onDomRefresh: function() {
+  onDomRefresh: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
     this.markers = new L.MarkerClusterGroup({
@@ -183,6 +147,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     // The collection is loaded and the scope "this" is bound to the 
     // drawonMap function.
     this.collection.fetch({success: _.bind(this.drawonMap, this)});
+    //this.booyah();
   },
   // drawonMap takes the collection and goes through the models in it
   // 'drawing' them on the map.
@@ -196,15 +161,28 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
       var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
         clickable: true,
         name: attributes.name,
-        cid: model.cid,
+        bbModel: model,
         code: attributes.code
       });
       marker.on('mouseover', updateInfo);
-      marker.on('click', selectforWorkspace)
+      marker.on('click', modalInfo);
       this.markers.addLayer(marker);
-    };
+    }
+    $('#modal').on('show', this.updateModal);
     this.mapCanvas.addLayer(this.markers);
+    
 
+    function modalInfo(e){
+          var marker = e.target;
+          var model = marker.valueOf().options.bbModel;
+          $('#modal').modal();
+      }
+
+    function updateModal(e){
+        var marker = e.target;
+        $('#modal').append('JAJAJA');
+
+    }
     // Event listener for updating the information in the
     // upper right corner.
     // only works for L.Marker objects
@@ -233,15 +211,12 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(this.mapCanvas);
 
 
-    function selectforWorkspace(e) {
+    function selectforCollage(e) {
         var marker = e.target;
         var properties = marker.valueOf().options;
-        var wsitem = new WorkspaceItem({
-            title: properties.name,
-            cid: properties.cid,
-            code: properties.code
-        });
-        Workspace.add(wsitem);
+        var wsitem = properties.bbModel;
+        wsitem.set({title: wsitem.attributes.name})
+        Collage.add(wsitem);
     };
 
 
@@ -254,7 +229,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 // This way you can talk with Leaflet after initializing the map. 
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
-Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
 Lizard.Map.map = function(){
   console.log('Lizard.Map.map()');
@@ -265,22 +239,19 @@ Lizard.Map.map = function(){
   // And add it to the #content div
   Lizard.App.content.show(mapView);
 
-
+  var collageView = new CollageView();
   var layersView = new LayersCollectionView();
-  var workspaceView = new WorkspaceView();
-
+  Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
   // And show them in their divs
   mapView.sidebarRegion.show(layersView.render());
-  mapView.workspaceRegion.show(workspaceView.render());
+  mapView.collageRegion.show(collageView.render());
   mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
 
   $('.drawer-item').popover({
     html: true,
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
-
-
 
   // Then tell backbone to set the navigation to #map
   Backbone.history.navigate('map');

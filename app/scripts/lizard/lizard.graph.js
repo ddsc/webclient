@@ -8,7 +8,8 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'mainRegion': '#mainRegion',
     'parametersRegion': 'p#parametersRegion',
     'filtersRegion': 'p#filtersRegion',
-    'locationsRegion': 'p#locationsRegion'
+    'locationsRegion': 'p#locationsRegion',
+    'collagegraphRegion' : '#collageRegion'
   }
 });
 
@@ -81,7 +82,7 @@ var FilterView = Backbone.Marionette.ItemView.extend({
 });
 
 var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.FilterCollection(),
+  collection: new Lizard.collections.Filter(),
   tagName: 'ul',
   
   itemView: FilterView,
@@ -100,7 +101,7 @@ var LocationView = Backbone.Marionette.ItemView.extend({
 });
 
 var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.LocationCollection(),
+  collection: new Lizard.collections.Location(),
   tagName: 'ul',
   
   itemView: LocationView,
@@ -121,7 +122,7 @@ var ParameterView = Backbone.Marionette.ItemView.extend({
 });
 
 var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.ParameterCollection(),
+  collection: new Lizard.collections.Parameter(),
   tagName: 'ul',
   
   itemView: ParameterView,
@@ -140,13 +141,12 @@ Lizard.Graphs.graphs = function(){
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
   Lizard.App.content.show(graphsView);
-
-
-
+  var collageView = new CollageView();
 
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());
   graphsView.parametersRegion.show(parametercollectionview.render());
+  graphsView.collagegraphRegion.show(collageView.render());
 
   var timeserieView = new Lizard.Graphs.TimeserieView();
   graphsView.mainRegion.show(timeserieView.render());

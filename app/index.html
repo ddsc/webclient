@@ -147,7 +147,7 @@
 
             <div class="span3" id="sidebar">
                 <div class="" id="sidebarRegion"></div>
-                <div class="" id="workspaceRegion"></div>
+                <div class="" id="collageRegion"></div>
             </div>
 
             <div class="span9" id="leafletRegion"></div>
@@ -185,13 +185,13 @@
             </span>
         </script>
 
-        <script type="text/template" id="workspaceitem-template">
+        <script type="text/template" id="collageitem-template">
             <span class="action remove">
                 <i class="icon-remove"></i>
             </span>
             <span class="content"><%= title %></span>
             <span class="indicator toggle">
-                <i class="icon-ok"></i>
+                <i class="icon-ok "></i>
             </span>
         </script>
 
@@ -265,25 +265,27 @@
 
         <script type="text/template" id="graphs-template">
           <div class="row-fluid">
-            <div class="span3" id="sidebarRegion">
-
-               <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                        <li class="metrics-dropdown" id="filters">
-                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
-                            <p data-group="filters" id="filtersRegion" class="-hide"></p>
-                        </li>
-                        <li class="metrics-dropdown" id="locations">
-                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
-                            <p data-group="locations" id="locationsRegion" class="hide"></p>
-                        </li>
-                        <li class="metrics-dropdown" id="parameters">
-                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
-                            <p data-group="parameters" id="parametersRegion" class="hide"></p>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
-                        </li>
-                    </ul>
+            <div class="span3" id="sidebar">
+                <div class="" id="sidebarRegion">
+                   <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                            <li class="metrics-dropdown" id="filters">
+                                <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
+                                <p data-group="filters" id="filtersRegion" class="-hide"></p>
+                            </li>
+                            <li class="metrics-dropdown" id="locations">
+                                <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
+                                <p data-group="locations" id="locationsRegion" class="hide"></p>
+                            </li>
+                            <li class="metrics-dropdown" id="parameters">
+                                <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
+                                <p data-group="parameters" id="parametersRegion" class="hide"></p>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="" id="collageRegion"></div>
             </div>
 
             <div class="span9" id="mainRegion">
@@ -396,6 +398,19 @@
         </div>
       </div>
     
+      <div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
       
       <div class="container">
         <div class='notifications top-right'></div>
@@ -515,12 +530,9 @@
         <script src="scripts/vendor/backbone-0.9.10.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
-        <script src="scripts/vendor/backbone.marionette.js"></script>
+        <script src="scripts/vendor/backbone.marionette.min.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
-
-
-
 
         <!-- Visualsearch.js by Documentcloud -->
         <script src="scripts/vendor/visualsearch.js" type="text/javascript"></script>
@@ -537,25 +549,22 @@
         
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
-
         <script src="scripts/lizard/lizard.layerbubble.js"></script>
 
-        <!-- Refactoring some elements, order matters -->
-        <script src="scripts/utilities.js"></script>
+        <!-- Lizard globals, order matters -->   
         <script src="localsettings.js"></script>
         <script src="scripts/lizard/lizard.js"></script>
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
         <script src="scripts/lizard/lizard.views.js"></script>
-        <script src="scripts/lizard/lizard.app.js"></script>
-
-
-
 
         <!-- Application code, split into files -->
+        <script src="scripts/utilities.js"></script>
+        <script src="scripts/lizard/lizard.app.js"></script>
         <script src="scripts/lizard/lizard.home.js"></script>
         <script src="scripts/lizard/lizard.help.js"></script>
         <script src="scripts/lizard/lizard.account.js"></script>
+        <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
         <script src="scripts/lizard/lizard.overview.js"></script>
