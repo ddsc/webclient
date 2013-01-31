@@ -1,34 +1,34 @@
 /**
-Collections
+collections
 */
 
-Lizard.Collections = {};
+Lizard.collections = {};
 
-Lizard.Collections.FilterCollection = Backbone.Collection.extend({
+Lizard.collections.Filter = Backbone.Collection.extend({
   initialize: function() {
-    console.log('FilterCollection initializing');
+    console.log('Filter initializing');
   },
   url: local_settings.filters_url,
-  model: Lizard.Models.FilterModel
+  model: Lizard.models.Filter
 });
 
-Lizard.Collections.LocationCollection = Backbone.Collection.extend({
+Lizard.collections.Location = Backbone.Collection.extend({
   initialize: function() {
-    console.log('LocationCollection initializing');
+    console.log('Location initializing');
   },
   url: local_settings.locations_url,
-  model: Lizard.Models.LocationModel,
+  model: Lizard.models.Location,
   parse: function(res, xhr) {
     return res.results;
   }
 });
 
-Lizard.Collections.ParameterCollection = Backbone.Collection.extend({
+Lizard.collections.Parameter = Backbone.Collection.extend({
   initialize: function() {
-    console.log('ParameterCollection initializing');
+    console.log('Parametern initializing');
   },
   url: local_settings.parameters_url,
-  model: Lizard.Models.ParameterModel
+  model: Lizard.models.Parameter
 });
 
-Lizard.Collections.Collage = Backbone.Collection.extend();
+Lizard.collections.Collage = Backbone.Collection.extend();

@@ -82,7 +82,7 @@ var FilterView = Backbone.Marionette.ItemView.extend({
 });
 
 var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.FilterCollection(),
+  collection: new Lizard.collections.Filter(),
   tagName: 'ul',
   
   itemView: FilterView,
@@ -101,7 +101,7 @@ var LocationView = Backbone.Marionette.ItemView.extend({
 });
 
 var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.LocationCollection(),
+  collection: new Lizard.collections.Location(),
   tagName: 'ul',
   
   itemView: LocationView,
@@ -122,7 +122,7 @@ var ParameterView = Backbone.Marionette.ItemView.extend({
 });
 
 var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.ParameterCollection(),
+  collection: new Lizard.collections.Parameter(),
   tagName: 'ul',
   
   itemView: ParameterView,

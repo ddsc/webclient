@@ -1,10 +1,10 @@
-var Collage = new Lizard.Collections.Collage();
+var Collage = new Lizard.collections.Collage();
 
 CollageItemView = Backbone.Marionette.ItemView.extend({
   template: '#collageitem-template',
   tagName: 'li',
   className: 'drawer-item collage-item',
-  model: Lizard.Models.CollageModel,
+  model: Lizard.models.Collage,
   events: {
     "click .remove" : "removeItem",
     "click .toggle" : "toggleItem",

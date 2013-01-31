@@ -1,6 +1,6 @@
-var filtercollectionview = new Lizard.Views.FilterCollectionView();
-var locationcollectionview = new Lizard.Views.LocationCollectionView();
-var parametercollectionview = new Lizard.Views.ParameterCollectionView();
+var filtercollectionview = new Lizard.views.FilterCollection();
+var locationcollectionview = new Lizard.views.LocationCollection();
+var parametercollectionview = new Lizard.views.ParameterCollection();
 
 // Instantiate the Application()
 Lizard.App = new Backbone.Marionette.Application();

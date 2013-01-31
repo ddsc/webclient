@@ -1,10 +1,10 @@
 /**
-Models
+models
 */
 
-Lizard.Models = {};
+Lizard.models = {};
 
-Lizard.Models.FilterModel = Backbone.Model.extend({
+Lizard.models.Filter = Backbone.Model.extend({
   initialize: function() {
     console.log('FilterModel initializing');
   },
@@ -13,21 +13,22 @@ Lizard.Models.FilterModel = Backbone.Model.extend({
   }
 });
 
-Lizard.Models.LocationModel = Backbone.Model.extend({
+Lizard.models.Location = Backbone.Model.extend({
   initialize: function(model) {
     console.log('LocationModel initializing');
     this.url = model.url;
+    console.log(model.url);
     this.fetch();
   },
 });
 
-Lizard.Models.ParameterModel = Backbone.Model.extend({
+Lizard.models.Parameter = Backbone.Model.extend({
   initialize: function() {
     console.log('ParameterModel initializing');
   }
 });
 
-Lizard.Models.CollageModel = Backbone.Model.extend({
+Lizard.models.Collage = Backbone.Model.extend({
   initialize: function() {
   }
 });

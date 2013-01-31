@@ -1,10 +1,10 @@
 /**
-ItemViews
+Itemviews
 */
 
-Lizard.Views = {};
+Lizard.views = {};
 
-Lizard.Views.FilterView = Backbone.Marionette.ItemView.extend({
+Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
     console.log('FilterView.initialize()');
@@ -43,7 +43,7 @@ Lizard.Views.FilterView = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.LocationView = Backbone.Marionette.ItemView.extend({
+Lizard.views.Location = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     console.log('LocationView.initialize()');
   },
@@ -51,7 +51,7 @@ Lizard.Views.LocationView = Backbone.Marionette.ItemView.extend({
   template: '#locationview-template'
 });
 
-Lizard.Views.ParameterView = Backbone.Marionette.ItemView.extend({
+Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     console.log('ParameterView.initialize()');
   },
@@ -61,36 +61,36 @@ Lizard.Views.ParameterView = Backbone.Marionette.ItemView.extend({
 
 
 /**
-CollectionViews
+Collectionviews
 */
 
-Lizard.Views.FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.FilterCollection(),
+Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
+  collection: new Lizard.collections.Filter(),
   tagName: 'ul',
   
-  itemView: Lizard.Views.FilterView,
+  itemView: Lizard.views.Filter,
   initialize: function(){
       this.collection.fetch();
       this.listenTo(this.collection, 'reset', this.render, this);
   }
 });
 
-Lizard.Views.LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.LocationCollection(),
+Lizard.views.LocationCollection = Backbone.Marionette.CollectionView.extend({
+  collection: new Lizard.collections.Location(),
   tagName: 'ul',
   
-  itemView: Lizard.Views.LocationView,
+  itemView: Lizard.views.Location,
   initialize: function(){
       this.collection.fetch();
       this.listenTo(this.collection, 'reset', this.render, this);
   }
 });
 
-Lizard.Views.ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.Collections.ParameterCollection(),
+Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
+  collection: new Lizard.collections.Parameter(),
   tagName: 'ul',
   
-  itemView: Lizard.Views.ParameterView,
+  itemView: Lizard.views.Parameter,
   initialize: function(){
       this.collection.fetch();
       this.listenTo(this.collection, 'reset', this.render, this);

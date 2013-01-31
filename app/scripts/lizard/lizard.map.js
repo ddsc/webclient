@@ -103,7 +103,6 @@ LayersCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 
-
 Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   template: '#icon-template',
   tagName: 'li'
@@ -118,14 +117,14 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-// It is highly debatable if this should be a Marionnette Itemview.
+// It is highly debatable if this should be a Marionette Itemview.
 // The functionality now allows:
 // * Location models are loaded and added to a Leaflet map. 
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
-  collection: new Lizard.Collections.LocationCollection(),
+  collection: new Lizard.collections.Location(),
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849), 
               new L.LatLng(50.9584, 7.5147)
@@ -135,7 +134,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   markers: null,
   initialize: function(){
     console.log('LeafletView.initialize()');
-    console.log(this.trigger);
     this.trigger("dom:refresh");
   },
   onDomRefresh: function(){
@@ -149,6 +147,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     // The collection is loaded and the scope "this" is bound to the 
     // drawonMap function.
     this.collection.fetch({success: _.bind(this.drawonMap, this)});
+    //this.booyah();
   },
   // drawonMap takes the collection and goes through the models in it
   // 'drawing' them on the map.
@@ -166,11 +165,24 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         code: attributes.code
       });
       marker.on('mouseover', updateInfo);
-      marker.on('click', selectforCollage)
+      marker.on('click', modalInfo);
       this.markers.addLayer(marker);
-    };
+    }
+    $('#modal').on('show', this.updateModal);
     this.mapCanvas.addLayer(this.markers);
+    
 
+    function modalInfo(e){
+          var marker = e.target;
+          var model = marker.valueOf().options.bbModel;
+          $('#modal').modal();
+      }
+
+    function updateModal(e){
+        var marker = e.target;
+        $('#modal').append('JAJAJA');
+
+    }
     // Event listener for updating the information in the
     // upper right corner.
     // only works for L.Marker objects
