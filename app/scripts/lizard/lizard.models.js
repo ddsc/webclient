@@ -11,21 +11,48 @@ Lizard.models.Filter = Backbone.Model.extend({
   },
   defaults: {
     'selected':  false
+  },
+  parse: function(data) {
+    console.log(data);
+    if(data.results) {
+      return data.results;
+    } else {
+      return data;
+    }
   }
 });
 
 Lizard.models.Location = Backbone.Model.extend({
   initialize: function(model) {
     console.log('LocationModel initializing');
-    this.url = model.url;
-    console.log(model.url);
-    this.fetch();
   },
+  defaults: {
+    'selected':  false
+  },
+  parse: function(data) {
+    console.log(data);
+    if(data.results) {
+      return data.results;
+    } else {
+      return data;
+    }
+  }
 });
 
 Lizard.models.Parameter = Backbone.Model.extend({
   initialize: function() {
     console.log('ParameterModel initializing');
+  },
+  defaults: {
+    'selected':  false
+  },
+  parse: function(data) {
+    console.log(data);
+    if(data.results) {
+      return data.results;
+    } else {
+      return data;
+    }
   }
 });
 

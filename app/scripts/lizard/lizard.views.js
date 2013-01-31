@@ -62,7 +62,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
 
 
 /**
-Collectionviews
+CollectionViews
 */
 
 Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
