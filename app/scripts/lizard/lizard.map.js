@@ -134,8 +134,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   markers: null,
   initialize: function(){
     console.log('LeafletView.initialize()');
-    this.trigger("dom:refresh");
   },
+  modalInfo:Lizard.Utils.Map.modalInfo,
+  updateInfo: Lizard.Utils.Map.updateInfo,
   onDomRefresh: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7, maxBounds: this.bounds});
@@ -146,51 +147,17 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     });
     // The collection is loaded and the scope "this" is bound to the 
     // drawonMap function.
-    this.collection.fetch({success: _.bind(this.drawonMap, this)});
-    //this.booyah();
-  },
-  // drawonMap takes the collection and goes through the models in it
-  // 'drawing' them on the map.
-  drawonMap: function(collection, objects){
-    var models = collection.models;
-    for (var i in models){
-      var model = models[i];
-      model.fetch({async: false});
-      var attributes = model.attributes;
-      var point = attributes.point_geometry;
-      var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
-        clickable: true,
-        name: attributes.name,
-        bbModel: model,
-        code: attributes.code
-      });
-      marker.on('mouseover', updateInfo);
-      marker.on('click', modalInfo);
-      this.markers.addLayer(marker);
-    }
+    var that = this;
+    Lizard.Utils.Map.booyah(that);
+    this.collection.fetch({
+      success: _.bind(Lizard.Utils.Map.drawonMap, that), 
+      error:function(data, response){
+        console.log('Error this'+ response.responseText);
+      }
+    });
     $('#modal').on('show', this.updateModal);
     this.mapCanvas.addLayer(this.markers);
-    
 
-    function modalInfo(e){
-          var marker = e.target;
-          var model = marker.valueOf().options.bbModel;
-          $('#modal').modal();
-      }
-
-    function updateModal(e){
-        var marker = e.target;
-        $('#modal').append('JAJAJA');
-
-    }
-    // Event listener for updating the information in the
-    // upper right corner.
-    // only works for L.Marker objects
-    function updateInfo(e) {
-        var marker = e.target;
-        info.update(marker.valueOf().options);
-    }
-    
     //add custom control, to show information on hover
     // taken from http://leafletjs.com/examples/choropleth.html
     info = L.control();
@@ -209,19 +176,9 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     };
     
     info.addTo(this.mapCanvas);
-
-
-    function selectforCollage(e) {
-        var marker = e.target;
-        var properties = marker.valueOf().options;
-        var wsitem = properties.bbModel;
-        wsitem.set({title: wsitem.attributes.name})
-        Collage.add(wsitem);
-    };
-
-
     $('#map').css('height', $(window).height()-100);
   },
+
   template: '#leaflet-template'
 });
 

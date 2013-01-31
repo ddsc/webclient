@@ -15,10 +15,9 @@ Lizard.models.Filter = Backbone.Model.extend({
 
 Lizard.models.Location = Backbone.Model.extend({
   initialize: function(model) {
-    console.log('LocationModel initializing');
-    this.url = model.url;
-    console.log(model.url);
-    this.fetch();
+    // console.log('LocationModel initializing');
+    // this.url = model.url;
+    // this.fetch();
   },
 });
 

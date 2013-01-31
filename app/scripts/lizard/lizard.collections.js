@@ -19,13 +19,13 @@ Lizard.collections.Location = Backbone.Collection.extend({
   url: local_settings.locations_url,
   model: Lizard.models.Location,
   parse: function(res, xhr) {
-    return res.results;
+    return res;
   }
 });
 
 Lizard.collections.Parameter = Backbone.Collection.extend({
   initialize: function() {
-    console.log('Parametern initializing');
+    console.log('Parameter initializing');
   },
   url: local_settings.parameters_url,
   model: Lizard.models.Parameter
