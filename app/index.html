@@ -247,19 +247,21 @@
 
         <script id="filterview-template" type="text/template">
             <label class="checkbox">
-                <input type="checkbox" <%if(selected){%>CHECKED<%}%>> <%= filtername %> <span class="state hide"><%= selected %></span>
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= filtername %> <span class="state hide"><%= selected %></span>
             </label>
         </script>
 
         <script id="locationview-template" type="text/template">
             <label class="checkbox">
-                <input type="checkbox"> <%= name %>
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-globe"></i> <%= name %> <span class="state hide"><%= selected %></span>
             </label>        
         </script>
 
         <script id="parameterview-template" type="text/template">
             <label class="checkbox">
-                <input type="checkbox"> <%= parameter %>
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>>
+                <i class="icon-flag"></i> <% if(!name){ %> Naamloze parameter <% } else { %><%=name%> <% } %> 
+                <span class="badge <% if(parametervalue<500){ %>badge-notice<% } else { %>badge-warning<% } %>"><%= parametervalue %></span><span class="state hide"><%= selected %></span>
             </label>                
         </script>
 
@@ -267,23 +269,23 @@
           <div class="row-fluid">
             <div class="span3" id="sidebar">
                 <div class="" id="sidebarRegion">
-                   <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                            <li class="metrics-dropdown" id="filters">
-                                <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
-                                <p data-group="filters" id="filtersRegion" class="-hide"></p>
-                            </li>
-                            <li class="metrics-dropdown" id="locations">
-                                <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
-                                <p data-group="locations" id="locationsRegion" class="hide"></p>
-                            </li>
-                            <li class="metrics-dropdown" id="parameters">
-                                <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
-                                <p data-group="parameters" id="parametersRegion" class="hide"></p>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
-                            </li>
-                        </ul>
+                    <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                        <li class="metrics-dropdown" id="filters">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Filters</a>
+                            <p data-group="filters" id="filtersRegion" class="-hide"></p>
+                        </li>
+                        <li class="metrics-dropdown" id="locations">
+                            <a href="javascript:void(0)"><em class="icon-chevron-down"></em> Locaties</a>
+                            <p data-group="locations" id="locationsRegion" class="-hide"></p>
+                        </li>
+                        <li class="metrics-dropdown" id="parameters">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down"></em> Parameters</a>
+                            <p data-group="parameters" id="parametersRegion" class="-hide"></p>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                        </li>
+                    </ul>
                     </div>
                     <div class="" id="collageRegion"></div>
             </div>
@@ -529,6 +531,7 @@
         <!-- Backbone -->
         <script src="scripts/vendor/backbone-0.9.10.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
+        <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
         <script src="scripts/vendor/backbone.marionette.min.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
@@ -550,17 +553,21 @@
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
         <script src="scripts/lizard/lizard.layerbubble.js"></script>
+        <script src="scripts/utilities.js"></script>
 
+        
         <!-- Lizard globals, order matters -->   
         <script src="localsettings.js"></script>
-        <script src="scripts/lizard/lizard.js"></script>
+
+        <script src="scripts/lizard/lizard.app.js"></script>
+
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
+
         <script src="scripts/lizard/lizard.views.js"></script>
 
+
         <!-- Application code, split into files -->
-        <script src="scripts/utilities.js"></script>
-        <script src="scripts/lizard/lizard.app.js"></script>
         <script src="scripts/lizard/lizard.home.js"></script>
         <script src="scripts/lizard/lizard.help.js"></script>
         <script src="scripts/lizard/lizard.account.js"></script>
@@ -568,6 +575,7 @@
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
         <script src="scripts/lizard/lizard.overview.js"></script>
+        <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 
         <!-- Backbone Application bootstrapping -->
         <script type="text/javascript">
@@ -576,6 +584,5 @@
         });
         </script>
         
-
     </body>
 </html>
