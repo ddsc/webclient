@@ -1,5 +1,5 @@
 /**
-collections
+Collections
 */
 
 Lizard.collections = {};

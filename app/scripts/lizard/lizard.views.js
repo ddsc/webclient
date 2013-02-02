@@ -1,5 +1,5 @@
 /**
-Itemviews
+ItemViews
 */
 
 Lizard.views = {};
