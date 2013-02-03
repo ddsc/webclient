@@ -50,7 +50,7 @@ This will show the test suite in HTML format. Use this to spot errors.
 
 ** Note ** The test/index.html file includes the project's javascript files. It also contains all the template fragments, which is obviously not ideal. 
 Perhaps we should start externalizing these templates so they can be included.
-
+See http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/
 
 
 ## Mock API
