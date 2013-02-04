@@ -72,74 +72,12 @@ Lizard.Graphs.TimeserieView = Backbone.Marionette.ItemView.extend({
 
 
 
-
-var FilterView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('FilterView.initialize()');
-  },
-  tagName: 'li',
-  template: '#filterview-template'
-});
-
-var FilterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Filter(),
-  tagName: 'ul',
-  
-  itemView: FilterView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-var LocationView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('LocationView.initialize()');
-  },
-  tagName: 'li',
-  template: '#locationview-template'
-});
-
-var LocationCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Location(),
-  tagName: 'ul',
-  
-  itemView: LocationView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-
-
-var ParameterView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('ParameterView.initialize()');
-  },
-  tagName: 'li',
-  template: '#parameterview-template'
-});
-
-var ParameterCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Parameter(),
-  tagName: 'ul',
-  
-  itemView: ParameterView,
-  initialize: function(){
-      this.collection.fetch();
-      this.bindTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-
-
-
 Lizard.Graphs.graphs = function(){
   console.log('Lizard.Graphs.graphs()');
 
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
+  
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
 
@@ -150,6 +88,9 @@ Lizard.Graphs.graphs = function(){
 
   var timeserieView = new Lizard.Graphs.TimeserieView();
   graphsView.mainRegion.show(timeserieView.render());
+
+
+  window.graphsView = graphsView; // so it's available outside this controller
 
   // And set URL to #graphs
   Backbone.history.navigate('graphs');

@@ -395,6 +395,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
 
 
+#filtersRegion ul li label, #locationsRegion ul li label, #parametersRegion ul li label{
+    font-size: .95em;
+    padding-left: -15px !important;
+    margin-left: -15px !important;
+    cursor: pointer;
+}
 
 #filtersRegion ul, #filtersRegion ul li {
     list-style: none;
@@ -410,6 +416,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+
+p#filtersRegion{
+    height: 200px;
+    overflow-y: auto;
+}
+
+p#locationsRegion{
+    height: 200px;
+    overflow-y: auto;
+}
+
+p#parametersRegion{
+    height: 200px;
+    overflow-y: auto;
 }
 
 

@@ -33,7 +33,27 @@ The 'yeoman server' step is optional, you can also serve it with nginx, apache o
     $ python -m SimpleHTTPServer
 
 
-### Mock API
+
+## Tests
+
+If you've installed yeoman, you should be able to run the Mocha test-suite from the commandline as such:
+
+    $ yeoman test
+    Testing index.html...........OK
+    >> 11 assertions passed (0s)
+
+    Done, without errors.    
+
+This is perfect for automated testing or for CI systems like Jenkins or Travis.
+Assuming you're serving the project root using a webserver, you should be able to point your browser to test/index.html.
+This will show the test suite in HTML format. Use this to spot errors.
+
+** Note ** The test/index.html file includes the project's javascript files. It also contains all the template fragments, which is obviously not ideal. 
+Perhaps we should start externalizing these templates so they can be included.
+See http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/
+
+
+## Mock API
 
 Because of parallel front-end and back-end development, at some point we're in need of a fake/mock/stub API, so we can create a responsive interface.
 This API was hacked together using node.js/PostGIS and lives here: https://github.com/ddsc/ddsc-node-mock-api

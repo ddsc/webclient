@@ -1,12 +1,13 @@
 /**
-models
+Models
 */
+
 
 Lizard.models = {};
 
 Lizard.models.Filter = Backbone.Model.extend({
   initialize: function() {
-    console.log('FilterModel initializing');
+    // console.log('FilterModel initializing');
   },
   defaults: {
     'selected':  false
@@ -19,11 +20,17 @@ Lizard.models.Location = Backbone.Model.extend({
     // this.url = model.url;
     // this.fetch();
   },
+  defaults: {
+    'selected':  false
+  }
 });
 
 Lizard.models.Parameter = Backbone.Model.extend({
   initialize: function() {
-    console.log('ParameterModel initializing');
+    // console.log('ParameterModel initializing');
+  },
+  defaults: {
+    'selected':  false
   }
 });
 
