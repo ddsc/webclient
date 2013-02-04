@@ -17,8 +17,6 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 
-
-
 // Model definitions
 
 var Layer = Backbone.Model.extend({

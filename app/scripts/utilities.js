@@ -61,7 +61,6 @@ Lizard.Utils.Map = {
           var marker = e.target;
           console.log(marker);
           modalLayout.header.show(modalView.render());
-          // modalLayout.body.show(modalView.render());
           var model = marker.valueOf().options.bbModel;
           $('#location-modal').modal();
     },
