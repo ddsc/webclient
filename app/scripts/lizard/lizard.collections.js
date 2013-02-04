@@ -20,6 +20,15 @@ Lizard.collections.Location = Backbone.Collection.extend({
   model: Lizard.models.Location
 });
 
+Lizard.collections.Timeserie = Backbone.Collection.extend({
+  initialize: function() {
+    // console.log('Location timeseries initializing');
+  },
+  url: local_settings.timeseries_url,
+  model: Lizard.models.Timeserie
+});
+
+
 Lizard.collections.Parameter = Backbone.Collection.extend({
   initialize: function() {
     console.log('Parameter initializing');
@@ -27,5 +36,6 @@ Lizard.collections.Parameter = Backbone.Collection.extend({
   url: local_settings.parameters_url,
   model: Lizard.models.Parameter
 });
+
 
 Lizard.collections.Collage = Backbone.Collection.extend();

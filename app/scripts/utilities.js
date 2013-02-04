@@ -63,31 +63,23 @@ $('li#parameters a em').live("click", function(e){
 
 
 var ModalView = Backbone.Marionette.ItemView.extend({
-    template: '#location-modal-header-template',
+    template: '#location-modal-template',
     model: null,
     initialize: function(model){
         this.model = model;
     }
 })
 
-Lizard.ModalLayout = Backbone.Marionette.Layout.extend({
-  template: '#location-modal-template',
-  regions: {
-    'header': '#location-modal-header',
-    'body': '#location-modal-body',
-  }
-});
-
-var modalLayout = new Lizard.ModalLayout();
-var modalView = null;
 
 Lizard.Utils = {};
 Lizard.Utils.Map = {
     modalInfo: function (e){
           var marker = e.target;
-          console.log(marker);
-          modalLayout.header.show(modalView.render());
           var model = marker.valueOf().options.bbModel;
+          modalView = new ModalView();
+          modalView.model = model;
+          console.log(model);
+          Lizard.mapView.modal.show(modalView.render());
           $('#location-modal').modal();
     },
     updateModal: function(e){
@@ -119,7 +111,7 @@ Lizard.Utils.Map = {
             code: attributes.code
           });
           //marker.on('mouseover', this.updateInfo);
-          marker.on('click', this.modalInfo);
+          marker.on('click', Lizard.Utils.Map.modalInfo);
           this.markers.addLayer(marker);
     }},
     selectforCollage: function(e) {

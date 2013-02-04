@@ -5,7 +5,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
-    'collageRegion': '#collageRegion'
+    'collageRegion': '#collageRegion',
+    'modal' : '#location-modal'
   }
 });
 
@@ -100,7 +101,6 @@ LayersCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
-
 Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   template: '#icon-template',
   tagName: 'li'
@@ -188,19 +188,19 @@ Lizard.Map.map = function(){
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
-  var mapView = new Lizard.Map.DefaultLayout();
+  Lizard.mapView = new Lizard.Map.DefaultLayout();
 
   // And add it to the #content div
-  Lizard.App.content.show(mapView);
+  Lizard.App.content.show(Lizard.mapView);
 
   var collageView = new CollageView();
   var layersView = new LayersCollectionView();
   Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
 
   // And show them in their divs
-  mapView.sidebarRegion.show(layersView.render());
-  mapView.collageRegion.show(collageView.render());
-  mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
+  Lizard.mapView.sidebarRegion.show(layersView.render());
+  Lizard.mapView.collageRegion.show(collageView.render());
+  Lizard.mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
 
   $('.drawer-item').popover({
     html: true,

@@ -14,15 +14,22 @@ Lizard.models.Filter = Backbone.Model.extend({
   }
 });
 
-Lizard.models.Location = Backbone.Model.extend({
-  initialize: function(model) {
-    // console.log('LocationModel initializing');
-    // this.url = model.url;
-    // this.fetch();
-  },
+
+Lizard.models.Timeserie = Backbone.AssociatedModel.extend({
+  defaults: {
+    'selected': false
+  }
+});
+
+Lizard.models.Location = Backbone.AssociatedModel.extend({
+  relations: [{
+    type: Backbone.Many,
+    key:'timeseries',
+    relatedModel: Lizard.models.Timeserie,
+  }],
   defaults: {
     'selected':  false
-  }
+  },
 });
 
 Lizard.models.Parameter = Backbone.Model.extend({
@@ -38,3 +45,5 @@ Lizard.models.Collage = Backbone.Model.extend({
   initialize: function() {
   }
 });
+
+Lizard.models.Timeserie

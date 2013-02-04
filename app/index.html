@@ -151,6 +151,7 @@
             </div>
 
             <div class="span9" id="leafletRegion"></div>
+            <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
 
           </div>
         </script>
@@ -200,23 +201,18 @@
         </script>
 
         <script type="text/template" id="location-modal-template">
-        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
           <div id="location-modal-header" class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="location-modal-label"><%= name %></h3>
         </div>
         <div id="location-modal-body" class="modal-body">
+        <%= timeseries.latest_value %>
         </div>
         <div id="location-modal-footer" class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <button class="btn btn-primary">Save changes</button>
         </div>
-    </div>
         </script>
-
-        <script type="text/template" id="location-modal-header-template">
-        <h3 id="location-modal-label"><%= name %></h3>
-        </script>
-
 
 
         <script type="text/template" id="testview-template">
@@ -529,6 +525,7 @@
 
         <!-- Backbone -->
         <script src="scripts/vendor/backbone-0.9.10.js"></script>
+        <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
@@ -552,13 +549,13 @@
         <script src="scripts/vendor/bootstrap-notify.js"></script>
 
         <script src="scripts/lizard/lizard.layerbubble.js"></script>
-        <script src="scripts/utilities.js"></script>
 
         
         <!-- Lizard globals, order matters -->   
         <script src="localsettings.js"></script>
 
         <script src="scripts/lizard/lizard.app.js"></script>
+        <script src="scripts/utilities.js"></script>
 
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
