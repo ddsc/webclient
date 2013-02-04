@@ -64,10 +64,6 @@ $('li#parameters a em').live("click", function(e){
 
 var ModalView = Backbone.Marionette.ItemView.extend({
     template: '#location-modal-template',
-    model: null,
-    initialize: function(model){
-        this.model = model;
-    }
 })
 
 
@@ -78,7 +74,6 @@ Lizard.Utils.Map = {
           var model = marker.valueOf().options.bbModel;
           modalView = new ModalView();
           modalView.model = model;
-          console.log(model);
           Lizard.mapView.modal.show(modalView.render());
           $('#location-modal').modal();
     },

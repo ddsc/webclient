@@ -146,6 +146,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     // The collection is loaded and the scope "this" is bound to the 
     // drawonMap function.
     var that = this;
+
     this.collection.fetch({
       success: _.bind(Lizard.Utils.Map.drawonMap, that), 
       error:function(data, response){

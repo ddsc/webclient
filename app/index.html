@@ -206,7 +206,11 @@
             <h3 id="location-modal-label"><%= name %></h3>
         </div>
         <div id="location-modal-body" class="modal-body">
-        <%= timeseries.latest_value %>
+        <ul> 
+        <% _.each(timeseries.models, function(ts){ %>
+            <li><%= ts.attributes.latest_value %></li>
+        <%});  %>
+        </ul>
         </div>
         <div id="location-modal-footer" class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
