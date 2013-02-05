@@ -120,9 +120,16 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     template: '#location-modal-template',
     series: null,
     title: null,
+    timeseries: null,
+    modelthings: function(model){
+      this.timeseries = new Backbone.Collection();
+      ts = this.model.timeseries;
+      for (i in timeseries) {
+
+      }
+    },
     onRender: function(){
-      this.title = this.model.attributes.name;
-      timeseries = this.model.attributes.timeseries.models;
+      this.modelthings()
       this.series = []
       for (i in timeseries){
         var attributes = timeseries[i].attributes;
