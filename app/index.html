@@ -208,7 +208,7 @@
         <div id="location-modal-body" class="modal-body">
             <div id="chartarea"></div>
 
-            <% chart.series %>
+            <% %>
 
         <% _.each(timeseries.models, function(ts){ %>
         <% ts.attributes.latest_value %>
@@ -219,9 +219,6 @@
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <button class="btn btn-primary">Save changes</button>
         </div>
-        </script>
-        <script type="text/template" id="points">
-        <% console.log('ja') %>
         </script>
 
 
