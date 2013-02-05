@@ -117,20 +117,28 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
-    template: '#location-modal-template',
+    template: function(model){
+      return _.template($('#location-modal-template').html(), {
+        // models: this.timeseries.attributes,
+        name: model.name,
+        tseries: model.tseries
+      }, {variable: 'timeseries'});
+    },
     series: null,
     title: null,
     timeseries: null,
-    modelthings: function(model){
-      this.timeseries = new Backbone.Collection();
-      ts = this.model.timeseries;
-      for (i in timeseries) {
 
+    onBeforeRender: function(){
+      this.model.set({tseries: new Backbone.Collection()});
+      ts = this.model.attributes.timeseries;
+      for (i in ts) {
+        TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
+        this.model.attributes.tseries.add(TimeserieModel);
       }
     },
     onRender: function(){
-      this.modelthings()
-      this.series = []
+      this.series = [];
+      timeseries = this.timeseries;
       for (i in timeseries){
         var attributes = timeseries[i].attributes;
         (attributes.latest_value ? 
@@ -138,7 +146,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
           'nothing')
       }
     },
-    onShow: function(){
+    jan: function(){
     var chart;
       chart = new Highcharts.Chart({
                 chart: {
