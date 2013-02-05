@@ -36,7 +36,33 @@ The 'yeoman server' step is optional, you can also serve it with nginx, apache o
 
 ## Tests
 
-If you've installed yeoman, you should be able to run the Mocha test-suite from the commandline as such:
+### Front-end testing with Casper.js
+
+[Casper.js](http://casperjs.org/) is a bit like Selenium, but faster, more flexible and scriptable.
+
+First, install [Phantom.js](http://phantomjs.org/) for your platform. (OS X users can brew install phantomjs)
+Then, install Casper from a recent tag:
+
+    $ git clone git://github.com/n1k0/casperjs.git
+    $ cd casperjs && git checkout tags/1.0.1
+    
+Make sure both phantomjs and casperjs are in your PATH (symlink into /usr/local/bin for example)
+When all is right, the following should be possible on your system:
+
+    $ which casperjs && which phantomjs
+    /usr/local/bin/casperjs
+    /usr/local/bin/phantomjs
+
+Change directory to test/ and tell Casper to test using the frontend.js script:
+
+    $ casperjs test frontend.js
+    
+This will test the front-end user interface.
+
+
+### Unit testing with Mocha.js
+
+If you've installed Yeoman, you should be able to run the Mocha test-suite from the commandline as such:
 
     $ yeoman test
     Testing index.html...........OK
@@ -45,12 +71,15 @@ If you've installed yeoman, you should be able to run the Mocha test-suite from 
     Done, without errors.    
 
 This is perfect for automated testing or for CI systems like Jenkins or Travis.
+Use this for testing Backbone models, collections, functions, in/out values, stuff like that.
+Mocha can run in BDD or TDD mode. More info at http://visionmedia.github.com/mocha/
 Assuming you're serving the project root using a webserver, you should be able to point your browser to test/index.html.
 This will show the test suite in HTML format. Use this to spot errors.
 
 ** Note ** The test/index.html file includes the project's javascript files. It also contains all the template fragments, which is obviously not ideal. 
 Perhaps we should start externalizing these templates so they can be included.
 See http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/
+
 
 
 ## Mock API
