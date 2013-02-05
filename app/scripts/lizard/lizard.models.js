@@ -19,7 +19,6 @@ Lizard.models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url;
     this.fetch({async: true});
-    // console.log('FilterModel initializing');
   },
   defaults: {
     'selected':  false
