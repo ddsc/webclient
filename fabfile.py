@@ -1,5 +1,8 @@
+from fabric.decorators import task
+
 from sitesetup.fab.config import init_file
-from sitesetup.fab.tasks import 
+from sitesetup.fab import detail
+from sitesetup.fab.tasks import staging, production
 
 # Most settings can be configured in fabfile.cfg
 init_file('fabfile.cfg')
