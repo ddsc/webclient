@@ -116,10 +116,62 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
-Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
-    template: '#location-modal-template',
-    onShow: function(){
+Lizard.Map.Timeseries = Backbone.Marionette.ItemView.extend({
+  template: '#location-modal-template',
+  collection: new Lizard.collections.Timeserie(),
+  onShow: function (){
+    console.log(this.collection.fetch());
+  }
+});
 
+Lizard.views.ModalGraph = Backbone.Marionette.CollectionView.extend({
+    template: '#location-modal-template',
+    initialize: function(){
+    },
+    onShow: function(){
+      var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo:'chartarea',
+                    type: 'line',
+                },
+                            title: {
+                text: 'Monthly Average Temperature',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature (°C)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'°C';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: []
+        });
     }
 })
 
