@@ -115,6 +115,67 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
+
+Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
+    template: '#location-modal-template',
+    onShow: function(){
+
+    }
+})
+
+
+// Utils for this item
+Lizard.Utils.Map = {
+    modalInfo: function (e){
+          var marker = e.target;
+          var model = marker.valueOf().options.bbModel;
+          modalView = new Lizard.views.ModalGraph();
+          modalView.model = model;
+          Lizard.mapView.modal.show(modalView.render());
+          $('#location-modal').modal();
+    },
+    updateModal: function(e){
+        var marker = e.target;
+        
+    },
+    updateInfo: function (e) {
+        var marker = e.target;
+        console.log(e);
+        props = marker.valueOf().options;
+        e.layer._map._controlContainer.innerHTML = '<h4>Datapunt</h4>' + (props ?
+                '<b>' + props.name + '</b><br>' +
+                'Punt: ' + props.code
+                : 'Zweef over de punten');
+    },
+    // drawonMap takes the collection and goes through the models in it
+    // 'drawing' them on the map.
+    drawonMap: function(collection, objects){
+        var models = collection.models;
+        for (var i in models){
+          var model = models[i];
+          model.fetch({async: false});
+          var attributes = model.attributes;
+          var point = attributes.point_geometry;
+          var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
+            clickable: true,
+            name: attributes.name,
+            bbModel: model,
+            code: attributes.code
+          });
+          //marker.on('mouseover', this.updateInfo);
+          marker.on('click', Lizard.Utils.Map.modalInfo);
+          this.markers.addLayer(marker);
+    }},
+    selectforCollage: function(e) {
+        var marker = e.target;
+        var properties = marker.valueOf().options;
+        var wsitem = properties.bbModel;
+        wsitem.set({title: wsitem.attributes.name})
+        Collage.add(wsitem);
+    }
+};
+
+
 // It is highly debatable if this should be a Marionette Itemview.
 // The functionality now allows:
 // * Location models are loaded and added to a Leaflet map. 

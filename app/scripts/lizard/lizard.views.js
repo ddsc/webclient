@@ -232,7 +232,6 @@ Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 
-
 // Instantiate the views
 var filtercollectionview = new Lizard.views.FilterCollection();
 var locationcollectionview = new Lizard.views.LocationCollection();
