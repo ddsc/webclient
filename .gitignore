@@ -1,6 +1,7 @@
 localsettings.js
 buildout.cfg
 
+*.py[cwo]
 .DS_Store
 .jshintrc
 .gitattributes
