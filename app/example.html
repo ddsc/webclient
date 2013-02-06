@@ -98,7 +98,6 @@
           </div>
           <div class="row-fluid">
 
-
             <div class="span3 well" id="timeseriesSelectionBlock">
                 <h4>Tijdserie selectie blok</h4>
                 <div id="timeseriesSelection">
@@ -117,6 +116,10 @@
 		  <input id="new-collage-item" placeholder="Add an item">
         </script>
 
+		<script type="text/template" id="name-template-delete">
+		  <div class='collageItem'> <%= name %> <em class="icon-remove"></em></div>
+		</script>
+
 		<script type="text/template" id="name-template">
 		  <div class='collageItem'> <%= name %> </div>
 		</script>
@@ -127,7 +130,7 @@
         </script>
 
         <script type="text/template" id="name-checkbox">
-            <input type="checkbox"> <%= name %> </input>
+            <input type="checkbox" class="bert"> <%= name %> <em class="icon-remove"></em></input>
         </script>
 
 
@@ -319,6 +322,7 @@
         <script src="scripts/lizard/lizard.views.js"></script>
         <script src="scripts/lizard/views/ActiveCollage.js"></script>
         <script src="scripts/lizard/views/CollageList.js"></script>
+		<script src="scripts/lizard/views/CollageItemList.js"></script>
         <script src="scripts/lizard/views/Graph.js"></script>
         <script src="scripts/lizard/views/GraphStack.js"></script>
 

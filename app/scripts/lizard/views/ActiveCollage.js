@@ -1,24 +1,6 @@
-
 Lizard.views.ActiveCollageHeader = Backbone.Marionette.ItemView.extend({
     //tagName: 'div',
-    template: '#name-template'
-});
-
-Lizard.views.CollageItem = Backbone.Marionette.ItemView.extend({
-    //tagName: "tr",
-    ui: {
-        checkbox: "input[type=checkbox]"
-    },
-    onRender: function() {
-        //if (this.model.get('id')>1) {
-        this.ui.checkbox.addClass('checked');
-        //}
-    },
-    template: '#name-checkbox'
-});
-
-Lizard.views.CollageItemList = Backbone.Marionette.CollectionView.extend({
-    itemView: Lizard.views.CollageItem
+    template: '#name-template',
 });
 
 Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
@@ -31,7 +13,7 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
     },
 
 	events: {
-		'keypress #new-collage-item': 'createOnEnter'
+		'keypress #new-collage-item': 'createOnEnter',
 	},
 
 	createOnEnter: function(event){
@@ -41,12 +23,18 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
 		if (event.which !== ENTER_KEY|| !val) {
 			return;
 		}
-		activeCollageItems.create({
+		new_item = activeCollageItems.create({
 			name: val,
-			collage: this._header.model.url() + '/'
+			collage: this._header.model.url()
 		});
 		input.val('');
+		this._collage_item_list.render()
 	},
+
+	// Broken working code.
+	// The intialize and setCollage function give headaches in other part
+	// of the code.
+	// the  this._collage_item_list must be rerendered in a couple of places.
 
     setCollage: function(collage) {
         this._header.model = collage;

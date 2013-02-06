@@ -61,6 +61,7 @@ collageListView.on('itemview:selectItem', function(childview, model) {
     activeCollageView.setCollage(model);
 });
 
+
 graphStackView = new Lizard.views.GraphStack({
     collection: activeCollageItems
 });
