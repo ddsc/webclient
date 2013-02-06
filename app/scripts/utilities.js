@@ -32,7 +32,7 @@ $('input[type=checkbox]').live('click', function(e) {
 
 
 // Click handlers for toggling the filter/location/parameter UI
-$('li#filters a em').live("click", function(e){
+$('li#filters em.toggle').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {
@@ -41,7 +41,7 @@ $('li#filters a em').live("click", function(e){
     el.removeClass('hide');
   }
 });
-$('li#locations a em').live("click", function(e){
+$('li#locations a em.toggle').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {
@@ -50,7 +50,7 @@ $('li#locations a em').live("click", function(e){
     el.removeClass('hide');
   }
 });
-$('li#parameters a em').live("click", function(e){
+$('li#parameters a em.toggle').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   if(el.is(':visible')) {
@@ -59,6 +59,53 @@ $('li#parameters a em').live("click", function(e){
     el.removeClass('hide');
   }
 });
+
+
+
+$('li#filters em.reset').live("click", function(e){
+  console.log("Resetting");
+  e.preventDefault();
+  _.each(filtercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(locationcollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(parametercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+});
+
+$('li#locations em.reset').live("click", function(e){
+  console.log("Resetting");
+  e.preventDefault();
+  _.each(filtercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(locationcollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(parametercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+});
+
+$('li#parameters em.reset').live("click", function(e){
+  console.log("Resetting");
+  e.preventDefault();
+  _.each(filtercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(locationcollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(parametercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+});
+
+
+
 
 
 
