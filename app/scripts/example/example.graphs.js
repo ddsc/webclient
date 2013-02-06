@@ -4,10 +4,29 @@ Example.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
     'collageList': '#collageList',
+    'collagaListFooter': '#new-collage',
     'selectedCollage': '#selectedCollage',
     'graphStack': '#graphStack',
     'timeseriesSelection': '#timeseriesSelection'
+  },
+
+  events: {
+    'keypress #new-collage': 'createOnEnter'
+  },
+
+  createOnEnter: function(event){
+    var ENTER_KEY = 13;
+    var input = $('#new-collage');
+    var val = input.val().trim();
+    if (event.which !== ENTER_KEY|| !val) {
+      return;
+    }
+
+    collageCollection.create({
+      name: val});
+    input.val('');
   }
+
 });
 
 Example.Graphs.Router = Backbone.Marionette.AppRouter.extend({
@@ -49,7 +68,6 @@ graphStackView = new Lizard.views.GraphStack({
 locationList = new Lizard.views.LocationCollection({
 
 });
-
 
 Example.Graphs.graphs = function(){
 	console.log('Example.Graphs.graphs()');

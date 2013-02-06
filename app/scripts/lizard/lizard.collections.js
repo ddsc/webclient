@@ -28,4 +28,5 @@ Lizard.collections.Parameter = Backbone.Collection.extend({
   model: Lizard.models.Parameter
 });
 
+
 Lizard.collections.Collage = Backbone.Collection.extend();

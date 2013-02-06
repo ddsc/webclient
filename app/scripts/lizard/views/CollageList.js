@@ -7,6 +7,7 @@ Lizard.views.Collage = Backbone.Marionette.ItemView.extend({
     selectItem: function() {
         this.trigger('selectItem', this.model);
     }
+
 });
 
 Lizard.views.CollageList = Backbone.Marionette.CollectionView.extend({

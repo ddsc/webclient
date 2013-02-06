@@ -26,8 +26,28 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
 
     regions: {
         header: '#active_collage_header',
-        collage_item_list: '#collage_item_list'
+        collage_item_list: '#collage_item_list',
+		footer: '#new_collage_item'
     },
+
+	events: {
+		'keypress #new-collage-item': 'createOnEnter'
+	},
+
+	createOnEnter: function(event){
+		var ENTER_KEY = 13;
+		var input = $('#new-collage-item');
+		var val = input.val().trim();
+		if (event.which !== ENTER_KEY|| !val) {
+			return;
+		}
+		activeCollageItems.create({
+			name: val,
+			collage: this._header.model.url() + '/'
+		});
+		input.val('');
+	},
+
     setCollage: function(collage) {
         this._header.model = collage;
         this.header.show(this._header.render());
