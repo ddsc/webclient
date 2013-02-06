@@ -130,22 +130,23 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
 
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
+      // this.listenTo(this.model.attributes.tseries, "add", this.render);
       ts = this.model.attributes.timeseries;
       for (i in ts) {
         TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
         this.model.attributes.tseries.add(TimeserieModel);
       }
     },
-    onRender: function(){
-      this.series = [];
-      timeseries = this.timeseries;
-      for (i in timeseries){
-        var attributes = timeseries[i].attributes;
-        (attributes.latest_value ? 
-          this.series.push(attributes.latest_value) :
-          'nothing')
-      }
-    },
+    // onRender: function(){
+    //   this.series = [];
+    //   timeseries = this.timeseries;
+    //   for (i in timeseries){
+    //     var attributes = timeseries[i].attributes;
+    //     (attributes.latest_value ? 
+    //       this.series.push(attributes.latest_value) :
+    //       'nothing')
+    //   }
+    // },
     jan: function(){
     var chart;
       chart = new Highcharts.Chart({
