@@ -27,6 +27,7 @@
         <![endif]-->
 
         <link href="styles/alert-blackgloss.css" rel="stylesheet">
+        <link href="styles/rickshaw.min.css" rel="stylesheet">
         <link href="styles/jquery.gridster.css" rel="stylesheet">
         <style>
             body {
@@ -203,17 +204,15 @@
         <script type="text/template" id="location-modal-template">
           <div id="location-modal-header" class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="location-modal-label"><%= name %></h3>
+            <h3 id="location-modal-label"><%= timeseries.name %></h3>
         </div>
         <div id="location-modal-body" class="modal-body">
-            <div id="chartarea"></div>
-
-            <% %>
-
-        <% _.each(timeseries.models, function(ts){ %>
-        <% ts.attributes.latest_value %>
-        <%});  %>
-        </ul>
+            <div id="chartarea"></div><div id="legend"></div>
+            <ul>
+                <% _.each(timeseries.tseries.models, function(ts) { %>
+                    <li class="timeserie" data-code="<%= ts.attributes.parameter.code %>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
+                <%});%>
+            </ul>
         </div>
         <div id="location-modal-footer" class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -459,6 +458,9 @@
             <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
         <script src="scripts/vendor/d3.v2.js"></script>
 
+        <!-- Rickshaw is a graph library built around d3.js -->
+        <script src="scripts/vendor/rickshaw.min.js"></script>
+
         <!-- Powerful time-series filtering tool -->
         <script src="scripts/vendor/crossfilter.js"></script>
 
@@ -570,7 +572,6 @@
 
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
-
         <script src="scripts/lizard/lizard.views.js"></script>
 
 		<!-- Utility code -->

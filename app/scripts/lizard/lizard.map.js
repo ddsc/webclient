@@ -116,65 +116,100 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
+
+/*This monstrosity of a Marionette ItemView is a view that
+ is initiated when a location on the map is clicked.
+
+ When one clicks on a location, the Bootstrap modal 
+ (focused lightbox with info) function is called. This
+
+ The focused block shows an overview of different timeseries.
+ A click on one of the timeseries opens a graph.
+
+ One view belongs to one location.
+*/ 
 Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
-    template: '#location-modal-template',
-    onShow: function(){
-      var chart;
-      chart = new Highcharts.Chart({
-                chart: {
-                    renderTo:'chartarea',
-                    type: 'line',
-                },
-                            title: {
-                text: 'Monthly Average Temperature',
-                x: -20 //center
+    template: function(model){
+      return _.template($('#location-modal-template').html(), {
+        // models: this.timeseries.attributes,
+        name: model.name,
+        tseries: model.tseries,
+      }, {variable: 'timeseries'});
+    },
+    series: [],
+    code: null,
+    events: {
+      'click .timeserie': "getSeriesdata",
+    },
+    getSeriesdata: function(clickedon){
+      var data_url = clickedon.target.dataset.url;
+      this.code = clickedon.target.dataset.code;
+      var EventCollection = Backbone.Collection.extend({
+        url: data_url
+      })
+      ts_events = new EventCollection()
+      ts_events.fetch({async:false,
+        success: _.bind(this.makeChart, this)
+      });
+    },
+    onBeforeRender: function(){
+      this.model.set({tseries: new Backbone.Collection()});
+      ts = this.model.attributes.timeseries;
+      for (i in ts) {
+        TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
+        this.model.attributes.tseries.add(TimeserieModel);
+      }
+    },
+    makeChart: function(collection, responses){
+      ts_events = responses;
+      this.series = [];
+      numbers = []
+      for (i in ts_events){
+        var date = new Date(ts_events[i].datetime);
+        yvalue = parseFloat(ts_events[i].value);
+        var value = {x: date.getTime()/1000, y: yvalue};
+        (value ? this.series.push(value) : 'nothing');
+        numbers.push(yvalue)
+      }
+      numbers.sort()
+      $('#chartarea').empty();
+      $('#legend').empty();
+      var graph = new Rickshaw.Graph( {
+      element: $('#chartarea')[0],
+      width:  300,
+      height: 150,
+      renderer: 'line',
+      min: numbers[0],
+      max: numbers[numbers.length - 1],
+      series: [
+            {
+              color: "#c05020",
+              data: this.series,
+              name: this.code
             },
-            subtitle: {
-                text: 'Source: WorldClimate.com',
-                x: -20
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        this.x +': '+ this.y +'°C';
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'New York',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-            }, {
-                name: 'Berlin',
-                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        })
+          ]
+        } );
+        graph.render();
+      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: graph
+      } );
+
+      var legend = new Rickshaw.Graph.Legend( {
+        graph: graph,
+        element: $('#legend')[0]
+
+      } );
+
+      var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+        graph: graph,
+        legend: legend
+      } );
+
+      var axes = new Rickshaw.Graph.Axis.Time( {
+        graph: graph
+      } );
+      axes.render();
+
     }
 })
 
@@ -334,4 +369,3 @@ Lizard.App.addInitializer(function(){
   });
   Lizard.App.vent.trigger('routing:started');
 });
-
