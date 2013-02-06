@@ -175,7 +175,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
       if(data.attributes.selected === true) {
         ids = ids + data.attributes.parameter_id;
         ids = ids + ',';
-        // console.log('---------->', ids);
+        console.log('---------->', ids);
       }
     });
     ids = ids.substring(0, ids.length - 1);
