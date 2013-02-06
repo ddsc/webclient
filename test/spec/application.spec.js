@@ -59,6 +59,17 @@
         });
     });
 
+    describe("Lizard.Map.LeafletView", function() {
+        it("creates a Lizard.Map.LeafletView", function() {
+            expect(Lizard.Map.LeafletView).to.be.a("function");
+        });
+    });
+
+    describe("Lizard.Map.Leaflet", function() {
+        it("creates an instance of LeafletView", function() {
+            expect(Lizard.Map.LeafletView).to.be.an("object");
+        });
+    });
 
     describe("filtercollectionview", function() {
         it("checks if filtercollectionview is instantiated", function() {
@@ -67,25 +78,21 @@
     });
 
 
-    describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
-      describe('count number of parameter models', function(){
-        it('should be 322', function(done){
-          var p = new Lizard.collections.Parameter();
-          var l;
-          p.fetch({
-            success: function() {
-                l = p.models.length;
-                expect(l).to.be(322);
-                done();
-            }
-          });
-        });
-      });
-    });
-
-
-
-
+    // describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
+    //   describe('count number of parameter models', function(){
+    //     it('should be 322', function(done){
+    //       var p = new Lizard.collections.Parameter();
+    //       var l;
+    //       p.fetch({
+    //         success: function() {
+    //             l = p.models.length;
+    //             expect(l).to.be(322);
+    //             done();
+    //         }
+    //       });
+    //     });
+    //   });
+    // });
 
 
 

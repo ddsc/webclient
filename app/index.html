@@ -209,7 +209,7 @@
             <div id="chartarea"></div>
             <ul>
                 <% _.each(timeseries.tseries.models, function(ts) { %>
-                    <li data-something="<%= ts.attributes.events %>"><%= ts.attributes.name %></li>
+                    <li class="timeserie" data-url="<%= ts.attributes.events %>"><%= ts.attributes.name %></li>
                 <%});%>
             </ul>
         </div>
@@ -568,7 +568,6 @@
 
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
-
         <script src="scripts/lizard/lizard.views.js"></script>
 
 		<!-- Utility code -->

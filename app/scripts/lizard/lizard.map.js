@@ -127,7 +127,13 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     series: null,
     title: null,
     timeseries: null,
+    events: {
+      'click .timeserie': "getSeriesdata",
+    },
+    getSeriesdata: function(thing){
+      var data_url = thing.target.dataset.url;
 
+    },
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
       // this.listenTo(this.model.attributes.tseries, "add", this.render);
@@ -354,4 +360,3 @@ Lizard.App.addInitializer(function(){
   });
   Lizard.App.vent.trigger('routing:started');
 });
-
