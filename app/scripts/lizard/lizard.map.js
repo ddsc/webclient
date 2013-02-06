@@ -124,15 +124,20 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         tseries: model.tseries
       }, {variable: 'timeseries'});
     },
-    series: null,
+    series: [],
     title: null,
-    timeseries: null,
     events: {
       'click .timeserie': "getSeriesdata",
     },
     getSeriesdata: function(thing){
       var data_url = thing.target.dataset.url;
-
+      var EventCollection = Backbone.Collection.extend({
+        url: data_url
+      })
+      ts_events = new EventCollection()
+      ts_events.fetch({
+        success: this.makeChart
+      });
     },
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
@@ -143,17 +148,14 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         this.model.attributes.tseries.add(TimeserieModel);
       }
     },
-    // onRender: function(){
-    //   this.series = [];
-    //   timeseries = this.timeseries;
-    //   for (i in timeseries){
-    //     var attributes = timeseries[i].attributes;
-    //     (attributes.latest_value ? 
-    //       this.series.push(attributes.latest_value) :
-    //       'nothing')
-    //   }
-    // },
-    jan: function(){
+    makeChart: function(collection, responses){
+      ts_events = responses;
+      this.series = [];
+      for (i in ts_events){
+        var value = ts_events[i].value;
+        (value ? this.series.push(parseFloat(value)) : 'nothing')
+      }
+      console.log(this.series);
     var chart;
       chart = new Highcharts.Chart({
                 chart: {
@@ -168,13 +170,9 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
                 text: 'Source: test.api.dijkdata.nl',
                 x: -20
             },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
             yAxis: {
                 title: {
-                    text: 'Temperature (°C)'
+                    text: 'Some Thing'
                 },
                 plotLines: [{
                     value: 0,
@@ -197,7 +195,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
                 borderWidth: 0
             },
             series: [{
-                name: 'Tokyo',
+                name: this.name,
                 data: this.series
             }]
         })
