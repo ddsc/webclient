@@ -60,28 +60,22 @@
     });
 
 
-    describe("filtercollectionview", function() {
-        it("checks if filtercollectionview is instantiated", function() {
-            expect(filtercollectionview instanceof Lizard.views.FilterCollection).to.be(true);
-        });
-    });
 
-
-    describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
-      describe('count number of parameter models', function(){
-        it('should be 322', function(done){
-          var p = new Lizard.collections.Parameter();
-          var l;
-          p.fetch({
-            success: function() {
-                l = p.models.length;
-                expect(l).to.be(322);
-                done();
-            }
-          });
-        });
-      });
-    });
+    // describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
+    //   describe('count number of parameter models', function(){
+    //     it('should be 322', function(done){
+    //       var p = new Lizard.collections.Parameter();
+    //       var l;
+    //       p.fetch({
+    //         success: function() {
+    //             l = p.models.length;
+    //             expect(l).to.be(322);
+    //             done();
+    //         }
+    //       });
+    //     });
+    //   });
+    // });
 
 
 
