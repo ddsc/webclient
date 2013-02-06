@@ -4,8 +4,6 @@ if(typeof(console) === 'undefined') {
     console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
 }
 
-
-
 $('input[type=checkbox]').live('click', function(e) {
   var el = $(this);
   if(el.is(':checked')) {
@@ -32,33 +30,31 @@ $('input[type=checkbox]').live('click', function(e) {
 
 
 // Click handlers for toggling the filter/location/parameter UI
-$('li#filters a em').live("click", function(e){
+$('em.toggle').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
+  console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
     el.removeClass('hide');
   }
 });
-$('li#locations a em').live("click", function(e){
+
+$('em.reset').live("click", function(e){
   e.preventDefault();
-  var el = $(this).parent().next();
-  if(el.is(':visible')) {
-    el.addClass('hide');
-  } else {
-    el.removeClass('hide');
-  }
+  _.each(filtercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(locationcollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
+  _.each(parametercollectionview.collection.models, function(model) {
+    model.set('selected', false);
+  });
 });
-$('li#parameters a em').live("click", function(e){
-  e.preventDefault();
-  var el = $(this).parent().next();
-  if(el.is(':visible')) {
-    el.addClass('hide');
-  } else {
-    el.removeClass('hide');
-  }
-});
+
+
 
 
 

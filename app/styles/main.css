@@ -326,6 +326,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 }
 .sidenav > li:last-child > a { border-radius: 0 0 6px 6px; }
 .sidenav > li:first-child > a { border-radius: 6px 6px 0 0; }
+.sidenav .icon-remove-circle {
+    float: right;
+    margin-top: 2px;
+    margin-right: -0px;
+    opacity: .25;
+}
+
 .sidenav .icon-chevron-down {
     float: right;
     margin-top: 2px;
