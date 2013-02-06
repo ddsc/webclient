@@ -49,7 +49,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     });
     ids = ids.substring(0, ids.length - 1);
 
-    locationcollectionview.collection.url = local_settings.locations_url + '?filters='+ids;
+    locationcollectionview.collection.url = settings.locations_url + '?filters='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -109,14 +109,14 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     });
     ids = ids.substring(0, ids.length - 1);
 
-    parametercollectionview.collection.url = local_settings.parameters_url + '?locations='+ids;
+    parametercollectionview.collection.url = settings.parameters_url + '?locations='+ids;
     parametercollectionview.collection.fetch({
       cache: true,
       success: function() {
         window.graphsView.parametersRegion.show(parametercollectionview.render());
       }
     });
-    filtercollectionview.collection.url = local_settings.filters_url + '?locations='+ids;
+    filtercollectionview.collection.url = settings.filters_url + '?locations='+ids;
     filtercollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -169,11 +169,11 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
       if(data.attributes.selected === true) {
         ids = ids + data.attributes.parameter_id;
         ids = ids + ',';
-        // console.log(ids);
+        console.log('---------->', ids);
       }
     });
     ids = ids.substring(0, ids.length - 1);
-    locationcollectionview.collection.url = local_settings.locations_url + '?parameters='+ids;
+    locationcollectionview.collection.url = settings.locations_url + '?parameters='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
