@@ -27,6 +27,7 @@
         <![endif]-->
 
         <link href="styles/alert-blackgloss.css" rel="stylesheet">
+        <link href="styles/rickshaw.min.css" rel="stylesheet">
         <link href="styles/jquery.gridster.css" rel="stylesheet">
         <style>
             body {
@@ -209,7 +210,7 @@
             <div id="chartarea"></div>
             <ul>
                 <% _.each(timeseries.tseries.models, function(ts) { %>
-                    <li class="timeserie" data-url="<%= ts.attributes.events %>"><%= ts.attributes.name %></li>
+                    <li class="timeserie" data-code="<%= ts.attributes.parameter.code %>" data-url="<%= ts.attributes.events %>"><%= ts.attributes.name %></li>
                 <%});%>
             </ul>
         </div>
@@ -456,6 +457,9 @@
         <!-- The most versatile graph library around -->
             <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
         <script src="scripts/vendor/d3.v2.js"></script>
+
+        <!-- Rickshaw is a graph library built around d3.js -->
+        <script src="scripts/vendor/rickshaw.min.js"></script>
 
         <!-- Powerful time-series filtering tool -->
         <script src="scripts/vendor/crossfilter.js"></script>

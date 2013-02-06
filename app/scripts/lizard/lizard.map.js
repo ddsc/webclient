@@ -116,21 +116,34 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
+
+/*This monstrosity of a Marionette ItemView is a view that
+ is initiated when a location on the map is clicked.
+
+ When one clicks on a location, the Bootstrap modal 
+ (focused lightbox with info) function is called. This
+
+ The focused block shows an overview of different timeseries.
+ A click on one of the timeseries opens a graph.
+
+ One view belongs to one location.
+*/ 
 Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     template: function(model){
       return _.template($('#location-modal-template').html(), {
         // models: this.timeseries.attributes,
         name: model.name,
-        tseries: model.tseries
+        tseries: model.tseries,
       }, {variable: 'timeseries'});
     },
     series: [],
-    title: null,
+    code: null,
     events: {
       'click .timeserie': "getSeriesdata",
     },
-    getSeriesdata: function(thing){
-      var data_url = thing.target.dataset.url;
+    getSeriesdata: function(clickedon){
+      var data_url = clickedon.target.dataset.url;
+      this.code = clickedon.target.dataset.code;
       var EventCollection = Backbone.Collection.extend({
         url: data_url
       })
@@ -152,53 +165,43 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       ts_events = responses;
       this.series = [];
       for (i in ts_events){
-        var value = ts_events[i].value;
-        (value ? this.series.push(parseFloat(value)) : 'nothing')
+        var date = new Date(ts_events[i].datetime);
+        var value = {x: date.getTime()/1000, y: parseFloat(ts_events[i].value)};
+        (value ? this.series.push(value) : 'nothing')
       }
-      console.log(this.series);
-    var chart;
-      chart = new Highcharts.Chart({
-                chart: {
-                    renderTo:'chartarea',
-                    type: 'line',
-                },
-                            title: {
-                text: this.title,
-                x: -20 //center
+      $('#chartarea').empty();
+      var graph = new Rickshaw.Graph( {
+      element: $('#chartarea')[0],
+      width:  300,
+      height: 150,
+      renderer: 'line',
+      series: [
+            {
+              color: "#c05020",
+              data: this.series,
+              name: this.title
             },
-            subtitle: {
-                text: 'Source: test.api.dijkdata.nl',
-                x: -20
-            },
-            yAxis: {
-                title: {
-                    text: 'Some Thing'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        this.x +': '+ this.y +'°C';
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: this.name,
-                data: this.series
-            }]
-        })
+          ]
+        } );
+        graph.render();
+      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: graph
+      } );
+
+      var legend = new Rickshaw.Graph.Legend( {
+        graph: graph,
+        element: document.getElementById('legend')
+
+      } );
+
+      var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+        graph: graph,
+        legend: legend
+      } );
+      var axes = new Rickshaw.Graph.Axis.Time( {
+        graph: graph
+      } );
+      axes.render();
     }
 })
 
