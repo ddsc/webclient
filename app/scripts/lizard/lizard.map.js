@@ -148,13 +148,12 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         url: data_url
       })
       ts_events = new EventCollection()
-      ts_events.fetch({
-        success: this.makeChart
+      ts_events.fetch({async:false,
+        success: _.bind(this.makeChart, this)
       });
     },
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
-      // this.listenTo(this.model.attributes.tseries, "add", this.render);
       ts = this.model.attributes.timeseries;
       for (i in ts) {
         TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
@@ -164,22 +163,29 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     makeChart: function(collection, responses){
       ts_events = responses;
       this.series = [];
+      numbers = []
       for (i in ts_events){
         var date = new Date(ts_events[i].datetime);
-        var value = {x: date.getTime()/1000, y: parseFloat(ts_events[i].value)};
-        (value ? this.series.push(value) : 'nothing')
+        yvalue = parseFloat(ts_events[i].value);
+        var value = {x: date.getTime()/1000, y: yvalue};
+        (value ? this.series.push(value) : 'nothing');
+        numbers.push(yvalue)
       }
+      numbers.sort()
       $('#chartarea').empty();
+      $('#legend').empty();
       var graph = new Rickshaw.Graph( {
       element: $('#chartarea')[0],
       width:  300,
       height: 150,
       renderer: 'line',
+      min: numbers[0],
+      max: numbers[numbers.length - 1],
       series: [
             {
               color: "#c05020",
               data: this.series,
-              name: this.title
+              name: this.code
             },
           ]
         } );
@@ -190,7 +196,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
 
       var legend = new Rickshaw.Graph.Legend( {
         graph: graph,
-        element: document.getElementById('legend')
+        element: $('#legend')[0]
 
       } );
 
@@ -198,10 +204,12 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         graph: graph,
         legend: legend
       } );
+
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph
       } );
       axes.render();
+
     }
 })
 

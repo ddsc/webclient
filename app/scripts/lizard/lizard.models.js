@@ -27,6 +27,8 @@ Lizard.models.Timeserie = Backbone.Model.extend({
 
 Lizard.models.Location = Backbone.Model.extend({
   initialize: function(response){
+    this.url = response.url;
+    this.fetch({cache: true})
   },
   defaults: {
     'selected':  false
