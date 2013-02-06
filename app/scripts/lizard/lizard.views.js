@@ -54,6 +54,8 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
       cache: true,
       success: function() {
         window.graphsView.locationsRegion.show(locationcollectionview.render());
+        window.graphsView.filtersRegion.show(filtercollectionview.render());
+        window.graphsView.parametersRegion.show(parametercollectionview.render());
       }
     });
 
@@ -114,13 +116,17 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
       cache: true,
       success: function() {
         window.graphsView.parametersRegion.show(parametercollectionview.render());
+        window.graphsView.filtersRegion.show(filtercollectionview.render());
+        window.graphsView.locationsRegion.show(locationcollectionview.render());
       }
     });
     filtercollectionview.collection.url = settings.filters_url + '?locations='+ids;
     filtercollectionview.collection.fetch({
       cache: true,
       success: function() {
+        window.graphsView.parametersRegion.show(parametercollectionview.render());
         window.graphsView.filtersRegion.show(filtercollectionview.render());
+        window.graphsView.locationsRegion.show(locationcollectionview.render());
       }
     });
 
@@ -177,6 +183,8 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
+        window.graphsView.parametersRegion.show(parametercollectionview.render());
+        window.graphsView.filtersRegion.show(filtercollectionview.render());
         window.graphsView.locationsRegion.show(locationcollectionview.render());
       }
     });
