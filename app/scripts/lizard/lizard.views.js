@@ -301,7 +301,7 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
       });
       setInterval(function() {
         jg.refresh(getRandomInt(350,980));
-      }, 3000);
+      }, getRandomInt(2000,5000));
     });
   }
 });
