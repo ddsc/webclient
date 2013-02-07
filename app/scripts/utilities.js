@@ -54,15 +54,18 @@ $('em.reset').live("click", function(e){
   });
 });
 
+function drag(e){
+  e.dataTransfer.setData("Text",e.target.dataset.url);
+ }
+
 function allowDrop(e){
   e.preventDefault();
 }
 
 function drop(e){
-
-  var data = e.dataTransfer.getData("Text");
-  //e.target.appendChild(document.getElementById(data));
   console.log(e)
+  // var data = e.dataTransfer.getData("Text");
+  // e.target.appendChild(document.getElementById(data));
 }
 
 
