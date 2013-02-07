@@ -256,13 +256,13 @@
             <li><a href="<%= name %>"><%= nodeName %></a></li>
         </script>
 
-        <script id="timeserieview-template" type="text/template">
+        <script id="timeserie-graph-template" type="text/template">
             <div id="demo"></div>
         </script>
 
         <script id="filterview-template" type="text/template">
             <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= filtername %> <span class="state hide"><%= selected %></span>
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
             </label>
         </script>
 
@@ -308,8 +308,20 @@
             <div class="span9" id="mainRegion">
              <h4>Grafieken</h4>
               <div id="graphs"></div>
+            <div class="row-fluid">
+                <div id="drop-one" class="span5 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+                <div id="drop-two" class="span5 drop offset1 empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+            </div>
+            <div class="row-fluid">
+                <div id="drop-three" class="span5 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+                <div id="drop-four" class="span5  drop offset1 empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+            </div>
             </div>
           </div>
+        </script>
+
+        <script type="text/template" id="graph-slot">
+
         </script>
 
         <script type="text/template" id="dashboard-template">
@@ -318,6 +330,10 @@
                 <li class="try" data-row="2" data-col="3" data-sizex="1" data-sizey="1"></li>
               </ul>
             </div>
+        </script>
+
+        <script type="text/template" id="drop-boxes">
+
         </script>
 
         <script type="text/template" id="overview-template">

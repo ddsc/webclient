@@ -54,8 +54,16 @@ $('em.reset').live("click", function(e){
   });
 });
 
+function allowDrop(e){
+  e.preventDefault();
+}
 
+function drop(e){
 
+  var data = e.dataTransfer.getData("Text");
+  //e.target.appendChild(document.getElementById(data));
+  console.log(e)
+}
 
 
 Lizard.Utils = {};

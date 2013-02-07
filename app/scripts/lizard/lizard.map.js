@@ -183,10 +183,9 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       // Could not find a more elegant solution so far
       // Div needs to be empty, otherwise it stacks
       // many graphs.
-      $('#chartarea').empty();
-      $('#legend').empty();
+      $('#chart-canvas').empty();
       var graph = new Rickshaw.Graph( {
-      element: $('#chartarea')[0],
+      element: $('#chart-canvas')[0],
       renderer: 'line',
       min: numbers[0],
       max: numbers[numbers.length - 1],
@@ -203,7 +202,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         graph: graph,
         orientation: 'left',
         // tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: $('y_axis')[0],
+        element: $('chart-y-axis')[0],
       } );
 
       graph.render();
