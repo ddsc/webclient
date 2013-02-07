@@ -56,16 +56,96 @@ $('em.reset').live("click", function(e){
   });
 });
 
+function drag(e){
+  timeserie = new Lizard.models.Timeserie({url: e.target.dataset.url});
+  timeserie.fetch({async: false});
+  sendThis = timeserie.attributes.events;
+  e.dataTransfer.setData("Text", sendThis);
+
+ }
+
 function allowDrop(e){
   e.preventDefault();
 }
 
 function drop(e){
-
-  var data = e.dataTransfer.getData("Text");
-  //e.target.appendChild(document.getElementById(data));
-  console.log(e)
+  e.preventDefault();
+  var data_url = e.dataTransfer.getData("Text");
+  var EventCollection = Backbone.Collection.extend({
+        url: data_url
+      })
+      // Timeserie has Events. Opens new collection
+      // for that specific timeserie.
+      ts_events = new EventCollection()
+      // _.bind connects "this" to the makeChart
+      // otherwise it loses it's scope.
+      ts_events.fetch({async:false, cache: true,
+        success: _.bind(makeChart, e)
+      });
 }
+
+function makeChart(collection, responses){
+      console.log(this.target)
+      ts_events = responses;
+      series = [];
+      numbers = [];
+      code = 'ja'
+      for (i in ts_events){
+        var date = new Date(ts_events[i].datetime);
+        yvalue = parseFloat(ts_events[i].value);
+        var value = {x: date.getTime()/1000, y: yvalue};
+        (value ? series.push(value) : 'nothing');
+        numbers.push(yvalue)
+      }
+      numbers.sort()
+      // Could not find a more elegant solution so far
+      // Div needs to be empty, otherwise it stacks
+      // many graphs.
+      $(this.target).empty();
+      var graph = new Rickshaw.Graph( {
+      element: this.target,
+      renderer: 'line',
+      min: numbers[0],
+      max: numbers[numbers.length - 1],
+      series: [
+            {
+              color: "#c05020",
+              data: series,
+              name: code
+            },
+          ]
+        } );
+      
+      var y_ticks = new Rickshaw.Graph.Axis.Y( {
+        graph: graph,
+        orientation: 'left',
+        // tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: $('chart-y-axis')[0],
+      } );
+
+      graph.render();
+      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: graph
+      } );
+
+      // var legend = new Rickshaw.Graph.Legend( {
+      //   graph: graph,
+      //   element: $('#legend')[0]
+
+      // } );
+
+      // var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+      //   graph: graph,
+      //   legend: legend
+      // } );
+
+      var axes = new Rickshaw.Graph.Axis.Time( {
+        graph: graph
+      } );
+      axes.render();
+
+    }
+
 
 
 Lizard.Utils = {};
