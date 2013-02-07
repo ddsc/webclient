@@ -37,5 +37,13 @@ Lizard.collections.Parameter = Backbone.Collection.extend({
   model: Lizard.models.Parameter
 });
 
+Lizard.collections.Widget = Backbone.Collection.extend({
+  initialize: function() {
+    console.log('Widget collection initializing');
+  },
+//   localStorage: new Backbone.LocalStorage("ddsc-widgets"),
+  model: Lizard.models.Widget
+});
+
 
 Lizard.collections.Collage = Backbone.Collection.extend();
