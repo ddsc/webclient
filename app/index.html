@@ -261,7 +261,7 @@
 
         <script id="filterview-template" type="text/template">
             <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= filtername %> <span class="state hide"><%= selected %></span>
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
             </label>
         </script>
 
@@ -284,17 +284,21 @@
             <div class="span3" id="sidebar">
                 <div class="" id="sidebarRegion">
                     <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                        <li class="metrics-dropdown" id="selection">
+                            <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Selectie</a>
+                            <p data-group="selection" class="hide" id="selectionRegion"></p>
+                        </li>                    
                         <li class="metrics-dropdown" id="filters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-tag"></i> Filters (<%=  filtercollectionview.collection.models.length %>)</a>
-                            <p data-group="filters" id="filtersRegion" class="-hide"></p>
+                            <p data-group="filters" id="filtersRegion"></p>
                         </li>
                         <li class="metrics-dropdown" id="locations">
                             <a href="javascript:void(0)"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-globe"></i> Locaties (<%=  locationcollectionview.collection.models.length %>)</a>
-                            <p data-group="locations" id="locationsRegion" class="-hide"></p>
+                            <p data-group="locations" id="locationsRegion"></p>
                         </li>
                         <li class="metrics-dropdown" id="parameters">
                             <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-flag"></i> Parameters (<%=  parametercollectionview.collection.models.length %>)</a>
-                            <p data-group="parameters" id="parametersRegion" class="-hide"></p>
+                            <p data-group="parameters" id="parametersRegion"></p>
                         </li>
                         <li>
                             <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
@@ -311,18 +315,15 @@
           </div>
         </script>
 
-        <script type="text/template" id="dashboard-template">
-            <div class="gridster">
-              <ul>
-                <li class="try" data-row="2" data-col="3" data-sizex="1" data-sizey="1"></li>
-              </ul>
-            </div>
-        </script>
-
         <script type="text/template" id="overview-template">
           <div class="row-fluid">
             <div class="span12" id="dashboardRegion"></div>
           </div>
+        </script>
+
+        <script type="text/template" id="widgetview-template">
+          <!-- <h5>Widget <%=gaugeId%></h5> -->
+          <div class="gauge-widget" id="<%=gaugeId%>"></div>
         </script>
 
         <script type="text/template" id="account-template">
