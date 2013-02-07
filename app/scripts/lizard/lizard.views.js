@@ -291,7 +291,7 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
     }).data('gridster');
 
     _.each(self.collection.models, function(model) {
-      new JustGage({
+      var jg = new JustGage({
         id: model.attributes.gaugeId,
         value: getRandomInt(650, 980),
         min: 350,
@@ -299,6 +299,9 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
         title: model.attributes.title,
         label: model.attributes.label
       });
+      setInterval(function() {
+        jg.refresh(getRandomInt(350,980));
+      }, 3000);
     });
   }
 });
