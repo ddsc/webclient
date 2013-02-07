@@ -194,9 +194,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
      font: normal 200 21px/1.2 Pill, "Helvetica Neue", Helvetica, sans-serif;   
 }
 
+/* Graph stuff*/
 
+#chart-y-axis{
+    width: 5%;
+}
 
+#chart-canvas{
+    width: 90%;
+    height: 200px;
+}
 
+.drop{
+    top:50%;
+    left: 50%;
+    height: 200px;
+    padding: 5px 0;
+    margin: 1em 0 0;
+    color: #444;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.drop:hover{
+    opacity: 1;
+}
+
+.empty{
+    opacity: 0.5;
+    padding: 50px;
+}
 
 
 
@@ -453,10 +492,6 @@ p#parametersRegion{
     height: 200px;
     overflow-y: auto;
 }
-
-
-
-
 
 
 

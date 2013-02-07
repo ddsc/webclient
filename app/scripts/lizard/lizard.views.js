@@ -15,7 +15,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     // console.log('filterview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
-    // console.log(bindings);
+    this.el.children[0].setAttribute('draggable', 'true');
   },
   tagName: 'li',
   template: '#filterview-template',
@@ -28,7 +28,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     } else {
       this.model.set('selected', false);
     }
-    console.log('Setting ' + this.model.get('filtername') + ' to ' + this.model.get('selected'));
+    console.log('Setting ' + this.model.get('name') + ' to ' + this.model.get('selected'));
   },
   modelEvents: {
     'change': 'modelChanged'
@@ -37,9 +37,6 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     'add': 'modelAdded'
   },
   modelChanged: function() {
-
-    // console.log(this.model.attributes.filtername +' changed to', this.model.attributes.selected);
-
     var ids = '';
     _.each(filtercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
@@ -170,7 +167,6 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     'add': 'modelAdded'
   },
   modelChanged: function() {
-    // console.log(this.model.attributes.filtername +' changed to', this.model.attributes.selected);
     var ids = '';
     _.each(parametercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {

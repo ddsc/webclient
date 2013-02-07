@@ -7,5 +7,11 @@ Lizard.models.Collage = Backbone.AssociatedModel.extend({
 	defaults: {
 		name: '',
 		id: null
+	},
+
+	url: function() {
+		var origUrl = Backbone.Model.prototype.url.call(this);
+		return origUrl += _.last(origUrl) === '/' ? '' : '/'
 	}
+
 });

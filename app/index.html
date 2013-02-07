@@ -207,7 +207,8 @@
             <h3 id="location-modal-label"><%= timeseries.name %></h3>
         </div>
         <div id="location-modal-body" class="modal-body">
-            <div id="chartarea"></div><div id="legend"></div>
+            <div id="chart-y-axis"></div>
+            <div id="chart-canvas"></div>
             <ul>
                 <% _.each(timeseries.tseries.models, function(ts) { %>
                     <li class="timeserie" data-code="<%= ts.attributes.parameter.code %>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
@@ -255,7 +256,7 @@
             <li><a href="<%= name %>"><%= nodeName %></a></li>
         </script>
 
-        <script id="timeserieview-template" type="text/template">
+        <script id="timeserie-graph-template" type="text/template">
             <div id="demo"></div>
         </script>
 
@@ -311,8 +312,24 @@
             <div class="span9" id="mainRegion">
              <h4>Grafieken</h4>
               <div id="graphs"></div>
+            <div class="row-fluid">
+                <div id="drop-one" class="span5 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+                <div id="drop-two" class="span5 drop offset1 empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+            </div>
+            <div class="row-fluid">
+                <div id="drop-three" class="span5 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+                <div id="drop-four" class="span5  drop offset1 empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
+            </div>
             </div>
           </div>
+        </script>
+
+        <script type="text/template" id="graph-slot">
+
+        </script>
+
+        <script type="text/template" id="drop-boxes">
+
         </script>
 
         <script type="text/template" id="overview-template">

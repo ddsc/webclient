@@ -129,9 +129,10 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
  One view belongs to one location.
 */ 
 Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
+    // custom template rendering to improve speed
+    // due to explicit variable passing.
     template: function(model){
       return _.template($('#location-modal-template').html(), {
-        // models: this.timeseries.attributes,
         name: model.name,
         tseries: model.tseries,
       }, {variable: 'timeseries'});
@@ -141,14 +142,21 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     events: {
       'click .timeserie': "getSeriesdata",
     },
+    // One Timeserie has many Events. An Events list is only
+    // loaded when it is explcitly chosen, with caching.
     getSeriesdata: function(clickedon){
+      // Get's the element that is clicked and it's datasets
       var data_url = clickedon.target.dataset.url;
       this.code = clickedon.target.dataset.code;
       var EventCollection = Backbone.Collection.extend({
         url: data_url
       })
+      // Timeserie has Events. Opens new collection
+      // for that specific timeserie.
       ts_events = new EventCollection()
-      ts_events.fetch({async:false,
+      // _.bind connects "this" to the makeChart
+      // otherwise it loses it's scope.
+      ts_events.fetch({async:false, cache: true,
         success: _.bind(this.makeChart, this)
       });
     },
@@ -172,12 +180,12 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
         numbers.push(yvalue)
       }
       numbers.sort()
-      $('#chartarea').empty();
-      $('#legend').empty();
+      // Could not find a more elegant solution so far
+      // Div needs to be empty, otherwise it stacks
+      // many graphs.
+      $('#chart-canvas').empty();
       var graph = new Rickshaw.Graph( {
-      element: $('#chartarea')[0],
-      width:  300,
-      height: 150,
+      element: $('#chart-canvas')[0],
       renderer: 'line',
       min: numbers[0],
       max: numbers[numbers.length - 1],
@@ -189,21 +197,29 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
             },
           ]
         } );
-        graph.render();
+      
+      var y_ticks = new Rickshaw.Graph.Axis.Y( {
+        graph: graph,
+        orientation: 'left',
+        // tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: $('chart-y-axis')[0],
+      } );
+
+      graph.render();
       var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph
       } );
 
-      var legend = new Rickshaw.Graph.Legend( {
-        graph: graph,
-        element: $('#legend')[0]
+      // var legend = new Rickshaw.Graph.Legend( {
+      //   graph: graph,
+      //   element: $('#legend')[0]
 
-      } );
+      // } );
 
-      var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
-        graph: graph,
-        legend: legend
-      } );
+      // var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+      //   graph: graph,
+      //   legend: legend
+      // } );
 
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph
