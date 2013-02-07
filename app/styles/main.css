@@ -269,7 +269,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     -ms-transition: opacity .6s;
     transition: opacity .6s;
 }
-.gridster ul, .gridster ul li {
+.gridster, .gridster ul, .gridster ul li {
     list-style: none;
 }
 
@@ -316,6 +316,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     -moz-border-radius: 10px;
     border-radius: 10px;
     clear: both;    
+}
+
+.gauge-widget {
+    width:200px; height:160px;
+    display: inline-block;
+    margin: 50px 0px 0px 46px;    
 }
 
 #g1, #g2, #g3 {
@@ -378,6 +384,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     margin-right: -6px;
     opacity: .25;
 }
+.sidenav .icon-chevron-up {
+    float: right;
+    margin-top: 2px;
+    margin-right: -6px;
+    opacity: .25;
+}
+
 .sidenav .icon-chevron-right {
     float: left;
     margin-top: 2px;

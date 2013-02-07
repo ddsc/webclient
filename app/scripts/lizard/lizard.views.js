@@ -4,6 +4,7 @@ ItemViews
 
 Lizard.views = {};
 
+
 Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
@@ -38,9 +39,6 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     'add': 'modelAdded'
   },
   modelChanged: function() {
-
-    console.log(this.model.attributes.name +' changed to', this.model.attributes.selected);
-
     var ids = '';
     _.each(filtercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
@@ -51,7 +49,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     });
     ids = ids.substring(0, ids.length - 1);
 
-    locationcollectionview.collection.url = settings.locations_url + '?filters='+ids;
+    locationcollectionview.collection.url = settings.locations_url + '?filter='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -101,19 +99,19 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
   },
   modelChanged: function() {
 
-    console.log(this.model.attributes.location +' changed to', this.model.attributes.selected);
+    // console.log(this.model.attributes.location +' changed to', this.model.attributes.selected);
 
     var ids = '';
     _.each(locationcollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
-        ids = ids + data.attributes.location_id;
+        ids = ids + data.attributes.uuid;
         ids = ids + ',';
         // console.log(ids);
       }
     });
     ids = ids.substring(0, ids.length - 1);
 
-    parametercollectionview.collection.url = settings.parameters_url + '?locations='+ids;
+    parametercollectionview.collection.url = settings.parameters_url + '?location='+ids;
     parametercollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -122,7 +120,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
         window.graphsView.locationsRegion.show(locationcollectionview.render());
       }
     });
-    filtercollectionview.collection.url = settings.filters_url + '?locations='+ids;
+    filtercollectionview.collection.url = settings.filters_url + '?location='+ids;
     filtercollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -171,7 +169,6 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     'add': 'modelAdded'
   },
   modelChanged: function() {
-    console.log(this.model.attributes.name +' changed to', this.model.attributes.selected);
     var ids = '';
     _.each(parametercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
@@ -181,7 +178,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
       }
     });
     ids = ids.substring(0, ids.length - 1);
-    locationcollectionview.collection.url = settings.locations_url + '?parameters='+ids;
+    locationcollectionview.collection.url = settings.locations_url + '?parameter='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
@@ -196,6 +193,33 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
   }
 });
 
+Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
+  initialize: function(){
+    console.log('Lizard.views.WidgetView initializing');
+  },
+  tagName: 'li',
+  className: 'new',
+  template: '#widgetview-template',
+  attributes: {
+    "data-col": "1", // << this needs to be dynamic!
+    "data-row": "1",
+    "data-sizex": "2",
+    "data-sizey": "2"
+  },
+  modelEvents: {
+    'change': 'modelChanged'
+  },
+  collectionEvents: {
+    'add': 'modelAdded'
+  },
+  modelChanged: function() {
+    console.log('modelChanged()');
+  },
+  modelAdded: function() {
+    console.log('modelAdded()');
+  }
+
+});
 
 /**
 CollectionViews
@@ -241,8 +265,63 @@ Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
   }
 });
 
+Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
+  // Creates the Gridster UL element
+  collection: new Lizard.collections.Widget(),
+  tagName: 'ul',
+  className: 'gridster',
+  itemView: Lizard.views.WidgetView,
+
+  initialize: function(){
+    this.listenTo(this.collection, 'reset', this.render, this);
+  },
+  onClose: function(s) {
+    console.log($('.gridster'));
+  },
+  onShow: function() {
+    var self = this;
+    console.log("onShow of Lizard.views.WidgetCollection");
+    var gridster = $('.gridster').gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [140, 140],
+        draggable: {
+          stop: function(event, ui) {
+            console.log('Syncing dashboard: ', gridster.serialize());
+            $('.top-right').notify({message: {text: 'Saving your dashboard layout!'}}).show();
+          }
+        }
+    }).data('gridster');
+
+    _.each(self.collection.models, function(model) {
+      new JustGage({
+        id: model.attributes.gaugeId,
+        value: getRandomInt(650, 980),
+        min: 350,
+        max: 980,
+        title: model.attributes.title,
+        label: model.attributes.label
+      });
+    });
+  }
+});
+
+
+
+
+
+
 
 // Instantiate the views
 var filtercollectionview = new Lizard.views.FilterCollection();
 var locationcollectionview = new Lizard.views.LocationCollection();
 var parametercollectionview = new Lizard.views.ParameterCollection();
+var widgetcollectionview = new Lizard.views.WidgetCollectionView();
+
+widgetcollectionview.collection.add([
+  new Lizard.models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
+  new Lizard.models.Widget({col:1,row:1,size_x:2,size_y:2,gaugeId:2,title:'Waternet',label:'Debiet (m3)'}),
+  new Lizard.models.Widget({col:3,row:3,size_x:2,size_y:2,gaugeId:3,title:'Rijn',label:'Volume (m3)'}),
+  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:4,title:'Dijk 22',label:'Sulfiet'}),
+  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:5,title:'Dijk 23',label:'Temperatuur (c)'}),
+  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:6,title:'Dijk 24',label:'Druk'})
+]);
