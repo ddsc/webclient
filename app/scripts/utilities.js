@@ -34,6 +34,7 @@ $('em.toggle').live("click", function(e){
   e.preventDefault();
   var el = $(this).parent().next();
   console.log(el.is(':visible'));
+  // console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
@@ -43,6 +44,7 @@ $('em.toggle').live("click", function(e){
 
 $('em.reset').live("click", function(e){
   e.preventDefault();
+  console.log("Resetting collections")
   _.each(filtercollectionview.collection.models, function(model) {
     model.set('selected', false);
   });
