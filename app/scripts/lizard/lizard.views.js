@@ -187,13 +187,13 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     });
   },
   modelAdded: function() {
-    console.log('modelAdded: ', this.model);
+    // console.log('modelAdded: ', this.model);
   }
 });
 
 Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
-    console.log('Lizard.views.WidgetView initializing');
+    // console.log('Lizard.views.WidgetView initializing');
   },
   tagName: 'li',
   className: 'new',
@@ -203,6 +203,12 @@ Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
     "data-row": "1",
     "data-sizex": "2",
     "data-sizey": "2"
+  },
+  events: {
+    'click .icon-cog': 'configureWidget'
+  },
+  configureWidget: function() {
+    console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
   },
   modelEvents: {
     'change': 'modelChanged'
@@ -273,12 +279,8 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
   initialize: function(){
     this.listenTo(this.collection, 'reset', this.render, this);
   },
-  onClose: function(s) {
-    console.log($('.gridster'));
-  },
   onShow: function() {
     var self = this;
-    console.log("onShow of Lizard.views.WidgetCollection");
     var gridster = $('.gridster').gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [140, 140],
