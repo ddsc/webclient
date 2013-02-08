@@ -42,9 +42,10 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     var ids = '';
     _.each(filtercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
-        ids = ids + data.attributes.filter_id;
+        var id = data.attributes.url.split('/')[6]; // TODO: Complain to Berto that this ID needs to be an attribute in the API JSON
+        ids = ids + id;
         ids = ids + ',';
-        // console.log(ids);
+        console.log(ids);
       }
     });
     ids = ids.substring(0, ids.length - 1);
@@ -56,6 +57,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
         window.graphsView.locationsRegion.show(locationcollectionview.render());
         window.graphsView.filtersRegion.show(filtercollectionview.render());
         window.graphsView.parametersRegion.show(parametercollectionview.render());
+        // ^^ not needed, marionette seems to take care of this
       }
     });
 
@@ -106,7 +108,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
       if(data.attributes.selected === true) {
         ids = ids + data.attributes.uuid;
         ids = ids + ',';
-        // console.log(ids);
+        console.log(ids);
       }
     });
     ids = ids.substring(0, ids.length - 1);
@@ -118,6 +120,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
         window.graphsView.parametersRegion.show(parametercollectionview.render());
         window.graphsView.filtersRegion.show(filtercollectionview.render());
         window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // ^^ not needed, marionette seems to take care of this
       }
     });
     filtercollectionview.collection.url = settings.filters_url + '?location='+ids;
@@ -127,6 +130,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
         window.graphsView.parametersRegion.show(parametercollectionview.render());
         window.graphsView.filtersRegion.show(filtercollectionview.render());
         window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // ^^ not needed, marionette seems to take care of this
       }
     });
 
@@ -172,7 +176,8 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     var ids = '';
     _.each(parametercollectionview.collection.models, function(data) {
       if(data.attributes.selected === true) {
-        ids = ids + data.attributes.parameter_id;
+        var id = data.attributes.url.split('/')[6]; // TODO: Complain to Berto that this ID needs to be an attribute in the API JSON
+        ids = ids + id;
         ids = ids + ',';
         console.log('---------->', ids);
       }
@@ -185,6 +190,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
         window.graphsView.parametersRegion.show(parametercollectionview.render());
         window.graphsView.filtersRegion.show(filtercollectionview.render());
         window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // ^^ not needed, marionette seems to take care of this
       }
     });
   },
@@ -196,6 +202,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
 Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
     // console.log('Lizard.views.WidgetView initializing');
+    that = this;
   },
   tagName: 'li',
   className: 'new',
@@ -209,8 +216,11 @@ Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
   events: {
     'click .icon-cog': 'configureWidget'
   },
-  configureWidget: function() {
-    console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
+  configureWidget: function(e) {
+    // alert('test');
+    // console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
+    e.preventDefault();
+    console.log($(e.currentTarget).parent().html("<h5>Configureer Widget</h5><form><checkbox name='d1' value='d1'>d1</checkbox></form>"));
   },
   modelEvents: {
     'change': 'modelChanged'
@@ -303,7 +313,7 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
         title: model.attributes.title,
         label: model.attributes.label
       });
-      setInterval(function() {
+      setInterval(function() { // <-- commented during development...
         jg.refresh(getRandomInt(350,980));
       }, getRandomInt(2000,5000));
     });
