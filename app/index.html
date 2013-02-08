@@ -65,12 +65,12 @@
              </div>
              <div class="span1 search-or-divider"><p>&nbsp;&nbsp;...of</p></div>
              <div class="span5">
-                <button type="button" class="btn">
-                    Zoek geavanceerd
-                </button>
-                <button type="button" class="btn">
-                    Data catalogus
-                </button>
+                <a href="#map"><button type="button" class="btn">
+                    Zoek via de kaart
+                </button></a>
+                <a href="#graphs"><button type="button" class="btn">
+                    Zoek via de catalogus
+                </button></a>
              </div>
           </div>
 
@@ -173,7 +173,7 @@
 
 
         <script type="text/template" id="leaflet-template">
-            <div id="map"></div>
+            <div id="map" style="height:90%;"></div>
         </script>
 
 
@@ -286,7 +286,7 @@
                 <div class="" id="sidebarRegion">
                     <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                         <li class="metrics-dropdown" id="selection">
-                            <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Selectie</a>
+                            <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
                             <p data-group="selection" class="hide" id="selectionRegion"></p>
                         </li>                    
                         <li class="metrics-dropdown" id="filters">
@@ -310,7 +310,7 @@
             </div>
 
             <div class="span9" id="mainRegion">
-             <h4>Grafieken</h4>
+             <!-- <h4>Grafieken</h4> -->
               <div id="graphs"></div>
             <div class="row-fluid">
                 <div id="drop-one" class="span5 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)"><h2>Drop it like it's hot!<h2></div>
@@ -324,12 +324,12 @@
           </div>
         </script>
 
-        <script type="text/template" id="graph-slot">
+        <script type="text/template" id="graph-slot"></script>
 
-        </script>
+        <script type="text/template" id="drop-boxes"></script>
 
-        <script type="text/template" id="drop-boxes">
-
+        <script type="text/template" id="collage-template">
+            <h4>Collage</h4>
         </script>
 
         <script type="text/template" id="overview-template">
@@ -398,10 +398,10 @@
                     <div class="nav-collapse collapse">
 
                         <ul class="nav" id="menu">
-                            <li class="home-menu"><a href="#"><em class="icon-home icon-white"></em>&nbsp;Home</a></li>
-
+                            <!-- <li class="home-menu"><a href="#"><em class="icon-home icon-white"></em>&nbsp;Home</a></li> -->
                             <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
                             <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
+                            <li class="collage-menu"><a href="#collage"><em class="icon-th-large icon-white"></em> Collage</a></li>
                             <li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
                             <!-- <li class="manage-menu"><a href="#manage">Beheer</a></li> -->
                         </ul>
@@ -587,7 +587,6 @@
         <script src="settings.js"></script>
 
         <script src="scripts/lizard/lizard.app.js"></script>
-        <script src="scripts/utilities.js"></script>
 
         <script src="scripts/lizard/lizard.models.js"></script>
         <script src="scripts/lizard/lizard.collections.js"></script>
@@ -603,6 +602,7 @@
         <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
+        <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.overview.js"></script>
         <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 

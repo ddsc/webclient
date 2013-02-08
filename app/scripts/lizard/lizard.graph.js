@@ -38,8 +38,8 @@ Lizard.Graphs.graphs = function(){
   graphsView.parametersRegion.show(parametercollectionview.render());
   graphsView.collagegraphRegion.show(collageView.render());
 
-  var timeserieView = new Lizard.Graphs.TimeserieView();
-  graphsView.mainRegion.show(timeserieView.render());
+  // var timeserieView = new Lizard.Graphs.TimeserieView();
+  // graphsView.mainRegion.show(timeserieView.render());
 
 
   window.graphsView = graphsView; // so it's available outside this controller

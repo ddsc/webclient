@@ -13,7 +13,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
 
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
-      'map': 'map'
+      'map': 'map',
+      'map/:lonlatzoom': 'map' // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
     }
 });
 
@@ -263,6 +264,7 @@ Lizard.Utils.Map = {
           var attributes = model.attributes;
           var point = attributes.point_geometry;
           var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
+            icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
             clickable: true,
             name: attributes.name,
             bbModel: model,
@@ -289,6 +291,14 @@ Lizard.Utils.Map = {
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
+  initialize: function(options) {
+    console.log('LeafletView');
+    console.log(options);
+    // (value ? this.series.push(value) : 'nothing');
+    options.lon; //= (options.lon ? options.lon : 5.16082763671875);
+    options.lat; //= (options.lat ? options.lat : 51.95442214470791);
+    options.zoom; //= (options.zoom ? options.zoom : 7);
+  },
   collection: new Lizard.collections.Location(),
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849),
@@ -297,15 +307,12 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
   markers: null,
-  initialize: function(){
-    console.log('LeafletView.initialize()');
-  },
   modalInfo:Lizard.Utils.Map.modalInfo,
   updateInfo: Lizard.Utils.Map.updateInfo,
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
-    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7});
-    window.ll = this.mapCanvas;
+    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
+    window.mapCanvas = this.mapCanvas;
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
@@ -344,7 +351,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(this.mapCanvas);
     $('#map').css('height', $(window).height()-100);
   },
-
   template: '#leaflet-template'
 });
 
@@ -353,7 +359,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(){
+Lizard.Map.map = function(lonlatzoom){
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
@@ -362,22 +368,54 @@ Lizard.Map.map = function(){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
+
+
   var collageView = new CollageView();
   var layersView = new LayersCollectionView();
-  Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
+
+  if(lonlatzoom) {
+    var leafletView = new Lizard.Map.LeafletView({
+      lon: lonlatzoom.split(',')[0],
+      lat: lonlatzoom.split(',')[1],
+      zoom: lonlatzoom.split(',')[2]
+    });
+  } else {
+    var leafletView = new Lizard.Map.LeafletView({
+      lon: 5.16082763671875,
+      lat: 51.95442214470791,
+      zoom: 7
+    });
+  }
 
   // And show them in their divs
   Lizard.mapView.sidebarRegion.show(layersView.render());
   Lizard.mapView.collageRegion.show(collageView.render());
-  Lizard.mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
+  Lizard.mapView.leafletRegion.show(leafletView.render());
 
   $('.drawer-item').popover({
     html: true,
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
 
+  window.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
+
+
+  var mapMove = function(e) {
+    var c = window.mapCanvas.getCenter();
+    var z = window.mapCanvas.getZoom();
+    window.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
+    Backbone.history.navigate('map/' + [c.lng, c.lat, z].join(','));
+  };
+
+  window.mapCanvas.on('moveend', mapMove);
+
   // Then tell backbone to set the navigation to #map
-  Backbone.history.navigate('map');
+  if(lonlatzoom) {
+    Backbone.history.navigate('map/' + lonlatzoom);
+  } else {
+    Backbone.history.navigate('map/');
+  }
+  
 };
 
 Lizard.App.addInitializer(function(){
