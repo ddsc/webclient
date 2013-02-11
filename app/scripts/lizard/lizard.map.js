@@ -13,7 +13,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
 
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
-      'map': 'map'
+      'map': 'map',
+      'map/:lonlatzoom': 'map' // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
     }
 });
 
@@ -120,14 +121,14 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 /*This monstrosity of a Marionette ItemView is a view that
  is initiated when a location on the map is clicked.
 
- When one clicks on a location, the Bootstrap modal 
+ When one clicks on a location, the Bootstrap modal
  (focused lightbox with info) function is called. This
 
  The focused block shows an overview of different timeseries.
  A click on one of the timeseries opens a graph.
 
  One view belongs to one location.
-*/ 
+*/
 Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     // custom template rendering to improve speed
     // due to explicit variable passing.
@@ -150,10 +151,10 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       this.code = clickedon.target.dataset.code;
       var EventCollection = Backbone.Collection.extend({
         url: data_url
-      })
+      });
       // Timeserie has Events. Opens new collection
       // for that specific timeserie.
-      ts_events = new EventCollection()
+      ts_events = new EventCollection();
       // _.bind connects "this" to the makeChart
       // otherwise it loses it's scope.
       ts_events.fetch({async:false, cache: true,
@@ -163,7 +164,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
       ts = this.model.attributes.timeseries;
-      for (i in ts) {
+      for (var i in ts) {
         TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
         this.model.attributes.tseries.add(TimeserieModel);
       }
@@ -171,15 +172,15 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     makeChart: function(collection, responses){
       ts_events = responses;
       this.series = [];
-      numbers = []
-      for (i in ts_events){
+      numbers = [];
+      for (var i in ts_events){
         var date = new Date(ts_events[i].datetime);
         yvalue = parseFloat(ts_events[i].value);
         var value = {x: date.getTime()/1000, y: yvalue};
         (value ? this.series.push(value) : 'nothing');
-        numbers.push(yvalue)
+        numbers.push(yvalue);
       }
-      numbers.sort()
+      numbers.sort();
       // Could not find a more elegant solution so far
       // Div needs to be empty, otherwise it stacks
       // many graphs.
@@ -227,7 +228,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       axes.render();
 
     }
-})
+});
 
 
 // Utils for this item
@@ -263,6 +264,7 @@ Lizard.Utils.Map = {
           var attributes = model.attributes;
           var point = attributes.point_geometry;
           var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
+            icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
             clickable: true,
             name: attributes.name,
             bbModel: model,
@@ -276,7 +278,7 @@ Lizard.Utils.Map = {
         var marker = e.target;
         var properties = marker.valueOf().options;
         var wsitem = properties.bbModel;
-        wsitem.set({title: wsitem.attributes.name})
+        wsitem.set({title: wsitem.attributes.name});
         Collage.add(wsitem);
     }
 };
@@ -284,38 +286,44 @@ Lizard.Utils.Map = {
 
 // It is highly debatable if this should be a Marionette Itemview.
 // The functionality now allows:
-// * Location models are loaded and added to a Leaflet map. 
+// * Location models are loaded and added to a Leaflet map.
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'WorkspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
+  initialize: function(options) {
+    console.log('LeafletView');
+    console.log(options);
+    // (value ? this.series.push(value) : 'nothing');
+    options.lon; //= (options.lon ? options.lon : 5.16082763671875);
+    options.lat; //= (options.lat ? options.lat : 51.95442214470791);
+    options.zoom; //= (options.zoom ? options.zoom : 7);
+  },
   collection: new Lizard.collections.Location(),
   bounds: new L.LatLngBounds(
-              new L.LatLng(53.74, 3.2849), 
+              new L.LatLng(53.74, 3.2849),
               new L.LatLng(50.9584, 7.5147)
           ),
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
   markers: null,
-  initialize: function(){
-    console.log('LeafletView.initialize()');
-  },
   modalInfo:Lizard.Utils.Map.modalInfo,
   updateInfo: Lizard.Utils.Map.updateInfo,
-  onDomRefresh: function(){
+  onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
-    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(52.12, 5.2), zoom: 7});
+    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
+    window.mapCanvas = this.mapCanvas;
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
       maxClusterRadius: 200
     });
-    // The collection is loaded and the scope "this" is bound to the 
+    // The collection is loaded and the scope "this" is bound to the
     // drawonMap function.
     var that = this;
 
     this.collection.fetch({
-      success: _.bind(Lizard.Utils.Map.drawonMap, that), 
+      success: _.bind(Lizard.Utils.Map.drawonMap, that),
       error:function(data, response){
         console.log('Error this'+ response.responseText);
       }
@@ -343,16 +351,15 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     info.addTo(this.mapCanvas);
     $('#map').css('height', $(window).height()-100);
   },
-
   template: '#leaflet-template'
 });
 
-// Instantiate the Leaflet Marionnette View. 
-// This way you can talk with Leaflet after initializing the map. 
+// Instantiate the Leaflet Marionnette View.
+// This way you can talk with Leaflet after initializing the map.
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(){
+Lizard.Map.map = function(lonlatzoom){
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
@@ -361,22 +368,54 @@ Lizard.Map.map = function(){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
+
+
   var collageView = new CollageView();
   var layersView = new LayersCollectionView();
-  Lizard.Map.Leaflet = new Lizard.Map.LeafletView();
+
+  if(lonlatzoom) {
+    var leafletView = new Lizard.Map.LeafletView({
+      lon: lonlatzoom.split(',')[0],
+      lat: lonlatzoom.split(',')[1],
+      zoom: lonlatzoom.split(',')[2]
+    });
+  } else {
+    var leafletView = new Lizard.Map.LeafletView({
+      lon: 5.16082763671875,
+      lat: 51.95442214470791,
+      zoom: 7
+    });
+  }
 
   // And show them in their divs
   Lizard.mapView.sidebarRegion.show(layersView.render());
   Lizard.mapView.collageRegion.show(collageView.render());
-  Lizard.mapView.leafletRegion.show(Lizard.Map.Leaflet.render());
+  Lizard.mapView.leafletRegion.show(leafletView.render());
 
   $('.drawer-item').popover({
     html: true,
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
 
+  window.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
+
+
+  var mapMove = function(e) {
+    var c = window.mapCanvas.getCenter();
+    var z = window.mapCanvas.getZoom();
+    window.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
+    Backbone.history.navigate('map/' + [c.lng, c.lat, z].join(','));
+  };
+
+  window.mapCanvas.on('moveend', mapMove);
+
   // Then tell backbone to set the navigation to #map
-  Backbone.history.navigate('map');
+  if(lonlatzoom) {
+    Backbone.history.navigate('map/' + lonlatzoom);
+  } else {
+    Backbone.history.navigate('map/');
+  }
+  
 };
 
 Lizard.App.addInitializer(function(){
