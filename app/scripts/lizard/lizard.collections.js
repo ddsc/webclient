@@ -45,5 +45,8 @@ Lizard.collections.Widget = Backbone.Collection.extend({
   model: Lizard.models.Widget
 });
 
-
 Lizard.collections.Collage = Backbone.Collection.extend();
+
+Lizard.collections.Timeseries = Backbone.Collection.extend({
+  model: Lizard.models.Timeserie
+});

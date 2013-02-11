@@ -56,6 +56,60 @@ $('em.reset').live("click", function(e){
   });
 });
 
+Lizard.Utils = {};
+
+Lizard.Utils.Workspace = {
+  queryString: null,
+  toggleSelected: function (uuid, type){
+    queryString = type + "," + uuid;
+    if (Lizard.Graphs.Workspace.get(queryString) === undefined){
+      tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
+      tempModel.fetch({success: this.createItem});
+      tempModel.destroy();
+    }
+    else {
+      workspaceItem = Lizard.Graphs.Workspace.remove(queryString);
+    }
+  },
+  createItem: function (mod, response){
+    workspaceItem = new Lizard.models.WorkspaceItem({
+      id: this.queryString,
+      tseries: response.timeseries
+    })
+    Lizard.Graphs.Workspace.add(workspaceItem);
+  return workspaceItem
+  },
+}
+
+Lizard.Utils.DragDrop = {
+  drag: function (e){
+  timeserie = new Lizard.models.Timeserie({url: e.target.dataset.url});
+  timeserie.fetch({async: false});
+  sendThis = timeserie.attributes.events;
+  e.dataTransfer.setData("Text", sendThis);
+
+   },
+
+  allowDrop: function (e){
+    e.preventDefault();
+  },
+
+  drop: function (e){
+    e.preventDefault();
+    var data_url = e.dataTransfer.getData("Text");
+    var EventCollection = Backbone.Collection.extend({
+          url: data_url
+        })
+        // Timeserie has Events. Opens new collection
+        // for that specific timeserie.
+        ts_events = new EventCollection()
+        // _.bind connects "this" to the makeChart
+        // otherwise it loses it's scope.
+        ts_events.fetch({async:false, cache: true,
+          success: _.bind(makeChart, e)
+        });
+  },
+};
 function drag(e){
   timeserie = new Lizard.models.Timeserie({url: e.target.dataset.url});
   timeserie.fetch({async: false});
@@ -145,8 +199,4 @@ function makeChart(collection, responses){
       } );
       axes.render();
 
-    }
-
-
-
-Lizard.Utils = {};
+    };

@@ -272,6 +272,12 @@
             </label>
         </script>
 
+        <script id="workspace-item-template" type="text/template">
+            <label class="checkbox">
+                <input class="hide" type="checkbox" class="filterCheckbox"><i class="icon-globe"></i> <span draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>"><%= workspace.name %></span> <span class="state hide"></span>
+            </label>
+        </script>
+
         <script id="parameterview-template" type="text/template">
             <label class="checkbox">
                 <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>>

@@ -4,7 +4,6 @@ ItemViews
 
 Lizard.views = {};
 
-
 Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
@@ -15,9 +14,6 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     // console.log('filterview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
-    // this.el.children[0].setAttribute('draggable', 'true');
-    // this.el.children[0].setAttribute('ondragstart', 'drag(event)');
-    // this.el.children[0].setAttribute('data-url', this.model.attributes.timeseries[0]);
   },
   tagName: 'li',
   template: '#filterview-template',
@@ -80,11 +76,9 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     'click input': 'toggle'
   },
   toggle: function(e) {
-    if(this.model.get('selected') === false) {
-      this.model.set('selected', true);
-    } else {
-      this.model.set('selected', false);
-    }
+    uuid = this.model.get('uuid');
+    type = 'locations';
+    Lizard.Utils.Workspace.toggleSelected(uuid, type);
   },
   modelEvents: {
     'change': 'modelChanged'

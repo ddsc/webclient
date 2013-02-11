@@ -46,5 +46,4 @@ Lizard.models.Collage = Backbone.Model.extend({
 });
 
 
-
-
+Lizard.models.WorkspaceItem = Backbone.Model.extend();
