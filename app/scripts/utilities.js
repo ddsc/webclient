@@ -85,7 +85,7 @@ function drop(e){
 }
 
 function makeChart(collection, responses){
-      console.log(this.target)
+      this.target.className.replace('empty', '')
       ts_events = responses;
       series = [];
       numbers = [];
@@ -101,6 +101,7 @@ function makeChart(collection, responses){
       // Could not find a more elegant solution so far
       // Div needs to be empty, otherwise it stacks
       // many graphs.
+      console.log(this);
       $(this.target).empty();
       var graph = new Rickshaw.Graph( {
       element: this.target,
