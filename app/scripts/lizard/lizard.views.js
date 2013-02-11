@@ -53,12 +53,6 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     locationcollectionview.collection.url = settings.locations_url + '?filter='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
-      success: function() {
-        // window.graphsView.locationsRegion.show(locationcollectionview.render());
-        // window.graphsView.filtersRegion.show(filtercollectionview.render());
-        // window.graphsView.parametersRegion.show(parametercollectionview.render());
-        // ^^ not needed, marionette seems to take care of this
-      }
     });
 
   },
@@ -66,7 +60,6 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     console.log('A model was added to the collection');
   }
 });
-
 
 Lizard.views.Location = Backbone.Marionette.ItemView.extend({
 
@@ -79,7 +72,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     // console.log('locationview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
-    // console.log(bindings);
+    this._modelBinder._onElChanged(this)
   },
   tagName: 'li',
   template: '#locationview-template',
@@ -116,22 +109,10 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     parametercollectionview.collection.url = settings.parameters_url + '?location='+ids;
     parametercollectionview.collection.fetch({
       cache: true,
-      success: function() {
-        // window.graphsView.parametersRegion.show(parametercollectionview.render());
-        // window.graphsView.filtersRegion.show(filtercollectionview.render());
-        // window.graphsView.locationsRegion.show(locationcollectionview.render());
-        // ^^ not needed, marionette seems to take care of this
-      }
     });
     filtercollectionview.collection.url = settings.filters_url + '?location='+ids;
     filtercollectionview.collection.fetch({
       cache: true,
-      success: function() {
-        // window.graphsView.parametersRegion.show(parametercollectionview.render());
-        // window.graphsView.filtersRegion.show(filtercollectionview.render());
-        // window.graphsView.locationsRegion.show(locationcollectionview.render());
-        // ^^ not needed, marionette seems to take care of this
-      }
     });
 
   },
@@ -186,12 +167,6 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     locationcollectionview.collection.url = settings.locations_url + '?parameter='+ids;
     locationcollectionview.collection.fetch({
       cache: true,
-      success: function() {
-        // window.graphsView.parametersRegion.show(parametercollectionview.render());
-        // window.graphsView.filtersRegion.show(filtercollectionview.render());
-        // window.graphsView.locationsRegion.show(locationcollectionview.render());
-        // ^^ not needed, marionette seems to take care of this
-      }
     });
   },
   modelAdded: function() {

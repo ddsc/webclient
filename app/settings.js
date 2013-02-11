@@ -7,4 +7,5 @@ var settings = {
     locations_url: domain + 'locations/' + extra,
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
+    collages_url: domain + 'collages/'
 };
