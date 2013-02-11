@@ -54,9 +54,9 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
-        window.graphsView.locationsRegion.show(locationcollectionview.render());
-        window.graphsView.filtersRegion.show(filtercollectionview.render());
-        window.graphsView.parametersRegion.show(parametercollectionview.render());
+        // window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // window.graphsView.filtersRegion.show(filtercollectionview.render());
+        // window.graphsView.parametersRegion.show(parametercollectionview.render());
         // ^^ not needed, marionette seems to take care of this
       }
     });
@@ -117,9 +117,9 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     parametercollectionview.collection.fetch({
       cache: true,
       success: function() {
-        window.graphsView.parametersRegion.show(parametercollectionview.render());
-        window.graphsView.filtersRegion.show(filtercollectionview.render());
-        window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // window.graphsView.parametersRegion.show(parametercollectionview.render());
+        // window.graphsView.filtersRegion.show(filtercollectionview.render());
+        // window.graphsView.locationsRegion.show(locationcollectionview.render());
         // ^^ not needed, marionette seems to take care of this
       }
     });
@@ -127,9 +127,9 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     filtercollectionview.collection.fetch({
       cache: true,
       success: function() {
-        window.graphsView.parametersRegion.show(parametercollectionview.render());
-        window.graphsView.filtersRegion.show(filtercollectionview.render());
-        window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // window.graphsView.parametersRegion.show(parametercollectionview.render());
+        // window.graphsView.filtersRegion.show(filtercollectionview.render());
+        // window.graphsView.locationsRegion.show(locationcollectionview.render());
         // ^^ not needed, marionette seems to take care of this
       }
     });
@@ -187,9 +187,9 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     locationcollectionview.collection.fetch({
       cache: true,
       success: function() {
-        window.graphsView.parametersRegion.show(parametercollectionview.render());
-        window.graphsView.filtersRegion.show(filtercollectionview.render());
-        window.graphsView.locationsRegion.show(locationcollectionview.render());
+        // window.graphsView.parametersRegion.show(parametercollectionview.render());
+        // window.graphsView.filtersRegion.show(filtercollectionview.render());
+        // window.graphsView.locationsRegion.show(locationcollectionview.render());
         // ^^ not needed, marionette seems to take care of this
       }
     });
