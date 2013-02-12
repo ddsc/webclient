@@ -30,12 +30,20 @@ Lizard.collections.Workspace = Backbone.Collection.extend({
       for (i in tseries){
         timeserie = new Lizard.models.Timeserie({url: tseries[i], id: tseries[i]})
         Lizard.Graphs.Timeseries.add(timeserie);
+        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
+        if (parameter != undefined){
+          parameter.set({hidden:false});
+        }
       }
     });
     this.on('remove', function(model){
       tseries = model.attributes.tseries;
       for (i in tseries){
         Lizard.Graphs.Timeseries.remove(tseries[i]);
+        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
+        if (parameter != undefined){
+          parameter.set({hidden:true});
+        }
       }
     });
   }
@@ -58,7 +66,6 @@ Lizard.views.Timeseries = Backbone.Marionette.CollectionView.extend({
   collection: Lizard.Graphs.Timeseries,
   tagName: 'ul',
   itemView: Lizard.views.Timeserie,
-
 });
 
 

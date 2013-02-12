@@ -61,6 +61,7 @@ Lizard.Utils = {};
 Lizard.Utils.Workspace = {
   queryString: null,
   toggleSelected: function (uuid, type){
+    console.log(uuid + type)
     queryString = type + "," + uuid;
     if (Lizard.Graphs.Workspace.get(queryString) === undefined){
       tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
@@ -74,7 +75,7 @@ Lizard.Utils.Workspace = {
   createItem: function (mod, response){
     workspaceItem = new Lizard.models.WorkspaceItem({
       id: this.queryString,
-      tseries: response.timeseries
+      tseries: response.timeseries,
     })
     Lizard.Graphs.Workspace.add(workspaceItem);
   return workspaceItem
@@ -94,7 +95,7 @@ Lizard.Utils.DragDrop = {
   drop: function (e){
     e.preventDefault();
     var data_url = e.dataTransfer.getData("Text");
-    console.log(data_url);
+    e.target.parentElement.classList.remove("empty");
     var EventCollection = Backbone.Collection.extend({
           url: data_url
         })

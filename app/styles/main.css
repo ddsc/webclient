@@ -215,6 +215,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
     height: 200px;
 }
 
+#chart{
+    padding: 10px;
+}
+
+div.empty #chart{
+    padding:100px;
+}
+
 .drop{
     top:50%;
     left: 50%;
@@ -244,7 +252,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
 .empty{
     opacity: 0.5;
-    padding: 50px;
 }
 
 

@@ -21,44 +21,13 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     'click input': 'toggle'
   },
   toggle: function(e) {
-    if(this.model.get('selected') === false) {
-      this.model.set('selected', true);
-    } else {
-      this.model.set('selected', false);
-    }
-    console.log('Setting ' + this.model.get('name') + ' to ' + this.model.get('selected'));
+    uuid = this.model.get('id');
+    type = 'logicalgroups';
+    Lizard.Utils.Workspace.toggleSelected(uuid, type);
   },
-  modelEvents: {
-    'change': 'modelChanged'
-  },
-  collectionEvents: {
-    'add': 'modelAdded'
-  },
-  modelChanged: function() {
-    var ids = '';
-    _.each(filtercollectionview.collection.models, function(data) {
-      if(data.attributes.selected === true) {
-        var id = data.attributes.url.split('/')[6]; // TODO: Complain to Berto that this ID needs to be an attribute in the API JSON
-        ids = ids + id;
-        ids = ids + ',';
-        console.log(ids);
-      }
-    });
-    ids = ids.substring(0, ids.length - 1);
-
-    locationcollectionview.collection.url = settings.locations_url + '?filter='+ids;
-    locationcollectionview.collection.fetch({
-      cache: true,
-    });
-
-  },
-  modelAdded: function() {
-    console.log('A model was added to the collection');
-  }
 });
 
 Lizard.views.Location = Backbone.Marionette.ItemView.extend({
-
   _modelBinder: undefined,
   initialize: function(){
     // console.log('LocationView.initialize()');
@@ -68,7 +37,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     // console.log('locationview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
-    this._modelBinder._onElChanged(this)
+    this._modelBinder._onElChanged(this);
   },
   tagName: 'li',
   template: '#locationview-template',
@@ -80,54 +49,17 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
     type = 'locations';
     Lizard.Utils.Workspace.toggleSelected(uuid, type);
   },
-  modelEvents: {
-    'change': 'modelChanged'
-  },
-  collectionEvents: {
-    'add': 'modelAdded'
-  },
-  modelChanged: function() {
-
-    // console.log(this.model.attributes.location +' changed to', this.model.attributes.selected);
-
-    var ids = '';
-    _.each(locationcollectionview.collection.models, function(data) {
-      if(data.attributes.selected === true) {
-        ids = ids + data.attributes.uuid;
-        ids = ids + ',';
-        console.log(ids);
-      }
-    });
-    ids = ids.substring(0, ids.length - 1);
-
-    parametercollectionview.collection.url = settings.parameters_url + '?location='+ids;
-    parametercollectionview.collection.fetch({
-      cache: true,
-    });
-    filtercollectionview.collection.url = settings.filters_url + '?location='+ids;
-    filtercollectionview.collection.fetch({
-      cache: true,
-    });
-
-  },
-  modelAdded: function() {
-    console.log('I, COLLECTION, HAS CHANGED');
-  }
-
 });
 
 Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
   
   _modelBinder: undefined,
   initialize: function(){
-    // console.log('ParameterView.initialize()');
     this._modelBinder = new Backbone.ModelBinder();
   },
   onRender: function() {
-    // console.log('parameterview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
-    // console.log(bindings);
   },
   tagName: 'li',
   template: '#parameterview-template',
@@ -142,30 +74,15 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     }
   },
   modelEvents: {
-    'change': 'modelChanged'
-  },
-  collectionEvents: {
-    'add': 'modelAdded'
+    'change:hidden': 'modelChanged'
   },
   modelChanged: function() {
-    var ids = '';
-    _.each(parametercollectionview.collection.models, function(data) {
-      if(data.attributes.selected === true) {
-        var id = data.attributes.url.split('/')[6]; // TODO: Complain to Berto that this ID needs to be an attribute in the API JSON
-        ids = ids + id;
-        ids = ids + ',';
-        console.log('---------->', ids);
-      }
-    });
-    ids = ids.substring(0, ids.length - 1);
-    locationcollectionview.collection.url = settings.locations_url + '?parameter='+ids;
-    locationcollectionview.collection.fetch({
-      cache: true,
-    });
+    if (this.model.get('hidden') === true ) {
+      this.$el._addClass("hidden")
+    } else {
+      this.$el._removeClass("hidden")
+    }
   },
-  modelAdded: function() {
-    // console.log('modelAdded: ', this.model);
-  }
 });
 
 Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
@@ -210,8 +127,12 @@ Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
 CollectionViews
 */
 
+FilterCollection = new Lizard.collections.Filter();
+LocationCollection = new Lizard.collections.Location();
+ParameterCollection = new Lizard.collections.Parameter();
+
 Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Filter(),
+  collection: FilterCollection,
   tagName: 'ul',
   itemView: Lizard.views.Filter,
 
@@ -224,7 +145,7 @@ Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.views.LocationCollection = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Location(),
+  collection: LocationCollection,
   tagName: 'ul',
   itemView: Lizard.views.Location,
 
@@ -237,7 +158,7 @@ Lizard.views.LocationCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: new Lizard.collections.Parameter(),
+  collection: ParameterCollection,
   tagName: 'ul',
 
   itemView: Lizard.views.Parameter,
