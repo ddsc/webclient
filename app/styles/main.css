@@ -221,7 +221,7 @@ input.input-medium.search-query {
     height: 200px;
 }
 
-#chart{
+.graph-drop{
     padding: 10px;
     width: 90%;
     height: 90%;
