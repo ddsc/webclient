@@ -17,7 +17,7 @@ Lizard.models.Layer = Backbone.Model.extend({
         type: null
 	},
 
-		url: function() {
+	url: function() {
 		var origUrl = Backbone.Model.prototype.url.call(this);
 		return origUrl += _.last(origUrl) === '/' ? '' : '/'
 	}
