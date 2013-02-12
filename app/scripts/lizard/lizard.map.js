@@ -18,10 +18,10 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-layerCollection = new Lizard.collections.Layer({
+layerCollection = new Lizard.Collections.Layer({
 });
 
-var layerView = new Lizard.views.LayerList({
+var layerView = new Lizard.Views.LayerList({
 	collection: layerCollection
 });
 
@@ -57,7 +57,7 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 
  One view belongs to one location.
 */
-Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
+Lizard.Views.ModalGraph = Backbone.Marionette.ItemView.extend({
     // custom template rendering to improve speed
     // due to explicit variable passing.
     template: function(model){
@@ -74,37 +74,31 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     // One Timeserie has many Events. An Events list is only
     // loaded when it is explcitly chosen, with caching.
     getSeriesdata: function(clickedon){
-      // Get's the element that is clicked and it's datasets
-
-      $('#chart-canvas').loadGraph("scripts/dummy.json");
-      // var data_url = clickedon.target.dataset.url;
-      // this.code = clickedon.target.dataset.code;
-      // var events = ['10c7e353-a4d6-4c47-a4fe-ff984fd3a627', '000b33fd-1f7c-4866-9ab8-c92e55cc449a',];
-      // var randome = Math.floor(Math.random() * events.length);
-      // var EventCollection = Backbone.Collection.extend({
-      //   url: domain + 'events/' + events[randome]
-      // });
-      // // Timeserie has Events. Opens new collection
-      // // for that specific timeserie.
-      // ts_events = new EventCollection();
-      // // _.bind connects "this" to the makeChart
-      // // otherwise it loses it's scope.
-      // ts_events.fetch({async:false, cache: true,
-      //   success: _.bind(this.makeChart, this)
-      // });
+      // Gets the element that is clicked and it's datasets
+      var data_url = clickedon.target.dataset.url;
+      this.code = clickedon.target.dataset.code;
+      var EventCollection = Backbone.Collection.extend({
+        url: data_url
+      });
+      // Timeserie has Events. Opens new collection
+      // for that specific timeserie.
+      ts_events = new EventCollection();
+      // _.bind connects "this" to the makeChart
+      // otherwise it loses it's scope.
+      ts_events.fetch({async:false, cache: true,
+        success: _.bind(this.makeChart, this)
+      });
     },
     onBeforeRender: function(){
-      this.model.set({tseries: new Backbone.Collection()});
+      timeseriesCollection.url = settings.timeseries_url + 
+        '?location=' + this.model.attributes.uuid;
+      timeseriesCollection.reset();
+      timeseriesCollection.fetch({async:false});
+      this.model.set({tseries: timeseriesCollection});
       ts = this.model.attributes.timeseries;
-      for (var i in ts) {
-        TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
-        TimeserieModel.fetch({async: false, cache:true});
-        this.model.attributes.tseries.add(TimeserieModel);
-      }
     },
     makeChart: function(collection, responses){
       ts_events = responses;
-      console.log(responses);
       this.series = [];
       numbers = [];
       for (var i in ts_events){
@@ -172,13 +166,13 @@ Lizard.Utils.Map = {
           var model = marker.valueOf().options.bbModel;
           model.fetch({
             success: function(model, res){
-              modalView = new Lizard.views.ModalGraph();
+              modalView = new Lizard.Views.ModalGraph();
               modalView.model = model;
               Lizard.mapView.modal.show(modalView.render());
               $('#location-modal').modal();
             },
             error: function(){
-              console.log('Something went horribly wrong')
+              console.log('Something went horribly wrong');
             },
             cache: true
           });
@@ -202,7 +196,7 @@ Lizard.Utils.Map = {
           var x = 4.411944150924683 + (Math.random() / 500.0);
           var y = 52.22242675741608 + (Math.random() / 500.0);
           var point = [x,y];
-          var leaflet_point = new L.LatLng(point[1], point[0])
+          var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
             clickable: true,
@@ -229,7 +223,7 @@ Lizard.Utils.Map = {
 // * Location models are loaded and added to a Leaflet map.
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
-// a 'WorkspaceCollection' on click on a specific object.
+// a 'workspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log('LeafletView');
@@ -238,7 +232,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     options.zoom; //= (options.zoom ? options.zoom : 7);
   },
-  collection: new Lizard.collections.Location(),
+  collection: locationCollection,
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849),
               new L.LatLng(50.9584, 7.5147)
@@ -249,8 +243,10 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   modalInfo:Lizard.Utils.Map.modalInfo,
   updateInfo: Lizard.Utils.Map.updateInfo,
   onShow: function(){
+    console.log(this.collection)
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
+    L.control.scale().addTo(this.mapCanvas);
     window.mapCanvas = this.mapCanvas;
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
@@ -309,15 +305,16 @@ Lizard.Map.map = function(lonlatzoom){
 
   var collageView = new CollageView();
   var layersView = layerView;
+  var leafletView;
 
   if(lonlatzoom) {
-    var leafletView = new Lizard.Map.LeafletView({
+    leafletView = new Lizard.Map.LeafletView({
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
       zoom: lonlatzoom.split(',')[2]
     });
   } else {
-    var leafletView = new Lizard.Map.LeafletView({
+    leafletView = new Lizard.Map.LeafletView({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
       zoom: 7
@@ -325,11 +322,26 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  Lizard.mapView.sidebarRegion.show(layersView.render());
+  // Lizard.mapView.sidebarRegion.show(layersView.render());
   Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
-  layerCollection.fetch();
+  layerCollection.fetch({success: function(layercollection) {
+    var lyrs = {};
+    // Add every layer in the collection to Leaflet
+    _.each(layercollection.models, function(model) {
+      console.log('Adding layer "' + model.attributes.layer_name + '" to Leaflet');
+      var lyr = L.tileLayer.wms(model.attributes.wms_url, {
+        layers: model.attributes.layer_name,
+        format: model.attributes.format,
+        transparent: model.attributes.transparent,
+        opacity: model.attributes.opacity,
+        attribution: 'DDSC'
+      });
+      lyrs[model.attributes.display_name] = lyr;
+    });
+    L.control.layers([], lyrs).addTo(window.mapCanvas);
+  }});
 
   $('.drawer-item').popover({
     html: true,

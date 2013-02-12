@@ -2,58 +2,87 @@
 Collections
 */
 
-Lizard.collections = {};
+Lizard.Collections = {};
 
-Lizard.collections.Filter = Backbone.Collection.extend({
+
+/* MAP COLLECTIONS */
+Lizard.Collections.Layer = Backbone.Collection.extend({
+  parse: function(response){
+    return response.results;
+  },
+  url: settings.layers_url,
+  model: Lizard.Models.Layer
+});
+
+
+
+
+/* FILTER/LOCATION/PARAMETER COLLECTIONS */
+Lizard.Collections.Filter = Backbone.Collection.extend({
   initialize: function() {
     // console.log('Filter collection initializing');
   },
   parse: function(response){
-    return response.results
+    return response.results;
   },
   url: settings.filters_url,
-  model: Lizard.models.Filter
+  model: Lizard.Models.Filter
 });
 
-Lizard.collections.Location = Backbone.Collection.extend({
+Lizard.Collections.Location = Backbone.Collection.extend({
   initialize: function() {
     // console.log('Location collection initializing');
   },
   parse: function(response){
-    return response.results
+    return response.results;
   },
   url: settings.locations_url,
-  model: Lizard.models.Location
+  model: Lizard.Models.Location
 });
 
-Lizard.collections.Parameter = Backbone.Collection.extend({
+Lizard.Collections.Parameter = Backbone.Collection.extend({
   initialize: function() {
     console.log('Parameter initializing');
   },
   parse: function(response){
-    return response.results
+    return response.results;
   },
   url: settings.parameters_url,
-  model: Lizard.models.Parameter
+  model: Lizard.Models.Parameter
 });
 
-Lizard.collections.Widget = Backbone.Collection.extend({
+
+/* WIDGET COLLECTIONS */
+Lizard.Collections.Widget = Backbone.Collection.extend({
   initialize: function() {
     console.log('Widget collection initializing');
   },
   parse: function(response){
-    return response.results
+    return response.results;
   },
-//   localStorage: new Backbone.LocalStorage("ddsc-widgets"),
-  model: Lizard.models.Widget
+  model: Lizard.Models.Widget
 });
 
-Lizard.collections.Collage = Backbone.Collection.extend();
 
-Lizard.collections.Timeseries = Backbone.Collection.extend({
+/* COLLAGE COLLECTIONS */
+Lizard.Collections.Collage = Backbone.Collection.extend();
+
+
+/* TIMESERIES COLLECTIONS */
+Lizard.Collections.Timeseries = Backbone.Collection.extend({
   parse: function(response){
-    return response.results
+    return response.results;
   },
   url: settings.timeseries_url,
-  model: Lizard.models.Timeserie
+  model: Lizard.Models.Timeserie
 });
+
+Lizard.Collections.Workspace = Backbone.Collection.extend({
+  model: Lizard.Models.WorkspaceItem,
+});
+
+workspaceCollection = new Lizard.Collections.Workspace();
+filterCollection = new Lizard.Collections.Filter();
+locationCollection = new Lizard.Collections.Location();
+parameterCollection = new Lizard.Collections.Parameter();
+timeseriesCollection = new Lizard.Collections.Timeseries();

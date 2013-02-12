@@ -3,15 +3,15 @@ Models
 */
 
 
-Lizard.models = {};
+Lizard.Models = {};
 
-Lizard.models.Filter = Backbone.Model.extend({
+Lizard.Models.Filter = Backbone.Model.extend({
   defaults: {
     'selected':  false
   }
 });
 
-Lizard.models.Location = Backbone.Model.extend({
+Lizard.Models.Location = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url; 
   },
@@ -20,13 +20,13 @@ Lizard.models.Location = Backbone.Model.extend({
   },
 });
 
-Lizard.models.Parameter = Backbone.Model.extend({
+Lizard.Models.Parameter = Backbone.Model.extend({
   defaults: {
     'selected':  false
   }
 });
 
-Lizard.models.Timeserie = Backbone.Model.extend({
+Lizard.Models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url;
     // this.fetch({async: false, cache: true});
@@ -36,14 +36,49 @@ Lizard.models.Timeserie = Backbone.Model.extend({
   },
 });
 
-Lizard.models.Widget = Backbone.Model.extend({});
+Lizard.Models.Widget = Backbone.Model.extend({});
 
-Lizard.models.Collage = Backbone.Model.extend({
-  initialize: function() {
-    this.url = response.url;
-    this.fetch({cache: true});
+// Lizard.Models.Collage = Backbone.Model.extend({
+//   initialize: function() {
+//     this.url = response.url;
+//     this.fetch({cache: true});
+//   }
+// });
+// ^^^^ This was present before Bastiaan/Roland added the one below.
+
+Lizard.Models.Collage = Backbone.Model.extend({
+  defaults: {
+    data: '',
+    id: null
+  },
+  url: function() {
+    var origUrl = Backbone.Model.prototype.url.call(this);
+    return origUrl += _.last(origUrl) === '/' ? '' : '/';
+  }
+});
+
+Lizard.Models.Layer = Backbone.Model.extend({
+  defaults: {
+        visibility: false,
+        order: 0,
+
+        layer_name: '',
+        display_name: '',
+        description: null,
+        metadata: null,
+        legend_url: null,
+        enable_search: null,
+        styles: null,
+        format: 'image/png',
+        height: null,
+        width: null,
+        tiled: null,
+        transparent: true,
+        wms_url: '',
+        opacity: 100,
+        type: null
   }
 });
 
 
-Lizard.models.WorkspaceItem = Backbone.Model.extend();
+Lizard.Models.WorkspaceItem = Backbone.Model.extend();

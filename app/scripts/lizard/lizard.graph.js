@@ -29,21 +29,21 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
           // we already have the collections, so using those would be nice instead.
           switch (facet) {
             case 'filter':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
+              $.getJSON(domain + 'logicalgroups/?page_size=0', function(logicalgroups) {
                 var lg = [];
                 _.each(logicalgroups, function(logicalgroup) { lg.push(logicalgroup.name); });
                 callback(lg);
               });
               break;
             case 'location':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/locations/?page_size=0', function(locations) {
+              $.getJSON(domain + 'locations/?page_size=0', function(locations) {
                 var lc = [];
                 _.each(locations, function(location) { lc.push(location.name); });
                 callback(lc);
               });
               break;
             case 'parameter':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/parameters/?page_size=0', function(parameters) {
+              $.getJSON(domain + 'parameters/?page_size=0', function(parameters) {
                 var pm = [];
                 _.each(parameters, function(parameter) { pm.push(parameter.description); });
                 callback(pm);
@@ -62,42 +62,11 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Graphs.Timeseries = new Lizard.collections.Timeseries;
+Lizard.Graphs.Timeseries = timeseriesCollection;
 Lizard.Graphs.Timeseries.fetch();
 
-Lizard.collections.Workspace = Backbone.Collection.extend({
-  model: Lizard.models.WorkspaceItem,
-  initialize: function(){
-    this.on('add', function(model){
-      tseries = Lizard.Graphs.Timeseries.models;
-      for (i in tseries){
-        timeserie = tseries[i]
-        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-        if (parameter != undefined){
-          parameter.set({hidden:false});
-        }
-        // locationuuid = timeserie.attributes.location.split("locations/")[1].split("/")[0];
-        // location = LocationCollection.where({uuid: uuid});
-        // console.log(location);
 
-      }
-    });
-    this.on('remove', function(model){
-      tseries = model.attributes.tseries;
-      for (i in tseries){
-        Lizard.Graphs.Timeseries.remove(tseries[i]);
-        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-        if (parameter != undefined){
-          parameter.set({hidden:true});
-        }
-      }
-    });
-  }
-});
-
-Lizard.Graphs.Workspace = new Lizard.collections.Workspace;
-
-Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   template: function(model){
       return _.template($('#workspace-item-template').html(), {
@@ -107,10 +76,10 @@ Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
     },
 });
 
-Lizard.views.Timeseries = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
   collection: Lizard.Graphs.Timeseries,
   tagName: 'ul',
-  itemView: Lizard.views.Timeserie,
+  itemView: Lizard.Views.Timeserie,
 });
 
 
@@ -122,7 +91,7 @@ Lizard.Graphs.graphs = function(){
   
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
-  var workspaceView = new Lizard.views.Timeseries();
+  var workspaceView = new Lizard.Views.Timeseries();
 
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());

@@ -44,7 +44,7 @@ $('em.toggle').live("click", function(e){
 
 $('em.reset').live("click", function(e){
   e.preventDefault();
-  console.log("Resetting collections")
+  console.log("Resetting collections");
   _.each(filtercollectionview.collection.models, function(model) {
     model.set('selected', false);
   });
@@ -63,21 +63,21 @@ Lizard.Utils.Workspace = {
   toggleSelected: function (uuid, type){
     console.log(uuid + type);
     queryString = type + "," + uuid;
-    if (Lizard.Graphs.Workspace.get(queryString) === undefined){
-      tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
+    if (workspaceCollection.get(queryString) === undefined){
+      tempModel = new Lizard.Models.Location({url: domain + type +'/' + uuid});
       tempModel.fetch({success: this.createItem});
       tempModel.destroy();
     }
     else {
-      workspaceItem = Lizard.Graphs.Workspace.remove(queryString);
+      workspaceItem = workspaceCollection.remove(queryString);
     }
   },
   createItem: function (mod, response){
-    workspaceItem = new Lizard.models.WorkspaceItem({
+    workspaceItem = new Lizard.Models.WorkspaceItem({
       id: this.queryString,
       tseries: response.timeseries,
     });
-    Lizard.Graphs.Workspace.add(workspaceItem);
+    workspaceCollection.add(workspaceItem);
   return workspaceItem;
   },
 };
