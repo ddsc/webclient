@@ -34,6 +34,10 @@ Lizard.collections.Workspace = Backbone.Collection.extend({
         if (parameter != undefined){
           parameter.set({hidden:false});
         }
+        // locationuuid = timeserie.attributes.location.split("locations/")[1].split("/")[0];
+        // location = LocationCollection.where({uuid: uuid});
+        // console.log(location);
+
       }
     });
     this.on('remove', function(model){
@@ -59,7 +63,6 @@ Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
         events: model.events
       }, {variable: 'workspace'});
     },
-
 });
 
 Lizard.views.Timeseries = Backbone.Marionette.CollectionView.extend({
@@ -84,6 +87,17 @@ Lizard.Graphs.graphs = function(){
   graphsView.parametersRegion.show(parametercollectionview.render());
   graphsView.selectionRegion.show(workspaceView.render());
   graphsView.collagegraphRegion.show(collageView.render());
+  $(document).ready(function() {
+          var visualSearch = VS.init({
+            container : $('.visual_search'),
+            query     : '',
+            callbacks : {
+              search       : function(query, searchCollection) {},
+              facetMatches : function(callback) {},
+              valueMatches : function(facet, searchTerm, callback) {}
+            }
+          });
+        });
 
   // var timeserieView = new Lizard.Graphs.TimeserieView();
   // graphsView.mainRegion.show(timeserieView.render());

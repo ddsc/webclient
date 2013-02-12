@@ -255,7 +255,22 @@ div.empty #chart{
 }
 
 
-
+.flot-graph > span.loading { background-image: url('../images/loading.gif'); }
+.flot-graph > span.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
+.flot-graph > span {
+    background-color: #222222;
+    background-position: center center;
+    background-repeat: no-repeat;
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+body {
+    font-family: Arial;
+}
 
 
 
