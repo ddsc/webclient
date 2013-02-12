@@ -83,11 +83,8 @@ Lizard.Utils.Workspace = {
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
-  timeserie = new Lizard.models.Timeserie({url: e.target.dataset.url});
-  timeserie.fetch({async: false});
-  sendThis = timeserie.attributes.events;
+  sendThis = e.target.dataset.url;
   e.dataTransfer.setData("Text", sendThis);
-
    },
 
   allowDrop: function (e){
@@ -97,6 +94,7 @@ Lizard.Utils.DragDrop = {
   drop: function (e){
     e.preventDefault();
     var data_url = e.dataTransfer.getData("Text");
+    console.log(data_url);
     var EventCollection = Backbone.Collection.extend({
           url: data_url
         })

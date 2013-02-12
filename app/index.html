@@ -274,7 +274,7 @@
 
         <script id="workspace-item-template" type="text/template">
             <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox"><i class="icon-globe"></i> <span draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>"><%= workspace.name %></span> <span class="state hide"></span>
+                <input class="hide" type="checkbox" class="filterCheckbox"><i class="icon-globe"></i> <span class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>"><%= workspace.name %></span> <span class="state hide"></span>
             </label>
         </script>
 
@@ -317,17 +317,16 @@
 
             <div class="span9" id="mainRegion">
              <!-- <h4>Grafieken</h4> -->
-              <div id="graphs"></div>
             <div class="row-fluid">
-                <div id="drop-one" class="span12 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <div id="chart">
+                <div id="drop-one" class="span12 drop empty">
+                    <div id="chart" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
                     <h2>Drop it like it's hot!<h2>
                     </div>
                 </div>
             </div>
             <div class="row-fluid">
-                <div id="drop-two" class="span12 drop empty" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <div id="chart">
+                <div id="drop-two" class="span12 drop empty">
+                    <div id="chart" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
                     <h2>Drop it like it's hot!<h2>
                     </div>
                 </div>
