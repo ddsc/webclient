@@ -149,9 +149,39 @@
             <div class="" id="sidebarRegion"></div>
             <div class="" id="collageRegion"></div>
         </div>
-
         <div class="span9" id="leafletRegion"></div>
         <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+
+      </div>
+    </script>
+        <!-- Template definitions -->
+        <script type="text/template" id="home-template">
+          <header class="jumbotron subhead hidden-phone hidden-tablet">
+              <div class="container">
+                <h1>Dijk Data Service Center</h1>
+                <h2 class="lead">Gateway to realtime sensor aggregation</h2>
+              </div>
+          </header>
+
+          <div class="row-fluid" id="home-search-wrapper">
+             <div class="span6">
+                <div class="visual_search hidden-tablet hidden-phone"></div>
+                <div class="textual_search hidden-desktop">
+                    <form class="form-search">
+                    <input type="text" class="input-medium search-query" autocomplete="off" placeholder="Doorzoek het DDSC" x-webkit-speech="">
+                    </form>                    
+                </div>
+             </div>
+             <div class="span1 search-or-divider"><p>&nbsp;&nbsp;...of</p></div>
+             <div class="span5">
+                <a href="#map"><button type="button" class="btn">
+                    Zoek via de kaart
+                </button></a>
+                <a href="#graphs"><button type="button" class="btn">
+                    Zoek via de catalogus
+                </button></a>
+             </div>
+          </div>
 
       </div>
     </script>
