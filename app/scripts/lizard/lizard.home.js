@@ -5,7 +5,7 @@ Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
   className: 'home',
   onShow: function() {
     console.log('onShow()');
-    // $('.search-query').focus();
+    $('.search-query').focus();
 
     var visualSearch = VS.init({
       container : $('.visual_search'),
