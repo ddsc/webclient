@@ -130,7 +130,6 @@ Lizard.Graphs.graphs = function(){
   graphsView.selectionRegion.show(workspaceView.render());
   graphsView.collagegraphRegion.show(collageView.render());
 
-
   // var timeserieView = new Lizard.Graphs.TimeserieView();
   // graphsView.mainRegion.show(timeserieView.render());
 

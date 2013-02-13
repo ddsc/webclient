@@ -79,9 +79,9 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
   },
   modelChanged: function() {
     if (this.model.get('hidden') === true ) {
-      this.$el._addClass("hidden")
+      this.$el._addClass("hidden");
     } else {
-      this.$el._removeClass("hidden")
+      this.$el._removeClass("hidden");
     }
   },
 });
