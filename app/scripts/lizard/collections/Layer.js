@@ -3,6 +3,6 @@ Lizard.collections.Layer = Backbone.Collection.extend({
 		return response.results
 	},
 
-	url: local_settings.layers_url,
+	url: settings.layers_url,
 	model: Lizard.models.Layer
 });
