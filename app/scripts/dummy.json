@@ -6,7 +6,7 @@
     "y_label": "mNAP",
     "y_max": -0.233,
     "data": [{
-        "color": "blue",
+        "color": "#7C8BF2",
         "lines": {
             "show": true
         },
@@ -207,7 +207,7 @@
         ],
         "label": "Monnickendam, Gouwzee"
     }, {
-        "color": "darkred",
+        "color": "#F38037",
         "lines": {
             "show": true
         },
@@ -408,7 +408,7 @@
         ],
         "label": "Monnickendam, Purmer"
     }, {
-        "color": "green",
+        "color": "#F4DE05",
         "lines": {
             "show": true
         },
