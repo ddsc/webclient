@@ -12,8 +12,14 @@ server {
        expires 1h;
     }
 
+    location /app/ {
+       alias ${buildout:directory}/app/;
+       expires 1h;
+    }
+
     location /test/ {
        alias ${buildout:directory}/test/;
        expires 1h;
     }
+
 }

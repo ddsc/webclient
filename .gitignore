@@ -1,5 +1,6 @@
 localsettings.js
 buildout.cfg
+flot/
 
 *.py[cwo]
 .DS_Store
