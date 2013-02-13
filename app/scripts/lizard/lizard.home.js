@@ -20,6 +20,8 @@ Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
            ]);
         },
         valueMatches : function(facet, searchTerm, callback) {
+          // TODO: We're doing unnecessary AJAX calls here,
+          // we already have the collections, so using those would be nice instead.
           switch (facet) {
             case 'filter':
               $.getJSON('http://test.api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
