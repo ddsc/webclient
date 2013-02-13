@@ -324,7 +324,7 @@
             <div class="row-fluid">
                 <div id="drop-one" class="span12 drop empty">
                     <div id="chart" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                    <h2>Sleep je metingen hier naartoe<h2>
+                    <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe<h2>
                     </div>
                 </div>
             </div>
@@ -408,12 +408,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">DDSC</a>
+                    <a href="#"><div id="brand" href="#"></div></a>
 
                     <div class="nav-collapse collapse">
 
                         <ul class="nav" id="menu">
-                            <!-- <li class="home-menu"><a href="#"><em class="icon-home icon-white"></em>&nbsp;Home</a></li> -->
                             <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
                             <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
                             <li class="collage-menu"><a href="#collage"><em class="icon-th-large icon-white"></em> Collage</a></li>

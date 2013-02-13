@@ -124,7 +124,7 @@ function allowDrop(e){
 function drop(e){
   e.preventDefault();
   var data_url = e.dataTransfer.getData("Text");
-  $(e.target).loadGraph("/scripts/dummy.json");
+  $(e.target).loadGraph("scripts/dummy.json");
 
 
 
