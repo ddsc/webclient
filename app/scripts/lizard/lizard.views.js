@@ -62,7 +62,7 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
     this._modelBinder.bind(this.model, this.el, bindings);
   },
   tagName: 'li',
-  className: 'hidden',
+  className: '',
   template: '#parameterview-template',
   events: {
     'click input': 'toggle'
