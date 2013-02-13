@@ -145,6 +145,7 @@ ol.drawer-group h4 {
 #home-search-wrapper {
     margin: 50px 0px 50px 0px;
 }
+/*******
 #home-search-wrapper input[type=text] {
     width: 94%;
     height: 30px;
@@ -162,7 +163,7 @@ ol.drawer-group h4 {
     width: 180px;
     height: 40px;
 }
-
+******/
 #threecol-wrapper {
     background: -moz-linear-gradient(top, rgba(219,219,219,1) 0%, rgba(206,206,206,0.91) 9%, rgba(230,230,230,0.01) 99%, rgba(230,230,230,0) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(219,219,219,1)), color-stop(9%,rgba(206,206,206,0.91)), color-stop(99%,rgba(230,230,230,0.01)), color-stop(100%,rgba(230,230,230,0))); /* Chrome,Safari4+ */
