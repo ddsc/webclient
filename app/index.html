@@ -328,7 +328,7 @@
             </div>
             <div class="row-fluid">
                 <div id="drop-two" class="span12 drop empty">
-                    <div id="chart" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
+                    <div id="chart" class="flot-graph" style="width: 1000px; height: 600px; ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
                     <h2>Drop it like it's hot!<h2>
                     </div>
                 </div>
@@ -593,7 +593,7 @@
 
         <script src="scripts/lizard/lizard.layerbubble.js"></script>
 
-        
+        <!-- Jquery Flot stuff -->        
         <script type="text/javascript"
                 src="scripts/jquery-flot-dev/jquery.flot.js"
         ></script>
@@ -621,7 +621,6 @@
         <script type="text/javascript"
                 src="scripts/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"
         ></script>
-
 
         <!-- Lizard globals, order matters -->
         <script src="localsettings.js"></script>

@@ -94,19 +94,20 @@ Lizard.Utils.DragDrop = {
 
   drop: function (e){
     e.preventDefault();
-    var data_url = e.dataTransfer.getData("Text");
+    // var data_url = e.dataTransfer.getData("Text");
     e.target.parentElement.classList.remove("empty");
-    var EventCollection = Backbone.Collection.extend({
-          url: data_url
-        })
-        // Timeserie has Events. Opens new collection
-        // for that specific timeserie.
-        ts_events = new EventCollection()
-        // _.bind connects "this" to the makeChart
-        // otherwise it loses it's scope.
-        ts_events.fetch({async:false, cache: true,
-          success: _.bind(makeChart, e)
-        });
+    $(e.target).loadGraph("/app/scripts/dummy.js");
+    // var EventCollection = Backbone.Collection.extend({
+    //       url: data_url
+    //     })
+    //     // Timeserie has Events. Opens new collection
+    //     // for that specific timeserie.
+    //     ts_events = new EventCollection()
+    //     // _.bind connects "this" to the makeChart
+    //     // otherwise it loses it's scope.
+    //     ts_events.fetch({async:false, cache: true,
+    //       success: _.bind(makeChart, e)
+    //     });
   },
 };
 function drag(e){
@@ -124,17 +125,21 @@ function allowDrop(e){
 function drop(e){
   e.preventDefault();
   var data_url = e.dataTransfer.getData("Text");
-  var EventCollection = Backbone.Collection.extend({
-        url: data_url
-      })
-      // Timeserie has Events. Opens new collection
-      // for that specific timeserie.
-      ts_events = new EventCollection()
-      // _.bind connects "this" to the makeChart
-      // otherwise it loses it's scope.
-      ts_events.fetch({async:false, cache: true,
-        success: _.bind(makeChart, e)
-      });
+  $(e.target).loadGraph("/scripts/dummy.js");
+
+
+
+  // var EventCollection = Backbone.Collection.extend({
+  //       url: data_url
+  //     })
+  //     // Timeserie has Events. Opens new collection
+  //     // for that specific timeserie.
+  //     ts_events = new EventCollection()
+  //     // _.bind connects "this" to the makeChart
+  //     // otherwise it loses it's scope.
+  //     ts_events.fetch({async:false, cache: true,
+  //       success: _.bind(makeChart, e)
+  //     });
 }
 
 function makeChart(collection, responses){
@@ -513,10 +518,5 @@ function bindPanZoomEvents($graph) {
         panAndZoomOtherGraphs(plot);
     });
 }
-
-$(document).ready(function (event) {
-    $('#graph1').loadGraph('http://demo.lizard.net/fewsunblobbed/map/adapter/adapter_fewsjdbc/flot_graph_data/?adapter_layer_json={%22slug%22:%20%22hhnk%22,%20%22filter%22:%20%22HHNK_OPP_WEB_BOEZEM%22,%20%22parameter%22:%20%22H.meting.boezem%22}&identifier={%22location%22:%20%22KDU-B-848_Gz%22}&identifier={%22location%22:%20%22KDU-B-848_Prmr%22}&identifier={%22location%22:%20%22KGM-Q-20390_uit%22}&dt_start=2013-02-04T00%3A00%3A00%2B00%3A00&dt_end=2013-02-06T00%3A00%3A00%2B00%3A00');
-    $('#graph2').loadGraph('http://demo.lizard.net/fewsunblobbed/map/adapter/adapter_fewsjdbc/flot_graph_data/?adapter_layer_json={%22slug%22:%20%22hhnk%22,%20%22filter%22:%20%22HHNK_OPP_WEB_BOEZEM%22,%20%22parameter%22:%20%22H.meting.boezem%22}&identifier={%22location%22:%20%22KDU-B-848_Gz%22}&identifier={%22location%22:%20%22KDU-B-848_Prmr%22}&identifier={%22location%22:%20%22KGM-Q-20390_uit%22}&dt_start=2013-02-04T00%3A00%3A00%2B00%3A00&dt_end=2013-02-06T00%3A00%3A00%2B00%3A00');
-});
 
 }(this));
