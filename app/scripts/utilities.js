@@ -61,7 +61,7 @@ Lizard.Utils = {};
 Lizard.Utils.Workspace = {
   queryString: null,
   toggleSelected: function (uuid, type){
-    console.log(uuid + type)
+    console.log(uuid + type);
     queryString = type + "," + uuid;
     if (Lizard.Graphs.Workspace.get(queryString) === undefined){
       tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
@@ -76,11 +76,11 @@ Lizard.Utils.Workspace = {
     workspaceItem = new Lizard.models.WorkspaceItem({
       id: this.queryString,
       tseries: response.timeseries,
-    })
+    });
     Lizard.Graphs.Workspace.add(workspaceItem);
-  return workspaceItem
+  return workspaceItem;
   },
-}
+};
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
@@ -115,8 +115,7 @@ function drag(e){
   timeserie.fetch({async: false});
   sendThis = timeserie.attributes.events;
   e.dataTransfer.setData("Text", sendThis);
-
- }
+}
 
 function allowDrop(e){
   e.preventDefault();
