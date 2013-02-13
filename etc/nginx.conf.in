@@ -7,7 +7,12 @@ server {
     access_log ${buildout:directory}/var/log/access.log;
     error_log ${buildout:directory}/var/log/error.log;
 
-    location (/|/app/) {
+    location / {
+       alias ${buildout:directory}/app/;
+       expires 1h;
+    }
+
+    location /app/ {
        alias ${buildout:directory}/app/;
        expires 1h;
     }
