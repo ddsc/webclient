@@ -166,6 +166,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       ts = this.model.attributes.timeseries;
       for (var i in ts) {
         TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
+        TimeserieModel.fetch();
         this.model.attributes.tseries.add(TimeserieModel);
       }
     },
@@ -236,14 +237,18 @@ Lizard.Utils.Map = {
     modalInfo: function (e){
           var marker = e.target;
           var model = marker.valueOf().options.bbModel;
-          modalView = new Lizard.views.ModalGraph();
-          modalView.model = model;
-          Lizard.mapView.modal.show(modalView.render());
-          $('#location-modal').modal();
-    },
-    updateModal: function(e){
-        var marker = e.target;
-        
+          model.fetch({
+            success: function(model, res){
+              modalView = new Lizard.views.ModalGraph();
+              modalView.model = model;
+              Lizard.mapView.modal.show(modalView.render());
+              $('#location-modal').modal();
+            },
+            error: function(){
+              console.log('Something went horribly wrong')
+            },
+            cache: true
+          });
     },
     updateInfo: function (e) {
         var marker = e.target;
@@ -260,7 +265,6 @@ Lizard.Utils.Map = {
         var models = collection.models;
         for (var i in models){
           var model = models[i];
-          model.fetch({async: false});
           var attributes = model.attributes;
           var point = attributes.point_geometry;
           var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
@@ -293,7 +297,6 @@ Lizard.Utils.Map = {
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log('LeafletView');
-    console.log(options);
     // (value ? this.series.push(value) : 'nothing');
     options.lon; //= (options.lon ? options.lon : 5.16082763671875);
     options.lat; //= (options.lat ? options.lat : 51.95442214470791);

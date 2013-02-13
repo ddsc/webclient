@@ -12,6 +12,9 @@ Lizard.models.Filter = Backbone.Model.extend({
 });
 
 Lizard.models.Location = Backbone.Model.extend({
+  initialize: function(response) {
+    this.url = response.url; 
+  },
   defaults: {
     'selected':  false
   },
@@ -25,8 +28,8 @@ Lizard.models.Parameter = Backbone.Model.extend({
 
 Lizard.models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
-    this.url = response.url;
-    this.fetch({async: false, cache: true});
+    // this.url = response.url;
+    // this.fetch({async: false, cache: true});
   },
   defaults: {
     'selected':  false
@@ -43,5 +46,4 @@ Lizard.models.Collage = Backbone.Model.extend({
 });
 
 
-
-
+Lizard.models.WorkspaceItem = Backbone.Model.extend();
