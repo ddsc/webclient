@@ -11,6 +11,57 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'locationsRegion': 'p#locationsRegion',
     'selectionRegion': 'p#selectionRegion',
     'collagegraphRegion' : '#collageRegion'
+  },
+  onShow: function() {
+    var visualSearch = VS.init({
+      container : $('.visual_search'),
+      placeholder: 'Zoeken naar...',
+      query     : '',
+      callbacks : {
+        search       : function(query, searchCollection) {},
+         facetMatches : function(callback) {
+           callback([
+               'filter', 'location', 'parameter'
+              // { label: 'city',    category: 'location' }
+           ]);
+        },
+        valueMatches : function(facet, searchTerm, callback) {
+          // TODO: We're doing unnecessary AJAX calls here,
+          // we already have the collections, so using those would be nice instead.
+          switch (facet) {
+            case 'filter':
+              $.getJSON('http://test.api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
+                var lg = [];
+                _.each(logicalgroups, function(logicalgroup) {
+                  lg.push(logicalgroup.name);
+                });
+                callback(lg);
+              });
+              break;
+            case 'location':
+              $.getJSON('http://test.api.dijkdata.nl/api/v0/locations/?page_size=0', function(locations) {
+                var lc = [];
+                _.each(locations, function(location) {
+                  console.log(location.name);
+                  lc.push(location.name);
+                });
+                callback(lc);
+              });
+              break;
+            case 'parameter':
+              $.getJSON('http://test.api.dijkdata.nl/api/v0/parameters/?page_size=0', function(parameters) {
+                var pm = [];
+                _.each(parameters, function(parameter) {
+                  console.log(parameter.description);
+                  pm.push(parameter.description);
+                });
+                callback(pm);
+              });
+              break;
+          }
+        }
+      }
+    });
   }
 });
 
@@ -87,17 +138,7 @@ Lizard.Graphs.graphs = function(){
   graphsView.parametersRegion.show(parametercollectionview.render());
   graphsView.selectionRegion.show(workspaceView.render());
   graphsView.collagegraphRegion.show(collageView.render());
-  $(document).ready(function() {
-          var visualSearch = VS.init({
-            container : $('.visual_search'),
-            query     : '',
-            callbacks : {
-              search       : function(query, searchCollection) {},
-              facetMatches : function(callback) {},
-              valueMatches : function(facet, searchTerm, callback) {}
-            }
-          });
-        });
+
 
   // var timeserieView = new Lizard.Graphs.TimeserieView();
   // graphsView.mainRegion.show(timeserieView.render());
