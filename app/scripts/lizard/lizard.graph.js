@@ -22,7 +22,6 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
          facetMatches : function(callback) {
            callback([
                'filter', 'location', 'parameter'
-              // { label: 'city',    category: 'location' }
            ]);
         },
         valueMatches : function(facet, searchTerm, callback) {
@@ -32,29 +31,21 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
             case 'filter':
               $.getJSON('http://test.api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
                 var lg = [];
-                _.each(logicalgroups, function(logicalgroup) {
-                  lg.push(logicalgroup.name);
-                });
+                _.each(logicalgroups, function(logicalgroup) { lg.push(logicalgroup.name); });
                 callback(lg);
               });
               break;
             case 'location':
               $.getJSON('http://test.api.dijkdata.nl/api/v0/locations/?page_size=0', function(locations) {
                 var lc = [];
-                _.each(locations, function(location) {
-                  console.log(location.name);
-                  lc.push(location.name);
-                });
+                _.each(locations, function(location) { lc.push(location.name); });
                 callback(lc);
               });
               break;
             case 'parameter':
               $.getJSON('http://test.api.dijkdata.nl/api/v0/parameters/?page_size=0', function(parameters) {
                 var pm = [];
-                _.each(parameters, function(parameter) {
-                  console.log(parameter.description);
-                  pm.push(parameter.description);
-                });
+                _.each(parameters, function(parameter) { pm.push(parameter.description); });
                 callback(pm);
               });
               break;
