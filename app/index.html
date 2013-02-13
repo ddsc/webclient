@@ -182,7 +182,7 @@
         <span class="action handle">
             <i class="icon-move"></i>
         </span>
-        <span class="content"><%= layerName %> (<%= layerType %>)</span>
+        <span class="content"><%= display_name %> (<%= type %>)</span>
         <span class="indicator">
             <i class="icon-eye-open"></i>
         </span>
@@ -628,9 +628,15 @@
         <script src="settings.js"></script>
 
         <script src="scripts/lizard/lizard.app.js"></script>
+
         <script src="scripts/lizard/lizard.models.js"></script>
-        <script src="scripts/lizard/lizard.collections.js"></scrip>
+        <script src="scripts/lizard/models/Layer.js"></script>
+
+        <script src="scripts/lizard/lizard.collections.js"></script>
+        <script src="scripts/lizard/collections/Layer.js"></script>
+
         <script src="scripts/lizard/lizard.views.js"></script>
+        <script src="scripts/lizard/views/Layers.js"></script>
 
 		<!-- Utility code -->
 		<script src="scripts/utilities.js"></script>
