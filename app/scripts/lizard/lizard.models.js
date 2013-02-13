@@ -14,6 +14,7 @@ Lizard.models.Filter = Backbone.Model.extend({
 Lizard.models.Location = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url; 
+    console.log(this.url)
   },
   defaults: {
     'selected':  false

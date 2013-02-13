@@ -266,8 +266,11 @@ Lizard.Utils.Map = {
         for (var i in models){
           var model = models[i];
           var attributes = model.attributes;
-          var point = attributes.point_geometry;
-          var marker = new L.Marker(new L.LatLng(point[1], point[0]),{
+          var x = 4.411944150924683 + (Math.random() / 500.0);
+          var y = 52.22242675741608 + (Math.random() / 500.0);
+          var point = [x,y];
+          var leaflet_point = new L.LatLng(point[1], point[0])
+          var marker = new L.Marker(leaflet_point,{
             icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
             clickable: true,
             name: attributes.name,
