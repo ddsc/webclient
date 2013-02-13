@@ -28,8 +28,8 @@ Lizard.models.Parameter = Backbone.Model.extend({
 
 Lizard.models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
-    this.url = response.url;
-    this.fetch({async: false, cache: true});
+    // this.url = response.url;
+    // this.fetch({async: false, cache: true});
   },
   defaults: {
     'selected':  false

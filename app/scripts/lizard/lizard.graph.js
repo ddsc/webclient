@@ -21,15 +21,15 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 Lizard.Graphs.Timeseries = new Lizard.collections.Timeseries;
+Lizard.Graphs.Timeseries.fetch();
 
 Lizard.collections.Workspace = Backbone.Collection.extend({
   model: Lizard.models.WorkspaceItem,
   initialize: function(){
     this.on('add', function(model){
-      tseries = model.attributes.tseries;
+      tseries = Lizard.Graphs.Timeseries.models;
       for (i in tseries){
-        timeserie = new Lizard.models.Timeserie({url: tseries[i], id: tseries[i]})
-        Lizard.Graphs.Timeseries.add(timeserie);
+        timeserie = tseries[i]
         parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
         if (parameter != undefined){
           parameter.set({hidden:false});
