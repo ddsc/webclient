@@ -15,10 +15,5 @@ Lizard.models.Layer = Backbone.Model.extend({
         wms_url: '',
         opacity: null,
         type: null
-	},
-
-	url: function() {
-		var origUrl = Backbone.Model.prototype.url.call(this);
-		return origUrl += _.last(origUrl) === '/' ? '' : '/'
 	}
 });

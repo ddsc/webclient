@@ -18,87 +18,15 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-
-// Model definitions
-
-var Layer = Backbone.Model.extend({
-  initialize: function() {
-    console.log('LayerModel initializing');
-  }
+layerCollection = new Lizard.collections.Layer({
 });
 
-var layer1 = new Layer({
-  id:1,
-  layerName: 'AHN25',
-  layerType: 'WMS',
-  layerDescription: 'Actuele Hoogtekaart Nederland'
+var layerView = new Lizard.views.LayerList({
+	collection: layerCollection
 });
-
-var layer2 = new Layer({
-  id:2,
-  layerName: 'Gemeentegrenzen (WMS)',
-  layerType: 'WMS',
-  layerDescription: 'Actuele Hoogtekaart Nederland'
-});
-
-var layer3 = new Layer({
-  id:3,
-  layerName: 'Waternet - Projecten - Amstel - 4.2.2. - Temperatuur',
-  layerType: 'Interactive',
-  layerDescription: 'Interactieve kaartlaag'
-});
-
-var layer4 = new Layer({
-  id:4,
-  layerName: 'HHNK - Dijken - 26.9 - Saturatie',
-  layerType: 'Interactive',
-  layerDescription: 'Interactieve kaartlaag'
-});
-
-var Layers = Backbone.Collection.extend();
-var layerCollection = new Layers([layer1, layer2, layer3, layer4]);
-
-Lizard.Map.LayersView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    console.log('LayersView.initialize()');
-  },
-  serializeData: function() {
-    return {
-      'title': 'Kaartlagen'
-    };
-  },
-  template: '#layersview-template'
-});
-
 
 Lizard.Map.NoItemsView = Backbone.Marionette.ItemView.extend({
   template: '#show-no-items-message-template'
-});
-
-
-LayerItemView = Backbone.Marionette.ItemView.extend({
-  template: '#layeritem-template',
-  tagName: 'li',
-  className: 'drawer-item',
-  model: Layer,
-  initialize: function() {
-    console.log('LayerItemView() initializing');
-  }
-});
-
-LayersCollectionView = Backbone.Marionette.CollectionView.extend({
-  collection: layerCollection,
-  itemView: LayerItemView,
-  tagName: 'ol',
-  className: 'ui-sortable drawer-group',
-  onDomRefresh: function() {
-    $('.drawer-group').sortable({
-      'forcePlaceholderSize': true,
-      'handle': '.handle',
-      'axis': 'y'
-    });
-    $('.drawer-group').disableSelection();
-  }
 });
 
 
@@ -198,7 +126,7 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
             },
           ]
         } );
-      
+
       var y_ticks = new Rickshaw.Graph.Axis.Y( {
         graph: graph,
         orientation: 'left',
@@ -243,7 +171,7 @@ Lizard.Utils.Map = {
     },
     updateModal: function(e){
         var marker = e.target;
-        
+
     },
     updateInfo: function (e) {
         var marker = e.target;
@@ -347,7 +275,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
                 'Punt: ' + props.code
                 : 'Zweef over de punten');
     };
-    
+
     info.addTo(this.mapCanvas);
     $('#map').css('height', $(window).height()-100);
   },
@@ -368,10 +296,8 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-
-
   var collageView = new CollageView();
-  var layersView = new LayersCollectionView();
+  var layersView = layerView;
 
   if(lonlatzoom) {
     var leafletView = new Lizard.Map.LeafletView({
@@ -391,6 +317,8 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.sidebarRegion.show(layersView.render());
   Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
+
+  layerCollection.fetch();
 
   $('.drawer-item').popover({
     html: true,
@@ -415,7 +343,7 @@ Lizard.Map.map = function(lonlatzoom){
   } else {
     Backbone.history.navigate('map/');
   }
-  
+
 };
 
 Lizard.App.addInitializer(function(){

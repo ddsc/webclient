@@ -17,7 +17,8 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
     this._modelBinder.bind(this.model, this.el, bindings);
     this.el.children[0].setAttribute('draggable', 'true');
     this.el.children[0].setAttribute('ondragstart', 'drag(event)');
-    this.el.children[0].setAttribute('data-url', this.model.attributes.timeseries[0]);
+  // Disables due to timeseries = has not item 0.
+  //  this.el.children[0].setAttribute('data-url', this.model.attributes.timeseries[0]);
   },
   tagName: 'li',
   template: '#filterview-template',
@@ -142,7 +143,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
 });
 
 Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
-  
+
   _modelBinder: undefined,
   initialize: function(){
     // console.log('ParameterView.initialize()');
