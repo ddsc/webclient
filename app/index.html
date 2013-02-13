@@ -147,62 +147,17 @@
 
     <script type="text/template" id="map-template">
       <div class="row-fluid">
+
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion"></div>
             <div class="" id="collageRegion"></div>
         </div>
+        <div class="span9" id="leafletRegion"></div>
+        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
 
-            <div class="span9" id="leafletRegion"></div>
-            <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+      </div>
+    </script>
 
-          </div>
-        </script>
-
-
-        <script type="text/template" id="icon-template">
-            Some icon
-        </script>
-
-        <script type="text/template" id="show-no-items-message-template">
-            <h4>&nbsp;</h4>
-            <p>...</p>
-        </script>
-
-        <script type="text/template" id="iconsview-template">
-            <h4>Icons</h4>
-        </script>
-
-
-        <script type="text/template" id="leaflet-template">
-            <div id="map" style="height:90%;"></div>
-        </script>
-
-
-        <script type="text/template" id="layeritem-template">
-            <span class="action handle">
-                <i class="icon-move"></i>
-            </span>
-            <span class="content layer-item">
-			  <%= display_name %> (<%= type %>)
-			</span>
-            <span class="indicator">
-                <i class="icon-eye-open"></i>
-            </span>
-        </script>
-
-        <script type="text/template" id="collageitem-template">
-            <span class="action remove">
-                <i class="icon-remove"></i>
-            </span>
-            <span class="content"><%= title %></span>
-            <span class="indicator toggle">
-                <i class="icon-ok "></i>
-            </span>
-        </script>
-
-        <script type="text/template" id="layersview-template">
-            <h4><%=title%></h4>
-        </script>
 
     <script type="text/template" id="icon-template">
         Some icon
@@ -360,11 +315,11 @@
                 </div>
                 <div class="" id="collageRegion"></div>
         </div>
+
         <div class="span9" id="mainRegion">
             <div class="row-fluid">
            <!-- <h4>Grafieken</h4> -->
               <div class="span12 visual_search hidden-phone hidden-tablet"></div>
->>>>>>> master
             </div>
             <div class="row-fluid">
                 <div id="drop-one" class="span12 drop empty">
@@ -383,64 +338,6 @@
 
       </div>
     </script
-
-        <script type="text/template" id="testview-template">
-
-            <div class="visible-phone"><div style="height:20px;"></div></div>
-            <span id="summary">
-                <h5>Modelbinder example</h5>
-                <p>Dit is een voorbeeld van <a href="https://github.com/theironcook/Backbone.ModelBinder">model binding met de de-facto standaard</a> voor Backbone.</p>
-                <p>Verander de voor/achternaam. Het object wordt (op het blur event) bi-directioneel aangepast.</p>
-                <blockquote>
-                    <code style="white-space: pre;" />
-                </blockquote>
-            </span>
-
-            <div id="personFields">
-                <form class="form-horizontal">
-                  <div class="control-group">
-                    <label class="control-label" for="firstName">First Name</label>
-                    <div class="controls">
-                      <input type="text" name="firstName" id="firstName" placeholder="John">
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="lastName">Last Name</label>
-                    <div class="controls">
-                      <input type="text" name="lastName" id="lastName" placeholder="Doe">
-                    </div>
-                  </div>
-                </form>
-            </div>
-        </script>
-
-        <script id="node-template" type="text/template">
-            <li><a href="<%= name %>"><%= nodeName %></a></li>
-        </script>
-
-        <script id="timeserie-graph-template" type="text/template">
-            <div id="demo"></div>
-        </script>
-
-        <script id="filterview-template" type="text/template">
-            <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
-            </label>
-        </script>
-
-        <script id="locationview-template" type="text/template">
-            <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-globe"></i> <%= name %> <span class="state hide"><%= selected %></span>
-            </label>
-        </script>
-
-        <script id="parameterview-template" type="text/template">
-            <label class="checkbox">
-                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>>
-                <i class="icon-flag"></i> <% if(!description){ %> Geen naam <% } else { %><%=description%> <% } %>
-                <span class="state hide"><%= selected %></span>
-            </label>
-        </script>
 
     <script type="text/template" id="graph-slot"></script>
 
@@ -731,22 +628,12 @@
         <script src="settings.js"></script>
 
         <script src="scripts/lizard/lizard.app.js"></script>
-
         <script src="scripts/lizard/lizard.models.js"></script>
-		<script src="scripts/lizard/models/Layer.js"></script>
-
-        <script src="scripts/lizard/lizard.collections.js"></script>
-		<script src="scripts/lizard/collections/Layer.js"></script>
-
-<<<<<<< HEAD
+        <script src="scripts/lizard/lizard.collections.js"></scrip>
         <script src="scripts/lizard/lizard.views.js"></script>
-		<script src="scripts/lizard/views/Layers.js"></script>
+
 		<!-- Utility code -->
 		<script src="scripts/utilities.js"></script>
-=======
-    <!-- Utility code -->
-    <script src="scripts/utilities.js"></script>
->>>>>>> master
 
         <!-- Application code, split into files -->
         <script src="scripts/lizard/lizard.home.js"></script>
