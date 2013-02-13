@@ -166,12 +166,13 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       ts = this.model.attributes.timeseries;
       for (var i in ts) {
         TimeserieModel = new Lizard.models.Timeserie({url: ts[i]});
-        TimeserieModel.fetch();
+        TimeserieModel.fetch({async: false, cache:true});
         this.model.attributes.tseries.add(TimeserieModel);
       }
     },
     makeChart: function(collection, responses){
       ts_events = responses;
+      console.log(responses);
       this.series = [];
       numbers = [];
       for (var i in ts_events){

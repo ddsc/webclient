@@ -212,7 +212,7 @@
         <div id="chart-canvas"></div>
         <ul>
             <% _.each(timeseries.tseries.models, function(ts) { %>
-                <li class="timeserie" data-code="<%= ts.attributes.parameter.code %>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
+                <li class="timeserie" data-code="<%= ts.attributes.description%>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
             <%});%>
         </ul>
     </div>
