@@ -96,7 +96,7 @@ Lizard.Utils.DragDrop = {
     e.preventDefault();
     // var data_url = e.dataTransfer.getData("Text");
     e.target.parentElement.classList.remove("empty");
-    $(e.target).loadGraph("/app/scripts/dummy.json");
+    $(e.target).loadGraph("scripts/dummy.json");
     // var EventCollection = Backbone.Collection.extend({
     //       url: data_url
     //     })
