@@ -1,21 +1,57 @@
-var dataset = [];
-var xhr = d3.json('http://test.api.dijkdata.nl/api/v0/timeseries/')
-    .on("progress", function() { console.log("progress", d3.event.loaded); })
-    .on("error", function(error) { console.log("failure!", error); })
-    .on("load", function(json) {
+var timeseries = [];
 
-      var q = queue(4); // Let's load 4 at a time.
+var xhr = d3.json('http://test.api.dijkdata.nl/api/v0/timeseries/?page_size=0')
+  .on("progress", function() { console.log("progress", d3.event.loaded); })
+  .on("error", function(error) { console.log("failure!", error); })
+  .on("load", function(json) {
+    json.forEach(function(timeserie) {
+      var obj = {};
+      obj.name = timeserie.name;
+      obj.url = timeserie.events;
+      timeseries.push(obj);
+    });
 
-      json.forEach(function(event) { // For every entry in the json...
-        q.defer(d3.json, event.events); // ...load more json using defer()
-      });
+    toplist = d3.select("body").append("ul");
+    toplist.selectAll("li")
+        .data(timeseries)
+        .enter()
+        .append("li")
+        .append("a")
+        .attr("href", function(d) {return d.url;})
+        .text(function(d){return d.name;});
+  }).get();
 
-      q.awaitAll(function(e, output) { // Wait for all deferred d3.json's to finish!
-        console.log(output);
-      });
 
-    })
-    .get(); // Initiate the XHR request using HTTP GET
+
+
+
+
+
+
+
+
+
+
+
+// var dataset = [];
+
+// var xhr = d3.json('http://test.api.dijkdata.nl/api/v0/timeseries/?page_size=0')
+//     .on("progress", function() { console.log("progress", d3.event.loaded); })
+//     .on("error", function(error) { console.log("failure!", error); })
+//     .on("load", function(json) {
+
+//       var q = queue(4); // Let's load 4 at a time.
+
+//       json.forEach(function(event) { // For every entry in the json...
+//         q.defer(d3.json, event.events); // ...load more json using defer()
+//       });
+
+//       q.awaitAll(function(e, output) { // Wait for all deferred d3.json's to finish!
+//         console.log(output);
+//       });
+
+//     })
+//     .get(); // Initiate the XHR request using HTTP GET
 
 
 
