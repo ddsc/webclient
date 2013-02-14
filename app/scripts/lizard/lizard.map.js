@@ -186,11 +186,11 @@ Lizard.Utils.Map = {
     updateInfo: function (e) {
         var marker = e.target;
         console.log(e);
-        props = marker.valueOf().options;
-        e.layer._map._controlContainer.innerHTML = '<h4>Datapunt</h4>' + (props ?
-                '<b>' + props.name + '</b><br>' +
-                'Punt: ' + props.code
-                : 'Zweef over de punten');
+        // props = marker.valueOf().options;
+        // e.layer._map._controlContainer.innerHTML = '<h4>Datapunt</h4>' + (props ?
+        //         '<b>' + props.name + '</b><br>' +
+        //         'Punt: ' + props.code
+        //         : 'Zweef over de punten');
     },
     // drawonMap takes the collection and goes through the models in it
     // 'drawing' them on the map.
@@ -272,22 +272,22 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
 
     //add custom control, to show information on hover
     // taken from http://leafletjs.com/examples/choropleth.html
-    info = L.control();
+    // info = L.control();
 
-    info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'infobox'); // create info div
-        this.update();
-        return this._div;
-    };
+    // info.onAdd = function (map) {
+    //     this._div = L.DomUtil.create('div', 'infobox'); // create info div
+    //     this.update();
+    //     return this._div;
+    // };
 
-    info.update = function (props) {
-        this._div.innerHTML = '<h4>Datapunt</h4>' + (props ?
-                '<b>' + props.name + '</b><br>' +
-                'Punt: ' + props.code
-                : 'Zweef over de punten');
-    };
+    // info.update = function (props) {
+    //     this._div.innerHTML = '<h4>Datapunt</h4>' + (props ?
+    //             '<b>' + props.name + '</b><br>' +
+    //             'Punt: ' + props.code
+    //             : 'Zweef over de punten');
+    // };
 
-    info.addTo(this.mapCanvas);
+    // info.addTo(this.mapCanvas);
     $('#map').css('height', $(window).height()-100);
   },
   template: '#leaflet-template'
