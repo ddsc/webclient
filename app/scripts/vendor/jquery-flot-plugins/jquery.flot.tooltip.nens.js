@@ -7,7 +7,7 @@
         }
     };
 
-	function init(plot) {
+	function init (plot) {
         var monthNames = [];
         var dayNames = [];
         var $tooltip;
@@ -15,7 +15,6 @@
         var fadingIn = false;
         var fadingOut = false;
         var fadedIn = false;
-        var moving = false;
 
         function createTooltip () {
             $tooltip = $('<div class="flot-graph-tooltip"/>')
@@ -44,21 +43,22 @@
             }
 
             // update text
-            $tooltip.text(datapoint[1] + ' (' + formatted + ')');
+            var datapoint_fmt = datapoint[1].toFixed(3);
+            $tooltip.text(datapoint_fmt + ' (' + formatted + ')');
 
             // its not positioned in the graph div, so subtract the parent's document offset
             var refpos = plot.getPlaceholder().offset();
             x -= refpos.left;
             y -= refpos.top;
 
+            // reposition instantly (animation code remove due to slowness)
+            $tooltip.css({
+                'top': y - 25,
+                'left': x + 5
+            });
+
             // fade in if invisible
             if (!fadedIn) {
-                // reposition instantly
-                $tooltip.css({
-                    'top': y - 25,
-                    'left': x + 5
-                });
-
                 if (!fadingIn) {
                     fadingOut = false;
                     fadingIn = true;
@@ -67,24 +67,6 @@
                         fadedIn = true;
                     });
                 }
-            }
-            else {
-                // reposition smoothly
-                if (moving) {
-                    $tooltip.stop();
-                }
-                moving = true;
-                $tooltip.animate(
-                    {
-                        'top': y - 25,
-                        'left': x + 5
-                    },
-                    100,
-                    'swing',
-                    function () {
-                        moving = false;
-                    }
-                );
             }
         }
 
