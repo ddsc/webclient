@@ -276,9 +276,14 @@
     </script>
 
     <script id="workspace-item-template" type="text/template">
-        <label class="checkbox">
-            <input class="hide" type="checkbox" class="filterCheckbox"><i class="icon-bar-chart"></i> <span class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>"><%= workspace.name %></span> <span class="state hide"></span>
-        </label>
+        <div class="workspace-item" class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
+        <h5><i class="icon-bar-chart"></i>&nbsp;<%= workspace.name %></h5>
+        <ul class="workspace-actions">
+            <li class="favorite"><i class="icon-star-empty"></i>Favoriet</li>
+            <li class="info"><i class="icon-question-sign"></i>Info</li>
+            <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-down hidden-tablet hidden-desktop"></i>Voeg toe</li>
+        </ul>
+        </div>
     </script>
 
     <script id="parameterview-template" type="text/template">

@@ -29,25 +29,22 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
           // we already have the collections, so using those would be nice instead.
           switch (facet) {
             case 'filter':
-              $.getJSON(domain + 'logicalgroups/?page_size=0', function(logicalgroups) {
                 var lg = [];
-                _.each(logicalgroups, function(logicalgroup) { lg.push(logicalgroup.name); });
+                var logicalgroups = filterCollection.models;
+                _.each(logicalgroups, function(logicalgroups) { lg.push(logicalgroups.attributes.name); });
                 callback(lg);
-              });
               break;
             case 'location':
-              $.getJSON(domain + 'locations/?page_size=0', function(locations) {
                 var lc = [];
-                _.each(locations, function(location) { lc.push(location.name); });
+                var locations = locationCollection.models;
+                _.each(locations, function(locations) { lc.push(locations.attributes.name); });
                 callback(lc);
-              });
               break;
             case 'parameter':
-              $.getJSON(domain + 'parameters/?page_size=0', function(parameters) {
                 var pm = [];
-                _.each(parameters, function(parameter) { pm.push(parameter.description); });
+                var parameters = parameterCollection.models;
+                _.each(parameters, function(parameters) { pm.push(parameters.attributes.description); });
                 callback(pm);
-              });
               break;
           }
         }
