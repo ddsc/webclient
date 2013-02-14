@@ -178,7 +178,7 @@ Lizard.Utils.Map = {
               $('#location-modal').modal();
             },
             error: function(){
-              console.log('Something went horribly wrong')
+              console.log('Something went horribly wrong');
             },
             cache: true
           });
@@ -202,7 +202,7 @@ Lizard.Utils.Map = {
           var x = 4.411944150924683 + (Math.random() / 500.0);
           var y = 52.22242675741608 + (Math.random() / 500.0);
           var point = [x,y];
-          var leaflet_point = new L.LatLng(point[1], point[0])
+          var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
             clickable: true,
@@ -309,15 +309,16 @@ Lizard.Map.map = function(lonlatzoom){
 
   var collageView = new CollageView();
   var layersView = layerView;
+  var leafletView;
 
   if(lonlatzoom) {
-    var leafletView = new Lizard.Map.LeafletView({
+    leafletView = new Lizard.Map.LeafletView({
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
       zoom: lonlatzoom.split(',')[2]
     });
   } else {
-    var leafletView = new Lizard.Map.LeafletView({
+    leafletView = new Lizard.Map.LeafletView({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
       zoom: 7
