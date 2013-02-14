@@ -75,19 +75,23 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
     // loaded when it is explcitly chosen, with caching.
     getSeriesdata: function(clickedon){
       // Get's the element that is clicked and it's datasets
-      var data_url = clickedon.target.dataset.url;
-      this.code = clickedon.target.dataset.code;
-      var EventCollection = Backbone.Collection.extend({
-        url: data_url
-      });
-      // Timeserie has Events. Opens new collection
-      // for that specific timeserie.
-      ts_events = new EventCollection();
-      // _.bind connects "this" to the makeChart
-      // otherwise it loses it's scope.
-      ts_events.fetch({async:false, cache: true,
-        success: _.bind(this.makeChart, this)
-      });
+
+      $('#chart-canvas').loadGraph("scripts/dummy.json");
+      // var data_url = clickedon.target.dataset.url;
+      // this.code = clickedon.target.dataset.code;
+      // var events = ['10c7e353-a4d6-4c47-a4fe-ff984fd3a627', '000b33fd-1f7c-4866-9ab8-c92e55cc449a',];
+      // var randome = Math.floor(Math.random() * events.length);
+      // var EventCollection = Backbone.Collection.extend({
+      //   url: domain + 'events/' + events[randome]
+      // });
+      // // Timeserie has Events. Opens new collection
+      // // for that specific timeserie.
+      // ts_events = new EventCollection();
+      // // _.bind connects "this" to the makeChart
+      // // otherwise it loses it's scope.
+      // ts_events.fetch({async:false, cache: true,
+      //   success: _.bind(this.makeChart, this)
+      // });
     },
     onBeforeRender: function(){
       this.model.set({tseries: new Backbone.Collection()});
