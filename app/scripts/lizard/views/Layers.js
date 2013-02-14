@@ -7,7 +7,11 @@ Lizard.views.Layer = Backbone.Marionette.ItemView.extend({
 	},
 
 	clickLayer: function() {
+		console.log(this.model);
+
 		console.log('clickLayer');
+
+
 	}
 });
 
