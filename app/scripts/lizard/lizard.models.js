@@ -59,6 +59,9 @@ Lizard.Models.Collage = Backbone.Model.extend({
 
 Lizard.Models.Layer = Backbone.Model.extend({
   defaults: {
+        visibility: false,
+        order: 0,
+
         layer_name: '',
         display_name: '',
         description: null,
@@ -66,13 +69,13 @@ Lizard.Models.Layer = Backbone.Model.extend({
         legend_url: null,
         enable_search: null,
         styles: null,
-        format: null,
+        format: 'image/png',
         height: null,
         width: null,
         tiled: null,
-        transparent: null,
+        transparent: true,
         wms_url: '',
-        opacity: null,
+        opacity: 100,
         type: null
   }
 });

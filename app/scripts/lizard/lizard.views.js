@@ -215,19 +215,23 @@ Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
   template: '#layeritem-template',
-  events: {
-    'click .layer-item': 'clickLayer'
+  initialize: function() {
+    this.model.bind('change', this.render);
   },
-  clickLayer: function() {
-    console.log(this.model);
-    var layer = L.tileLayer.wms(this.model.attributes.wms_url, {
-      layers: this.model.attributes.layer_name,
-      format: 'image/png',
-      transparent: true,
-      attribution: 'DDSC'
-    });
-    window.mapCanvas.addLayer(layer);
-    console.log('clickLayer');
+  onBeforeRender: function(model) {
+    console.log('onBeforeRender', model);
+  },
+  events: {
+    'click .layer-item .indicator': 'toggleVisibility'
+  },
+  toggleVisibility: function() {
+    if(this.model.attributes.visibility) {
+      this.model.set({ visibility: false });
+    } else {
+      this.model.set({ visibility: true });
+    }
+    console.log('Is this visible? ', this.model.attributes.visibility);
+    // console.log(this.model);
   }
 });
 

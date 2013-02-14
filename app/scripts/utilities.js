@@ -44,7 +44,7 @@ $('em.toggle').live("click", function(e){
 
 $('em.reset').live("click", function(e){
   e.preventDefault();
-  console.log("Resetting collections")
+  console.log("Resetting collections");
   _.each(filtercollectionview.collection.models, function(model) {
     model.set('selected', false);
   });
