@@ -220,7 +220,7 @@
     </div>
     <div id="location-modal-footer" class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Save changes</button>
+        <button class="btn btn-primary">Sla op in Collage</button>
     </div>
     </script>
 
@@ -296,19 +296,19 @@
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown" id="selection">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
-                        <p data-group="selection" class="hide" id="selectionRegion"></p>
+                        <p data-group="selection" id="selectionRegion"></p>
                     </li>
                     <li class="metrics-dropdown" id="filters">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-tag"></i> Filters (<%=  filtercollectionview.collection.models.length %>)</a>
-                        <p data-group="filters" id="filtersRegion"></p>
+                        <p data-group="filters" class="hide" id="filtersRegion"></p>
                     </li>
                     <li class="metrics-dropdown" id="locations">
                         <a href="javascript:void(0)"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-globe"></i> Locaties (<%=  locationcollectionview.collection.models.length %>)</a>
-                        <p data-group="locations" id="locationsRegion"></p>
+                        <p data-group="locations" class="hide" id="locationsRegion"></p>
                     </li>
                     <li class="metrics-dropdown" id="parameters">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-flag"></i> Parameters (<%=  parametercollectionview.collection.models.length %>)</a>
-                        <p data-group="parameters" id="parametersRegion"></p>
+                        <p data-group="parameters" class="hide" id="parametersRegion"></p>
                     </li>
                     <li>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
