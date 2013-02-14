@@ -21,7 +21,7 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
 layerCollection = new Lizard.Collections.Layer({
 });
 
-var layerView = new Lizard.views.LayerList({
+var layerView = new Lizard.Views.LayerList({
 	collection: layerCollection
 });
 
@@ -57,7 +57,7 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
 
  One view belongs to one location.
 */
-Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
+Lizard.Views.ModalGraph = Backbone.Marionette.ItemView.extend({
     // custom template rendering to improve speed
     // due to explicit variable passing.
     template: function(model){
@@ -166,7 +166,7 @@ Lizard.Utils.Map = {
           var model = marker.valueOf().options.bbModel;
           model.fetch({
             success: function(model, res){
-              modalView = new Lizard.views.ModalGraph();
+              modalView = new Lizard.Views.ModalGraph();
               modalView.model = model;
               Lizard.mapView.modal.show(modalView.render());
               $('#location-modal').modal();

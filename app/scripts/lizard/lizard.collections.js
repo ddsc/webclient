@@ -11,7 +11,7 @@ Lizard.Collections.Layer = Backbone.Collection.extend({
     return response.results;
   },
   url: settings.layers_url,
-  model: Lizard.models.Layer
+  model: Lizard.Models.Layer
 });
 
 
@@ -26,7 +26,7 @@ Lizard.Collections.Filter = Backbone.Collection.extend({
     return response.results;
   },
   url: settings.filters_url,
-  model: Lizard.models.Filter
+  model: Lizard.Models.Filter
 });
 
 Lizard.Collections.Location = Backbone.Collection.extend({
@@ -37,7 +37,7 @@ Lizard.Collections.Location = Backbone.Collection.extend({
     return response.results;
   },
   url: settings.locations_url,
-  model: Lizard.models.Location
+  model: Lizard.Models.Location
 });
 
 Lizard.Collections.Parameter = Backbone.Collection.extend({
@@ -48,7 +48,7 @@ Lizard.Collections.Parameter = Backbone.Collection.extend({
     return response.results;
   },
   url: settings.parameters_url,
-  model: Lizard.models.Parameter
+  model: Lizard.Models.Parameter
 });
 
 
@@ -60,7 +60,7 @@ Lizard.Collections.Widget = Backbone.Collection.extend({
   parse: function(response){
     return response.results;
   },
-  model: Lizard.models.Widget
+  model: Lizard.Models.Widget
 });
 
 
@@ -74,15 +74,15 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
     return response.results;
   },
   url: settings.timeseries_url,
-  model: Lizard.models.Timeserie
+  model: Lizard.Models.Timeserie
 });
 
 Lizard.Collections.Workspace = Backbone.Collection.extend({
-  model: Lizard.models.WorkspaceItem,
+  model: Lizard.Models.WorkspaceItem,
 });
 
 workspaceCollection = new Lizard.Collections.Workspace();
-filterCollection = new Lizard.collections.Filter();
-locationCollection = new Lizard.collections.Location();
-parameterCollection = new Lizard.collections.Parameter();
-timeseriesCollection = new Lizard.collections.Timeseries();
+filterCollection = new Lizard.Collections.Filter();
+locationCollection = new Lizard.Collections.Location();
+parameterCollection = new Lizard.Collections.Parameter();
+timeseriesCollection = new Lizard.Collections.Timeseries();

@@ -47,7 +47,7 @@ parametercollectionview.on('collection:rendered', function(collection) {
   });
 });
 
-WorkspaceCollection.on('add', function(model){
+workspaceCollection.on('add', function(model){
   tseries = Lizard.Graphs.Timeseries.models;
   for (i in tseries){
     timeserie = tseries[i]
@@ -58,7 +58,7 @@ WorkspaceCollection.on('add', function(model){
   };
 });
 
-WorkspaceCollection.on('remove', function(model){
+workspaceCollection.on('remove', function(model){
   tseries = model.attributes.tseries;
   for (i in tseries){
     Lizard.Graphs.Timeseries.remove(tseries[i]);
