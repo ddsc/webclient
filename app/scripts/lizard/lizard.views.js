@@ -131,6 +131,7 @@ CollectionViews
 FilterCollection = new Lizard.collections.Filter();
 LocationCollection = new Lizard.collections.Location();
 ParameterCollection = new Lizard.collections.Parameter();
+TimeseriesCollection = new Lizard.collections.Timeseries();
 
 Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
   collection: FilterCollection,
@@ -253,9 +254,31 @@ Lizard.views.LayerList = Backbone.Marionette.CollectionView.extend({
 
 
 
+WorkspaceCollection.on('add', function(model){
+  tseries = Lizard.Graphs.Timeseries.models;
+  for (i in tseries){
+    timeserie = tseries[i]
+    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
+    if (parameter != undefined){
+      parameter.set({hidden:false});
+    }
+    // locationuuid = timeserie.attributes.location.split("locations/")[1].split("/")[0];
+    // location = LocationCollection.where({uuid: uuid});
+    // console.log(location);
 
+  };
+});
 
-
+WorkspaceCollection.on('remove', function(model){
+  tseries = model.attributes.tseries;
+  for (i in tseries){
+    Lizard.Graphs.Timeseries.remove(tseries[i]);
+    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
+    if (parameter != undefined){
+      parameter.set({hidden:true});
+    }
+  }
+});
 
 
 

@@ -76,3 +76,9 @@ Lizard.collections.Timeseries = Backbone.Collection.extend({
   url: settings.timeseries_url,
   model: Lizard.models.Timeserie
 });
+
+Lizard.collections.Workspace = Backbone.Collection.extend({
+  model: Lizard.models.WorkspaceItem,
+});
+
+WorkspaceCollection = new Lizard.collections.Workspace();

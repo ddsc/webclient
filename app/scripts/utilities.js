@@ -63,13 +63,13 @@ Lizard.Utils.Workspace = {
   toggleSelected: function (uuid, type){
     console.log(uuid + type);
     queryString = type + "," + uuid;
-    if (Lizard.Graphs.Workspace.get(queryString) === undefined){
+    if (WorkspaceCollection.get(queryString) === undefined){
       tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
       tempModel.fetch({success: this.createItem});
       tempModel.destroy();
     }
     else {
-      workspaceItem = Lizard.Graphs.Workspace.remove(queryString);
+      workspaceItem = WorkspaceCollection.remove(queryString);
     }
   },
   createItem: function (mod, response){
@@ -77,7 +77,7 @@ Lizard.Utils.Workspace = {
       id: this.queryString,
       tseries: response.timeseries,
     });
-    Lizard.Graphs.Workspace.add(workspaceItem);
+    WorkspaceCollection.add(workspaceItem);
   return workspaceItem;
   },
 };

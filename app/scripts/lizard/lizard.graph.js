@@ -62,40 +62,9 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Graphs.Timeseries = new Lizard.collections.Timeseries;
+Lizard.Graphs.Timeseries = TimeseriesCollection;
 Lizard.Graphs.Timeseries.fetch();
 
-Lizard.collections.Workspace = Backbone.Collection.extend({
-  model: Lizard.models.WorkspaceItem,
-  initialize: function(){
-    this.on('add', function(model){
-      tseries = Lizard.Graphs.Timeseries.models;
-      for (i in tseries){
-        timeserie = tseries[i]
-        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-        if (parameter != undefined){
-          parameter.set({hidden:false});
-        }
-        // locationuuid = timeserie.attributes.location.split("locations/")[1].split("/")[0];
-        // location = LocationCollection.where({uuid: uuid});
-        // console.log(location);
-
-      }
-    });
-    this.on('remove', function(model){
-      tseries = model.attributes.tseries;
-      for (i in tseries){
-        Lizard.Graphs.Timeseries.remove(tseries[i]);
-        parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-        if (parameter != undefined){
-          parameter.set({hidden:true});
-        }
-      }
-    });
-  }
-});
-
-Lizard.Graphs.Workspace = new Lizard.collections.Workspace;
 
 Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
