@@ -7,6 +7,45 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
     'modal' : '#location-modal'
+  },
+  onShow: function() {
+    var visualSearch = VS.init({
+      container : $('.visual_search'),
+      placeholder: 'Zoeken naar...',
+      query     : '',
+      callbacks : {
+        search       : function(query, searchCollection) {},
+         facetMatches : function(callback) {
+           callback([
+               'filter', 'location', 'parameter'
+           ]);
+        },
+        valueMatches : function(facet, searchTerm, callback) {
+          // TODO: We're doing unnecessary AJAX calls here,
+          // we already have the collections, so using those would be nice instead.
+          switch (facet) {
+            case 'filter':
+                var lg = [];
+                var logicalgroups = filterCollection.models;
+                _.each(logicalgroups, function(logicalgroups) { lg.push(logicalgroups.attributes.name); });
+                callback(lg);
+              break;
+            case 'location':
+                var lc = [];
+                var locations = locationCollection.models;
+                _.each(locations, function(locations) { lc.push(locations.attributes.name); });
+                callback(lc);
+              break;
+            case 'parameter':
+                var pm = [];
+                var parameters = parameterCollection.models;
+                _.each(parameters, function(parameters) { pm.push(parameters.attributes.description); });
+                callback(pm);
+              break;
+          }
+        }
+      }
+    });
   }
 });
 
@@ -243,7 +282,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   modalInfo:Lizard.Utils.Map.modalInfo,
   updateInfo: Lizard.Utils.Map.updateInfo,
   onShow: function(){
-    console.log(this.collection)
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
     L.control.scale().addTo(this.mapCanvas);
