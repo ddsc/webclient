@@ -2,9 +2,9 @@
 ItemViews
 */
 
-Lizard.views = {};
+Lizard.Views = {};
 
-Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
     // console.log('FilterView.initialize()');
@@ -27,7 +27,7 @@ Lizard.views.Filter = Backbone.Marionette.ItemView.extend({
   },
 });
 
-Lizard.views.Location = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Location = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
     // console.log('LocationView.initialize()');
@@ -51,7 +51,7 @@ Lizard.views.Location = Backbone.Marionette.ItemView.extend({
   },
 });
 
-Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Parameter = Backbone.Marionette.ItemView.extend({
 
   _modelBinder: undefined,
   initialize: function(){
@@ -86,9 +86,9 @@ Lizard.views.Parameter = Backbone.Marionette.ItemView.extend({
   },
 });
 
-Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
+Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
   initialize: function(){
-    // console.log('Lizard.views.WidgetView initializing');
+    // console.log('Lizard.Views.WidgetView initializing');
     that = this;
   },
   tagName: 'li',
@@ -128,15 +128,10 @@ Lizard.views.WidgetView = Backbone.Marionette.ItemView.extend({
 CollectionViews
 */
 
-FilterCollection = new Lizard.collections.Filter();
-LocationCollection = new Lizard.collections.Location();
-ParameterCollection = new Lizard.collections.Parameter();
-TimeseriesCollection = new Lizard.collections.Timeseries();
-
-Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: FilterCollection,
+Lizard.Views.FilterCollection = Backbone.Marionette.CollectionView.extend({
+  collection: filterCollection,
   tagName: 'ul',
-  itemView: Lizard.views.Filter,
+  itemView: Lizard.Views.Filter,
 
   initialize: function(){
      this.collection.fetch({
@@ -146,10 +141,10 @@ Lizard.views.FilterCollection = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-Lizard.views.LocationCollection = Backbone.Marionette.CollectionView.extend({
-  collection: LocationCollection,
+Lizard.Views.LocationCollection = Backbone.Marionette.CollectionView.extend({
+  collection: locationCollection,
   tagName: 'ul',
-  itemView: Lizard.views.Location,
+  itemView: Lizard.Views.Location,
 
   initialize: function(){
       this.collection.fetch({
@@ -159,11 +154,11 @@ Lizard.views.LocationCollection = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: ParameterCollection,
+Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
+  collection: parameterCollection,
   tagName: 'ul',
 
-  itemView: Lizard.views.Parameter,
+  itemView: Lizard.Views.Parameter,
 
   initialize: function(){
       this.collection.fetch({
@@ -173,12 +168,12 @@ Lizard.views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
   // Creates the Gridster UL element
-  collection: new Lizard.collections.Widget(),
+  collection: new Lizard.Collections.Widget(),
   tagName: 'ul',
   className: 'gridster',
-  itemView: Lizard.views.WidgetView,
+  itemView: Lizard.Views.WidgetView,
 
   initialize: function(){
     this.listenTo(this.collection, 'reset', this.render, this);
@@ -216,7 +211,7 @@ Lizard.views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
 
 
 /* LAYER VIEWS */
-Lizard.views.Layer = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
   template: '#layeritem-template',
@@ -236,10 +231,10 @@ Lizard.views.Layer = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.views.LayerList = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   tagName: 'ol',
   className: 'ui-sortable drawer-group',
-  itemView: Lizard.views.Layer,
+  itemView: Lizard.Views.Layer,
   onDomRefresh: function() {
     $('.drawer-group').sortable({
       'forcePlaceholderSize': true,
@@ -251,48 +246,17 @@ Lizard.views.LayerList = Backbone.Marionette.CollectionView.extend({
 });
 
 
-
-
-
-WorkspaceCollection.on('add', function(model){
-  tseries = Lizard.Graphs.Timeseries.models;
-  for (i in tseries){
-    timeserie = tseries[i]
-    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-    if (parameter != undefined){
-      parameter.set({hidden:false});
-    }
-    // locationuuid = timeserie.attributes.location.split("locations/")[1].split("/")[0];
-    // location = LocationCollection.where({uuid: uuid});
-    // console.log(location);
-
-  };
-});
-
-WorkspaceCollection.on('remove', function(model){
-  tseries = model.attributes.tseries;
-  for (i in tseries){
-    Lizard.Graphs.Timeseries.remove(tseries[i]);
-    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-    if (parameter != undefined){
-      parameter.set({hidden:true});
-    }
-  }
-});
-
-
-
-// Instantiate the views
-var filtercollectionview = new Lizard.views.FilterCollection();
-var locationcollectionview = new Lizard.views.LocationCollection();
-var parametercollectionview = new Lizard.views.ParameterCollection();
-var widgetcollectionview = new Lizard.views.WidgetCollectionView();
+// Instantiate the Views
+var filtercollectionview = new Lizard.Views.FilterCollection();
+var locationcollectionview = new Lizard.Views.LocationCollection();
+var parametercollectionview = new Lizard.Views.ParameterCollection();
+var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
 
 widgetcollectionview.collection.add([
-  new Lizard.models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
-  new Lizard.models.Widget({col:1,row:1,size_x:2,size_y:2,gaugeId:2,title:'Waternet',label:'Debiet (m3)'}),
-  new Lizard.models.Widget({col:3,row:3,size_x:2,size_y:2,gaugeId:3,title:'Rijn',label:'Volume (m3)'}),
-  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:4,title:'Dijk 22',label:'Sulfiet'}),
-  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:5,title:'Dijk 23',label:'Temperatuur (c)'}),
-  new Lizard.models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:6,title:'Dijk 24',label:'Druk'})
+  new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
+  new Lizard.Models.Widget({col:1,row:1,size_x:2,size_y:2,gaugeId:2,title:'Waternet',label:'Debiet (m3)'}),
+  new Lizard.Models.Widget({col:3,row:3,size_x:2,size_y:2,gaugeId:3,title:'Rijn',label:'Volume (m3)'}),
+  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:4,title:'Dijk 22',label:'Sulfiet'}),
+  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:5,title:'Dijk 23',label:'Temperatuur (c)'}),
+  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:6,title:'Dijk 24',label:'Druk'})
 ]);

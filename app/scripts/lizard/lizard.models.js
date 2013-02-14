@@ -3,15 +3,15 @@ Models
 */
 
 
-Lizard.models = {};
+Lizard.Models = {};
 
-Lizard.models.Filter = Backbone.Model.extend({
+Lizard.Models.Filter = Backbone.Model.extend({
   defaults: {
     'selected':  false
   }
 });
 
-Lizard.models.Location = Backbone.Model.extend({
+Lizard.Models.Location = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url; 
   },
@@ -20,13 +20,13 @@ Lizard.models.Location = Backbone.Model.extend({
   },
 });
 
-Lizard.models.Parameter = Backbone.Model.extend({
+Lizard.Models.Parameter = Backbone.Model.extend({
   defaults: {
     'selected':  false
   }
 });
 
-Lizard.models.Timeserie = Backbone.Model.extend({
+Lizard.Models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url;
     // this.fetch({async: false, cache: true});
@@ -36,9 +36,9 @@ Lizard.models.Timeserie = Backbone.Model.extend({
   },
 });
 
-Lizard.models.Widget = Backbone.Model.extend({});
+Lizard.Models.Widget = Backbone.Model.extend({});
 
-// Lizard.models.Collage = Backbone.Model.extend({
+// Lizard.Models.Collage = Backbone.Model.extend({
 //   initialize: function() {
 //     this.url = response.url;
 //     this.fetch({cache: true});
@@ -46,7 +46,7 @@ Lizard.models.Widget = Backbone.Model.extend({});
 // });
 // ^^^^ This was present before Bastiaan/Roland added the one below.
 
-Lizard.models.Collage = Backbone.Model.extend({
+Lizard.Models.Collage = Backbone.Model.extend({
   defaults: {
     data: '',
     id: null
@@ -57,7 +57,7 @@ Lizard.models.Collage = Backbone.Model.extend({
   }
 });
 
-Lizard.models.Layer = Backbone.Model.extend({
+Lizard.Models.Layer = Backbone.Model.extend({
   defaults: {
         layer_name: '',
         display_name: '',
@@ -78,4 +78,4 @@ Lizard.models.Layer = Backbone.Model.extend({
 });
 
 
-Lizard.models.WorkspaceItem = Backbone.Model.extend();
+Lizard.Models.WorkspaceItem = Backbone.Model.extend();

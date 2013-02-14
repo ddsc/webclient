@@ -18,7 +18,7 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-layerCollection = new Lizard.collections.Layer({
+layerCollection = new Lizard.Collections.Layer({
 });
 
 var layerView = new Lizard.views.LayerList({
@@ -90,11 +90,11 @@ Lizard.views.ModalGraph = Backbone.Marionette.ItemView.extend({
       });
     },
     onBeforeRender: function(){
-      TimeseriesCollection.url = settings.timeseries_url + 
+      timeseriesCollection.url = settings.timeseries_url + 
         '?location=' + this.model.attributes.uuid;
-      TimeseriesCollection.reset();
-      TimeseriesCollection.fetch({async:false});
-      this.model.set({tseries: TimeseriesCollection});
+      timeseriesCollection.reset();
+      timeseriesCollection.fetch({async:false});
+      this.model.set({tseries: timeseriesCollection});
       ts = this.model.attributes.timeseries;
     },
     makeChart: function(collection, responses){
@@ -223,7 +223,7 @@ Lizard.Utils.Map = {
 // * Location models are loaded and added to a Leaflet map.
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
-// a 'WorkspaceCollection' on click on a specific object.
+// a 'workspaceCollection' on click on a specific object.
 Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log('LeafletView');
@@ -232,7 +232,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     options.zoom; //= (options.zoom ? options.zoom : 7);
   },
-  collection: LocationCollection,
+  collection: locationCollection,
   bounds: new L.LatLngBounds(
               new L.LatLng(53.74, 3.2849),
               new L.LatLng(50.9584, 7.5147)

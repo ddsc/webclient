@@ -63,21 +63,21 @@ Lizard.Utils.Workspace = {
   toggleSelected: function (uuid, type){
     console.log(uuid + type);
     queryString = type + "," + uuid;
-    if (WorkspaceCollection.get(queryString) === undefined){
-      tempModel = new Lizard.models.Location({url: domain + type +'/' + uuid});
+    if (workspaceCollection.get(queryString) === undefined){
+      tempModel = new Lizard.Models.Location({url: domain + type +'/' + uuid});
       tempModel.fetch({success: this.createItem});
       tempModel.destroy();
     }
     else {
-      workspaceItem = WorkspaceCollection.remove(queryString);
+      workspaceItem = workspaceCollection.remove(queryString);
     }
   },
   createItem: function (mod, response){
-    workspaceItem = new Lizard.models.WorkspaceItem({
+    workspaceItem = new Lizard.Models.WorkspaceItem({
       id: this.queryString,
       tseries: response.timeseries,
     });
-    WorkspaceCollection.add(workspaceItem);
+    workspaceCollection.add(workspaceItem);
   return workspaceItem;
   },
 };
@@ -111,7 +111,7 @@ Lizard.Utils.DragDrop = {
   },
 };
 function drag(e){
-  timeserie = new Lizard.models.Timeserie({url: e.target.dataset.url});
+  timeserie = new Lizard.Models.Timeserie({url: e.target.dataset.url});
   timeserie.fetch({async: false});
   sendThis = timeserie.attributes.events;
   e.dataTransfer.setData("Text", sendThis);

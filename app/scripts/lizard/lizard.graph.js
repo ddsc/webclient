@@ -62,11 +62,11 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Graphs.Timeseries = TimeseriesCollection;
+Lizard.Graphs.Timeseries = timeseriesCollection;
 Lizard.Graphs.Timeseries.fetch();
 
 
-Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
+Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   template: function(model){
       return _.template($('#workspace-item-template').html(), {
@@ -76,10 +76,10 @@ Lizard.views.Timeserie = Backbone.Marionette.ItemView.extend({
     },
 });
 
-Lizard.views.Timeseries = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
   collection: Lizard.Graphs.Timeseries,
   tagName: 'ul',
-  itemView: Lizard.views.Timeserie,
+  itemView: Lizard.Views.Timeserie,
 });
 
 
@@ -91,7 +91,7 @@ Lizard.Graphs.graphs = function(){
   
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
-  var workspaceView = new Lizard.views.Timeseries();
+  var workspaceView = new Lizard.Views.Timeseries();
 
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());
