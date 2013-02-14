@@ -3,52 +3,7 @@ Lizard.Home = {};
 Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
   template: '#home-template',
   className: 'home',
-  onShow: function() {
-    console.log('onShow()');
-    $('.search-query').focus();
-
-    var visualSearch = VS.init({
-      container : $('.visual_search'),
-      placeholder: 'Zoeken naar...',
-      query     : '',
-      callbacks : {
-        search       : function(query, searchCollection) {},
-         facetMatches : function(callback) {
-           callback([
-               'filter', 'location', 'parameter'
-              // { label: 'city',    category: 'location' }
-           ]);
-        },
-        valueMatches : function(facet, searchTerm, callback) {
-          // TODO: We're doing unnecessary AJAX calls here,
-          // we already have the collections, so using those would be nice instead.
-          switch (facet) {
-            case 'filter':
-              $.getJSON(domain + 'logicalgroups/?page_size=0', function(logicalgroups) {
-                var lg = [];
-                _.each(logicalgroups, function(logicalgroup) { lg.push(logicalgroup.name); });
-                callback(lg);
-              });
-              break;
-            case 'location':
-              $.getJSON(domain +  'locations/?page_size=0', function(locations) {
-                var lc = [];
-                _.each(locations, function(location) { lc.push(location.name); });
-                callback(lc);
-              });
-              break;
-            case 'parameter':
-              $.getJSON(domain + 'parameters/?page_size=0', function(parameters) {
-                var pm = [];
-                _.each(parameters, function(parameter) { pm.push(parameter.description); });
-                callback(pm);
-              });
-              break;
-          }
-        }
-      }
-    });
-  },
+  onShow: Lizard.Visualsearch.init
   onDomRefresh: function() {
     console.log('onDomRefresh');
   }
