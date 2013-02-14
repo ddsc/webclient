@@ -24,21 +24,21 @@ Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
           // we already have the collections, so using those would be nice instead.
           switch (facet) {
             case 'filter':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
+              $.getJSON('http://api.dijkdata.nl/api/v0/logicalgroups/?page_size=0', function(logicalgroups) {
                 var lg = [];
                 _.each(logicalgroups, function(logicalgroup) { lg.push(logicalgroup.name); });
                 callback(lg);
               });
               break;
             case 'location':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/locations/?page_size=0', function(locations) {
+              $.getJSON('http://api.dijkdata.nl/api/v0/locations/?page_size=0', function(locations) {
                 var lc = [];
                 _.each(locations, function(location) { lc.push(location.name); });
                 callback(lc);
               });
               break;
             case 'parameter':
-              $.getJSON('http://test.api.dijkdata.nl/api/v0/parameters/?page_size=0', function(parameters) {
+              $.getJSON('http://api.dijkdata.nl/api/v0/parameters/?page_size=0', function(parameters) {
                 var pm = [];
                 _.each(parameters, function(parameter) { pm.push(parameter.description); });
                 callback(pm);
