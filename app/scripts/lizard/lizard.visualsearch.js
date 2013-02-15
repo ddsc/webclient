@@ -10,31 +10,57 @@ Lizard.Visualsearch = {
           // to give back models that are already in the namespace collections
           //
           var results =[]
-          var url = settings.timeseries_url + '?'
+          var url = settings.timeseries_url + '?';
           _.each(searchCollection.models, function(search){
             if (search.attributes.category === "parameter"){
               _.each(parameterCollection.where({description : search.attributes.value}), function(model){
-                workspaceItem = new Lizard.Models.WorkspaceItem({id: "parameter," + model.id});
+                workspaceItem = new Lizard.Models.WorkspaceItem({
+                  id: "parameter," + model.id
+                });
                 results.push(workspaceItem);
-                url = url + '&parameter=' + model.id;
+                var extra = '&parameter=' + model.id;
+                locationCollection.url = settings.locations_url + '?' + extra;
+                filterCollection.url = settings.filters_url + '?' + extra;
+                locationCollection.fetch();
+                filterCollection.fetch();
+                console.log(url)
+                url = url + extra;
               })
             } 
             else if (search.attributes.category === "location") {
               _.each(locationCollection.where({name : search.attributes.value}), function(model){
-                workspaceItem = new Lizard.Models.WorkspaceItem({id: "location,"+ model.attributes.uuid});
+                workspaceItem = new Lizard.Models.WorkspaceItem({
+                  id: "location,"+ model.attributes.uuid
+                });
                 results.push(workspaceItem);
                 url = url + '&location=' + model.attributes.uuid;
+                var extra = '&location=' + model.attributes.uuid;
+                parameterCollection.url = settings.parameters_url + '?' + extra;
+                filterCollection.url = settings.filters_url + '?' + extra;
+                parameterCollection.fetch();
+                filterCollection.fetch();
+                var point = model.attributes.point_geometry;
+                window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
               })
             } else if (search.attributes.category === "filter") {
               _.each(filterCollection.where({name : search.attributes.value}), function(model){
-                workspaceItem = new Lizard.Models.WorkspaceItem({id: "logicalgroups,"+ model.id});
+                workspaceItem = new Lizard.Models.WorkspaceItem({
+                  id: "logicalgroups,"+ model.id
+                });
                 results.push(workspaceItem);
                 url = url + '&logicalgroups=' + model.id;
+                var extra = '&logicalgroups=' + model.id;
+                parameterCollection.url = settings.parameters_url + '?' + extra;
+                locationCollection.url = settings.locations_url + '?' + extra;
+                parameterCollection.fetch();
+                locationCollection.fetch();
               })
             }
             timeseriesCollection.url = url;
             timeseriesCollection.fetch();
             workspaceCollection.add(results);
+            // var url = workspaceCollection.buildUrl();
+
           });
         },
          facetMatches : function(callback) {
@@ -66,6 +92,10 @@ Lizard.Visualsearch = {
                 callback(pm);
               break;
         }
+      },
+      clearSearch: function(){
+        timeseriesCollection.url = settings.timeseries_url;
+        timeseriesCollection.fetch();
       }
     }
   })
