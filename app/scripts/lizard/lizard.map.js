@@ -194,9 +194,10 @@ Lizard.Utils.Map = {
         for (var i in models){
           var model = models[i];
           var attributes = model.attributes;
-          var x = 4.411944150924683 + (Math.random() / 500.0);
-          var y = 52.22242675741608 + (Math.random() / 500.0);
-          var point = [x,y];
+          // var x = 4.411944150924683 + (Math.random() / 500.0);
+          // var y = 52.22242675741608 + (Math.random() / 500.0);
+          // var point = [x,y];
+          var point = model.attributes.point_geometry;
           var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
@@ -234,10 +235,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     options.zoom; //= (options.zoom ? options.zoom : 7);
   },
   collection: locationCollection,
-  bounds: new L.LatLngBounds(
-              new L.LatLng(53.74, 3.2849),
-              new L.LatLng(50.9584, 7.5147)
-          ),
   cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
   markers: null,

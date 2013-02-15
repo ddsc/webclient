@@ -149,7 +149,17 @@
       <div class="row-fluid">
 
         <div class="span3" id="sidebar">
-            <div class="" id="sidebarRegion"></div>
+            <div class="" id="sidebarRegion">
+                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                    <li class="metrics-dropdown mappage" id="selection">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
+                        <p data-group="selection" id="selectionRegion"></p>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                    </li>
+                </ul>
+            </div>
             <div class="" id="collageRegion"></div>
         </div>
         <div class="span9" id="">
