@@ -32,7 +32,7 @@ $('input[type=checkbox]').live('click', function(e) {
 // Click handlers for toggling the filter/location/parameter UI
 $('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
-  var el = $(this).children().first().next();
+  var el = $(this).next();
   console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
