@@ -10,7 +10,9 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'filtersRegion': 'p#filtersRegion',
     'locationsRegion': 'p#locationsRegion',
     'selectionRegion': 'p#selectionRegion',
-    'collagegraphRegion' : '#collageRegion'
+    'collagegraphRegion' : '#collageRegion',
+    'infomodal': '#info-modal'
+
   },
   onShow: function() {
     var visualSearch = VS.init({
@@ -64,11 +66,34 @@ Lizard.Graphs.Timeseries.fetch();
 
 
 Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
+  initialize: function() {
+    this.model.on('change', this.render, this);
+  },
   tagName: 'li',
+  events: {
+    'click .fav': 'toggleFavorite',
+    'click .info': 'showInfoModal'
+  },
+  toggleFavorite: function(me) {
+    var favorite = this.model.get('favorite');
+    if(favorite) {
+      this.model.set({"favorite": false});
+      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
+    } else {
+      this.model.set({"favorite": true});
+      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
+    }
+  },
+  showInfoModal: function(me) {
+    infoModalView = new Lizard.Views.InfoModal();
+    window.graphsView.infomodal.show(infoModalView.render());
+    $('#info-modal').modal();
+  },
   template: function(model){
       return _.template($('#workspace-item-template').html(), {
         name: model.name,
-        events: model.events
+        events: model.events,
+        favorite: model.favorite
       }, {variable: 'workspace'});
     },
 });
@@ -85,7 +110,8 @@ Lizard.Graphs.graphs = function(){
 
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
-  
+  window.graphsView = graphsView;
+
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
   var workspaceView = new Lizard.Views.Timeseries();
