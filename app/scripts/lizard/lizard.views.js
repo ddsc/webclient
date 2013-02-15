@@ -229,7 +229,7 @@ Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
     this.model.bind('change', this.render);
   },
   onBeforeRender: function(model) {
-    console.log('onBeforeRender', model);
+    // console.log('onBeforeRender', model);
   },
   events: {
     'click .layer-item .indicator': 'toggleVisibility'

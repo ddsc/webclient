@@ -1,22 +1,16 @@
 // Marionette event listeners
 workspaceCollection.on('add', function(model){
-  tseries = Lizard.Graphs.Timeseries.models;
-  for (i in tseries){
-    timeserie = tseries[i]
-    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-    if (parameter != undefined){
-      parameter.set({hidden:false});
-    }
-  };
+  var attribute = model.id.split(",")[0]
+  var id = model.id.split(",")[1]
+  timeseriesCollection.url = (settings.timeseries_url + '?' + attribute + '=' + id )
+  timeseriesCollection.fetch();
+  // if (attribute === "location"){
+  //   var point = model.attributes.point_geometry;
+  //   console.log(model);
+  //   window.mapCanvas.setView(new L.LatLng(point[0], point[1]), 11);
+  // }
 });
 
 workspaceCollection.on('remove', function(model){
-  tseries = model.attributes.tseries;
-  for (i in tseries){
-    Lizard.Graphs.Timeseries.remove(tseries[i]);
-    parameter = ParameterCollection.get(timeserie.attributes.parameter.id);
-    if (parameter != undefined){
-      parameter.set({hidden:true});
-    }
-  }
+
 });

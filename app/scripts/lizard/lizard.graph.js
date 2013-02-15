@@ -14,45 +14,7 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'infomodal': '#info-modal'
 
   },
-  onShow: function() {
-    var visualSearch = VS.init({
-      container : $('.visual_search'),
-      placeholder: 'Zoeken naar...',
-      query     : '',
-      callbacks : {
-        search       : function(query, searchCollection) {},
-         facetMatches : function(callback) {
-           callback([
-               'filter', 'location', 'parameter'
-           ]);
-        },
-        valueMatches : function(facet, searchTerm, callback) {
-          // TODO: We're doing unnecessary AJAX calls here,
-          // we already have the collections, so using those would be nice instead.
-          switch (facet) {
-            case 'filter':
-                var lg = [];
-                var logicalgroups = filterCollection.models;
-                _.each(logicalgroups, function(logicalgroups) { lg.push(logicalgroups.attributes.name); });
-                callback(lg);
-              break;
-            case 'location':
-                var lc = [];
-                var locations = locationCollection.models;
-                _.each(locations, function(locations) { lc.push(locations.attributes.name); });
-                callback(lc);
-              break;
-            case 'parameter':
-                var pm = [];
-                var parameters = parameterCollection.models;
-                _.each(parameters, function(parameters) { pm.push(parameters.attributes.description); });
-                callback(pm);
-              break;
-          }
-        }
-      }
-    });
-  }
+  onShow: Lizard.Visualsearch.init
 });
 
 Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
