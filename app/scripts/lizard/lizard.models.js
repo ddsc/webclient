@@ -32,8 +32,9 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
     // this.fetch({async: false, cache: true});
   },
   defaults: {
-    'selected':  false
-  },
+    'selected':  false,
+    'favorite': false
+  }
 });
 
 Lizard.Models.Widget = Backbone.Model.extend({});

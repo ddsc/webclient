@@ -5,22 +5,20 @@ ItemViews
 Lizard.Views = {};
 
 
-Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  template: function(model){
-      return _.template($('#workspace-item-template').html(), {
-        name: model.name,
-        events: model.events
-      }, {variable: 'workspace'});
-    },
+Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
+  template: '#info-modal-template',
+  initialize: function() {
+    console.log('Lizard.Views.Info initializing');
+  }
 });
+
 
 Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
     // console.log('FilterView.initialize()');
     this._modelBinder = new Backbone.ModelBinder();
-    this.model.on('sync', this.render, this);
+    this.model.on('reset', this.render, this);
   },
   onRender: function() {
     // console.log('filterview onRender()');

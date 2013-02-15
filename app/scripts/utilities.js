@@ -33,7 +33,7 @@ $('input[type=checkbox]').live('click', function(e) {
 $('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
   var el = $(this).next();
-  console.log(el.is(':visible'));
+  // console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {

@@ -222,6 +222,20 @@
         <h4><%=title%></h4>
     </script>
 
+    <script type="text/template" id="info-modal-template">
+      <div id="info-modal-header" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="info-modal-label">Informatie</h3>
+    </div>
+    <div id="info-modal-body" class="modal-body">
+        Info
+    </div>
+    <div id="info-modal-footer" class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
+    </div>
+    </script>
+
+
     <script type="text/template" id="location-modal-template">
       <div id="location-modal-header" class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -294,14 +308,15 @@
     </script>
 
     <script id="workspace-item-template" type="text/template">
-        <div class="workspace-item" class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
+        <div class="workspace-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
         <h5><i class="icon-bar-chart"></i>&nbsp;<%= workspace.name %></h5>
         <ul class="workspace-actions">
-            <li class="favorite"><i class="icon-star-empty"></i>Favoriet</li>
+            <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
             <li class="info"><i class="icon-question-sign"></i>Info</li>
             <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-down hidden-tablet hidden-desktop"></i>Voeg toe</li>
         </ul>
         </div>
+        <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
     </script>
 
     <script id="parameterview-template" type="text/template">
