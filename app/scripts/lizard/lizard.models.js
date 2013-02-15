@@ -13,7 +13,8 @@ Lizard.Models.Filter = Backbone.Model.extend({
 
 Lizard.Models.Location = Backbone.Model.extend({
   initialize: function(response) {
-    this.url = response.url; 
+    this.url = response.url;
+    this.id = response.uuid;
   },
   defaults: {
     'selected':  false
@@ -29,7 +30,7 @@ Lizard.Models.Parameter = Backbone.Model.extend({
 Lizard.Models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url;
-    // this.fetch({async: false, cache: true});
+    this.id = response.uuid;
   },
   defaults: {
     'selected':  false,
