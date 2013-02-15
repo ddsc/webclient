@@ -117,7 +117,8 @@ Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
     // alert('test');
     // console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
     e.preventDefault();
-    console.log($(e.currentTarget).parent().html("<h5>Configureer Widget</h5><form><checkbox name='d1' value='d1'>d1</checkbox></form>"));
+    var template = _.template( $("#widget-configuration").html(), {} );
+    this.$el.html( template );
   },
   modelEvents: {
     'change': 'modelChanged'

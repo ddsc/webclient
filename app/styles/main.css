@@ -513,7 +513,7 @@ p#parametersRegion{
     overflow-x: none;
 }
 p#selectionRegion{
-    height: 200px;
+    height: 350px;
     overflow-y: auto;
     overflow-x: none;    
 }
@@ -700,7 +700,7 @@ position: relative;
 }
 
 ul.workspace-actions, ul.workspace-actions li {
-    font-size: .98em;
+    
     list-style: none;
     cursor: pointer;
     display:inline;
