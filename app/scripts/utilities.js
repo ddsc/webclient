@@ -30,11 +30,10 @@ $('input[type=checkbox]').live('click', function(e) {
 
 
 // Click handlers for toggling the filter/location/parameter UI
-$('em.toggle').live("click", function(e){
+$('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
-  var el = $(this).parent().next();
+  var el = $(this).children().first().next();
   console.log(el.is(':visible'));
-  // console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
@@ -42,19 +41,19 @@ $('em.toggle').live("click", function(e){
   }
 });
 
-$('em.reset').live("click", function(e){
-  e.preventDefault();
-  console.log("Resetting collections");
-  _.each(filtercollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-  _.each(locationcollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-  _.each(parametercollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-});
+// $('em.reset').live("click", function(e){
+//   e.preventDefault();
+//   console.log("Resetting collections");
+//   _.each(filtercollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+//   _.each(locationcollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+//   _.each(parametercollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+// });
 
 Lizard.Utils = {};
 
@@ -216,13 +215,13 @@ var isAppleMobile = false;
 /**
  * Configure jQuery.
  */
-$.ajaxSetup({
-    timeout: 20000,
-    crossDomain: true,
-    xhrFields: {
-       withCredentials: true
-    }
-});
+// $.ajaxSetup({
+//     timeout: 20000,
+//     crossDomain: true,
+//     xhrFields: {
+//        withCredentials: true
+//     }
+// });
 
 /**
  * Things related to time/date formatting.
