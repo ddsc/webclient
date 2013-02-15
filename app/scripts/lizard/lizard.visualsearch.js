@@ -9,21 +9,32 @@ Lizard.Visualsearch = {
           // Search now goes through the parameters, filters and locations requested
           // to give back models that are already in the namespace collections
           //
+          var results =[]
+          var url = settings.timeseries_url + '?'
           _.each(searchCollection.models, function(search){
             if (search.attributes.category === "parameter"){
               _.each(parameterCollection.where({description : search.attributes.value}), function(model){
-                workspaceCollection.add(new Lizard.Models.WorkspaceItem({id: "parameter,"+ model.id}));
+                workspaceItem = new Lizard.Models.WorkspaceItem({id: "parameter," + model.id});
+                results.push(workspaceItem);
+                url = url + '&parameter=' + model.id;
               })
             } 
             else if (search.attributes.category === "location") {
               _.each(locationCollection.where({name : search.attributes.value}), function(model){
-                workspaceCollection.add(new Lizard.Models.WorkspaceItem({id: "location," + model.attributes.uuid}));
+                workspaceItem = new Lizard.Models.WorkspaceItem({id: "location,"+ model.attributes.uuid});
+                results.push(workspaceItem);
+                url = url + '&location=' + model.attributes.uuid;
               })
             } else if (search.attributes.category === "filter") {
               _.each(filterCollection.where({name : search.attributes.value}), function(model){
-                workspaceCollection.add(new Lizard.Models.WorkspaceItem({id: "filter," + model.id}));
+                workspaceItem = new Lizard.Models.WorkspaceItem({id: "logicalgroups,"+ model.id});
+                results.push(workspaceItem);
+                url = url + '&logicalgroups=' + model.id;
               })
             }
+            timeseriesCollection.url = url;
+            timeseriesCollection.fetch();
+            workspaceCollection.add(results);
           });
         },
          facetMatches : function(callback) {
