@@ -221,7 +221,7 @@ input.input-medium.search-query {
     height: 200px;
 }
 
-#chart{
+.graph-drop{
     padding: 10px;
     width: 90%;
     height: 90%;
@@ -437,7 +437,7 @@ input.input-medium.search-query {
     border-radius: 0;
 }
 .sidenav p {
-    padding: 3px 5px 10px 16px;
+    padding: 5px 5px 3px 3px;
     margin: 0;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
@@ -507,13 +507,16 @@ input.input-medium.search-query {
 
 p#filtersRegion,
 p#locationsRegion,
-p#parametersRegion,
-p#selectionRegion{
+p#parametersRegion{
     height: 150px;
     overflow-y: auto;
     overflow-x: none;
 }
-
+p#selectionRegion{
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: none;    
+}
 
 
 
@@ -670,4 +673,38 @@ position: relative;
 .line {
   background: #000;
   z-index: 2;
+}
+
+
+
+
+
+
+
+.workspace-item {
+    margin-top: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.workspace-item h5 {
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    padding: 0;
+    margin: 0;
+    display: block; 
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 100%; 
+    height: 23px;    
+    color: #0084B4;
+}
+
+ul.workspace-actions, ul.workspace-actions li {
+    font-size: .98em;
+    list-style: none;
+    cursor: pointer;
+    display:inline;
+}
+ul.workspace-actions li {
+
 }

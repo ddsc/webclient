@@ -72,38 +72,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         ctx.restore();
     };
 
-    /*
-    CanvasAxisLabel.prototype.draw = function(box) {
-        var p = this.plot;
-        var ctx = this.plot.getCanvas().getContext('2d');
-        ctx.save();
-        ctx.textAlign = 'start';
-        ctx.textBaseline = 'alphabetic';
-        ctx.font = this.axisLabelFontSizePixels + 'px ' +
-            this.axisLabelFontFamily;
-        var x, y, angle = 0, heightAdjustFactor = 0.72;
-        if (this.position == 'top') {
-            x = box.left + box.width/2 - this.width/2;
-            y = box.top + this.height*heightAdjustFactor;
-        } else if (this.position == 'bottom') {
-            x = box.left + box.width/2 - this.width/2;
-            y = box.top + box.height - this.height*heightAdjustFactor;
-        } else if (this.position == 'left') {
-            x = box.left + this.height*0.72;
-            y = box.height/2 + box.top + this.width/2;
-            angle = -Math.PI/2;
-        } else if (this.position == 'right') {
-            x = box.left + box.width - this.height*heightAdjustFactor;
-            y = box.height/2 + box.top - this.width/2;
-            angle = Math.PI/2;
-        }
-        ctx.translate(x, y);
-        ctx.rotate(angle);
-        ctx.fillText(this.opts.axisLabel, 0, 0);
-        ctx.restore();
-    };
-    */
-
     CanvasAxisLabel.prototype.draw = function(box) {
         var p = this.plot;
         var ctx = this.plot.getCanvas().getContext('2d');
@@ -138,6 +106,44 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     /* *************************************************** */
 
+    function initializeRenderer (plot, axis, axisName) {
+        /*
+        $.each(plot.getAxes(), function(axisName, axis) {
+        });
+        var margin = { left: 0, right: 0, top: 0, bottom: 0 };
+        */
+
+        var opts = axis.options;
+        if (!opts || !opts.axisLabel || !axis.show)
+            return;
+
+        var rendererInstance = new renderer(
+            axis,
+            axisName,
+            axis.position, 0,
+            plot, opts
+        );
+        rendererInstance.calculateSize();
+        return rendererInstance;
+
+        // set margin to highest needed label height
+        /*
+        margin[axis.position] = Math.max(margin[axis.position], rendererInstance.height); 
+        */
+
+        // set plot margins if they aren't manually set on the grid
+        // Note: need to do before draw
+        // Note: should add an extra axislabels margin instead...
+        /*
+        var plotOpts = plot.getOptions();
+        if (!plotOpts.grid.margin) {
+            plotOpts.grid.margin = margin;
+        }
+        */
+    }
+
+    /* *************************************************** */
+
     // determine renderer class
     var renderer = CanvasAxisLabel;
 
@@ -148,33 +154,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         plot.hooks.draw.push(function (plot, ctx) {
             // MEASURE AND SET OPTIONS
             if (!renderersInitialized) {
-                var margin = { left: 0, right: 0, top: 0, bottom: 0 };
-                $.each(plot.getAxes(), function(axisName, axis) {
-                    var opts = axis.options;
-                    if (!opts || !opts.axisLabel || !axis.show)
-                        return;
-
-                    var rendererInstance = new renderer(
-                        axis,
-                        axisName,
-                        axis.position, 0,
-                        plot, opts
-                    );
-                    rendererInstance.calculateSize();
-                    axisLabels[axisName] = rendererInstance;
-
-                    // set margin to highest needed label height
-                    margin[axis.position] = Math.max(margin[axis.position], rendererInstance.height); 
                 });
-                // set plot margins if they aren't manually set on the grid
-                // Note: need to do before draw
-                // Note: should add an extra axislabels margin instead...
-                /*
-                var plotOpts = plot.getOptions();
-                if (!plotOpts.grid.margin) {
-                    plotOpts.grid.margin = margin;
-                }
-                */
                 renderersInitialized = true;
             }
             // DRAW
@@ -182,6 +162,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 var opts = axis.options;
                 if (!opts || !opts.axisLabel || !axis.show)
                     return;
+                if (!(axisName in axisLabels)) {
+                    axisLabels[axisName] = initializeRenderer(plot, axis, axisName);
+                }
                 axisLabels[axisName].draw(axis.box);
             });
         });

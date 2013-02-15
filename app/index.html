@@ -294,9 +294,14 @@
     </script>
 
     <script id="workspace-item-template" type="text/template">
-        <label class="checkbox">
-            <input class="hide" type="checkbox" class="filterCheckbox"><i class="icon-bar-chart"></i> <span class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>"><%= workspace.name %></span> <span class="state hide"></span>
-        </label>
+        <div class="workspace-item" class="noselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
+        <h5><i class="icon-bar-chart"></i>&nbsp;<%= workspace.name %></h5>
+        <ul class="workspace-actions">
+            <li class="favorite"><i class="icon-star-empty"></i>Favoriet</li>
+            <li class="info"><i class="icon-question-sign"></i>Info</li>
+            <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-down hidden-tablet hidden-desktop"></i>Voeg toe</li>
+        </ul>
+        </div>
     </script>
 
     <script id="parameterview-template" type="text/template">
@@ -313,23 +318,23 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
-                        <p data-group="selection" id="selectionRegion"></p>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
                     </li>
+                    <p data-group="selection" id="selectionRegion"></p>
                     <li class="metrics-dropdown" id="filters">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-tag"></i> Filters (<%=  filtercollectionview.collection.models.length %>)</a>
-                        <p data-group="filters" class="hide" id="filtersRegion"></p>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-tag"></i> Filters (<%=  filtercollectionview.collection.models.length %>)</a>
                     </li>
+                    <p data-group="filters" class="hide" id="filtersRegion"></p>
                     <li class="metrics-dropdown" id="locations">
-                        <a href="javascript:void(0)"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-globe"></i> Locaties (<%=  locationcollectionview.collection.models.length %>)</a>
-                        <p data-group="locations" class="hide" id="locationsRegion"></p>
+                        <a href="javascript:void(0)"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Locaties (<%=  locationcollectionview.collection.models.length %>)</a>
                     </li>
+                    <p data-group="locations" class="hide" id="locationsRegion"></p>                    
                     <li class="metrics-dropdown" id="parameters">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-flag"></i> Parameters (<%=  parametercollectionview.collection.models.length %>)</a>
-                        <p data-group="parameters" class="hide" id="parametersRegion"></p>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-flag"></i> Parameters (<%=  parametercollectionview.collection.models.length %>)</a>
                     </li>
+                    <p data-group="parameters" class="hide" id="parametersRegion"></p>                    
                     <li>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> <i class="icon-question-sign"></i> Help</a>
                     </li>
                 </ul>
                 </div>
@@ -343,15 +348,15 @@
             </div>
             <div class="row-fluid">
                 <div id="drop-one" class="span12 drop empty">
-                    <div id="chart" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                    <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe<h2>
+                    <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
+                        <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe<h2>
                     </div>
                 </div>
             </div>
             <div class="row-fluid">
                 <div id="drop-two" class="span12 drop empty">
-                    <div id="chart" class="flot-graph" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                    <h2>Sleep je metingen hier naartoe<h2>
+                    <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
+                        <h2>Sleep je metingen hier naartoe<h2>
                     </div>
                 </div>
             </div>

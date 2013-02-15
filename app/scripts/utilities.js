@@ -30,11 +30,10 @@ $('input[type=checkbox]').live('click', function(e) {
 
 
 // Click handlers for toggling the filter/location/parameter UI
-$('em.toggle').live("click", function(e){
+$('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
-  var el = $(this).parent().next();
+  var el = $(this).next();
   console.log(el.is(':visible'));
-  // console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
@@ -42,19 +41,19 @@ $('em.toggle').live("click", function(e){
   }
 });
 
-$('em.reset').live("click", function(e){
-  e.preventDefault();
-  console.log("Resetting collections");
-  _.each(filtercollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-  _.each(locationcollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-  _.each(parametercollectionview.collection.models, function(model) {
-    model.set('selected', false);
-  });
-});
+// $('em.reset').live("click", function(e){
+//   e.preventDefault();
+//   console.log("Resetting collections");
+//   _.each(filtercollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+//   _.each(locationcollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+//   _.each(parametercollectionview.collection.models, function(model) {
+//     model.set('selected', false);
+//   });
+// });
 
 Lizard.Utils = {};
 
@@ -84,9 +83,9 @@ Lizard.Utils.Workspace = {
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
-  sendThis = e.target.dataset.url;
-  e.dataTransfer.setData("Text", sendThis);
-   },
+    sendThis = e.target.dataset.url;
+    e.dataTransfer.setData("Text", sendThis);
+  },
 
   allowDrop: function (e){
     e.preventDefault();
@@ -94,52 +93,28 @@ Lizard.Utils.DragDrop = {
 
   drop: function (e){
     e.preventDefault();
-    // var data_url = e.dataTransfer.getData("Text");
-    e.target.parentElement.classList.remove("empty");
-    $(e.target).loadGraph("scripts/dummy.json");
+    var data_url = e.dataTransfer.getData("Text");
+    var $target = $(e.target);
+    $target.parent().removeClass("empty");
+    // only fire for nearest .graph-drop parent (in case there is already a graph in the element)
+    var $graph = $target;
+    if (!$graph.hasClass('graph-drop')) {
+        $graph = $target.parent('.graph-drop');
+    }
+    $graph.loadPlotData(data_url + '?eventsformat=flot');
     // var EventCollection = Backbone.Collection.extend({
-    //       url: data_url
-    //     })
-    //     // Timeserie has Events. Opens new collection
-    //     // for that specific timeserie.
-    //     ts_events = new EventCollection()
-    //     // _.bind connects "this" to the makeChart
-    //     // otherwise it loses it's scope.
-    //     ts_events.fetch({async:false, cache: true,
-    //       success: _.bind(makeChart, e)
-    //     });
+          // url: data_url
+        // })
+        // // Timeserie has Events. Opens new collection
+        // // for that specific timeserie.
+        // ts_events = new EventCollection()
+        // // _.bind connects "this" to the makeChart
+        // // otherwise it loses it's scope.
+        // ts_events.fetch({async:false, cache: true,
+          // success: _.bind(makeChart, e)
+    // });
   },
 };
-function drag(e){
-  timeserie = new Lizard.Models.Timeserie({url: e.target.dataset.url});
-  timeserie.fetch({async: false});
-  sendThis = timeserie.attributes.events;
-  e.dataTransfer.setData("Text", sendThis);
-}
-
-function allowDrop(e){
-  e.preventDefault();
-}
-
-function drop(e){
-  e.preventDefault();
-  var data_url = e.dataTransfer.getData("Text");
-  $(e.target).loadGraph("scripts/dummy.json");
-
-
-
-  // var EventCollection = Backbone.Collection.extend({
-  //       url: data_url
-  //     })
-  //     // Timeserie has Events. Opens new collection
-  //     // for that specific timeserie.
-  //     ts_events = new EventCollection()
-  //     // _.bind connects "this" to the makeChart
-  //     // otherwise it loses it's scope.
-  //     ts_events.fetch({async:false, cache: true,
-  //       success: _.bind(makeChart, e)
-  //     });
-}
 
 function makeChart(collection, responses){
       this.target.className.replace('empty', '')
@@ -240,96 +215,17 @@ var isAppleMobile = false;
 /**
  * Configure jQuery.
  */
-$.ajaxSetup({
-    timeout: 20000
-});
+// $.ajaxSetup({
+//     timeout: 20000,
+//     crossDomain: true,
+//     xhrFields: {
+//        withCredentials: true
+//     }
+// });
 
-function loadGraph ($graph, dataUrl, callback, force) {
-    // check if graph is already loaded
-    if (force !== true && $graph.data('loaded') === true) {
-        return;
-    }
-
-    // the wonders of asynchronous programming
-    if ($graph.data('loading') === true) {
-        return;
-    }
-
-    // check if element is visible
-    // flot can't draw on an invisible surface
-    if ($graph.is(':hidden')) {
-        return;
-    }
-
-    // no data, nothing to do
-    if (!dataUrl) {
-        return;
-    }
-
-    // ensure relative positioning
-    $graph.css('position', 'relative');
-
-    // add a spinner
-    var $loading = $('<span class="loading" />');
-    $graph.empty().append($loading);
-    $graph.data('loading', true);
-
-    // remove spinner when loading has finished (either with or without an error)
-    function removeSpinner () {
-        $graph.data('loading', false);
-        $loading.remove();
-    }
-
-    // swap out graph for an error icon when we failed to retrieve the data
-    function showError () {
-        var $broken = $('<span class="broken" />');
-        $broken.click(function (event) {
-            loadGraph($graph, dataUrl, callback, true);
-        });
-        $graph.empty().append($broken);
-    }
-
-    // for flot graphs, grab the JSON data and call Flot
-    $.get(dataUrl, {}, undefined, 'json')
-    .done(function (data, textStatus, jqXHR) {
-        removeSpinner();
-
-        // target element might have been hidden in the meantime
-        // so check if element is visible again:
-        // we can't draw on an invisible surface
-        if ($graph.is(':hidden')) {
-            return;
-        }
-
-        // show an error on an empty dataset
-        if (!data.data || data.data.length == 0) {
-            showError();
-        }
-
-        // perform the draw
-        var plot = drawGraph($graph, data);
-        if (plot) {
-            $graph.data('loaded', true);
-            // set attribute and call callback when drawing has finished
-            if (typeof callback !== 'undefined') {
-                callback(plot);
-            }
-        }
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        removeSpinner();
-        showError();
-    });
-}
-
-$.fn.loadGraph = function (dataUrl, callback, force) {
-    if (typeof dataUrl === 'undefined') {
-        // get the data url from the element instead
-        var dataUrl = $(this).data('data-url');
-    }
-    loadGraph($(this), dataUrl, callback, force);
-};
-
+/**
+ * Things related to time/date formatting.
+ */
 var timeUnitSize = {
     "second": 1000,
     "minute": 60 * 1000,
@@ -341,7 +237,6 @@ var timeUnitSize = {
 };
 var dayNames = ['zo', 'ma', 'di', 'wo', 'do', 'vr','za'];
 var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-
 function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
@@ -394,35 +289,223 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
     return rt;
 }
 
-/**
- * Draw the response data to a canvas in DOM element $graph using Flot.
- *
- * @param {$graph} DOM element which will be replaced by the graph
- * @param {response} a dictionary containing graph data such as x/y values and labels
- */
-function drawGraph($container, response) {
+function loadPlotData ($graph, dataUrl, callback, force) {
+    // no dataUrl or element, nothing to do
+    if (!$graph || !dataUrl) {
+        return;
+    }
+
+    // check if data is already loaded
+    var loadedDataUrls = $graph.data('loadedDataUrls');
+    if (force !== true && loadedDataUrls) {
+        $.each(loadedDataUrls, function (idx, loadedDataUrl) {
+            if (loadedDataUrl == dataUrl) {
+                // data from this URL is already loaded, do nothing
+                return;
+            }
+        });
+    }
+
+    // the wonders of asynchronous programming
+    // do nothing if data is still loading
+    if ($graph.data('isLoading') === true) {
+        return;
+    }
+
+    // check if element is visible
+    // flot can't draw on an invisible surface
+    if ($graph.is(':hidden')) {
+        return;
+    }
+
+    // ensure relative positioning, add a class name, force explicit height/width
+    $graph.css({
+        'position': 'relative',
+        'width': '100%',
+        'height': '100%'
+    });
+    $graph.addClass('flot-graph');
+    if ($graph.height() == 0) {
+        console.error('Height of the graph element seems to be 0');
+    }
+
+    // initialize the graph, if it doesn't exist already
+    var plot = $graph.data('plot');
+    if (!plot) {
+        plot = initializePlot($graph);
+        $graph.data('plot', plot);
+    }
+
+    // add a spinner
+    var $loading = $('<span class="loading" />');
+    $graph.append($loading);
+    $graph.data('isLoading', true);
+
+    // remove spinner when loading has finished (either with or without an error)
+    function loadingFinished () {
+        $graph.data('isLoading', false);
+        $loading.remove();
+    }
+
+    // swap out graph for an error icon when we failed to retrieve the data
+    function showError () {
+        var $broken = $('<span class="broken" />');
+        $broken.click(function (event) {
+            $broken.remove();
+            loadPlotData($graph, dataUrl, callback, true);
+        });
+        $graph.append($broken);
+    }
+
+    // call callback on success
+    function loadingSuccess () {
+        // update loadedDataUrls
+        var loadedDataUrls = $graph.data('loadedDataUrls');
+        if (!loadedDataUrls) {
+            loadedDataUrls = [];
+        }
+        loadedDataUrls.push(dataUrl);
+        $graph.data('loadedDataUrls', loadedDataUrls);
+
+        // set attribute and call callback when drawing has finished
+        if (typeof callback !== 'undefined') {
+            callback();
+        }
+    }
+
+    // for flot graphs, grab the JSON data and call Flot
+    $.get(dataUrl, {}, undefined, 'json')
+    .done(function (data, textStatus, jqXHR) {
+        loadingFinished();
+
+        // target element might have been hidden in the meantime
+        // so check if element is visible again:
+        // we can't draw on an invisible surface
+        if ($graph.is(':hidden')) {
+            return;
+        }
+
+        // add the data
+        $.each(data, function (idx, line) {
+            addPlotLine(plot, line);
+        });
+        redraw(plot);
+        loadingSuccess();
+        // try {
+        // }
+        // catch (Exception) {
+            // // we probably recieved some malformed data
+            // showError();
+        // }
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        loadingFinished();
+        showError();
+    });
+}
+
+$.fn.loadPlotData = function (dataUrl, callback, force) {
+    if (typeof dataUrl === 'undefined') {
+        // get the data url from the element instead
+        var dataUrl = $(this).data('data-url');
+    }
+    loadPlotData($(this), dataUrl, callback, force);
+};
+
+function redraw (plot) {
+    plot.setupGrid();
+    plot.draw();
+    plot.triggerRedrawOverlay();
+}
+
+function addPlotLine (plot, line) {
+    var currentData = plot.getData();
+    var newData = $.extend(true, [], currentData);
+    var parameter_pk_to_yaxis = {};
+    var allocated_yaxes = 0;
+
+    // unset old colors so Flot determines a new color from the default colormap
+    $.each(newData, function (idx, line) {
+        delete line['color'];
+    });
+
+    // determine yaxis per parameter
+    var yAxes = plot.getYAxes();
+    $.each(yAxes, function (idx, axis) {
+        if ('parameter_pk' in axis) {
+            parameter_pk_to_yaxis[axis.parameter_pk] = axis.n;
+            allocated_yaxes++; // can't properly get the length of an associative array
+        }
+    });
+
+    // add the new data
+    // create a new axis only when we discover a new parameter
+    var yaxis = 0;
+    if (line.parameter_pk in parameter_pk_to_yaxis) {
+        yaxis = parameter_pk_to_yaxis[line.parameter_pk];
+    }
+    else {
+        // allocate a new axis
+        yaxis = allocated_yaxes + 1;
+        // set the axisLabel and parameter
+        yAxes[yaxis].parameter_pk = line.parameter_pk;
+        yAxes[yaxis].axisLabel = line.parameter_name;
+    }
+    line.yaxis = yaxis;
+    newData.push(line);
+
+    plot.setData(newData);
+}
+
+function initializePlot($container) {
     // define a set of options used for all graphs
     var defaultOpts = {
         series: {
             points: { show: true, hoverable: true, radius: 1 },
-            shadowSize: 0
+            shadowSize: 0,
+            lines: { show: true }
         },
         yaxes: [
+            // allocate at least 5 axes
             {
+                axisLabel: '',
                 zoomRange: [false, false],
                 panRange: false,
                 position: 'left',
                 reserveSpace: true
             },
             {
+                axisLabel: '',
                 zoomRange: [false, false],
                 panRange: false,
                 position: 'right',
                 reserveSpace: true
+            },
+            {
+                axisLabel: '',
+                zoomRange: [false, false],
+                panRange: false,
+                position: 'right',
+                reserveSpace: false
+            },
+            {
+                axisLabel: '',
+                zoomRange: [false, false],
+                panRange: false,
+                position: 'right',
+                reserveSpace: false
+            },
+            {
+                axisLabel: '',
+                zoomRange: [false, false],
+                panRange: false,
+                position: 'right',
+                reserveSpace: false
             }
         ],
         xaxes: [
             {
+                axisLabel: 'Tijd',
                 mode: 'time',
                 zoomRange: [1 * timeUnitSize['minute'], 400 * timeUnitSize['year']],
                 tickFormatter: timeTickFormatter,
@@ -446,7 +529,7 @@ function drawGraph($container, response) {
             // disable touch, so the flot.touch plugin won't mess up the desktop browser
             touch: false,
             // enable pan & zoom
-            pan: { interactive: true },
+            pan: { interactive: false },
             zoom: { interactive: true },
             tooltip: {
                 enabled: true,
@@ -459,27 +542,8 @@ function drawGraph($container, response) {
         });
     }
 
-    // set up elements nested in our assigned parent div
-    $container.css('position', 'relative');
-
-    // initial plot
-    var opts = {
-        xaxes: [
-            {
-                axisLabel: response.x_label || 'Tijd'
-            }
-        ],
-        yaxes: [
-            {
-                axisLabel: response.y_label
-            },
-            {
-                axisLabel: response.y2_label || ''
-            }
-        ]
-    };
-    var finalOpts = $.extend(true, {}, defaultOpts, opts);
-    var plot = $.plot($container, response.data, finalOpts);
+    var finalOpts = $.extend({}, defaultOpts);
+    var plot = $.plot($container, [], finalOpts);
 
     bindPanZoomEvents($container);
 
