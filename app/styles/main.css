@@ -226,7 +226,6 @@ input.input-medium.search-query {
     width: 90%;
     height: 90%;
 }
-
 .drop{
     top:50%;
     left: 50%;
@@ -248,6 +247,32 @@ input.input-medium.search-query {
     -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
+}
+
+.modal-graph{
+    height: 300px;
+    padding: 5px 0;
+    margin: 1em 0 0;
+    color: #444;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+#modal-graph-wrapper{
+    height: 300px;
+    width: 90%;
 }
 
 .drop:hover{
@@ -532,6 +557,7 @@ p#selectionRegion{
     padding: 0;
     margin: 0;
     display: block; 
+    cursor: pointer;
     overflow: hidden; 
     white-space: nowrap;
     width: 100%; 
@@ -544,9 +570,6 @@ ul.timeserie-actions, ul.timeserie-actions li {
     list-style: none;
     cursor: pointer;
     display:inline;
-}
-ul.timeserie-actions li {
-
 }
 
 

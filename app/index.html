@@ -152,7 +152,7 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown mappage" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Favorites</a>
                         <p data-group="selection" id="selectionRegion"></p>
                     </li>
                     <li>
@@ -177,7 +177,11 @@
                 <h3 id="location-modal-label"></h3>
             </div>
             <div id="location-modal-body" class="modal-body">
-            
+                <div id="modal-graph-wrapper" class="hidden">
+                    <div class="flot-graph modal-graph"></div>
+                </div>
+                <div id="location-modal-collapsables">
+                </div>            
             </div>
             <div id="location-modal-footer" class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -191,6 +195,10 @@
 
     <script type="text/template" id="icon-template">
         Some icon
+    </script>
+
+    <script type="text/template" id="favorite">
+        jaja
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
@@ -249,18 +257,18 @@
 
 
     <script type="text/template" id="location-modal-template">
-    <div id="chart-canvas"></div>
-
     </script>
 
     <script type="text/template" id="location-modal-timeserie">
-        <div class="timeserie-item oselect" data-toggle="collapse" data-target="#<%=timeserie.uuid%>">
-            <h5 class="" data-url="<%= timeserie.events%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+        <div class="timeserie-item oselect">
+            <h5 data-toggle="collapse" data-target="#<%=timeserie.uuid%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
             <div id="<%=timeserie.uuid%>" class="collapse">
                 <ul class="timeserie-actions">
                     <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
-                    <li class="info"><i class="icon-question-sign"></i>Info</li>
-                    <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Voeg toe</li>
+                    <li class="graph-this" data-url="<%= timeserie.events%>"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Teken Grafiek</li>
+                    <li class="add">
+                        <i class="icon-plus"></i> Voeg toe aan collage
+                    </li>
                 </ul>
             </div>
         </div>

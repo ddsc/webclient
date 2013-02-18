@@ -1,7 +1,7 @@
 // Marionette event listeners
 favoritesCollection.on('add', function(model){
-  var attribute = model.id.split(",")[0]
-  var id = model.id.split(",")[1]
+  // var attribute = model.id.split(",")[0]
+  // var id = model.id.split(",")[1]
   // if (attribute === "location"){
   //   locmodel = locationCollection.get(id);
   //   var point = locmodel.attributes.point_geometry;

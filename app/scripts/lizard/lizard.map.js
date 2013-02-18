@@ -6,7 +6,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
-    'modal' : '#location-modal-body'
+    'modalitems' : '#location-modal-collapsables',
+    'favoriteRegion': 'p#selectionRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -45,7 +46,23 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
+Lizard.Map.FavoriteView = Backbone.Marionette.ItemView.extend({
+  template:function(model){
+    return _.template($('#favorites').html(), {
+      name: model.name,
+      jean: console.log('success')
+    }, {variable: 'favorite'});
+  },
+  tagName: 'li',
+});
 
+Lizard.Map.FavoritesView = Backbone.Marionette.CollectionView.extend({
+  collection: favoritesCollection,
+  tagName: 'ul',
+  itemView: Lizard.Map.FavoriteView,
+});
+
+// Modal view that opens when clicking on a location
 Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
   template:function(model){
     return _.template($('#location-modal-timeserie').html(), {
@@ -54,19 +71,42 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
       events: model.events,
     }, {variable: 'timeserie'});
   },
+  uuid: null,
+  events: {
+    'click .graph-this': "getSeriesdata",
+    'click .fav': 'toggleFavorite',
+  },
   tagName: 'li',
+  onBeforeRender: function(view){
+      this.uuid = view.model.url.split("eries/")[1].split("/")[0]
+  },
+  toggleFavorite: function(me) {
+    var favorite = this.model.get('favorite');
+    if(favorite) {
+      this.model.set({"favorite": false});
+      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
+    } else {
+      this.model.set({"favorite": true});
+      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
+    }
+    uuid = this.uuid;
+    type = 'timeseries';
+    Lizard.Utils.Favorites.toggleSelected(uuid, type);
+  },
+  // One Timeserie has many Events. An Events list is only
+  // loaded when it is explcitly chosen, with caching.
+  getSeriesdata: function(clickedon){
+    // Gets the element that is clicked and it's datasets
+    var data_url = clickedon.target.dataset.url;
+    $('#modal-graph-wrapper').removeClass('hidden');
+    $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
+  }
 });
 
 // Modal view that opens when clicking on a location
 Lizard.Map.ModalTimeseriesView = Backbone.Marionette.CollectionView.extend({
   collection: timeseriesCollection,
-  // custom template rendering to improve speed
-  // due to explicit variable passing.
-  template: '#location-modal-boom-boom',
   tagName: 'ul',
-  events: {
-    'click .timeserie-item': "getSeriesdata",
-  },
   itemView: Lizard.Map.ModalTimeserieView,
   onBeforeRender: function(){
     this.collection.url = settings.timeseries_url + 
@@ -74,16 +114,8 @@ Lizard.Map.ModalTimeseriesView = Backbone.Marionette.CollectionView.extend({
   },
   onRender: function (model){
     $('#location-modal-label').html(this.location);
-  },
-  // One Timeserie has many Events. An Events list is only
-  // loaded when it is explcitly chosen, with caching.
-  getSeriesdata: function(clickedon){
-    // Gets the element that is clicked and it's datasets
-    var data_url = clickedon.target.dataset.url;
-    console.log(data_url);
-  },
-
-})
+  }
+});
 
 
 // Utils for this item
@@ -91,12 +123,13 @@ Lizard.Utils.Map = {
     modalInfo: function (e){
           var marker = e.target;
           var model = marker.valueOf().options.bbModel;
+          $('#modal-graph-wrapper').find('.flot-graph').empty();
           modalView = new Lizard.Map.ModalTimeseriesView();
           modalView.locationuuid = model.attributes.uuid;
           modalView.location = model.attributes.name;
           timeseriesCollection.reset();
           timeseriesCollection.fetch({cache: true});
-          Lizard.mapView.modal.show(modalView.render());
+          Lizard.mapView.modalitems.show(modalView.render());
           $('#location-modal').modal();
     },
     updateInfo: function (e) {
@@ -221,7 +254,7 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-  var collageView = new CollageView();
+  var favoritesView = new Lizard.Map.FavoritesView();
   var layersView = layerView;
   var leafletView;
 
@@ -240,8 +273,8 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  // Lizard.mapView.sidebarRegion.show(layersView.render());
-  Lizard.mapView.collageRegion.show(collageView.render());
+  console.log(Lizard.mapView.favoriteRegion.show(favoritesView.render()));
+  // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
   layerCollection.fetch({success: function(layercollection) {
