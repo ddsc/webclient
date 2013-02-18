@@ -52,11 +52,11 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
     $('#info-modal').modal();
   },
   template: function(model){
-      return _.template($('#workspace-item-template').html(), {
+      return _.template($('#timeserie-item-template').html(), {
         name: model.name,
         events: model.events,
         favorite: model.favorite
-      }, {variable: 'workspace'});
+      }, {variable: 'timeserie'});
     },
 });
 
@@ -76,12 +76,12 @@ Lizard.Graphs.graphs = function(){
 
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
-  var workspaceView = new Lizard.Views.Timeseries();
+  var timeserieView = new Lizard.Views.Timeseries();
 
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());
   graphsView.parametersRegion.show(parametercollectionview.render());
-  graphsView.selectionRegion.show(workspaceView.render());
+  graphsView.selectionRegion.show(timeserieView.render());
   graphsView.collagegraphRegion.show(collageView.render());
 
   // var timeserieView = new Lizard.Graphs.TimeserieView();

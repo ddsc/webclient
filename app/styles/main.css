@@ -681,12 +681,12 @@ position: relative;
 
 
 
-.workspace-item {
+.timeserie-item {
     margin-top: 5px;
     border-bottom: 1px solid #ccc;
 }
 
-.workspace-item h5 {
+.timeserie-item h5 {
     text-decoration: none; 
     text-overflow: ellipsis; 
     padding: 0;
@@ -699,12 +699,12 @@ position: relative;
     color: #0084B4;
 }
 
-ul.workspace-actions, ul.workspace-actions li {
+ul.timeserie-actions, ul.timeserie-actions li {
     font-size: .98em;
     list-style: none;
     cursor: pointer;
     display:inline;
 }
-ul.workspace-actions li {
+ul.timeserie-actions li {
 
 }

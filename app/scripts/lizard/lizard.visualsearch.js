@@ -40,7 +40,9 @@ Lizard.Visualsearch = {
                 parameterCollection.fetch();
                 filterCollection.fetch();
                 var point = model.attributes.point_geometry;
-                window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
+                if (window.mapCanvas){
+                  window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
+                }
               })
             } else if (search.attributes.category === "filter") {
               _.each(filterCollection.where({name : search.attributes.value}), function(model){
@@ -96,6 +98,8 @@ Lizard.Visualsearch = {
       clearSearch: function(){
         timeseriesCollection.url = settings.timeseries_url;
         timeseriesCollection.fetch();
+        $('.VS-search-inner').empty();
+        searchCollection.reset();
       }
     }
   })

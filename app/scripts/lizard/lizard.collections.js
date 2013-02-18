@@ -77,8 +77,8 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
   model: Lizard.Models.Timeserie
 });
 
-Lizard.Collections.Workspace = Backbone.Collection.extend({
-  model: Lizard.Models.WorkspaceItem,
+Lizard.Collections.Favorites = Backbone.Collection.extend({
+  model: Lizard.Models.Favorite,
   buildUrl: function(){
     // _.each(this, model, function(model){
       
@@ -86,7 +86,7 @@ Lizard.Collections.Workspace = Backbone.Collection.extend({
   }
 });
 
-workspaceCollection = new Lizard.Collections.Workspace();
+favoritesCollection = new Lizard.Collections.Favorites();
 filterCollection = new Lizard.Collections.Filter();
 locationCollection = new Lizard.Collections.Location();
 parameterCollection = new Lizard.Collections.Parameter();
