@@ -57,27 +57,27 @@ $('li.metrics-dropdown').live("click", function(e){
 
 Lizard.Utils = {};
 
-Lizard.Utils.Workspace = {
+Lizard.Utils.Favorites = {
   queryString: null,
   toggleSelected: function (uuid, type){
     console.log(uuid + type);
     queryString = type + "," + uuid;
-    if (workspaceCollection.get(queryString) === undefined){
-      tempModel = new Lizard.Models.Location({url: domain + type +'/' + uuid});
+    if (favoritesCollection.get(queryString) === undefined){
+      tempModel = new Lizard.Models.Location({url: domain + type +'/' + uuid + '/'});
       tempModel.fetch({success: this.createItem});
       tempModel.destroy();
     }
     else {
-      workspaceItem = workspaceCollection.remove(queryString);
+      favorite = favoritesCollection.remove(queryString);
     }
   },
   createItem: function (mod, response){
-    workspaceItem = new Lizard.Models.WorkspaceItem({
+    favorite = new Lizard.Models.Favorite({
       id: this.queryString,
       tseries: response.timeseries,
     });
-    workspaceCollection.add(workspaceItem);
-  return workspaceItem;
+    favoritesCollection.add(favorite);
+  return favorite;
   },
 };
 

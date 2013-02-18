@@ -29,7 +29,7 @@ Lizard.Visualsearch = {
             } 
             else if (search.attributes.category === "location") {
               _.each(locationCollection.where({name : search.attributes.value}), function(model){
-                workspaceItem = new Lizard.Models.WorkspaceItem({
+                workspaceItem = new Lizard.Models.Favorite({
                   id: "location,"+ model.attributes.uuid
                 });
                 results.push(workspaceItem);
@@ -60,7 +60,7 @@ Lizard.Visualsearch = {
             }
             timeseriesCollection.url = url;
             timeseriesCollection.fetch();
-            workspaceCollection.add(results);
+            favoritesCollection.add(results);
             // var url = workspaceCollection.buildUrl();
 
           });

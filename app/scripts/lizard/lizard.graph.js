@@ -45,6 +45,9 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
       this.model.set({"favorite": true});
       this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
     }
+    uuid = this.model.get('uuid');
+    type = 'timeseries';
+    Lizard.Utils.Favorites.toggleSelected(uuid, type);
   },
   showInfoModal: function(me) {
     infoModalView = new Lizard.Views.InfoModal();

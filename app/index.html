@@ -171,7 +171,19 @@
             </div>
         </div>
 
-        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+            <div id="location-modal-header" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="location-modal-label"></h3>
+            </div>
+            <div id="location-modal-body" class="modal-body">
+            
+            </div>
+            <div id="location-modal-footer" class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Sla op in Collage</button>
+            </div>
+        </div>
 
       </div>
     </script>
@@ -237,23 +249,21 @@
 
 
     <script type="text/template" id="location-modal-template">
-      <div id="location-modal-header" class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="location-modal-label"><%= timeseries.name %></h3>
-    </div>
-    <div id="location-modal-body" class="modal-body">
-        <div id="chart-y-axis"></div>
-        <div id="chart-canvas"></div>
-        <ul>
-            <% _.each(timeseries.tseries.models, function(ts) { %>
-                <li class="timeserie" data-code="<%= ts.attributes.description%>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
-            <%});%>
-        </ul>
-    </div>
-    <div id="location-modal-footer" class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Sla op in Collage</button>
-    </div>
+    <div id="chart-canvas"></div>
+
+    </script>
+
+    <script type="text/template" id="location-modal-timeserie">
+        <div class="timeserie-item oselect" data-toggle="collapse" data-target="#<%=timeserie.uuid%>">
+            <h5 class="" data-url="<%= timeserie.events%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+            <div id="<%=timeserie.uuid%>" class="collapse">
+                <ul class="timeserie-actions">
+                    <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
+                    <li class="info"><i class="icon-question-sign"></i>Info</li>
+                    <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Voeg toe</li>
+                </ul>
+            </div>
+        </div>
     </script>
 
 

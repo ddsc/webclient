@@ -498,7 +498,9 @@ input.input-medium.search-query {
 #parametersRegion ul, 
 #parametersRegion ul li,
 #selectionRegion ul, 
-#selectionRegion ul li {
+#selectionRegion ul li,
+#location-modal-body ul,
+#location-modal-body ul li{
     list-style: none;
     margin: 0;
     padding: 0;
@@ -518,8 +520,34 @@ p#selectionRegion{
     overflow-x: none;    
 }
 
+.timeserie-item {
+    margin-top: 5px;
+    border-bottom: 1px solid #ccc;
+    overflow:auto;
+}
 
+.timeserie-item h5 {
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    padding: 0;
+    margin: 0;
+    display: block; 
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 100%; 
+    height: 23px;    
+    color: #0084B4;
+}
 
+ul.timeserie-actions, ul.timeserie-actions li {
+    font-size: .98em;
+    list-style: none;
+    cursor: pointer;
+    display:inline;
+}
+ul.timeserie-actions li {
+
+}
 
 
 /************ BOOTSTRAP OVERRIDES ************/
@@ -673,38 +701,4 @@ position: relative;
 .line {
   background: #000;
   z-index: 2;
-}
-
-
-
-
-
-
-
-.timeserie-item {
-    margin-top: 5px;
-    border-bottom: 1px solid #ccc;
-}
-
-.timeserie-item h5 {
-    text-decoration: none; 
-    text-overflow: ellipsis; 
-    padding: 0;
-    margin: 0;
-    display: block; 
-    overflow: hidden; 
-    white-space: nowrap;
-    width: 100%; 
-    height: 23px;    
-    color: #0084B4;
-}
-
-ul.timeserie-actions, ul.timeserie-actions li {
-    font-size: .98em;
-    list-style: none;
-    cursor: pointer;
-    display:inline;
-}
-ul.timeserie-actions li {
-
 }
