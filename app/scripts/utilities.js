@@ -530,6 +530,7 @@ function panAndZoomOtherGraphs(plot) {
                 otherXAxisOptions.max = xmax;
                 otherPlot.setupGrid();
                 otherPlot.draw();
+                otherPlot.getPlaceholder().trigger('plotpanzoombypass');
             }
         }
     });

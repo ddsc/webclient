@@ -116,6 +116,7 @@
     LazyLoad.prototype.bindEvents = function (plot, eventHolder) {
         plot.getPlaceholder().bind("plotzoom.lazyload", this.scheduleUpdateAll.bind(this));
         plot.getPlaceholder().bind("plotpan.lazyload", this.scheduleUpdateAll.bind(this));
+        plot.getPlaceholder().bind("plotpanzoombypass.lazyload", this.scheduleUpdateAll.bind(this));
         // plot.getPlaceholder().bind("dragstart.lazyload", this.setPreventUpdates.bind(this, true));
         // plot.getPlaceholder().bind("dragend.lazyload", this.setPreventUpdates.bind(this, false));
     };
@@ -123,6 +124,7 @@
     LazyLoad.prototype.shutdown = function (plot, eventHolder) {
         plot.getPlaceholder().unbind("plotzoom.lazyload");
         plot.getPlaceholder().unbind("plotpan.lazyload");
+        plot.getPlaceholder().unbind("plotpanzoombypass.lazyload");
         // plot.getPlaceholder().unbind("dragstart.lazyload");
         // plot.getPlaceholder().unbind("dragend.lazyload");
     };
