@@ -59,20 +59,21 @@ Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {
   toggleSelected: function (model){
-    uuid = model.url.split("eries/")[1].split("/")[0];
-    type = 'timeseries';
-    queryString = type + "," + uuid;
-    if (favoriteCollection.get(queryString) === undefined){
+    uuid = model.url.split("eries/")[1].split("/")[0];;
+    if (favoriteCollection.where({timeserie: uuid}).length === 0){
             name = model.attributes.name;
-            var favorite = new Lizard.Models.Favorite({
-              id: queryString,
-              location: model.attributes.location,
-              name: name
+            var favorite = favoriteCollection.create({
+              data: {
+                location: model.attributes.location,
+                timeserie: uuid,
+                name: name
+            }
             });
-            favoriteCollection.add(favorite);
+            // favoriteCollection.add(favorite);
     }
     else {
-      favorite = favoriteCollection.remove(queryString);
+      favorite = favoriteCollection.where({timeserie: uuid})[0];
+      favorite.destroy({wait:true})
     }
   }
 };

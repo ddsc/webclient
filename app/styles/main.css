@@ -522,6 +522,9 @@ input.input-medium.search-query {
     padding: 0;
 }
 
+/*#favoriteRegion ul{
+position: absolute
+}*/
 
 p#filtersRegion,
 p#locationsRegion,
@@ -568,7 +571,7 @@ ul.timeserie-actions, ul.timeserie-actions li {
 
 /************ BOOTSTRAP OVERRIDES ************/
 .navbar {
-    z-index: 10000;
+    z-index: 1000;
 }
 .navbar-inner{
     background: rgb(23,127,140); /* Old browsers */

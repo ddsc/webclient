@@ -7,7 +7,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
-    'favoriteRegion': 'p#favoriteRegion'
+    'favoriteRegion': '#favoriteRegion'
   },
   onShow: Lizard.Visualsearch.init
 });

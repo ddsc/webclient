@@ -135,19 +135,22 @@ Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
 Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
   template:function(model){
     return _.template($('#favorite-item-template').html(), {
-      name: model.name,
-      uuid: model.id.split(",")[1]
+      name: model.data.name,
+      uuid: model.data.timeserie
     }, {variable: 'favorite'});
   },
-  toggleHidden: function(){
-    if (window.mapCanvas){
-      this.$el.find('goto').toggle('hidden');
+  onRender: function(){
+    if (!window.mapCanvas){
+      this.$el.find('.goto').toggle('hidden');
     }
   },
   tagName: 'li',
   events:{
     "click .goto": 'goTo',
-    "add" : 'toggleHidden'
+    "click .favstar" : 'removeFav'
+  },
+  removeFav: function(){
+    this.model.destroy({wait:true});
   },
   goTo: function(e){
     if (window.mapCanvas){
@@ -246,6 +249,9 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
   collection: favoriteCollection,
   tagName: 'ul',
   itemView: Lizard.Views.FavoriteView,
+  initialize: function() {
+    this.collection.fetch();
+  }
 });
 
 
