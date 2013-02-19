@@ -24,6 +24,8 @@
                 'width': 140,
                 'margin-left': -70
             });
+            var $trash = $('<button title="Verwijder data" class="btn btn-mini" type="button"><i class="icon-trash"></i></button>');
+            $buttons.append($trash);
             var $reset = $('<button title="Reset zoom" class="btn btn-mini" type="button"><i class="icon-refresh"></i></button>');
             $buttons.append($reset);
             var $plus = $('<button title="Zoom in" class="btn btn-mini" type="button"><i class="icon-zoom-in"></i></button>');
@@ -35,6 +37,9 @@
             var $fwd = $('<button title="Schuif naar rechts" class="btn btn-mini" type="button"><i class="icon-forward"></i></button>');
             $buttons.append($fwd);
 
+            $trash.click(function () {
+                plot.removeAllDataUrls();
+            });
             $reset.click(function () {
                 $.each(plot.getXAxes(), function (idx, axis) {
                     axis.options.min = null;

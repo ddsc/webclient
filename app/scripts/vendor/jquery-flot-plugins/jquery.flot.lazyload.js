@@ -181,6 +181,12 @@
         this.refreshData();
     };
 
+    LazyLoad.prototype.removeAllDataUrls = function () {
+        this.datasets = [];
+        //this.refreshData();
+        this.redraw();
+    };
+
     /* *************************************************** */
 
     function init (plot) {
@@ -197,6 +203,7 @@
         }
 
         plot.addDataUrl = lazyLoad.addDataUrl.bind(lazyLoad);
+        plot.removeAllDataUrls = lazyLoad.removeAllDataUrls.bind(lazyLoad);
 
         plot.hooks.processOptions.push(processOptions);
     }
