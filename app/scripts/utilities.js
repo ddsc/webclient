@@ -101,7 +101,7 @@ Lizard.Utils.DragDrop = {
     if (!$graph.hasClass('graph-drop')) {
         $graph = $target.parent('.graph-drop');
     }
-    $graph.loadPlotData(data_url + '?eventsformat=flot');
+    $graph.loadPlotData(data_url);
     // var EventCollection = Backbone.Collection.extend({
           // url: data_url
         // })
@@ -295,6 +295,39 @@ function loadPlotData ($graph, dataUrl, callback, force) {
         return;
     }
 
+    // check if element is visible
+    // flot can't draw on an invisible surface
+    if ($graph.is(':hidden')) {
+        return;
+    }
+
+    // ensure relative positioning, add a class name, force explicit height/width
+    $graph.css({
+        'position': 'relative',
+        'width': '100%',
+        'height': '100%'
+    });
+    $graph.addClass('flot-graph');
+    if ($graph.height() == 0) {
+        console.error('Height of the graph element seems to be 0');
+    }
+
+    // initialize the graph, if it doesn't exist already
+    var plot = $graph.data('plot');
+    if (!plot) {
+        plot = initializePlot($graph);
+        $graph.data('plot', plot);
+    }
+
+    plot.addDataUrl(dataUrl);
+}
+
+function loadPlotDataOld ($graph, dataUrl, callback, force) {
+    // no dataUrl or element, nothing to do
+    if (!$graph || !dataUrl) {
+        return;
+    }
+
     // check if data is already loaded
     var loadedDataUrls = $graph.data('loadedDataUrls');
     if (force !== true && loadedDataUrls) {
@@ -418,11 +451,11 @@ function redraw (plot) {
     plot.triggerRedrawOverlay();
 }
 
-function addPlotLine (plot, line) {
+function addPlotLine (plot, line, dataUrl) {
     var currentData = plot.getData();
     var newData = $.extend(true, [], currentData);
     var parameter_pk_to_yaxis = {};
-    var allocated_yaxes = 0;
+    var allocatedYAxes = 0;
 
     // unset old colors so Flot determines a new color from the default colormap
     $.each(newData, function (idx, line) {
@@ -434,7 +467,7 @@ function addPlotLine (plot, line) {
     $.each(yAxes, function (idx, axis) {
         if ('parameter_pk' in axis) {
             parameter_pk_to_yaxis[axis.parameter_pk] = axis.n;
-            allocated_yaxes++; // can't properly get the length of an associative array
+            allocatedYAxes++; // can't properly get the length of an associative array
         }
     });
 
@@ -446,7 +479,7 @@ function addPlotLine (plot, line) {
     }
     else {
         // allocate a new axis
-        yaxis = allocated_yaxes + 1;
+        yaxis = allocatedYAxes + 1;
         // set the axisLabel and parameter
         yAxes[yaxis].parameter_pk = line.parameter_pk;
         yAxes[yaxis].axisLabel = line.parameter_name;
@@ -512,7 +545,13 @@ function initializePlot($container) {
                 labelHeight: 28 // always reserve enough vertical space for time label
             }
         ],
-        grid: { hoverable: true, labelMargin: 4, margin: 30 /* for the axis labels */, borderWidth: 1}
+        grid: {
+            hoverable: true,
+            labelMargin: 4,
+            margin: 30 /* for the axis labels */,
+            borderWidth: 1,
+            autoHighlight: false
+        }
     };
 
     if (isAppleMobile) {
