@@ -7,28 +7,28 @@
         });
     });
 
-    describe("Lizard.models", function() {
-        it("creates a global namespace Lizard.models", function() {
-            expect(Lizard.models).to.be.an("object");
+    describe("Lizard.Models", function() {
+        it("creates a global namespace Lizard.Models", function() {
+            expect(Lizard.Models).to.be.an("object");
         });
     });
 
 
-    describe("Lizard.models.Filter", function() {
-        it("creates a global variable of the function Lizard.models.Filter", function() {
-            expect(Lizard.models.Filter).to.be.a("function");
+    describe("Lizard.Models.Filter", function() {
+        it("creates a global variable of the function Lizard.Models.Filter", function() {
+            expect(Lizard.Models.Filter).to.be.a("function");
         });
     });
 
-    describe("Lizard.models.Location", function() {
-        it("creates a global variable of the function Lizard.models.Location", function() {
-            expect(Lizard.models.Location).to.be.a("function");
+    describe("Lizard.Models.Location", function() {
+        it("creates a global variable of the function Lizard.Models.Location", function() {
+            expect(Lizard.Models.Location).to.be.a("function");
         });
     });
 
-    describe("Lizard.models.Parameter", function() {
-        it("creates a global variable of the function Lizard.models.Parameter", function() {
-            expect(Lizard.models.Parameter).to.be.a("function");
+    describe("Lizard.Models.Parameter", function() {
+        it("creates a global variable of the function Lizard.Models.Parameter", function() {
+            expect(Lizard.Models.Parameter).to.be.a("function");
         });
     });
 
@@ -58,6 +58,7 @@
             expect(Lizard.Map.Router).to.be.a("function");
         });
     });
+
     describe("Lizard.Map.LeafletView", function() {
         it("creates a Lizard.Map.LeafletView", function() {
             expect(Lizard.Map.LeafletView).to.be.a("function");
@@ -70,31 +71,57 @@
         });
     });
 
-
-
-    // describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
-    //   describe('count number of parameter models', function(){
-    //     it('should be 322', function(done){
-    //       var p = new Lizard.collections.Parameter();
-    //       var l;
-    //       p.fetch({
-    //         success: function() {
-    //             l = p.models.length;
-    //             expect(l).to.be(322);
-    //             done();
-    //         }
-    //       });
-    //     });
-    //   });
-    // });
-
-
     describe("filtercollectionview", function() {
         it("checks if filtercollectionview is instantiated", function() {
-            expect(filtercollectionview instanceof Lizard.views.FilterCollection).to.be(true);
+            expect(filtercollectionview instanceof Lizard.Views.FilterCollection).to.be(true);
+        });
+    });
+    
+    describe("locationCollection", function() {
+        it("checks if locationCollection is instantiated", function() {
+            expect(locationCollection instanceof Lizard.Collections.Location).to.be(true);
+        });
+        describe('#models', function(){
+            it("should show models to be an instance of Lizard.Models.Location", function(){
+                for (var i in locationCollection.models){
+                expect(locationCollection.models[i] instanceof Lizard.Models.Location).to.be(true);
+                }
+            });
+            describe('#point_geometry', function(){
+                it("should show point_geometry to be an Array", function(){
+                for (var i in locationCollection.models){
+                    var model = locationCollection.models[i]
+                expect(model.attributes.point_geometry instanceof Array).to.be(true);
+                }
+                });
+                    describe('#point_geometry.length', function(){
+                        it("should be an Array of length 2", function(){
+                            for (var i in locationCollection.models){
+                                var model = locationCollection.models[i]
+                            expect(model.attributes.point_geometry.length === 2).to.be(true);
+                            }
+                        
+                    });
+                });
+            });
         });
     });
 
+    describe("filterCollection", function() {
+        it("checks if filterCollection is instantiated", function() {
+            expect(filterCollection instanceof Lizard.Collections.Filter).to.be(true);
+        });
+        describe('#models', function(){
+            it("should show models to be an instance of Lizard.Models.Filter", function(){
+                for (var i in filterCollection.models){
+                expect(filterCollection.models[i] instanceof Lizard.Models.Filter).to.be(true);
+                }
+            });
+        });
+    });
+
+})();
+
 
     // describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
     //   describe('count number of parameter models', function(){
@@ -113,7 +140,18 @@
     // });
 
 
-
-
-
-})();
+    // describe('Lizard.collections.Parameter - This works only for me (gijs) while testing Mocha!', function(){
+    //   describe('count number of parameter models', function(){
+    //     it('should be 322', function(done){
+    //       var p = new Lizard.collections.Parameter();
+    //       var l;
+    //       p.fetch({
+    //         success: function() {
+    //             l = p.models.length;
+    //             expect(l).to.be(322);
+    //             done();
+    //         }
+    //       });
+    //     });
+    //   });
+    // });

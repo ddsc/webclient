@@ -55,9 +55,7 @@ Lizard.Views.Location = Backbone.Marionette.ItemView.extend({
     'click input': 'toggle'
   },
   toggle: function(e) {
-    uuid = this.model.get('uuid');
-    type = 'locations';
-    Lizard.Utils.Workspace.toggleSelected(uuid, type);
+
   },
 });
 

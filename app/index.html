@@ -152,7 +152,7 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown mappage" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Favorites</a>
                         <p data-group="selection" id="selectionRegion"></p>
                     </li>
                     <li>
@@ -171,7 +171,23 @@
             </div>
         </div>
 
-        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+            <div id="location-modal-header" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="location-modal-label"></h3>
+            </div>
+            <div id="location-modal-body" class="modal-body">
+                <div id="modal-graph-wrapper" class="hidden">
+                    <div class="flot-graph modal-graph"></div>
+                </div>
+                <div id="location-modal-collapsables">
+                </div>            
+            </div>
+            <div id="location-modal-footer" class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Sla op in Collage</button>
+            </div>
+        </div>
 
       </div>
     </script>
@@ -179,6 +195,10 @@
 
     <script type="text/template" id="icon-template">
         Some icon
+    </script>
+
+    <script type="text/template" id="favorite">
+        jaja
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
@@ -237,23 +257,21 @@
 
 
     <script type="text/template" id="location-modal-template">
-      <div id="location-modal-header" class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="location-modal-label"><%= timeseries.name %></h3>
-    </div>
-    <div id="location-modal-body" class="modal-body">
-        <div id="chart-y-axis"></div>
-        <div id="chart-canvas"></div>
-        <ul>
-            <% _.each(timeseries.tseries.models, function(ts) { %>
-                <li class="timeserie" data-code="<%= ts.attributes.description%>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
-            <%});%>
-        </ul>
-    </div>
-    <div id="location-modal-footer" class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Sla op in Collage</button>
-    </div>
+    </script>
+
+    <script type="text/template" id="location-modal-timeserie">
+        <div class="timeserie-item oselect">
+            <h5 data-toggle="collapse" data-target="#<%=timeserie.uuid%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+            <div id="<%=timeserie.uuid%>" class="collapse">
+                <ul class="timeserie-actions">
+                    <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
+                    <li class="graph-this" data-url="<%= timeserie.events%>"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Teken Grafiek</li>
+                    <li class="add">
+                        <i class="icon-plus"></i> Voeg toe aan collage
+                    </li>
+                </ul>
+            </div>
+        </div>
     </script>
 
 
@@ -307,10 +325,10 @@
         </label>
     </script>
 
-    <script id="workspace-item-template" type="text/template">
-        <div class="workspace-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
-        <h5><i class="icon-bar-chart"></i>&nbsp;<%= workspace.name %></h5>
-        <ul class="workspace-actions">
+    <script id="timeserie-item-template" type="text/template">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= timeserie.events%>">
+        <h5><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+        <ul class="timeserie-actions">
             <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
             <li class="info"><i class="icon-question-sign"></i>Info</li>
             <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-down hidden-tablet hidden-desktop"></i>Voeg toe</li>

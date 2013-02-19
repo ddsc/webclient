@@ -6,7 +6,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
-    'modal' : '#location-modal'
+    'modalitems' : '#location-modal-collapsables',
+    'favoriteRegion': 'p#selectionRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -45,118 +46,75 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
+Lizard.Map.FavoriteView = Backbone.Marionette.ItemView.extend({
+  template:function(model){
+    return _.template($('#favorites').html(), {
+      name: model.name,
+      jean: console.log('success')
+    }, {variable: 'favorite'});
+  },
+  tagName: 'li',
+});
 
+Lizard.Map.FavoritesView = Backbone.Marionette.CollectionView.extend({
+  collection: favoritesCollection,
+  tagName: 'ul',
+  itemView: Lizard.Map.FavoriteView,
+});
 
-/*This monstrosity of a Marionette ItemView is a view that
- is initiated when a location on the map is clicked.
-
- When one clicks on a location, the Bootstrap modal
- (focused lightbox with info) function is called. This
-
- The focused block shows an overview of different timeseries.
- A click on one of the timeseries opens a graph.
-
- One view belongs to one location.
-*/
-Lizard.Views.ModalGraph = Backbone.Marionette.ItemView.extend({
-    // custom template rendering to improve speed
-    // due to explicit variable passing.
-    template: function(model){
-      return _.template($('#location-modal-template').html(), {
-        name: model.name,
-        tseries: model.tseries,
-      }, {variable: 'timeseries'});
-    },
-    series: [],
-    code: null,
-    events: {
-      'click .timeserie': "getSeriesdata",
-    },
-    // One Timeserie has many Events. An Events list is only
-    // loaded when it is explcitly chosen, with caching.
-    getSeriesdata: function(clickedon){
-      // Gets the element that is clicked and it's datasets
-      var data_url = clickedon.target.dataset.url;
-      this.code = clickedon.target.dataset.code;
-      var EventCollection = Backbone.Collection.extend({
-        url: data_url
-      });
-      // Timeserie has Events. Opens new collection
-      // for that specific timeserie.
-      ts_events = new EventCollection();
-      // _.bind connects "this" to the makeChart
-      // otherwise it loses it's scope.
-      ts_events.fetch({async:false, cache: true,
-        success: _.bind(this.makeChart, this)
-      });
-    },
-    onBeforeRender: function(){
-      timeseriesCollection.url = settings.timeseries_url + 
-        '?location=' + this.model.attributes.uuid;
-      timeseriesCollection.reset();
-      timeseriesCollection.fetch({async:false});
-      this.model.set({tseries: timeseriesCollection});
-      ts = this.model.attributes.timeseries;
-    },
-    makeChart: function(collection, responses){
-      ts_events = responses;
-      this.series = [];
-      numbers = [];
-      for (var i in ts_events){
-        var date = new Date(ts_events[i].datetime);
-        yvalue = parseFloat(ts_events[i].value);
-        var value = {x: date.getTime()/1000, y: yvalue};
-        (value ? this.series.push(value) : 'nothing');
-        numbers.push(yvalue);
-      }
-      numbers.sort();
-      // Could not find a more elegant solution so far
-      // Div needs to be empty, otherwise it stacks
-      // many graphs.
-      $('#chart-canvas').empty();
-      var graph = new Rickshaw.Graph( {
-      element: $('#chart-canvas')[0],
-      renderer: 'line',
-      min: numbers[0],
-      max: numbers[numbers.length - 1],
-      series: [
-            {
-              color: "#c05020",
-              data: this.series,
-              name: this.code
-            },
-          ]
-        } );
-
-      var y_ticks = new Rickshaw.Graph.Axis.Y( {
-        graph: graph,
-        orientation: 'left',
-        // tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: $('chart-y-axis')[0],
-      } );
-
-      graph.render();
-      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: graph
-      } );
-
-      // var legend = new Rickshaw.Graph.Legend( {
-      //   graph: graph,
-      //   element: $('#legend')[0]
-
-      // } );
-
-      // var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
-      //   graph: graph,
-      //   legend: legend
-      // } );
-
-      var axes = new Rickshaw.Graph.Axis.Time( {
-        graph: graph
-      } );
-      axes.render();
-
+// Modal view that opens when clicking on a location
+Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
+  template:function(model){
+    return _.template($('#location-modal-timeserie').html(), {
+      name: model.name,
+      uuid: model.url.split("eries/")[1].split("/")[0],
+      events: model.events,
+    }, {variable: 'timeserie'});
+  },
+  uuid: null,
+  events: {
+    'click .graph-this': "getSeriesdata",
+    'click .fav': 'toggleFavorite',
+  },
+  tagName: 'li',
+  onBeforeRender: function(view){
+      this.uuid = view.model.url.split("eries/")[1].split("/")[0]
+  },
+  toggleFavorite: function(me) {
+    var favorite = this.model.get('favorite');
+    if(favorite) {
+      this.model.set({"favorite": false});
+      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
+    } else {
+      this.model.set({"favorite": true});
+      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
     }
+    uuid = this.uuid;
+    type = 'timeseries';
+    Lizard.Utils.Favorites.toggleSelected(uuid, type);
+  },
+  // One Timeserie has many Events. An Events list is only
+  // loaded when it is explcitly chosen, with caching.
+  getSeriesdata: function(clickedon){
+    // Gets the element that is clicked and it's datasets
+    var data_url = clickedon.target.dataset.url;
+    $('#modal-graph-wrapper').removeClass('hidden');
+    $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
+  }
+});
+
+// Modal view that opens when clicking on a location
+Lizard.Map.ModalTimeseriesView = Backbone.Marionette.CollectionView.extend({
+  collection: timeseriesCollection,
+  tagName: 'ul',
+  itemView: Lizard.Map.ModalTimeserieView,
+  onBeforeRender: function(){
+    this.collection.url = settings.timeseries_url + 
+      '?location=' + this.locationuuid;
+  },
+  onRender: function (model){
+    $('#location-modal-label').html(this.location);
+  }
 });
 
 
@@ -165,18 +123,14 @@ Lizard.Utils.Map = {
     modalInfo: function (e){
           var marker = e.target;
           var model = marker.valueOf().options.bbModel;
-          model.fetch({
-            success: function(model, res){
-              modalView = new Lizard.Views.ModalGraph();
-              modalView.model = model;
-              Lizard.mapView.modal.show(modalView.render());
-              $('#location-modal').modal();
-            },
-            error: function(){
-              console.log('Something went horribly wrong');
-            },
-            cache: true
-          });
+          $('#modal-graph-wrapper').find('.flot-graph').empty();
+          modalView = new Lizard.Map.ModalTimeseriesView();
+          modalView.locationuuid = model.attributes.uuid;
+          modalView.location = model.attributes.name;
+          timeseriesCollection.reset();
+          timeseriesCollection.fetch({cache: true});
+          Lizard.mapView.modalitems.show(modalView.render());
+          $('#location-modal').modal();
     },
     updateInfo: function (e) {
         var marker = e.target;
@@ -300,7 +254,7 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-  var collageView = new CollageView();
+  var favoritesView = new Lizard.Map.FavoritesView();
   var layersView = layerView;
   var leafletView;
 
@@ -319,15 +273,15 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  // Lizard.mapView.sidebarRegion.show(layersView.render());
-  Lizard.mapView.collageRegion.show(collageView.render());
+  console.log(Lizard.mapView.favoriteRegion.show(favoritesView.render()));
+  // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
   layerCollection.fetch({success: function(layercollection) {
     var lyrs = {};
     // Add every layer in the collection to Leaflet
     _.each(layercollection.models, function(model) {
-      console.log('Adding layer "' + model.attributes.layer_name + '" to Leaflet');
+      // console.log('Adding layer "' + model.attributes.layer_name + '" to Leaflet');
       var lyr = L.tileLayer.wms(model.attributes.wms_url, {
         layers: model.attributes.layer_name,
         format: model.attributes.format,

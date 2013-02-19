@@ -40,14 +40,6 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
 
 Lizard.Models.Widget = Backbone.Model.extend({});
 
-// Lizard.Models.Collage = Backbone.Model.extend({
-//   initialize: function() {
-//     this.url = response.url;
-//     this.fetch({cache: true});
-//   }
-// });
-// ^^^^ This was present before Bastiaan/Roland added the one below.
-
 Lizard.Models.Collage = Backbone.Model.extend({
   defaults: {
     data: '',
@@ -83,4 +75,4 @@ Lizard.Models.Layer = Backbone.Model.extend({
 });
 
 
-Lizard.Models.WorkspaceItem = Backbone.Model.extend();
+Lizard.Models.Favorite = Backbone.Model.extend();
