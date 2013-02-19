@@ -41,6 +41,7 @@
                 plot.removeAllDataUrls();
             });
             $reset.click(function () {
+                plot.setPreventUpdates(true);
                 $.each(plot.getXAxes(), function (idx, axis) {
                     axis.options.min = null;
                     axis.options.max = null;
@@ -51,6 +52,7 @@
                 });
                 plot.setupGrid();
                 plot.draw();
+                plot.setPreventUpdates(false);
             });
             $plus.click(function () {
                 plot.zoom({ amount: 2 });

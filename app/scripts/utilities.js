@@ -164,7 +164,7 @@ var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli'
 function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
-    // note: first tick is tickIndex 1
+    // note: first tick is tickIndex 1, but only sometimes (???)
     var isFirstOrLast = tickIndex == 1 || tickIndex == (tickLength - 2);
 
     var t = axis.tickSize[0] * timeUnitSize[axis.tickSize[1]];
@@ -194,14 +194,19 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
         }
     }
     else if (t < timeUnitSize.month) {
-        fmt = "%d %b";
+        fmt = "%d\n%b";
     }
     else if (t < timeUnitSize.year) {
         if (span < timeUnitSize.year) {
-            fmt = "%b";
+            if (isFirstOrLast) {
+                fmt = "%b\n%Y";
+            }
+            else {
+                fmt = "%b";
+            }
         }
         else {
-            fmt = "%b %Y";
+            fmt = "%b\n%Y";
         }
     }
     else {
@@ -528,12 +533,13 @@ function panAndZoomOtherGraphs(plot) {
         if ($(this).is(':visible')) {
             var otherPlot = $(this).data('plot');
             if (otherPlot && plot !== otherPlot) {
-                var otherXAxisOptions = otherPlot.getAxes().xaxis.options;
+                var otherXAxis = otherPlot.getAxes().xaxis;
+                var otherXAxisOptions = otherXAxis.options;
                 otherXAxisOptions.min = xmin;
                 otherXAxisOptions.max = xmax;
                 otherPlot.setupGrid();
                 otherPlot.draw();
-                otherPlot.getPlaceholder().trigger('plotpanzoombypass');
+                otherPlot.getPlaceholder().trigger('axisminmaxchanged', otherXAxis);
             }
         }
     });

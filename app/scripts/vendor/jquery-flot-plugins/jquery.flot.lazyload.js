@@ -20,6 +20,8 @@
         this.label = '';
         this.parameterPk = null;
         this.parameterName = null;
+        this.xmin = null;
+        this.xmax = null;
         this.xhr = null;
     }
 
@@ -43,6 +45,8 @@
             self.label = data.label;
             self.parameterPk = data.parameter_pk;
             self.parameterName = data.parameter_name;
+            self.xmin = data.xmin;
+            self.xmax = data.xmax;
             self.needsUpdate = false;
             if (typeof successCallback !== 'undefined') {
                 successCallback(self);
@@ -66,6 +70,10 @@
     }
 
     LazyLoad.prototype.scheduleUpdateAll = function (event) {
+        if (this.preventUpdates) {
+            return;
+        }
+
         if (this.timeout != null) {
             clearTimeout(this.timeout);
             this.timeout = null;
@@ -95,21 +103,50 @@
         var allocatedYAxes = 0;
         var newData = [];
 
+        // Used to determine yaxis per parameter.
+        var yAxes = this.plot.getYAxes();
+
         for (var i in this.datasets) {
             var dataset = this.datasets[i];
             var line = {};
+
+            // Create a new axis only when we discover a new parameter.
+            var yaxis = 1;
+            if (dataset.parameterPk in parameterPkToYAxis) {
+                yaxis = parameterPkToYAxis[dataset.parameterPk];
+            }
+            else {
+                // Allocate a new axis.
+                yaxis = allocatedYAxes + 1;
+                allocatedYAxes++;
+                // Set the axisLabel of the new axis.
+                yAxes[yaxis - 1].options.axisLabel = dataset.parameterName;
+                // Add the axis to a map so any following dataset can find
+                // a suitable axis for their parameters.
+                parameterPkToYAxis[dataset.parameterPk] = yaxis;
+            }
+
+            // Append the line.
             line.data = dataset.data;
-            line.yaxis = 1;
+            line.yaxis = yaxis;
             line.label = dataset.label;
             newData.push(line);
         }
 
+        var xaxis = this.plot.getXAxes()[0];
+        if (this.datasets.length == 1 && xaxis.min === null && xaxis.max === null) {
+            // First and only line, so use it to determine axis bounds.
+            // Note: not implemented yet, unsure if needed
+        }
+
+        this.setPreventUpdates(true);
         this.plot.setData(newData);
         this.plot.setupGrid();
         // if (this.datasets.length == 1) {
         // }
         this.plot.draw();
         this.plot.triggerRedrawOverlay();
+        this.setPreventUpdates(false);
     };
 
     LazyLoad.prototype.setPreventUpdates = function (preventUpdates) {
@@ -119,7 +156,7 @@
     LazyLoad.prototype.bindEvents = function (plot, eventHolder) {
         plot.getPlaceholder().bind("plotzoom.lazyload", this.scheduleUpdateAll.bind(this));
         plot.getPlaceholder().bind("plotpan.lazyload", this.scheduleUpdateAll.bind(this));
-        plot.getPlaceholder().bind("plotpanzoombypass.lazyload", this.scheduleUpdateAll.bind(this));
+        plot.getPlaceholder().bind("axisminmaxchanged.lazyload", this.scheduleUpdateAll.bind(this));
         // plot.getPlaceholder().bind("dragstart.lazyload", this.setPreventUpdates.bind(this, true));
         // plot.getPlaceholder().bind("dragend.lazyload", this.setPreventUpdates.bind(this, false));
     };
@@ -127,7 +164,7 @@
     LazyLoad.prototype.shutdown = function (plot, eventHolder) {
         plot.getPlaceholder().unbind("plotzoom.lazyload");
         plot.getPlaceholder().unbind("plotpan.lazyload");
-        plot.getPlaceholder().unbind("plotpanzoombypass.lazyload");
+        plot.getPlaceholder().unbind("axisminmaxchanged.lazyload");
         // plot.getPlaceholder().unbind("dragstart.lazyload");
         // plot.getPlaceholder().unbind("dragend.lazyload");
     };
@@ -204,6 +241,7 @@
 
         plot.addDataUrl = lazyLoad.addDataUrl.bind(lazyLoad);
         plot.removeAllDataUrls = lazyLoad.removeAllDataUrls.bind(lazyLoad);
+        plot.setPreventUpdates = lazyLoad.setPreventUpdates.bind(lazyLoad);
 
         plot.hooks.processOptions.push(processOptions);
     }
