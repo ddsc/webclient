@@ -17,6 +17,7 @@
         this.url = url;
         this.needsUpdate = true;
         this.data = [];
+        this.label = '';
         this.parameterPk = null;
         this.parameterName = null;
         this.xhr = null;
@@ -39,6 +40,7 @@
         )
         .done(function (data, textStatus, jqXHR) {
             self.data = data.data;
+            self.label = data.label;
             self.parameterPk = data.parameter_pk;
             self.parameterName = data.parameter_name;
             self.needsUpdate = false;
@@ -98,6 +100,7 @@
             var line = {};
             line.data = dataset.data;
             line.yaxis = 1;
+            line.label = dataset.label;
             newData.push(line);
         }
 

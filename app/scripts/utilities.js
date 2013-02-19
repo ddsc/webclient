@@ -475,6 +475,9 @@ function initializePlot($container) {
             margin: 30 /* for the axis labels */,
             borderWidth: 1,
             autoHighlight: false
+        },
+        legend: {
+            show: true
         }
     };
 
