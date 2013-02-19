@@ -110,7 +110,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         if (!opts || !opts.axisLabel || !axis.show)
             return;
 
-        var rendererInstance = new renderer(
+        var rendererInstance = new CanvasAxisLabel(
             axis,
             axis.position, 0,
             plot, opts
