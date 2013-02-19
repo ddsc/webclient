@@ -132,6 +132,35 @@ Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
 
 });
 
+Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
+  template:function(model){
+    return _.template($('#favorite-item-template').html(), {
+      name: model.data.name,
+      uuid: model.data.timeserie
+    }, {variable: 'favorite'});
+  },
+  onRender: function(){
+    if (!window.mapCanvas){
+      this.$el.find('.goto').toggle('hidden');
+    }
+  },
+  tagName: 'li',
+  events:{
+    "click .goto": 'goTo',
+    "click .favstar" : 'removeFav'
+  },
+  removeFav: function(){
+    this.model.destroy({wait:true});
+  },
+  goTo: function(e){
+    if (window.mapCanvas){
+      var location = locationCollection.get(this.model.attributes.location);
+      var point = location.attributes.point_geometry;
+      window.mapCanvas.panTo(new L.LatLng(point[1], point[0]));
+    }
+  }
+});
+
 /**
 CollectionViews
 */
@@ -216,6 +245,15 @@ Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
+Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
+  collection: favoriteCollection,
+  tagName: 'ul',
+  itemView: Lizard.Views.FavoriteView,
+  initialize: function() {
+    this.collection.fetch();
+  }
+});
+
 
 
 /* LAYER VIEWS */
@@ -260,6 +298,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
 
 // Instantiate the Views
 var filtercollectionview = new Lizard.Views.FilterCollection();
+var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();

@@ -386,23 +386,12 @@ input.input-medium.search-query {
 
 
 
-
-
-
-
 .layersview-popover {
     border: 1px solid red;
     background-color: blue;
     width:500px;
     height:500px;
 }
-
-
-
-
-
-
-
 
 
 
@@ -505,7 +494,7 @@ input.input-medium.search-query {
 }
 
 
-
+#favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
 #parametersRegion ul li label,
@@ -516,6 +505,8 @@ input.input-medium.search-query {
     cursor: pointer;
 }
 
+#favoriteRegion ul, 
+#favoriteRegion ul li,
 #filtersRegion ul, 
 #filtersRegion ul li,
 #locationsRegion ul, 
@@ -531,6 +522,9 @@ input.input-medium.search-query {
     padding: 0;
 }
 
+/*#favoriteRegion ul{
+position: absolute
+}*/
 
 p#filtersRegion,
 p#locationsRegion,
@@ -545,12 +539,14 @@ p#selectionRegion{
     overflow-x: none;    
 }
 
-.timeserie-item {
+.favorite-item,
+.timeserie-item{
     margin-top: 5px;
     border-bottom: 1px solid #ccc;
     overflow:auto;
 }
 
+.favorite-item h5,
 .timeserie-item h5 {
     text-decoration: none; 
     text-overflow: ellipsis; 
@@ -575,7 +571,7 @@ ul.timeserie-actions, ul.timeserie-actions li {
 
 /************ BOOTSTRAP OVERRIDES ************/
 .navbar {
-    z-index: 10000;
+    z-index: 1000;
 }
 .navbar-inner{
     background: rgb(23,127,140); /* Old browsers */

@@ -7,7 +7,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
-    'favoriteRegion': 'p#selectionRegion'
+    'favoriteRegion': '#favoriteRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -46,21 +46,6 @@ Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-Lizard.Map.FavoriteView = Backbone.Marionette.ItemView.extend({
-  template:function(model){
-    return _.template($('#favorites').html(), {
-      name: model.name,
-      jean: console.log('success')
-    }, {variable: 'favorite'});
-  },
-  tagName: 'li',
-});
-
-Lizard.Map.FavoritesView = Backbone.Marionette.CollectionView.extend({
-  collection: favoritesCollection,
-  tagName: 'ul',
-  itemView: Lizard.Map.FavoriteView,
-});
 
 // Modal view that opens when clicking on a location
 Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
@@ -78,7 +63,7 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
   },
   tagName: 'li',
   onBeforeRender: function(view){
-      this.uuid = view.model.url.split("eries/")[1].split("/")[0]
+
   },
   toggleFavorite: function(me) {
     var favorite = this.model.get('favorite');
@@ -91,7 +76,7 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
     }
     uuid = this.uuid;
     type = 'timeseries';
-    Lizard.Utils.Favorites.toggleSelected(uuid, type);
+    Lizard.Utils.Favorites.toggleSelected(this.model);
   },
   // One Timeserie has many Events. An Events list is only
   // loaded when it is explcitly chosen, with caching.
@@ -217,24 +202,6 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     $('#modal').on('show', this.updateModal);
     this.mapCanvas.addLayer(this.markers);
 
-    //add custom control, to show information on hover
-    // taken from http://leafletjs.com/examples/choropleth.html
-    // info = L.control();
-
-    // info.onAdd = function (map) {
-    //     this._div = L.DomUtil.create('div', 'infobox'); // create info div
-    //     this.update();
-    //     return this._div;
-    // };
-
-    // info.update = function (props) {
-    //     this._div.innerHTML = '<h4>Datapunt</h4>' + (props ?
-    //             '<b>' + props.name + '</b><br>' +
-    //             'Punt: ' + props.code
-    //             : 'Zweef over de punten');
-    // };
-
-    // info.addTo(this.mapCanvas);
     $('#map').css('height', $(window).height()-100);
   },
   template: '#leaflet-template'
@@ -254,7 +221,6 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-  var favoritesView = new Lizard.Map.FavoritesView();
   var layersView = layerView;
   var leafletView;
 
@@ -273,7 +239,7 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  console.log(Lizard.mapView.favoriteRegion.show(favoritesView.render()));
+  console.log(Lizard.mapView.favoriteRegion.show(favoritecollectionview.render()));
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
