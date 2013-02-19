@@ -54,7 +54,7 @@
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             if (textStatus !== 'abort') {
-                console.error('Error loading data from ' + self.url + ': ' + textStatus);
+                console.error('Error loading data from ' + self.url + ': ' + errorThrown);
             }
         })
         .complete(function () {

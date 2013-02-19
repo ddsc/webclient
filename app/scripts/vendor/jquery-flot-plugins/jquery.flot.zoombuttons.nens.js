@@ -43,12 +43,31 @@
             $reset.click(function () {
                 plot.setPreventUpdates(true);
                 $.each(plot.getXAxes(), function (idx, axis) {
-                    axis.options.min = null;
-                    axis.options.max = null;
+                    if (axis.datamin && axis.datamax) {
+                        axis.options.min = null;
+                        axis.options.max = null;
+                    }
+                    else {
+                        // can't determine bounds from the data, so just
+                        // pick sane ones
+                        var today = new Date();
+                        var lastYear = new Date(
+                            today.getFullYear() - 1,
+                            today.getMonth(),
+                            today.getDate(),
+                            today.getHours(),
+                            today.getMinutes(),
+                            today.getMilliseconds()
+                        );
+                        axis.options.min = lastYear.getTime();
+                        axis.options.max = today.getTime();
+                    }
                 });
                 $.each(plot.getYAxes(), function (idx, axis) {
-                    axis.options.min = null;
-                    axis.options.max = null;
+                    if (axis.datamin && axis.datamax) {
+                        axis.options.min = null;
+                        axis.options.max = null;
+                    }
                 });
                 plot.setupGrid();
                 plot.draw();
