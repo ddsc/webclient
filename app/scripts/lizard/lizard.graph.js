@@ -8,6 +8,7 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'mainRegion': '#mainRegion',
     'parametersRegion': 'p#parametersRegion',
     'filtersRegion': 'p#filtersRegion',
+    'favoriteRegion': 'p#favoriteRegion',
     'locationsRegion': 'p#locationsRegion',
     'selectionRegion': 'p#selectionRegion',
     'collagegraphRegion' : '#collageRegion',
@@ -45,9 +46,7 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
       this.model.set({"favorite": true});
       this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
     }
-    uuid = this.model.get('uuid');
-    type = 'timeseries';
-    Lizard.Utils.Favorites.toggleSelected(uuid, type);
+    Lizard.Utils.Favorites.toggleSelected(this.model);
   },
   showInfoModal: function(me) {
     infoModalView = new Lizard.Views.InfoModal();
@@ -81,6 +80,7 @@ Lizard.Graphs.graphs = function(){
   var collageView = new CollageView();
   var timeserieView = new Lizard.Views.Timeseries();
 
+  graphsView.favoriteRegion.show(favoritecollectionview.render());
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());
   graphsView.parametersRegion.show(parametercollectionview.render());

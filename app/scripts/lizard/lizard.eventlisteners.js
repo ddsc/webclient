@@ -1,5 +1,5 @@
 // Marionette event listeners
-favoritesCollection.on('add', function(model){
+favoriteCollection.on('add', function(model){
   // var attribute = model.id.split(",")[0]
   // var id = model.id.split(",")[1]
   // if (attribute === "location"){
@@ -9,6 +9,6 @@ favoritesCollection.on('add', function(model){
   // }
 });
 
-favoritesCollection.on('remove', function(model){
+favoriteCollection.on('remove', function(model){
 
 });

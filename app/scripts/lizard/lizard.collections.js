@@ -66,6 +66,7 @@ Lizard.Collections.Widget = Backbone.Collection.extend({
 
 /* COLLAGE COLLECTIONS */
 Lizard.Collections.Collage = Backbone.Collection.extend({
+  url: settings.collages_url,
   model: Lizard.Models.Collage
 });
 
@@ -79,7 +80,7 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
   model: Lizard.Models.Timeserie
 });
 
-Lizard.Collections.Favorites = Backbone.Collection.extend({
+Lizard.Collections.Favorite = Backbone.Collection.extend({
   model: Lizard.Models.Favorite,
   buildUrl: function(){
     // _.each(this, model, function(model){
@@ -88,7 +89,7 @@ Lizard.Collections.Favorites = Backbone.Collection.extend({
   }
 });
 
-favoritesCollection = new Lizard.Collections.Favorites();
+favoriteCollection = new Lizard.Collections.Favorite();
 filterCollection = new Lizard.Collections.Filter();
 locationCollection = new Lizard.Collections.Location();
 parameterCollection = new Lizard.Collections.Parameter();

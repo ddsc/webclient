@@ -1,12 +1,11 @@
 // Add a title comment so that you know what's happening and when
-casper.test.comment('DDSC - Homepage');
+casper.test.comment('DDSC - Graphs');
  
 // Setup any variables you may need. In this case we need a search term
 var search_term = "";
  
-// Start casper running on a web page, in this case the awesome
-// duckduckgo seach engine.
-casper.start('http://localhost/103_ddsc_marionette/app/#graphs', function () {
+// Start casper running on a web page
+casper.start('http://test.dijkdata.nl/#graphs', function () {
  
     // Check the title is "DDSC"
     this.test.assertTitle('DDSC', 'Homepage has the correct title');

@@ -58,25 +58,23 @@ $('li.metrics-dropdown').live("click", function(e){
 Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {
-  queryString: null,
-  toggleSelected: function (uuid, type){
-    console.log(uuid + type);
+  toggleSelected: function (model){
+    uuid = model.url.split("eries/")[1].split("/")[0];
+    type = 'timeseries';
     queryString = type + "," + uuid;
-    if (favoritesCollection.get(queryString) === undefined){
-        this.createItem();
+    if (favoriteCollection.get(queryString) === undefined){
+            name = model.attributes.name;
+            var favorite = new Lizard.Models.Favorite({
+              id: queryString,
+              location: model.attributes.location,
+              name: name
+            });
+            favoriteCollection.add(favorite);
     }
     else {
-      favorite = favoritesCollection.remove(queryString);
+      favorite = favoriteCollection.remove(queryString);
     }
-  },
-  createItem: function (){
-    favorite = new Lizard.Models.Favorite({
-      id: this.queryString,
-      name: 'ja'
-    });
-    favoritesCollection.add(favorite);
-  return favorite;
-  },
+  }
 };
 
 Lizard.Utils.DragDrop = {

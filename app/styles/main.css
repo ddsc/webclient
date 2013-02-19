@@ -386,23 +386,12 @@ input.input-medium.search-query {
 
 
 
-
-
-
-
 .layersview-popover {
     border: 1px solid red;
     background-color: blue;
     width:500px;
     height:500px;
 }
-
-
-
-
-
-
-
 
 
 
@@ -505,7 +494,7 @@ input.input-medium.search-query {
 }
 
 
-
+#favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
 #parametersRegion ul li label,
@@ -516,6 +505,8 @@ input.input-medium.search-query {
     cursor: pointer;
 }
 
+#favoriteRegion ul, 
+#favoriteRegion ul li,
 #filtersRegion ul, 
 #filtersRegion ul li,
 #locationsRegion ul, 
@@ -545,12 +536,14 @@ p#selectionRegion{
     overflow-x: none;    
 }
 
-.timeserie-item {
+.favorite-item,
+.timeserie-item{
     margin-top: 5px;
     border-bottom: 1px solid #ccc;
     overflow:auto;
 }
 
+.favorite-item h5,
 .timeserie-item h5 {
     text-decoration: none; 
     text-overflow: ellipsis; 

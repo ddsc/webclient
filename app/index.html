@@ -151,10 +151,10 @@
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                    <li class="metrics-dropdown mappage" id="selection">
+                    <li class="metrics-dropdown mappage" id="favorite">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Favorites</a>
-                        <p data-group="selection" id="selectionRegion"></p>
                     </li>
+                    <p data-group="favorite" id="favoriteRegion"></p>
                     <li>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
                     </li>
@@ -197,8 +197,20 @@
         Some icon
     </script>
 
-    <script type="text/template" id="favorite">
-        jaja
+    <script type="text/template" id="favorite-item-template">
+        <div class="favorite-item oselect">
+            <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="icon-star"></i>&nbsp;<%= favorite.name %></h5>
+            <div id="<%=favorite.uuid%>" class="collapse">
+                <ul class="timeserie-actions">
+                    <li class="add">
+                        <i class="icon-plus"></i> Voeg toe aan collage
+                    </li>
+                    <li class="goto hidden">
+                        <i class="icon-map-marker"></i> Ga naar
+                    </li>
+                </ul>
+            </div>
+        </div>
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
@@ -350,6 +362,10 @@
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                    <li class="metrics-dropdown" id="favorite">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Favorites</a>
+                    </li>
+                    <p data-group="favorite" id="favoriteRegion"></p>
                     <li class="metrics-dropdown" id="selection">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
                     </li>
