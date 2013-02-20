@@ -353,11 +353,12 @@
         </label>
     </script>
 
-    <script id="workspace-item-template" type="text/template">
-        <div class="workspace-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= workspace.events%>">
-        <h5><i class="icon-bar-chart"></i>&nbsp;<%= workspace.name %></h5>
-        <ul class="workspace-actions">
-            <li class="fav"><i class="<% if(workspace.favorite) { %>icon-star<% } else { %>icon-star-empty<% } %>"></i>Favoriet</li>
+
+    <script id="timeserie-item-template" type="text/template">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= timeserie.events%>">
+        <h5><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+        <ul class="timeserie-actions">
+            <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
             <li class="info"><i class="icon-question-sign"></i>Info</li>
             <li class="add"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-down hidden-tablet hidden-desktop"></i>Voeg toe</li>
         </ul>
