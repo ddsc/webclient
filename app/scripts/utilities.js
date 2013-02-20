@@ -547,32 +547,12 @@ function bindPanZoomEvents($graph) {
 /**
  * Turn mouse cursor in a spinner on Ajax requests.
  */
-var runningAjaxCount = 0;
-var busyClass = 'busy';
+$(document).ajaxStart(function () {
+    $('html').addClass('busy');
+});
 
-function runningAjaxCountChanged () {
-    var $html = $('html');
-    if (runningAjaxCount > 0) {
-        if (!$html.hasClass(busyClass)) {
-            $html.addClass(busyClass);
-        }
-    }
-    else {
-        if ($html.hasClass(busyClass)) {
-            $html.removeClass(busyClass);
-        }
-    }
-}
-
-$.ajaxSetup({
-    beforeSend: function () {
-        runningAjaxCount++;
-        runningAjaxCountChanged();
-    },
-    complete: function () {
-        runningAjaxCount--;
-        runningAjaxCountChanged();
-    }
+$(document).ajaxStop(function () {
+    $('html').removeClass('busy');
 });
 
 }(this));
