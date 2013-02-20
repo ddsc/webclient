@@ -226,7 +226,6 @@ input.input-medium.search-query {
     width: 90%;
     height: 90%;
 }
-
 .drop{
     top:50%;
     left: 50%;
@@ -248,6 +247,32 @@ input.input-medium.search-query {
     -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
+}
+
+.modal-graph{
+    height: 300px;
+    padding: 5px 0;
+    margin: 1em 0 0;
+    color: #444;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+#modal-graph-wrapper{
+    height: 300px;
+    width: 90%;
 }
 
 .drop:hover{
@@ -361,23 +386,12 @@ input.input-medium.search-query {
 
 
 
-
-
-
-
 .layersview-popover {
     border: 1px solid red;
     background-color: blue;
     width:500px;
     height:500px;
 }
-
-
-
-
-
-
-
 
 
 
@@ -480,7 +494,7 @@ input.input-medium.search-query {
 }
 
 
-
+#favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
 #parametersRegion ul li label,
@@ -491,6 +505,8 @@ input.input-medium.search-query {
     cursor: pointer;
 }
 
+#favoriteRegion ul, 
+#favoriteRegion ul li,
 #filtersRegion ul, 
 #filtersRegion ul li,
 #locationsRegion ul, 
@@ -498,12 +514,17 @@ input.input-medium.search-query {
 #parametersRegion ul, 
 #parametersRegion ul li,
 #selectionRegion ul, 
-#selectionRegion ul li {
+#selectionRegion ul li,
+#location-modal-body ul,
+#location-modal-body ul li{
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
+/*#favoriteRegion ul{
+position: absolute
+}*/
 
 p#filtersRegion,
 p#locationsRegion,
@@ -518,13 +539,39 @@ p#selectionRegion{
     overflow-x: none;    
 }
 
+.favorite-item,
+.timeserie-item{
+    margin-top: 5px;
+    border-bottom: 1px solid #ccc;
+    overflow:auto;
+}
 
+.favorite-item h5,
+.timeserie-item h5 {
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    padding: 0;
+    margin: 0;
+    display: block; 
+    cursor: pointer;
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 100%; 
+    height: 23px;    
+    color: #0084B4;
+}
 
+ul.timeserie-actions, ul.timeserie-actions li {
+    font-size: .98em;
+    list-style: none;
+    cursor: pointer;
+    display:inline;
+}
 
 
 /************ BOOTSTRAP OVERRIDES ************/
 .navbar {
-    z-index: 10000;
+    z-index: 1000;
 }
 .navbar-inner{
     background: rgb(23,127,140); /* Old browsers */
@@ -674,9 +721,6 @@ position: relative;
   background: #000;
   z-index: 2;
 }
-
-
-
 
 
 

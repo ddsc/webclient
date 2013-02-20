@@ -33,9 +33,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     /* *************************************************** */
 
-    function AxisLabel(axis, axisName, position, padding, plot, opts) {
+    function AxisLabel(axis, position, padding, plot, opts) {
         this.axis = axis;
-        this.axisName = axisName;
         this.position = position;
         this.padding = padding;
         this.plot = plot;
@@ -48,8 +47,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     CanvasAxisLabel.prototype = new AxisLabel();
     CanvasAxisLabel.prototype.constructor = CanvasAxisLabel;
-    function CanvasAxisLabel(axis, axisName, position, padding, plot, opts) {
-        AxisLabel.prototype.constructor.call(this, axis, axisName, position, padding,
+    function CanvasAxisLabel(axis, position, padding, plot, opts) {
+        AxisLabel.prototype.constructor.call(this, axis, position, padding,
                                              plot, opts);
         if (this.opts.axisLabelFontSizePixels)
             this.axisLabelFontSizePixels = this.opts.axisLabelFontSizePixels;
@@ -106,66 +105,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     /* *************************************************** */
 
-    function initializeRenderer (plot, axis, axisName) {
-        /*
-        $.each(plot.getAxes(), function(axisName, axis) {
-        });
-        var margin = { left: 0, right: 0, top: 0, bottom: 0 };
-        */
-
+    function initializeRenderer (plot, axis) {
         var opts = axis.options;
         if (!opts || !opts.axisLabel || !axis.show)
             return;
 
-        var rendererInstance = new renderer(
+        var rendererInstance = new CanvasAxisLabel(
             axis,
-            axisName,
             axis.position, 0,
             plot, opts
         );
         rendererInstance.calculateSize();
         return rendererInstance;
-
-        // set margin to highest needed label height
-        /*
-        margin[axis.position] = Math.max(margin[axis.position], rendererInstance.height); 
-        */
-
-        // set plot margins if they aren't manually set on the grid
-        // Note: need to do before draw
-        // Note: should add an extra axislabels margin instead...
-        /*
-        var plotOpts = plot.getOptions();
-        if (!plotOpts.grid.margin) {
-            plotOpts.grid.margin = margin;
-        }
-        */
     }
 
     /* *************************************************** */
 
-    // determine renderer class
-    var renderer = CanvasAxisLabel;
-
     function init(plot) {
         var renderersInitialized = false;
-        var axisLabels = {};
-
         plot.hooks.draw.push(function (plot, ctx) {
-            // MEASURE AND SET OPTIONS
-            if (!renderersInitialized) {
-                });
-                renderersInitialized = true;
-            }
-            // DRAW
             $.each(plot.getAxes(), function(axisName, axis) {
                 var opts = axis.options;
                 if (!opts || !opts.axisLabel || !axis.show)
                     return;
-                if (!(axisName in axisLabels)) {
-                    axisLabels[axisName] = initializeRenderer(plot, axis, axisName);
-                }
-                axisLabels[axisName].draw(axis.box);
+                var renderer = initializeRenderer(plot, axis);
+                renderer.draw(axis.box);
             });
         });
     }

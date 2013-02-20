@@ -57,28 +57,25 @@ $('li.metrics-dropdown').live("click", function(e){
 
 Lizard.Utils = {};
 
-Lizard.Utils.Workspace = {
-  queryString: null,
-  toggleSelected: function (uuid, type){
-    console.log(uuid + type);
-    queryString = type + "," + uuid;
-    if (workspaceCollection.get(queryString) === undefined){
-      tempModel = new Lizard.Models.Location({url: domain + type +'/' + uuid});
-      tempModel.fetch({success: this.createItem});
-      tempModel.destroy();
+Lizard.Utils.Favorites = {
+  toggleSelected: function (model){
+    uuid = model.url.split("eries/")[1].split("/")[0];;
+    if (favoriteCollection.where({timeserie: uuid}).length === 0){
+            name = model.attributes.name;
+            var favorite = favoriteCollection.create({
+              data: {
+                location: model.attributes.location,
+                timeserie: uuid,
+                name: name
+            }
+            });
+            // favoriteCollection.add(favorite);
     }
     else {
-      workspaceItem = workspaceCollection.remove(queryString);
+      favorite = favoriteCollection.where({timeserie: uuid})[0];
+      favorite.destroy({wait:true})
     }
-  },
-  createItem: function (mod, response){
-    workspaceItem = new Lizard.Models.WorkspaceItem({
-      id: this.queryString,
-      tseries: response.timeseries,
-    });
-    workspaceCollection.add(workspaceItem);
-  return workspaceItem;
-  },
+  }
 };
 
 Lizard.Utils.DragDrop = {
@@ -101,83 +98,9 @@ Lizard.Utils.DragDrop = {
     if (!$graph.hasClass('graph-drop')) {
         $graph = $target.parent('.graph-drop');
     }
-    $graph.loadPlotData(data_url + '?eventsformat=flot');
-    // var EventCollection = Backbone.Collection.extend({
-          // url: data_url
-        // })
-        // // Timeserie has Events. Opens new collection
-        // // for that specific timeserie.
-        // ts_events = new EventCollection()
-        // // _.bind connects "this" to the makeChart
-        // // otherwise it loses it's scope.
-        // ts_events.fetch({async:false, cache: true,
-          // success: _.bind(makeChart, e)
-    // });
+    $graph.loadPlotData(data_url);
   },
 };
-
-function makeChart(collection, responses){
-      this.target.className.replace('empty', '')
-      ts_events = responses;
-      series = [];
-      numbers = [];
-      code = 'ja'
-      for (i in ts_events){
-        var date = new Date(ts_events[i].datetime);
-        yvalue = parseFloat(ts_events[i].value);
-        var value = {x: date.getTime()/1000, y: yvalue};
-        (value ? series.push(value) : 'nothing');
-        numbers.push(yvalue)
-      }
-      numbers.sort()
-      // Could not find a more elegant solution so far
-      // Div needs to be empty, otherwise it stacks
-      // many graphs.
-      console.log(this);
-      $(this.target).empty();
-      var graph = new Rickshaw.Graph( {
-      element: this.target,
-      renderer: 'line',
-      min: numbers[0],
-      max: numbers[numbers.length - 1],
-      series: [
-            {
-              color: "#c05020",
-              data: series,
-              name: code
-            },
-          ]
-        } );
-      
-      var y_ticks = new Rickshaw.Graph.Axis.Y( {
-        graph: graph,
-        orientation: 'left',
-        // tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: $('chart-y-axis')[0],
-      } );
-
-      graph.render();
-      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: graph
-      } );
-
-      // var legend = new Rickshaw.Graph.Legend( {
-      //   graph: graph,
-      //   element: $('#legend')[0]
-
-      // } );
-
-      // var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
-      //   graph: graph,
-      //   legend: legend
-      // } );
-
-      var axes = new Rickshaw.Graph.Axis.Time( {
-        graph: graph
-      } );
-      axes.render();
-
-    };
 
 (function (global) {
 
@@ -240,7 +163,7 @@ var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli'
 function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
-    // note: first tick is tickIndex 1
+    // note: first tick is tickIndex 1, but only sometimes (???)
     var isFirstOrLast = tickIndex == 1 || tickIndex == (tickLength - 2);
 
     var t = axis.tickSize[0] * timeUnitSize[axis.tickSize[1]];
@@ -270,14 +193,19 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
         }
     }
     else if (t < timeUnitSize.month) {
-        fmt = "%d %b";
+        fmt = "%d\n%b";
     }
     else if (t < timeUnitSize.year) {
         if (span < timeUnitSize.year) {
-            fmt = "%b";
+            if (isFirstOrLast) {
+                fmt = "%b\n%Y";
+            }
+            else {
+                fmt = "%b";
+            }
         }
         else {
-            fmt = "%b %Y";
+            fmt = "%b\n%Y";
         }
     }
     else {
@@ -290,6 +218,39 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
 }
 
 function loadPlotData ($graph, dataUrl, callback, force) {
+    // no dataUrl or element, nothing to do
+    if (!$graph || !dataUrl) {
+        return;
+    }
+
+    // check if element is visible
+    // flot can't draw on an invisible surface
+    if ($graph.is(':hidden')) {
+        return;
+    }
+
+    // ensure relative positioning, add a class name, force explicit height/width
+    $graph.css({
+        'position': 'relative',
+        'width': '100%',
+        'height': '100%'
+    });
+    $graph.addClass('flot-graph');
+    if ($graph.height() == 0) {
+        console.error('Height of the graph element seems to be 0');
+    }
+
+    // initialize the graph, if it doesn't exist already
+    var plot = $graph.data('plot');
+    if (!plot) {
+        plot = initializePlot($graph);
+        $graph.data('plot', plot);
+    }
+
+    plot.addDataUrl(dataUrl);
+}
+
+function loadPlotDataOld ($graph, dataUrl, callback, force) {
     // no dataUrl or element, nothing to do
     if (!$graph || !dataUrl) {
         return;
@@ -418,11 +379,11 @@ function redraw (plot) {
     plot.triggerRedrawOverlay();
 }
 
-function addPlotLine (plot, line) {
+function addPlotLine (plot, line, dataUrl) {
     var currentData = plot.getData();
     var newData = $.extend(true, [], currentData);
     var parameter_pk_to_yaxis = {};
-    var allocated_yaxes = 0;
+    var allocatedYAxes = 0;
 
     // unset old colors so Flot determines a new color from the default colormap
     $.each(newData, function (idx, line) {
@@ -434,7 +395,7 @@ function addPlotLine (plot, line) {
     $.each(yAxes, function (idx, axis) {
         if ('parameter_pk' in axis) {
             parameter_pk_to_yaxis[axis.parameter_pk] = axis.n;
-            allocated_yaxes++; // can't properly get the length of an associative array
+            allocatedYAxes++; // can't properly get the length of an associative array
         }
     });
 
@@ -446,7 +407,7 @@ function addPlotLine (plot, line) {
     }
     else {
         // allocate a new axis
-        yaxis = allocated_yaxes + 1;
+        yaxis = allocatedYAxes + 1;
         // set the axisLabel and parameter
         yAxes[yaxis].parameter_pk = line.parameter_pk;
         yAxes[yaxis].axisLabel = line.parameter_name;
@@ -512,7 +473,16 @@ function initializePlot($container) {
                 labelHeight: 28 // always reserve enough vertical space for time label
             }
         ],
-        grid: { hoverable: true, labelMargin: 4, margin: 30 /* for the axis labels */, borderWidth: 1}
+        grid: {
+            hoverable: true,
+            labelMargin: 4,
+            margin: 30 /* for the axis labels */,
+            borderWidth: 1,
+            autoHighlight: false
+        },
+        legend: {
+            show: true
+        }
     };
 
     if (isAppleMobile) {
@@ -562,11 +532,13 @@ function panAndZoomOtherGraphs(plot) {
         if ($(this).is(':visible')) {
             var otherPlot = $(this).data('plot');
             if (otherPlot && plot !== otherPlot) {
-                var otherXAxisOptions = otherPlot.getAxes().xaxis.options;
+                var otherXAxis = otherPlot.getAxes().xaxis;
+                var otherXAxisOptions = otherXAxis.options;
                 otherXAxisOptions.min = xmin;
                 otherXAxisOptions.max = xmax;
                 otherPlot.setupGrid();
                 otherPlot.draw();
+                otherPlot.getPlaceholder().trigger('axisminmaxchanged', otherXAxis);
             }
         }
     });

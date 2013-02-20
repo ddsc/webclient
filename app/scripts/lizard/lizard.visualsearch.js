@@ -29,7 +29,7 @@ Lizard.Visualsearch = {
             } 
             else if (search.attributes.category === "location") {
               _.each(locationCollection.where({name : search.attributes.value}), function(model){
-                workspaceItem = new Lizard.Models.WorkspaceItem({
+                workspaceItem = new Lizard.Models.Favorite({
                   id: "location,"+ model.attributes.uuid
                 });
                 results.push(workspaceItem);
@@ -40,7 +40,9 @@ Lizard.Visualsearch = {
                 parameterCollection.fetch();
                 filterCollection.fetch();
                 var point = model.attributes.point_geometry;
-                window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
+                if (window.mapCanvas){
+                  window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
+                }
               })
             } else if (search.attributes.category === "filter") {
               _.each(filterCollection.where({name : search.attributes.value}), function(model){
@@ -58,7 +60,7 @@ Lizard.Visualsearch = {
             }
             timeseriesCollection.url = url;
             timeseriesCollection.fetch();
-            workspaceCollection.add(results);
+            favoritesCollection.add(results);
             // var url = workspaceCollection.buildUrl();
 
           });
@@ -96,6 +98,8 @@ Lizard.Visualsearch = {
       clearSearch: function(){
         timeseriesCollection.url = settings.timeseries_url;
         timeseriesCollection.fetch();
+        $('.VS-search-inner').empty();
+        searchCollection.reset();
       }
     }
   })

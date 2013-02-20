@@ -151,10 +151,10 @@
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                    <li class="metrics-dropdown mappage" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Tijdreeksen</a>
-                        <p data-group="selection" id="selectionRegion"></p>
+                    <li class="metrics-dropdown mappage" id="favorite">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em><em class="icon-remove-circle reset"></em> <i class="icon-list"></i> Favorites</a>
                     </li>
+                    <p data-group="favorite" id="favoriteRegion"></p>
                     <li>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
                     </li>
@@ -171,7 +171,23 @@
             </div>
         </div>
 
-        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+        <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+            <div id="location-modal-header" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="location-modal-label"></h3>
+            </div>
+            <div id="location-modal-body" class="modal-body">
+                <div id="modal-graph-wrapper" class="hidden">
+                    <div class="flot-graph modal-graph"></div>
+                </div>
+                <div id="location-modal-collapsables">
+                </div>            
+            </div>
+            <div id="location-modal-footer" class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Sla op in Collage</button>
+            </div>
+        </div>
 
       </div>
     </script>
@@ -179,6 +195,34 @@
 
     <script type="text/template" id="icon-template">
         Some icon
+    </script>
+
+    <script type="text/template" id="favorite-item-template">
+        <div class="favorite-item oselect">
+            <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="favstar icon-star"></i>&nbsp;<%= favorite.name %></h5>
+            <div id="<%=favorite.uuid%>" class="collapse">
+                <ul class="timeserie-actions">
+                    <li class="add dropdown">
+                        <i class="icon-plus"></i> 
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Voeg toe aan collage</i><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                <li class="about-menu"><a href="#logout"></a></li>
+                                    <li><a href="#account" target="">Uw gegevens</a></li>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">DDSC</li>
+                                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
+                                    <li><a href="#">Uitloggen</a></li>
+                                </ul>
+                    </li>
+
+
+                    <li class="goto hidden">
+                        <i class="icon-map-marker"></i> Ga naar
+                    </li>
+                </ul>
+            </div>
+        </div>
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
@@ -237,23 +281,21 @@
 
 
     <script type="text/template" id="location-modal-template">
-      <div id="location-modal-header" class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="location-modal-label"><%= timeseries.name %></h3>
-    </div>
-    <div id="location-modal-body" class="modal-body">
-        <div id="chart-y-axis"></div>
-        <div id="chart-canvas"></div>
-        <ul>
-            <% _.each(timeseries.tseries.models, function(ts) { %>
-                <li class="timeserie" data-code="<%= ts.attributes.description%>" data-url="<%= ts.attributes.events %>"><i class="icon-bar-chart"></i><%= ts.attributes.name %></li>
-            <%});%>
-        </ul>
-    </div>
-    <div id="location-modal-footer" class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Sla op in Collage</button>
-    </div>
+    </script>
+
+    <script type="text/template" id="location-modal-timeserie">
+        <div class="timeserie-item oselect">
+            <h5 data-toggle="collapse" data-target="#<%=timeserie.uuid%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
+            <div id="<%=timeserie.uuid%>" class="collapse">
+                <ul class="timeserie-actions">
+                    <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
+                    <li class="graph-this" data-url="<%= timeserie.events%>"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Teken Grafiek</li>
+                    <li class="add">
+                        <i class="icon-plus"></i> Voeg toe aan collage
+                    </li>
+                </ul>
+            </div>
+        </div>
     </script>
 
 
@@ -648,7 +690,6 @@
         <!-- Backbone -->
         <script src="scripts/vendor/backbone-0.9.10.js"></script>
         <script src="scripts/vendor/backbone-associations-min.js"></script>
-        <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
         <script src="scripts/vendor/backbone.marionette.min.js"></script>
@@ -699,6 +740,9 @@
         ></script>
         <script type="text/javascript"
                 src="scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"
+        ></script>
+        <script type="text/javascript"
+                src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload.js"
         ></script>
 
         <!-- Lizard globals, order matters -->

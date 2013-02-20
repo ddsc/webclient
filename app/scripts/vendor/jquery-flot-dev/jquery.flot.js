@@ -1249,6 +1249,8 @@ Licensed under the MIT license.
             }
             axis.min = min;
             axis.max = max;
+            // ejnens: fire our custom event so we know when to reload other dataUrls
+            placeholder.trigger('axisminmaxchanged', axis);
         }
 
         function setupTickGeneration(axis) {
