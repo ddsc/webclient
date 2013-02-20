@@ -239,7 +239,7 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  console.log(Lizard.mapView.favoriteRegion.show(favoritecollectionview.render()));
+  Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 

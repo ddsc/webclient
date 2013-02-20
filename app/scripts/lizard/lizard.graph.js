@@ -79,7 +79,7 @@ Lizard.Graphs.graphs = function(){
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
   var timeserieView = new Lizard.Views.Timeseries();
-
+  
   graphsView.favoriteRegion.show(favoritecollectionview.render());
   graphsView.filtersRegion.show(filtercollectionview.render());
   graphsView.locationsRegion.show(locationcollectionview.render());

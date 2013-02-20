@@ -144,6 +144,7 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
     if (!window.mapCanvas){
       this.$el.find('.goto').toggle('hidden');
     }
+    console.log(this.$el)
   },
   tagName: 'li',
   events:{

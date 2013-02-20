@@ -60,7 +60,7 @@ Lizard.Visualsearch = {
             }
             timeseriesCollection.url = url;
             timeseriesCollection.fetch();
-            favoritesCollection.add(results);
+            favoriteCollection.add(results);
             // var url = workspaceCollection.buildUrl();
 
           });
