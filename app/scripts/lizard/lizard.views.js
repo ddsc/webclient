@@ -33,7 +33,7 @@ Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   toggle: function(e) {
     uuid = this.model.get('id');
     type = 'logicalgroups';
-    Lizard.Utils.Workspace.toggleSelected(uuid, type);
+    Lizard.Utils.Favorites.toggleSelected(uuid, type);
   },
 });
 
