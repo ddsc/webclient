@@ -135,16 +135,6 @@ var isAppleMobile = false;
     }
 }());
 
-/**
- * Configure jQuery.
- */
-// $.ajaxSetup({
-//     timeout: 20000,
-//     crossDomain: true,
-//     xhrFields: {
-//        withCredentials: true
-//     }
-// });
 
 /**
  * Things related to time/date formatting.
