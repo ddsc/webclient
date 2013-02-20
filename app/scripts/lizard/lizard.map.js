@@ -20,12 +20,7 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-layerCollection = new Lizard.Collections.Layer({
-});
 
-var layerView = new Lizard.Views.LayerList({
-	collection: layerCollection
-});
 
 Lizard.Map.NoItemsView = Backbone.Marionette.ItemView.extend({
   template: '#show-no-items-message-template'
@@ -242,23 +237,6 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
-
-  layerCollection.fetch({success: function(layercollection) {
-    var lyrs = {};
-    // Add every layer in the collection to Leaflet
-    _.each(layercollection.models, function(model) {
-      // console.log('Adding layer "' + model.attributes.layer_name + '" to Leaflet');
-      var lyr = L.tileLayer.wms(model.attributes.wms_url, {
-        layers: model.attributes.layer_name,
-        format: model.attributes.format,
-        transparent: model.attributes.transparent,
-        opacity: model.attributes.opacity,
-        attribution: 'DDSC'
-      });
-      lyrs[model.attributes.display_name] = lyr;
-    });
-    L.control.layers([], lyrs).addTo(window.mapCanvas);
-  }});
 
   $('.drawer-item').popover({
     html: true,
