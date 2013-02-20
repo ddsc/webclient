@@ -75,4 +75,4 @@ Lizard.Models.Layer = Backbone.Model.extend({
 });
 
 
-Lizard.Models.Favorite = Backbone.Model.extend();
+Lizard.Models.Favorite = Lizard.Models.Collage.extend();
