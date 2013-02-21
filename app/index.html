@@ -156,9 +156,9 @@
                     </li>
                     <p data-group="favorite" id="favoriteRegion"></p>
                     <li class="metrics-dropdown mappage" id="maplayers">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Alle kaartlagen</a>
                     </li>
-                    <p data-group="favorite" class="hide" id="mapLayersRegion"></p>
+                    <p data-group="favorite" class="" id="mapLayersRegion"></p>
                     <li>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
                     </li>
@@ -251,6 +251,7 @@
         </span>
         <span class="content handle"><%= display_name %> (<%= type %>)</span>
         <span class="indicator">
+            <i class="<% if(visibility) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
             <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
         </span>
 	  </div>

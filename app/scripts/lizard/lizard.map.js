@@ -216,8 +216,8 @@ Lizard.Map.map = function(lonlatzoom){
 
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
+  var layersView = new Lizard.Views.LayerList();
 
-  var layersView = layerView;
   var leafletView;
 
   if(lonlatzoom) {

@@ -324,8 +324,6 @@ var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
-var layerView = new Lizard.Views.LayerList();
-
 
 widgetcollectionview.collection.add([
   new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
