@@ -8,7 +8,7 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'mainRegion': '#mainRegion',
     'parametersRegion': 'p#parametersRegion',
     'filtersRegion': 'p#filtersRegion',
-    'favoriteRegion': 'p#favoriteRegion',
+    'favoriteRegion': '#favoriteRegion',
     'locationsRegion': 'p#locationsRegion',
     'selectionRegion': 'p#selectionRegion',
     'collagegraphRegion' : '#collageRegion',
