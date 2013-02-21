@@ -509,11 +509,13 @@
 	</script>
 
 	<script type="text/template" id="login-template">
-		<span id="login"><% if (authenticated===true) {
-							print(user.username)
-							} else {
-							print('Log in')
-							}%>
+		<span id="login">Log in
+		  <i class="icon-user icon-white"></i>
+		</span>
+	</script>
+
+	<script type="text/template" id="loggedin-template">
+		<span id="login"><%= user.username %>
 		  <i class="icon-user icon-white"></i>
 		</span>
 	</script>

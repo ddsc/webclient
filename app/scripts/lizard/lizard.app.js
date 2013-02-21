@@ -1,3 +1,11 @@
+// Initialization code needed to run before eerything
+
+
+$.ajaxSetup({
+	xhrFields: {
+		withCredentials: true
+	}
+});
 
 
 // Define Lizard namespace

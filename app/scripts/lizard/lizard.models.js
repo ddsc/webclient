@@ -83,3 +83,5 @@ Lizard.Models.Account = Backbone.Model.extend({
 		authenticated: false,
 	}
 });
+
+Lizard.Models.AccountToken = Backbone.Model.extend

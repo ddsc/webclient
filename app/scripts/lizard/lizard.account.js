@@ -17,8 +17,8 @@ Lizard.Menu.DefaultLayout = Backbone.Marionette.Layout.extend({
 
 Lizard.Account.LoginView = Backbone.Marionette.ItemView.extend({
 	model: new Lizard.Models.Account(),
-	template: '#login-template',
 	tagName: 'a',
+	template: '#login-template',
     attributes: {
 		'href': '#'},
 
@@ -28,13 +28,21 @@ Lizard.Account.LoginView = Backbone.Marionette.ItemView.extend({
 
 	initialize: function(){
 		console.log('initialize LoginView');
-		this.model.fetch();
+		var that = this;
+		this.model.fetch({
+			success: function(model, response, data){
+				if (model.attributes.authenticated === true){
+					that.template = '#loggedin-template';
+					that.render();
+				}
+			}
+		});
 	},
 
 	doLogin: function(e){
+		// Redirect to the Single Sign On server.
 		e.preventDefault();
-		console.log('YeeHaa');
-		url = this.model.attributes.login_url;
+		url = settings.login_token_url;
 		$.getJSON(url, function(json) {
 			window.location=json.login_url;
 		});
