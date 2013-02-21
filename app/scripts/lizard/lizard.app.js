@@ -9,7 +9,7 @@ Lizard.App = new Backbone.Marionette.Application();
 // Add regions for Lizards main interface (menu + content)
 Lizard.App.addRegions({
   content: '#content',
-  menu: '#menu'
+  menu: '#menu-bar'
 });
 
 // Start Backbone's url router

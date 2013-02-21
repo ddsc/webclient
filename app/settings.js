@@ -8,7 +8,8 @@ var settings = {
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
     collages_url: domain + 'collages/',
-	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/'
+	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/',
+	account_url: domain + 'account/'
 };
 
 /**
