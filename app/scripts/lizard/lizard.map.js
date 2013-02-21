@@ -7,7 +7,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
-    'favoriteRegion': '#favoriteRegion'
+    'favoriteRegion': '#favoriteRegion',
+    'layerRegion' : '#mapLayersRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -232,11 +233,11 @@ Lizard.Map.map = function(lonlatzoom){
       zoom: 7
     });
   }
-
   // And show them in their divs
   Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
+  Lizard.mapView.layerRegion.show(layersView.render());
 
   $('.drawer-item').popover({
     html: true,
