@@ -752,3 +752,12 @@ ul.workspace-actions, ul.workspace-actions li {
 ul.workspace-actions li {
 
 }
+
+/**
+ * Turn mouse cursor in a spinner on Ajax requests.
+ *
+ * @see utilities.js
+ */
+html.busy, html.busy * {
+  cursor: wait !important;
+}
