@@ -77,3 +77,5 @@ Lizard.Models.Layer = Backbone.Model.extend({
 
 Lizard.Models.Favorite = Lizard.Models.Collage.extend();
 
+Lizard.Models.WorkspaceItem = Backbone.Model.extend();
+

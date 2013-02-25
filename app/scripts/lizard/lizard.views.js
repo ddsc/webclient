@@ -256,6 +256,11 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 
+Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
+  collection: workspaceCollection,
+  
+});
+
 
 /* LAYER VIEWS */
 Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({

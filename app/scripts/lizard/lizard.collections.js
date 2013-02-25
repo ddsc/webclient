@@ -6,7 +6,7 @@ Lizard.Collections = {};
 
 Backbone.Collection.prototype.parse = function(response){
   return response.results;
-}
+};
 
 /* MAP COLLECTIONS */
 Lizard.Collections.Layer = Backbone.Collection.extend({
@@ -55,7 +55,7 @@ Lizard.Collections.Widget = Backbone.Collection.extend({
 /* COLLAGE COLLECTIONS */
 Lizard.Collections.Collage = Backbone.Collection.extend({
   url: settings.collages_url,
-  model: Lizard.Models.Collage,
+  model: Lizard.Models.Collage
 });
 
 
@@ -66,7 +66,7 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
 });
 
 Lizard.Collections.Favorite = Lizard.Collections.Collage.extend({
-  model: Lizard.Models.Favorite,
+  model: Lizard.Models.Favorite
  });
 
 Lizard.Collections.Workspace = Backbone.Collection.extend({
@@ -74,15 +74,15 @@ Lizard.Collections.Workspace = Backbone.Collection.extend({
   url: settings.workspace_url
 });
 
+
 collageCollection = new Lizard.Collections.Collage();
 favoriteCollection = new Lizard.Collections.Favorite();
 filterCollection = new Lizard.Collections.Filter();
+layerCollection = new Lizard.Collections.Layer();
 locationCollection = new Lizard.Collections.Location();
 parameterCollection = new Lizard.Collections.Parameter();
 timeseriesCollection = new Lizard.Collections.Timeseries();
-layerCollection = new Lizard.Collections.Layer();
-
-
+workspaceCollection = new Lizard.Collections.Workspace();
 
 
 
