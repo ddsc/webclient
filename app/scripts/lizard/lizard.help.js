@@ -2,7 +2,7 @@ Lizard.Help = {};
 
 Lizard.Help.DefaultView = Backbone.Marionette.ItemView.extend({
   template: '#help-template',
-  className: 'help'
+ className: 'help'
 });
 
 Lizard.Help.Router = Backbone.Marionette.AppRouter.extend({
@@ -22,6 +22,6 @@ Lizard.App.addInitializer(function(){
   Lizard.Help.router = new Lizard.Help.Router({
     controller: Lizard.Help
   });
-  
+
   Lizard.App.vent.trigger('routing:started');
 });

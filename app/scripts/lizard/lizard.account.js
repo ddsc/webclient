@@ -1,5 +1,13 @@
+/*
+Lizard Account information
+*/
+
+
 Lizard.Account = {};
 
+// Lizard login handling
+
+// Lizard Account page
 Lizard.Account.DefaultView = Backbone.Marionette.ItemView.extend({
   template: '#account-template',
   className: 'account'
@@ -22,6 +30,6 @@ Lizard.App.addInitializer(function(){
   Lizard.Account.router = new Lizard.Account.Router({
     controller: Lizard.Account
   });
-  
+
   Lizard.App.vent.trigger('routing:started');
 });
