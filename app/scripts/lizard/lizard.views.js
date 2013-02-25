@@ -318,6 +318,55 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
 });
 
 
+/* MENU VIEWS */
+
+Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
+	model: new Lizard.Models.Account(),
+	tagName: 'a',
+	template: '#login-template',
+    attributes: {
+		'href': '#'},
+
+	events: {
+		'click #login': 'doLogin',
+		'click #logout': 'doLogout'
+	},
+
+	initialize: function(){
+		console.log('initialize LoginView');
+		var that = this;
+		this.model.fetch({
+			success: function(model, response, data){
+				if (model.attributes.authenticated === true){
+					that.template = '#loggedin-template';
+					that.render();
+				}
+			}
+		});
+	},
+
+	doLogin: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.login_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.login_url;
+		});
+	},
+
+	doLogout: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.logout_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.logout_url;
+		});
+	}
+
+});
+
+
+
 // Instantiate the Views
 var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();

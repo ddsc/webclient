@@ -10,7 +10,8 @@ var settings = {
     collages_url: domain + 'collages/',
 	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/',
 	account_url: domain + 'account/',
-	login_token_url: domain + 'account/login-url'
+	login_token_url: domain + 'account/login-url/',
+	logout_token_url: domain + 'account/logout-url/'
 };
 
 /**

@@ -1,6 +1,4 @@
 // Initialization code needed to run before eerything
-
-
 $.ajaxSetup({
 	xhrFields: {
 		withCredentials: true
@@ -20,7 +18,23 @@ Lizard.App.addRegions({
   menu: '#menu-bar'
 });
 
+
+Lizard.Menu = {};
+Lizard.Menu.DefaultLayout = Backbone.Marionette.Layout.extend({
+  template: '#menu-template',
+  regions: {
+	  'loginRegion': '#loginRegion'
+  }
+});
+
+
 // Start Backbone's url router
 Lizard.App.on('initialize:after', function() {
+  menuView = new Lizard.Menu.DefaultLayout();
+  loginView = new Lizard.Views.Menu();
+
+  Lizard.App.menu.show(menuView);
+  menuView.loginRegion.show(loginView.render());
+
   Backbone.history.start();
 });
