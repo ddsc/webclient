@@ -289,7 +289,9 @@ Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
   collection: layerCollection,
   itemView: Lizard.Views.Layer,
   initialize: function() {
-    this.collection.fetch();
+    this.collection.fetch({
+      cache: true
+    });
   }
 });
 
