@@ -160,7 +160,7 @@
                     </li>
                     <p data-group="favorite" class="hide" id="mapLayersRegion"></p>
                     <li>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"><i class="icon-question-sign"></i> Help</a>
                     </li>
                 </ul>
             </div>
@@ -247,11 +247,14 @@
     <script type="text/template" id="layeritem-template">
 	  <div class="layer-item">
         <span class="action handle">
-            <i class="icon-move"></i>
+            <i class="icon-globe"></i>
         </span>
-        <span class="content"><%= display_name %> (<%= type %>)</span>
-        <span class="indicator">
+        <span class="content"><%= display_name %></span>
+        <span class="indicator pull-right">
             <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
+        </span>
+        <span class="order pull-right">
+            <i class="icon-circle-arrow-up"></i><i class="icon-circle-arrow-down"></i>
         </span>
 	  </div>
     </script>

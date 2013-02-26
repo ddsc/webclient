@@ -5,6 +5,34 @@ ItemViews
 Lizard.Views = {};
 
 
+
+Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+  template: '#layeritem-template',
+  initialize: function() {
+    this.model.bind('change', this.render);
+  },
+  events: {
+    'click .icon-circle-arrow-up': 'moveUp',
+    'click .icon-circle-arrow-down': 'moveDown',
+    'click .indicator': 'toggleVisibility'
+  },
+  moveUp: function(event) {
+    console.log('moveUp!', this.model.get('display_name'));
+  },
+  moveDown: function(event) {
+    console.log('moveDown!', this.model.get('display_name'));
+  },
+  toggleVisibility: function(event) {
+    console.log('Toggle!', this.model.get('display_name'));
+  },
+  onBeforeRender: function(model) {
+    // console.log('onBeforeRender', model);
+  }
+});
+
+
+
 Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   template: '#info-modal-template',
   initialize: function() {
@@ -256,43 +284,11 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 
-
-/* LAYER VIEWS */
-Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  className: 'drawer-item',
-  template: '#layeritem-template',
-  initialize: function() {
-    this.model.bind('change', this.render);
-  },
-  onBeforeRender: function(model) {
-    // console.log('onBeforeRender', model);
-  },
-  events: {
-    'click .layer-item .indicator': 'toggleVisibility'
-  },
-  toggleVisibility: function() {
-    if(this.model.attributes.visibility) {
-      this.model.set({ visibility: false });
-    } else {
-      this.model.set({ visibility: true });
-    }
-    console.log('Is this visible? ', this.model.attributes.visibility);
-    // console.log(this.model);
-  }
-});
-
-Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
-  tagName: 'ol',
-  className: 'ui-sortable drawer-group',
+Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
+  collection: layerCollection,
   itemView: Lizard.Views.Layer,
-  onDomRefresh: function() {
-    $('.drawer-group').sortable({
-      'forcePlaceholderSize': true,
-      'handle': '.handle',
-      'axis': 'y'
-    });
-    $('.drawer-group').disableSelection();
+  initialize: function() {
+    this.collection.fetch();
   }
 });
 
@@ -302,9 +298,8 @@ var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
+var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
-var layerView = new Lizard.Views.LayerList({collection: layerCollection});
-
 
 widgetcollectionview.collection.add([
   new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),

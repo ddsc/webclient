@@ -7,7 +7,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
-    'favoriteRegion': '#favoriteRegion'
+    'favoriteRegion': '#favoriteRegion',
+    'mapLayersRegion': '#mapLayersRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -216,9 +217,7 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-  var layersView = layerView;
   var leafletView;
-
   if(lonlatzoom) {
     leafletView = new Lizard.Map.LeafletView({
       lon: lonlatzoom.split(',')[0],
@@ -234,8 +233,8 @@ Lizard.Map.map = function(lonlatzoom){
   }
 
   // And show them in their divs
-  console.log(Lizard.mapView.favoriteRegion.show(favoritecollectionview.render()));
-  // Lizard.mapView.collageRegion.show(collageView.render());
+  Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
+  Lizard.mapView.mapLayersRegion.show(layercollectionview.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
   $('.drawer-item').popover({
