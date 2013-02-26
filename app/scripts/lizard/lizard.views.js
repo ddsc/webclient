@@ -284,13 +284,122 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 
-Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
-  collection: layerCollection,
-  itemView: Lizard.Views.Layer,
-  initialize: function() {
-    this.collection.fetch();
+
+// Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
+//   collection: layerCollection,
+//   itemView: Lizard.Views.Layer,
+//   initialize: function() {
+//     this.collection.fetch();
+
+
+/* LAYER VIEWS */
+Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+  className: 'drawer-item',
+  template: '#layeritem-template',
+  initialize: function () {
+    this.model.bind('change', this.render);
+  },
+  onBeforeRender: function () {
+    this.el.setAttribute("id", this.model.attributes.display_name);
+  },
+  events: {
+    'click .layer-item .indicator': 'toggleVisibility'
+  },
+  toggleVisibility: function () {
+    if(this.model.attributes.visibility) {
+      this.model.set({ visibility: false });
+      window.mapCanvas.removeLayer(this.model.attributes.lyr);
+    } else {
+      this.model.set({ visibility: true });
+      var lyr = L.tileLayer.wms(this.model.attributes.wms_url, {
+        zIndex: 100 - this.$el.index(),
+        layers: this.model.attributes.layer_name,
+        format: this.model.attributes.format,
+        transparent: this.model.attributes.transparent,
+        opacity: this.model.attributes.opacity,
+        attribution: 'DDSC'
+      });
+      this.model.set({lyr: lyr});
+      window.mapCanvas.addLayer(lyr);
+    }
+  },
+  updateOrder: function() {
+
+    console.log($(this.model.attributes.display_name).index());
   }
 });
+
+Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
+  initialize: function () {
+    this.collection.fetch();
+  },
+  collection: layerCollection,
+  tagName: 'ol',
+  className: 'ui-sortable drawer-group',
+  itemView: Lizard.Views.Layer,
+  onDomRefresh: function () {
+    $('.drawer-group').sortable({
+      'forcePlaceholderSize': true,
+      'handle': '.handle',
+      'axis': 'y',
+      update: function (event, ui) {
+        model = layerCollection.where({display_name: ui.item[0].id})[0];
+        model.attributes.lyr.setZIndex(100 - ui.item.index())
+      }
+    });
+    $('.drawer-group').disableSelection();
+  }
+});
+
+
+/* MENU VIEWS */
+
+Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
+	model: new Lizard.Models.Account(),
+	tagName: 'a',
+	template: '#login-template',
+    attributes: {
+		'href': '#'},
+
+	events: {
+		'click #login': 'doLogin',
+		'click #logout': 'doLogout'
+	},
+
+	initialize: function(){
+		console.log('initialize LoginView');
+		var that = this;
+		this.model.fetch({
+			success: function(model, response, data){
+				if (model.attributes.authenticated === true){
+					that.template = '#loggedin-template';
+					that.render();
+				}
+			}
+		});
+	},
+
+	doLogin: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.login_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.login_url;
+		});
+	},
+
+	doLogout: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.logout_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.logout_url;
+		});
+	}
+
+});
+
 
 
 // Instantiate the Views

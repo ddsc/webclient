@@ -135,16 +135,6 @@ var isAppleMobile = false;
     }
 }());
 
-/**
- * Configure jQuery.
- */
-// $.ajaxSetup({
-//     timeout: 20000,
-//     crossDomain: true,
-//     xhrFields: {
-//        withCredentials: true
-//     }
-// });
 
 /**
  * Things related to time/date formatting.
@@ -553,5 +543,16 @@ function bindPanZoomEvents($graph) {
         panAndZoomOtherGraphs(plot);
     });
 }
+
+/**
+ * Turn mouse cursor in a spinner on Ajax requests.
+ */
+$(document).ajaxStart(function () {
+    $('html').addClass('busy');
+});
+
+$(document).ajaxStop(function () {
+    $('html').removeClass('busy');
+});
 
 }(this));
