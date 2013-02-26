@@ -23,7 +23,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     format: 'image/png',
     transparent: true,
     reuseTiles: true,
-    attribution: "KAART B"
+    attribution: "Dijkdata"
   }),
   //cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   onShow: function(){

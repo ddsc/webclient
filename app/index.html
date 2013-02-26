@@ -158,7 +158,7 @@
                     <li class="metrics-dropdown mappage" id="workspace">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Workspace</a>
                     </li>
-                    <p data-group="favorite" ondrop="Lizard.Utils.DragDrop.wmsdrop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)" id="workspaceRegion"></p>
+                    <p data-group="favorite"  id="workspaceRegion"></p>
                     <li class="metrics-dropdown mappage" id="maplayers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Alle kaartlagen</a>
                     </li>
@@ -251,7 +251,7 @@
 
 
     <script type="text/template" id="layeritem-template">
-	  <div class="layer-item" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="">
+	  <div class="layer-item">
         <span class="action handle">
             <i class="icon-globe"></i>
         </span>
@@ -261,6 +261,19 @@
             <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
         </span>
 	  </div>
+    </script>
+
+    <script type="text/template" id="workspaceitem-template">
+      <div class="layer-item">
+        <span class="action handle">
+            <i class="icon-globe"></i>
+        </span>
+        <span class="content handle"><%= display_name %> (<%= type %>)</span>
+        <span class="indicator">
+            <i class="<% if(visibility) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
+            <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
+        </span>
+      </div>
     </script>
 
     <script type="text/template" id="collageitem-template">
