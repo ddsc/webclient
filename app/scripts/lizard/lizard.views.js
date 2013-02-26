@@ -12,20 +12,20 @@ Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   }
 });
 
-
-Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
+Lizard.Views.ItemView = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
-    // console.log('FilterView.initialize()');
     this._modelBinder = new Backbone.ModelBinder();
     this.model.on('reset', this.render, this);
   },
   onRender: function() {
-    // console.log('filterview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
   },
-  tagName: 'li',
+  tagName: 'li'
+});
+
+Lizard.Views.Filter = Lizard.Views.ItemView.extend({
   template: '#filterview-template',
   events: {
     'click input': 'toggle'
@@ -37,39 +37,16 @@ Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   },
 });
 
-Lizard.Views.Location = Backbone.Marionette.ItemView.extend({
-  _modelBinder: undefined,
-  initialize: function(){
-    // console.log('LocationView.initialize()');
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  onRender: function() {
-    // console.log('locationview onRender()');
-    var bindings = {state: 'span.state'};
-    this._modelBinder.bind(this.model, this.el, bindings);
-    this._modelBinder._onElChanged(this);
-  },
-  tagName: 'li',
+Lizard.Views.Location = Lizard.Views.ItemView.extend({
   template: '#locationview-template',
   events: {
     'click input': 'toggle'
   },
   toggle: function(e) {
-
-  },
+  }
 });
 
-Lizard.Views.Parameter = Backbone.Marionette.ItemView.extend({
-
-  _modelBinder: undefined,
-  initialize: function(){
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  onRender: function() {
-    var bindings = {state: 'span.state'};
-    this._modelBinder.bind(this.model, this.el, bindings);
-  },
-  tagName: 'li',
+Lizard.Views.Parameter = Lizard.Views.ItemView.extend({
   className: '',
   template: '#parameterview-template',
   events: {
@@ -166,44 +143,29 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
 CollectionViews
 */
 
-Lizard.Views.FilterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: filterCollection,
+Lizard.Views.CollectionView = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
-  itemView: Lizard.Views.Filter,
-
   initialize: function(){
-     this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
+   this.collection.fetch({
+      cache: false
+    });
+    this.listenTo(this.collection, 'reset', this.render, this);
   }
+});
+
+Lizard.Views.FilterCollection = Lizard.Views.CollectionView.extend({
+  collection: filterCollection,
+  itemView: Lizard.Views.Filter,
 });
 
 Lizard.Views.LocationCollection = Backbone.Marionette.CollectionView.extend({
   collection: locationCollection,
-  tagName: 'ul',
   itemView: Lizard.Views.Location,
-
-  initialize: function(){
-      this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
-  }
 });
 
 Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
   collection: parameterCollection,
-  tagName: 'ul',
-
   itemView: Lizard.Views.Parameter,
-
-  initialize: function(){
-      this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
-  }
 });
 
 Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
@@ -246,9 +208,8 @@ Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
-Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
   collection: favoriteCollection,
-  tagName: 'ul',
   itemView: Lizard.Views.FavoriteView,
   initialize: function() {
     this.collection.fetch();
