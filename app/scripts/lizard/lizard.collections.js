@@ -70,7 +70,7 @@ Lizard.Collections.Favorite = Lizard.Collections.Collage.extend({
  });
 
 Lizard.Collections.Workspace = Backbone.Collection.extend({
-  model: new Backbone.Model(),
+  model: Lizard.Models.WorkspaceItem,
   url: settings.workspace_url
 });
 

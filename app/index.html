@@ -155,10 +155,14 @@
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Favorites</a>
                     </li>
                     <p data-group="favorite" id="favoriteRegion"></p>
+                    <li class="metrics-dropdown mappage" id="workspace">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Workspace</a>
+                    </li>
+                    <p data-group="favorite" ondrop="Lizard.Utils.DragDrop.wmsdrop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)" id="workspaceRegion"></p>
                     <li class="metrics-dropdown mappage" id="maplayers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Alle kaartlagen</a>
                     </li>
-                    <p data-group="favorite" class="" id="mapLayersRegion"></p>
+                    <p data-group="favorite" id="mapLayersRegion"></p>
                     <li>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"> Help</a>
                     </li>
@@ -245,7 +249,7 @@
 
 
     <script type="text/template" id="layeritem-template">
-	  <div class="layer-item">
+	  <div class="layer-item" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="">
         <span class="action handle">
             <i class="icon-move"></i>
         </span>

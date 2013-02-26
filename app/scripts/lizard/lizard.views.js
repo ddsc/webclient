@@ -12,6 +12,9 @@ Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   }
 });
 
+Lizard.Views.Selectable = Backbone.Marionette.ItemView.extend({
+  tagName: 'li'
+});
 
 Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
@@ -258,6 +261,7 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
   collection: workspaceCollection,
+  tagName: 'ul'
   
 });
 
