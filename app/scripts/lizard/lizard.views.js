@@ -322,11 +322,8 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	model: new Lizard.Models.Account(),
-	tagName: 'a',
+	el: '#loginRegion',
 	template: '#login-template',
-    attributes: {
-		'href': '#'},
-
 	events: {
 		'click #login': 'doLogin',
 		'click #logout': 'doLogout'
@@ -340,6 +337,7 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 				if (model.attributes.authenticated === true){
 					that.template = '#loggedin-template';
 					that.render();
+					$('#account-dropdown').dropdown();
 				}
 			}
 		});
