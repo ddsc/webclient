@@ -285,12 +285,13 @@ Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
 
 
 
-// Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
-//   collection: layerCollection,
-//   itemView: Lizard.Views.Layer,
-//   initialize: function() {
-//     this.collection.fetch();
-
+Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
+  collection: layerCollection,
+  itemView: Lizard.Views.Layer,
+  initialize: function() {
+    this.collection.fetch();
+  }
+});
 
 /* LAYER VIEWS */
 Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
