@@ -261,10 +261,9 @@ Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 /* LAYER VIEWS */
-Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
+Lizard.Views.WMSItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
-  template: '#layeritem-template',
   initialize: function () {
     this.model.bind('change', this.render);
   },
@@ -298,33 +297,49 @@ Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
   }
 });
 
+Lizard.Views.Layer = Lizard.Views.WMSItem.extend({
+  template: '#layeritem-template'
+});
+
+Lizard.Views.WorkspaceItem = Lizard.Views.WMSItem.extend({
+  template: '#workspaceitem-template'
+});
+
 Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   initialize: function () {
     this.collection.fetch();
   },
   collection: layerCollection,
-  tagName: 'ol',
+  tagName: 'ul',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.Layer,
-  onDomRefresh: function () {
-    $('.drawer-group').sortable({});
+  onShow: function () {
+    $('.drawer-group').draggable('destroy').draggable({
+      connectToSortable: '#workspaceRegion',
+      revert: "invalid",
+      containment: '#weetnietwatditis',
+      helper: function(e, ui) {
+        return $(this).clone().css()
+      }
+    });
     $('.drawer-group').disableSelection();
   }
 });
 
-Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   initialize: function () {
     this.collection.fetch();
   },
   collection: workspaceCollection,
   tagName: 'ol',
   className: 'ui-sortable drawer-group workspace',
-  itemView: Lizard.Views.Layer,
+  itemView: Lizard.Views.WorkspaceItem,
   onDomRefresh: function () {
     $('.drawer-group workspace').sortable({
       'forcePlaceholderSize': true,
       'handle': '.handle',
       'axis': 'y',
+      // weet niet of ik (fritzvd) receive of update moet gebruiken. nog even uitzoeken
       update: function (event, ui) {
         model = layerCollection.where({display_name: ui.item[0].id})[0];
         model.attributes.lyr.setZIndex(100 - ui.item.index())
@@ -389,6 +404,7 @@ var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
 var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
+var workspacecollectionview = new Lizard.Views.WorkspaceCollection();
 
 widgetcollectionview.collection.add([
   new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),

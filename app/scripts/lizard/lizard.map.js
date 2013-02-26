@@ -8,7 +8,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
     'favoriteRegion': '#favoriteRegion',
-    // 'mapLayersRegion': '#mapLayersRegion',
+    'workspaceRegion': '#workspaceRegion',
     'layerRegion' : '#mapLayersRegion'
   },
   onShow: Lizard.Visualsearch.init
@@ -176,7 +176,7 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
         format: 'image/png',
         transparent: true,
         reuseTiles: true,
-        attribution: "KAART B"
+        attribution: "Dijkdata"
     }),
   //cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
@@ -246,6 +246,7 @@ Lizard.Map.map = function(lonlatzoom){
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
   Lizard.mapView.layerRegion.show(layersView.render());
+  Lizard.mapView.workspaceRegion.show(workspacecollectionview.render());
 
   $('.drawer-item').popover({
     html: true,
