@@ -186,6 +186,7 @@ Lizard.Map.map = function(lonlatzoom){
       zoom: 7
     });
   }
+
   // And show them in their divs
   Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
 
@@ -199,26 +200,6 @@ Lizard.Map.map = function(lonlatzoom){
   });
 
 
-  function fixzoom(e) {
-    window.mapCanvas.zoomOut(false);
-    window.mapCanvas.off('viewreset', fixzoom);
-  }
-  window.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
-  window.mapCanvas.on('viewreset', fixzoom);
-
-
-  
-  // window.mapCanvas.invalidateSize()
-
-
-  var mapMove = function(e) {
-    var c = window.mapCanvas.getCenter();
-    var z = window.mapCanvas.getZoom();
-    window.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
-    Backbone.history.navigate('map/' + [c.lng, c.lat, z].join(','));
-  };
-
-  window.mapCanvas.on('moveend', mapMove);
 
   // Then tell backbone to set the navigation to #map
   if(lonlatzoom) {
