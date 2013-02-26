@@ -242,7 +242,6 @@ Lizard.Map.map = function(lonlatzoom){
   }
   // And show them in their divs
   Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
-  //Lizard.mapView.mapLayersRegion.show(layercollectionview.render());
 
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
@@ -253,7 +252,17 @@ Lizard.Map.map = function(lonlatzoom){
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
 
+
+  function fixzoom(e) {
+    window.mapCanvas.zoomOut(false);
+    window.mapCanvas.off('viewreset', fixzoom);
+  }
   window.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
+  window.mapCanvas.on('viewreset', fixzoom);
+
+
+  
+  // window.mapCanvas.invalidateSize()
 
 
   var mapMove = function(e) {

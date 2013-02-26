@@ -254,7 +254,9 @@ Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
   collection: layerCollection,
   itemView: Lizard.Views.Layer,
   initialize: function() {
-    this.collection.fetch();
+    this.collection.fetch({
+      cache: true
+    });
   }
 });
 
@@ -337,11 +339,8 @@ Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	model: new Lizard.Models.Account(),
-	tagName: 'a',
+	el: '#loginRegion',
 	template: '#login-template',
-    attributes: {
-		'href': '#'},
-
 	events: {
 		'click #login': 'doLogin',
 		'click #logout': 'doLogout'
@@ -355,6 +354,7 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 				if (model.attributes.authenticated === true){
 					that.template = '#loggedin-template';
 					that.render();
+					$('#account-dropdown').dropdown();
 				}
 			}
 		});
