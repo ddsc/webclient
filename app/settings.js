@@ -8,6 +8,7 @@ var settings = {
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
     collages_url: domain + 'collages/',
+  workspace_url: domain + 'workspaces/',
 	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/',
 	account_url: domain + 'account/',
 	login_token_url: domain + 'account/login-url/',

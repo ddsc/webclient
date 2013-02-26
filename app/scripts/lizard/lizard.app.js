@@ -8,6 +8,8 @@ $.ajaxSetup({
 
 // Define Lizard namespace
 Lizard = {};
+Lizard.Layers = {};
+Lizard.Popups = {};
 
 // Instantiate the Application()
 Lizard.App = new Backbone.Marionette.Application();

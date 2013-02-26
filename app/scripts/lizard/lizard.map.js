@@ -1,5 +1,6 @@
 Lizard.Map = {};
 
+//create default layout, including regions
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
   regions: {
@@ -14,14 +15,13 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   onShow: Lizard.Visualsearch.init
 });
 
-
+//create router
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'map': 'map',
       'map/:lonlatzoom': 'map' // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
     }
 });
-
 
 
 Lizard.Map.NoItemsView = Backbone.Marionette.ItemView.extend({
@@ -34,127 +34,9 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   tagName: 'li'
 });
 
-Lizard.Map.IconCollectionView = Backbone.Marionette.CollectionView.extend({
-  itemView: Lizard.Map.IconItemView,
-  emptyView: Lizard.Map.NoItemsView,
-  tagName: 'ul',
-  initialize: function() {
-    console.log('IconCollectionView()', this);
-  }
-});
-
-
-// Modal view that opens when clicking on a location
-Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
-  template:function(model){
-    return _.template($('#location-modal-timeserie').html(), {
-      name: model.name,
-      uuid: model.url.split("eries/")[1].split("/")[0],
-      events: model.events,
-    }, {variable: 'timeserie'});
-  },
-  uuid: null,
-  events: {
-    'click .graph-this': "getSeriesdata",
-    'click .fav': 'toggleFavorite',
-  },
-  tagName: 'li',
-  onBeforeRender: function(view){
-
-  },
-  toggleFavorite: function(me) {
-    var favorite = this.model.get('favorite');
-    if(favorite) {
-      this.model.set({"favorite": false});
-      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
-    } else {
-      this.model.set({"favorite": true});
-      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
-    }
-    uuid = this.uuid;
-    type = 'timeseries';
-    Lizard.Utils.Favorites.toggleSelected(this.model);
-  },
-  // One Timeserie has many Events. An Events list is only
-  // loaded when it is explcitly chosen, with caching.
-  getSeriesdata: function(clickedon){
-    // Gets the element that is clicked and it's datasets
-    var data_url = clickedon.target.dataset.url;
-    $('#modal-graph-wrapper').removeClass('hidden');
-    $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
-  }
-});
-
-// Modal view that opens when clicking on a location
-Lizard.Map.ModalTimeseriesView = Backbone.Marionette.CollectionView.extend({
-  collection: timeseriesCollection,
-  tagName: 'ul',
-  itemView: Lizard.Map.ModalTimeserieView,
-  onBeforeRender: function(){
-    this.collection.url = settings.timeseries_url + 
-      '?location=' + this.locationuuid;
-  },
-  onRender: function (model){
-    $('#location-modal-label').html(this.location);
-  }
-});
-
-
-// Utils for this item
-Lizard.Utils.Map = {
-    modalInfo: function (e){
-          var marker = e.target;
-          var model = marker.valueOf().options.bbModel;
-          $('#modal-graph-wrapper').find('.flot-graph').empty();
-          modalView = new Lizard.Map.ModalTimeseriesView();
-          modalView.locationuuid = model.attributes.uuid;
-          modalView.location = model.attributes.name;
-          timeseriesCollection.reset();
-          timeseriesCollection.fetch({cache: true});
-          Lizard.mapView.modalitems.show(modalView.render());
-          $('#location-modal').modal();
-    },
-    updateInfo: function (e) {
-        var marker = e.target;
-        console.log(e);
-        // props = marker.valueOf().options;
-        // e.layer._map._controlContainer.innerHTML = '<h4>Datapunt</h4>' + (props ?
-        //         '<b>' + props.name + '</b><br>' +
-        //         'Punt: ' + props.code
-        //         : 'Zweef over de punten');
-    },
-    // drawonMap takes the collection and goes through the models in it
-    // 'drawing' them on the map.
-    drawonMap: function(collection, objects){
-        var models = collection.models;
-        for (var i in models){
-          var model = models[i];
-          var attributes = model.attributes;
-          // var x = 4.411944150924683 + (Math.random() / 500.0);
-          // var y = 52.22242675741608 + (Math.random() / 500.0);
-          // var point = [x,y];
-          var point = model.attributes.point_geometry;
-          var leaflet_point = new L.LatLng(point[1], point[0]);
-          var marker = new L.Marker(leaflet_point,{
-            icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
-            clickable: true,
-            name: attributes.name,
-            bbModel: model,
-            code: attributes.code
-          });
-          //marker.on('mouseover', this.updateInfo);
-          marker.on('click', Lizard.Utils.Map.modalInfo);
-          this.markers.addLayer(marker);
-    }},
-    selectforCollage: function(e) {
-        var marker = e.target;
-        var properties = marker.valueOf().options;
-        var wsitem = properties.bbModel;
-        wsitem.set({title: wsitem.attributes.name});
-        Collage.add(wsitem);
-    }
-};
-
+// create collection for this page
+workspaceCollection = new Lizard.Collections.Workspace();
+layerCollection = new Lizard.Collections.Layer();
 
 
 // Instantiate the Leaflet Marionnette View.
@@ -170,7 +52,10 @@ Lizard.Map.map = function(lonlatzoom){
 
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
-  var layersView = new Lizard.Views.LayerList();
+
+  var layersView = new Lizard.Views.LayerList({
+    collection: layerCollection
+  });
 
   var leafletView;
   if(lonlatzoom) {

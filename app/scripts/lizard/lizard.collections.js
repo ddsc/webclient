@@ -78,11 +78,10 @@ Lizard.Collections.Workspace = Backbone.Collection.extend({
 collageCollection = new Lizard.Collections.Collage();
 favoriteCollection = new Lizard.Collections.Favorite();
 filterCollection = new Lizard.Collections.Filter();
-layerCollection = new Lizard.Collections.Layer();
 locationCollection = new Lizard.Collections.Location();
 parameterCollection = new Lizard.Collections.Parameter();
 timeseriesCollection = new Lizard.Collections.Timeseries();
-workspaceCollection = new Lizard.Collections.Workspace();
+
 
 
 

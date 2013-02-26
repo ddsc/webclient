@@ -245,13 +245,13 @@ Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
 });
 
 Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
-  collection: workspaceCollection,
+  collection: null, //workspaceCollection,
   tagName: 'ul'
   
 });
 
 Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
-  collection: layerCollection,
+  collection: null, //layerCollection,
   itemView: Lizard.Views.Layer,
   initialize: function() {
     this.collection.fetch({
@@ -309,11 +309,13 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   initialize: function () {
     this.collection.fetch();
   },
-  collection: layerCollection,
+  collection: null, //layerCollection,
   tagName: 'ul',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.Layer,
-  onShow: function () {
+  onDomRefresh: function () {
+    $('.drawer-group').sortable({});
+  /*onShow: function () {
     $('.drawer-group').draggable('destroy').draggable({
       connectToSortable: '#workspaceRegion',
       revert: "invalid",
@@ -321,7 +323,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       helper: function(e, ui) {
         return $(this).clone().css()
       }
-    });
+    });*/
     $('.drawer-group').disableSelection();
   }
 });
@@ -330,7 +332,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   initialize: function () {
     this.collection.fetch();
   },
-  collection: workspaceCollection,
+  collection: null, //workspaceCollection,
   tagName: 'ol',
   className: 'ui-sortable drawer-group workspace',
   itemView: Lizard.Views.WorkspaceItem,
@@ -397,14 +399,14 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 
 
 
-// Instantiate the Views
+// Instantiate the Views - todo: only in pages or App please
 var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
-var layercollectionview = new Lizard.Views.LayerCollection();
+//var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
-var workspacecollectionview = new Lizard.Views.WorkspaceCollection();
+//var workspacecollectionview = new Lizard.Views.WorkspaceCollection();
 
 widgetcollectionview.collection.add([
   new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
