@@ -8,6 +8,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
     'favoriteRegion': '#favoriteRegion',
+    // 'mapLayersRegion': '#mapLayersRegion',
     'layerRegion' : '#mapLayersRegion'
   },
   onShow: Lizard.Visualsearch.init
@@ -170,14 +171,21 @@ Lizard.Map.LeafletView = Backbone.Marionette.ItemView.extend({
     options.zoom; //= (options.zoom ? options.zoom : 7);
   },
   collection: locationCollection,
-  cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
+  deltaportaal: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
+        layers: 'deltaportaal',
+        format: 'image/png',
+        transparent: true,
+        reuseTiles: true,
+        attribution: "KAART B"
+    }),
+  //cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
   mapCanvas: null,
   markers: null,
   modalInfo:Lizard.Utils.Map.modalInfo,
   updateInfo: Lizard.Utils.Map.updateInfo,
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
-    this.mapCanvas = L.map('map', { layers: [this.cloudmade], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
+    this.mapCanvas = L.map('map', { layers: [this.deltaportaal], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
     L.control.scale().addTo(this.mapCanvas);
     window.mapCanvas = this.mapCanvas;
     this.markers = new L.MarkerClusterGroup({
@@ -219,7 +227,6 @@ Lizard.Map.map = function(lonlatzoom){
   var layersView = new Lizard.Views.LayerList();
 
   var leafletView;
-
   if(lonlatzoom) {
     leafletView = new Lizard.Map.LeafletView({
       lon: lonlatzoom.split(',')[0],
@@ -235,6 +242,8 @@ Lizard.Map.map = function(lonlatzoom){
   }
   // And show them in their divs
   Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
+  //Lizard.mapView.mapLayersRegion.show(layercollectionview.render());
+
   // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
   Lizard.mapView.layerRegion.show(layersView.render());

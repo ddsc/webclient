@@ -5,6 +5,34 @@ ItemViews
 Lizard.Views = {};
 
 
+
+Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+  template: '#layeritem-template',
+  initialize: function() {
+    this.model.bind('change', this.render);
+  },
+  events: {
+    'click .icon-circle-arrow-up': 'moveUp',
+    'click .icon-circle-arrow-down': 'moveDown',
+    'click .indicator': 'toggleVisibility'
+  },
+  moveUp: function(event) {
+    console.log('moveUp!', this.model.get('display_name'));
+  },
+  moveDown: function(event) {
+    console.log('moveDown!', this.model.get('display_name'));
+  },
+  toggleVisibility: function(event) {
+    console.log('Toggle!', this.model.get('display_name'));
+  },
+  onBeforeRender: function(model) {
+    // console.log('onBeforeRender', model);
+  }
+});
+
+
+
 Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   template: '#info-modal-template',
   initialize: function() {
@@ -12,23 +40,20 @@ Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.Selectable = Backbone.Marionette.ItemView.extend({
-  tagName: 'li'
-});
-
-Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
+Lizard.Views.ItemView = Backbone.Marionette.ItemView.extend({
   _modelBinder: undefined,
   initialize: function(){
-    // console.log('FilterView.initialize()');
     this._modelBinder = new Backbone.ModelBinder();
     this.model.on('reset', this.render, this);
   },
   onRender: function() {
-    // console.log('filterview onRender()');
     var bindings = {state: 'span.state'};
     this._modelBinder.bind(this.model, this.el, bindings);
   },
-  tagName: 'li',
+  tagName: 'li'
+});
+
+Lizard.Views.Filter = Lizard.Views.ItemView.extend({
   template: '#filterview-template',
   events: {
     'click input': 'toggle'
@@ -40,39 +65,16 @@ Lizard.Views.Filter = Backbone.Marionette.ItemView.extend({
   },
 });
 
-Lizard.Views.Location = Backbone.Marionette.ItemView.extend({
-  _modelBinder: undefined,
-  initialize: function(){
-    // console.log('LocationView.initialize()');
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  onRender: function() {
-    // console.log('locationview onRender()');
-    var bindings = {state: 'span.state'};
-    this._modelBinder.bind(this.model, this.el, bindings);
-    this._modelBinder._onElChanged(this);
-  },
-  tagName: 'li',
+Lizard.Views.Location = Lizard.Views.ItemView.extend({
   template: '#locationview-template',
   events: {
     'click input': 'toggle'
   },
   toggle: function(e) {
-
-  },
+  }
 });
 
-Lizard.Views.Parameter = Backbone.Marionette.ItemView.extend({
-
-  _modelBinder: undefined,
-  initialize: function(){
-    this._modelBinder = new Backbone.ModelBinder();
-  },
-  onRender: function() {
-    var bindings = {state: 'span.state'};
-    this._modelBinder.bind(this.model, this.el, bindings);
-  },
-  tagName: 'li',
+Lizard.Views.Parameter = Lizard.Views.ItemView.extend({
   className: '',
   template: '#parameterview-template',
   events: {
@@ -169,44 +171,29 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
 CollectionViews
 */
 
-Lizard.Views.FilterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: filterCollection,
+Lizard.Views.CollectionView = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
-  itemView: Lizard.Views.Filter,
-
   initialize: function(){
-     this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
+   this.collection.fetch({
+      cache: false
+    });
+    this.listenTo(this.collection, 'reset', this.render, this);
   }
+});
+
+Lizard.Views.FilterCollection = Lizard.Views.CollectionView.extend({
+  collection: filterCollection,
+  itemView: Lizard.Views.Filter,
 });
 
 Lizard.Views.LocationCollection = Backbone.Marionette.CollectionView.extend({
   collection: locationCollection,
-  tagName: 'ul',
   itemView: Lizard.Views.Location,
-
-  initialize: function(){
-      this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
-  }
 });
 
 Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
   collection: parameterCollection,
-  tagName: 'ul',
-
   itemView: Lizard.Views.Parameter,
-
-  initialize: function(){
-      this.collection.fetch({
-        cache: true
-      });
-      this.listenTo(this.collection, 'reset', this.render, this);
-  }
 });
 
 Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
@@ -249,15 +236,13 @@ Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
-Lizard.Views.FavoriteCollection = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
   collection: favoriteCollection,
-  tagName: 'ul',
   itemView: Lizard.Views.FavoriteView,
   initialize: function() {
     this.collection.fetch();
   }
 });
-
 
 Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
   collection: workspaceCollection,
@@ -265,6 +250,13 @@ Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
   
 });
 
+Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
+  collection: layerCollection,
+  itemView: Lizard.Views.Layer,
+  initialize: function() {
+    this.collection.fetch();
+  }
+});
 
 /* LAYER VIEWS */
 Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
@@ -310,10 +302,24 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   },
   collection: layerCollection,
   tagName: 'ol',
-  className: 'ui-sortable drawer-group',
+  className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.Layer,
   onDomRefresh: function () {
-    $('.drawer-group').sortable({
+    $('.drawer-group').sortable({});
+    $('.drawer-group').disableSelection();
+  }
+});
+
+Lizard.Views.Workspace = Backbone.Marionette.CollectionView.extend({
+  initialize: function () {
+    this.collection.fetch();
+  },
+  collection: workspaceCollection,
+  tagName: 'ol',
+  className: 'ui-sortable drawer-group workspace',
+  itemView: Lizard.Views.Layer,
+  onDomRefresh: function () {
+    $('.drawer-group workspace').sortable({
       'forcePlaceholderSize': true,
       'handle': '.handle',
       'axis': 'y',
@@ -327,11 +333,61 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
 });
 
 
+/* MENU VIEWS */
+
+Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
+	model: new Lizard.Models.Account(),
+	tagName: 'a',
+	template: '#login-template',
+    attributes: {
+		'href': '#'},
+
+	events: {
+		'click #login': 'doLogin',
+		'click #logout': 'doLogout'
+	},
+
+	initialize: function(){
+		console.log('initialize LoginView');
+		var that = this;
+		this.model.fetch({
+			success: function(model, response, data){
+				if (model.attributes.authenticated === true){
+					that.template = '#loggedin-template';
+					that.render();
+				}
+			}
+		});
+	},
+
+	doLogin: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.login_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.login_url;
+		});
+	},
+
+	doLogout: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.logout_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.logout_url;
+		});
+	}
+
+});
+
+
+
 // Instantiate the Views
 var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
+var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
 
 widgetcollectionview.collection.add([
