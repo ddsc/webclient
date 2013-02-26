@@ -202,31 +202,33 @@
     </script>
 
     <script type="text/template" id="favorite-item-template">
-        <div class="favorite-item oselect">
-            <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="favstar icon-star"></i>&nbsp;<%= favorite.name %></h5>
-            <div id="<%=favorite.uuid%>" class="collapse">
-                <ul class="timeserie-actions">
-                    <li class="add dropdown">
-                        <i class="icon-plus"></i>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Voeg toe aan collage</i><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                <li class="about-menu"><a href="#logout"></a></li>
-                                    <li><a href="#account" target="">Uw gegevens</a></li>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li class="nav-header">DDSC</li>
-                                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
-                                    <li><a href="#">Uitloggen</a></li>
-                                </ul>
-                    </li>
+      <div class="favorite-item oselect">
+        <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="favstar icon-star"></i>&nbsp;<%= favorite.name %></h5>
+        <div id="<%=favorite.uuid%>" class="collapse">
+          <ul class="timeserie-actions">
+            <li class="add dropdown">
+              <i class="icon-plus"></i>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				<i>Voeg toe aan collage</i><b class="caret"></b>
+			  </a>
+			</li>
+			<ul class="dropdown-menu">
+              <li class="about-menu"><a href="#logout"></a></li>
+              <li><a href="#account" target="">Uw gegevens</a></li>
+			  <li class="divider"></li>
+			  <li class="nav-header">DDSC</li>
+			  <li><a href="javascript:void(0)" data-toggle="modal"
+					 data-target="#modalHelp">Help</a>
+			  </li>
+              <li><a href="#">Uitloggen</a></li>
+            </ul>
 
-
-                    <li class="goto hidden">
-                        <i class="icon-map-marker"></i> Ga naar
-                    </li>
-                </ul>
-            </div>
+            <li class="goto hidden">
+              <i class="icon-map-marker"></i> Ga naar
+            </li>
+          </ul>
         </div>
+      </div>
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
@@ -509,15 +511,28 @@
 	</script>
 
 	<script type="text/template" id="login-template">
+	  <a id="login" href="#">
 		<span id="login">Log in
 		  <i class="icon-user icon-white"></i>
 		</span>
+	  </a>
 	</script>
 
 	<script type="text/template" id="loggedin-template">
-		<span id="logout"><%= user.username %>
+	  <a id="account-dropdown" class="dropdown-toggle" data-toggle="dropdown"
+		 href="#">
+		<span id="logout"><%= user.first_name %> <%= user.last_name %>
 		  <i class="icon-user icon-white"></i>
+		  <b class="icon-caret-down icon-white"></b>
 		</span>
+	  </a>
+	  <ul class="dropdown-menu">
+		<li><a href="#account" target="">Uw gegevens</a></li>
+		<li class="divider"></li>
+		<li class="nav-header">DDSC</li>
+		<li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
+		<li><a href="#" id="logout">Uitloggen</a></li>
+	  </ul>
 	</script>
 
     <script type="text/template" id="help-template">
@@ -563,6 +578,22 @@
             <a href="#"><div id="brand" href="#"></div></a>
 
             <div class="nav-collapse collapse" id="menu-bar">
+			  <ul class="nav">
+				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
+				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
+				<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
+
+			  </ul>
+			  <ul class="nav pull-right">
+				<li class="dropdown" id="loginRegion">
+				</li>
+				<li>
+				  <form class="navbar-form pull-right">
+					<label for="searchbox" class="hide">Zoeken</label>
+					<input id="searchbox" class="input-large" style="height:30px;" type="text" placeholder="Zoeken" autocomplete="off">
+				  </form>
+				</li>
+			  </ul>
             </div>
 		  </div>
         </div>
