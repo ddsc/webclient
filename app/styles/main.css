@@ -394,7 +394,9 @@ input.input-medium.search-query {
     height:500px;
 }
 
-
+.layer-item span.content{
+    text-transform:capitalize;
+}
 
 
 
@@ -722,8 +724,6 @@ position: relative;
   background: #000;
   z-index: 2;
 }
-
-
 
 
 .workspace-item {

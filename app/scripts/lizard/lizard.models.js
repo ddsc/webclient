@@ -77,3 +77,11 @@ Lizard.Models.Layer = Backbone.Model.extend({
 
 Lizard.Models.Favorite = Lizard.Models.Collage.extend();
 
+Lizard.Models.Account = Backbone.Model.extend({
+	url: settings.account_url,
+	defaults: {
+		authenticated: false,
+	}
+});
+
+Lizard.Models.AccountToken = Backbone.Model.extend

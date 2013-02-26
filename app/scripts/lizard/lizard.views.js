@@ -5,6 +5,34 @@ ItemViews
 Lizard.Views = {};
 
 
+
+Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+  template: '#layeritem-template',
+  initialize: function() {
+    this.model.bind('change', this.render);
+  },
+  events: {
+    'click .icon-circle-arrow-up': 'moveUp',
+    'click .icon-circle-arrow-down': 'moveDown',
+    'click .indicator': 'toggleVisibility'
+  },
+  moveUp: function(event) {
+    console.log('moveUp!', this.model.get('display_name'));
+  },
+  moveDown: function(event) {
+    console.log('moveDown!', this.model.get('display_name'));
+  },
+  toggleVisibility: function(event) {
+    console.log('Toggle!', this.model.get('display_name'));
+  },
+  onBeforeRender: function(model) {
+    // console.log('onBeforeRender', model);
+  }
+});
+
+
+
 Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   template: '#info-modal-template',
   initialize: function() {
@@ -218,6 +246,14 @@ Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
 
 
 
+Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
+  collection: layerCollection,
+  itemView: Lizard.Views.Layer,
+  initialize: function() {
+    this.collection.fetch();
+  }
+});
+
 /* LAYER VIEWS */
 Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
@@ -279,11 +315,61 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
 });
 
 
+/* MENU VIEWS */
+
+Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
+	model: new Lizard.Models.Account(),
+	tagName: 'a',
+	template: '#login-template',
+    attributes: {
+		'href': '#'},
+
+	events: {
+		'click #login': 'doLogin',
+		'click #logout': 'doLogout'
+	},
+
+	initialize: function(){
+		console.log('initialize LoginView');
+		var that = this;
+		this.model.fetch({
+			success: function(model, response, data){
+				if (model.attributes.authenticated === true){
+					that.template = '#loggedin-template';
+					that.render();
+				}
+			}
+		});
+	},
+
+	doLogin: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.login_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.login_url;
+		});
+	},
+
+	doLogout: function(e){
+		// Redirect to the Single Sign On server.
+		e.preventDefault();
+		url = settings.logout_token_url;
+		$.getJSON(url, function(json) {
+			window.location=json.logout_url;
+		});
+	}
+
+});
+
+
+
 // Instantiate the Views
 var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
+var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
 
 widgetcollectionview.collection.add([
