@@ -28,8 +28,8 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     this.map.mapCanvas.addLayer(this.markers);
   },
   drawOnMap: function(collection, objects){
-    debugger
     var models = collection.models;
+    var that = this;
     for (var i in models){
       var model = models[i];
       var attributes = model.attributes;
@@ -44,14 +44,14 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
             code: attributes.code
           });
         //marker.on('mouseover', this.updateInfo);
-        //marker.on('click', Lizard.Utils.Map.modalInfo); //todo
+        marker.on('click', that.map.showPopup); //todo
         this.markers.addLayer(marker);
       } catch (e) {
         console.log('location has no geometry. error: ' + e)
       }
-
-
-
     }
-  }
+  },
+  popupContent: Lizard.Views.TimeserieView,
+  largePopupContent: Lizard.Views.TimeserieView,
+  getMouseOverContent: null
 });
