@@ -6,7 +6,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   collection: null, //locationCollection,
   map: null,
   initialize: function(options) {
-    debugger
     this.collection = options.collection;
     this.map = options.map;
 
@@ -28,7 +27,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     this.map.mapCanvas.addLayer(this.markers);
   },
   drawOnMap: function(collection, objects){
-    debugger
     var models = collection.models;
     for (var i in models){
       var model = models[i];
@@ -49,8 +47,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
       } catch (e) {
         console.log('location has no geometry. error: ' + e)
       }
-
-
 
     }
   }
