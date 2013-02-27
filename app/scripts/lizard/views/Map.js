@@ -73,7 +73,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   initWorkspace: function() {
     this.workspace.each(function(model) {
       this.addLayer(model);
-      debugger
     });
 
   },

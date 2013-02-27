@@ -1,5 +1,3 @@
-Lizard.Map = {};
-
 //create default layout, including regions
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',

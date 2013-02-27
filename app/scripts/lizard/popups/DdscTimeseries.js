@@ -3,7 +3,8 @@
 //
 //todo: move these classes to lizard.views
 // Modal view that opens when clicking on a location
-Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
+
+Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   template:function(model){
     return _.template($('#location-modal-timeserie').html(), {
       name: model.name,
@@ -13,14 +14,11 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
   },
   uuid: null,
   events: {
-    'click .graph-this': "getSeriesdata",
+    'click .graph-this': "drawGraph",
     'click .fav': 'toggleFavorite',
   },
   tagName: 'li',
-  onBeforeRender: function(view){
-
-  },
-  toggleFavorite: function(me) {
+  toggleFavorite: function() {
     var favorite = this.model.get('favorite');
     if(favorite) {
       this.model.set({"favorite": false});
@@ -35,7 +33,34 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
   },
   // One Timeserie has many Events. An Events list is only
   // loaded when it is explcitly chosen, with caching.
-  getSeriesdata: function(clickedon){
+  drawGraph: function(clickedon){
+    // Gets the element that is clicked and it's datasets
+    var data_url = clickedon.target.dataset.url;
+    // $('#modal-graph-wrapper').removeClass('hidden');
+    // $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
+  }
+});
+
+// Modal view that opens when clicking on a location
+Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
+  collection: timeseriesCollection,
+  itemView: Lizard.Map.TimeserieView,
+  tagName: 'ul',
+  onBeforeRender: function(){
+    this.collection.url = settings.timeseries_url +
+      '?location=' + this.locationuuid;
+  }
+});
+
+Lizard.Map.ModalTimeserie = Lizard.Map.TimeserieView.extend({
+  template:function(model){
+    return _.template($('#location-modal-timeserie').html(), {
+      name: model.name,
+      uuid: model.url.split("eries/")[1].split("/")[0],
+      events: model.events,
+    }, {variable: 'timeserie'});
+  },
+  drawGraph: function(clickedon){
     // Gets the element that is clicked and it's datasets
     var data_url = clickedon.target.dataset.url;
     $('#modal-graph-wrapper').removeClass('hidden');
@@ -44,22 +69,15 @@ Lizard.Map.ModalTimeserieView = Backbone.Marionette.ItemView.extend({
 });
 
 // Modal view that opens when clicking on a location
-Lizard.Map.ModalTimeseriesView = Backbone.Marionette.CollectionView.extend({
-  collection: timeseriesCollection,
-  tagName: 'ul',
-  itemView: Lizard.Map.ModalTimeserieView,
-  onBeforeRender: function(){
-    this.collection.url = settings.timeseries_url +
-      '?location=' + this.locationuuid;
-  },
+Lizard.Map.ModalTimeseriesView = Lizard.Map.TimeseriesView.extend({
+  itemView: Lizard.Map.ModalTimeserie,
   onRender: function (model){
     $('#location-modal-label').html(this.location);
   }
 });
 
 
-Lizard.Popups.DdscTimeseries = Marionette.ItemView.extend({
-  template: '#layeritem-template',
+Lizard.Popups.DdscTimeseries = {
   modalInfo: function (e){
     var marker = e.target;
     var model = marker.valueOf().options.bbModel;
@@ -71,6 +89,16 @@ Lizard.Popups.DdscTimeseries = Marionette.ItemView.extend({
     timeseriesCollection.fetch({cache: true});
     Lizard.mapView.modalitems.show(modalView.render());
     $('#location-modal').modal();
+  },
+  getPopupContent: function (marker){
+    var model = marker.valueOf().options.bbModel;
+    popupView = new Lizard.Map.TimeseriesView();
+    popupView.locationuuid = model.attributes.uuid;
+    popupView.location = model.attributes.name;
+    timeseriesCollection.reset();
+    timeseriesCollection.fetch({async: false,cache: true});
+    popupContent = popupView.render().el;
+    return popupContent;
   },
   updateInfo: function (e) {
     var marker = e.target;
@@ -88,6 +116,4 @@ Lizard.Popups.DdscTimeseries = Marionette.ItemView.extend({
     wsitem.set({title: wsitem.attributes.name});
     Collage.add(wsitem);
   }
-
-
-});
+};

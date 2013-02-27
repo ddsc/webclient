@@ -20,6 +20,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 Lizard = {};
 Lizard.Layers = {};
 Lizard.Popups = {};
+Lizard.Map = {};
 
 // Instantiate the Application()
 Lizard.App = new Backbone.Marionette.Application();
