@@ -16,7 +16,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     // drawonMap function.
     var that = this;
     this.collection.fetch({
-      success: _.bind(Lizard.Utils.Map.drawonMap, that),
+      success: _.bind(that.drawOnMap, that),
       error:function(data, response){
         console.log('Error this'+ response.responseText);
       }
@@ -28,9 +28,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     for (var i in models){
       var model = models[i];
       var attributes = model.attributes;
-      // var x = 4.411944150924683 + (Math.random() / 500.0);
-      // var y = 52.22242675741608 + (Math.random() / 500.0);
-      // var point = [x,y];
       var point = model.attributes.point_geometry;
       var leaflet_point = new L.LatLng(point[1], point[0]);
       var marker = new L.Marker(leaflet_point,{
@@ -41,7 +38,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
         code: attributes.code
       });
       //marker.on('mouseover', this.updateInfo);
-      marker.on('click', Lizard.Utils.Map.modalInfo);
+      //marker.on('click', Lizard.Utils.Map.modalInfo); //todo
       this.markers.addLayer(marker);
     }
   }

@@ -301,7 +301,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   collection: null, //layerCollection,
   tagName: 'ul',
   className: 'ui-sortable drawer-group wms_sources',
-  itemView: Lizard.Views.LayerItem,
+  itemView: Lizard.Views.LayerListItem,
   events: {
     drop: 'drop'
   },

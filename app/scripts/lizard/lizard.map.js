@@ -81,6 +81,12 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.leafletRegion.show(leafletView.render());
   Lizard.mapView.layerRegion.show(layersView.render());
 
+  //correct place for this?
+  Layers.DdscMarkerLayer({
+    collection: locationCollection,
+    map: leafletView.mapCanvas
+  })
+
   $('.drawer-item').popover({
     html: true,
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
