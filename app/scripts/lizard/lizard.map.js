@@ -6,10 +6,10 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
-    'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
-    'favoriteRegion': '#favoriteRegion',
-    'layerRegion' : '#mapLayersRegion'
+    'workspaceListRegion': '#workspaceListRegion',
+    'workspaceRegion': '#workspaceRegion',
+    'extraLayerRegion' : '#extraLayerRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -52,9 +52,23 @@ Lizard.Map.map = function(lonlatzoom){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-  var layersView = new Lizard.Views.LayerList({
-    collection: layerCollection
+
+  var workspaceView = new Lizard.Views.ActiveWorkspace({
   });
+
+  var workspaceListView = new Lizard.Views.WorkspaceCollection({
+    collection: workspaceCollection,
+    workspaceView: workspaceView
+  });
+
+
+
+  var extraLayersView = new Lizard.Views.LayerList({
+    collection: layerCollection,
+    workspace: workspaceView.collection
+  });
+
+
 
   var leafletView;
   if(lonlatzoom) {
@@ -62,29 +76,31 @@ Lizard.Map.map = function(lonlatzoom){
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
       zoom: lonlatzoom.split(',')[2],
-      workspace: layerCollection
+      workspace: workspaceView.collection
     });
   } else {
     leafletView = new Lizard.Views.Map({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
       zoom: 7,
-      workspace: layerCollection
+      workspace: workspaceView.collection
     });
   }
 
-  // And show them in their divs
-  Lizard.mapView.favoriteRegion.show(favoritecollectionview.render());
-
-  // Lizard.mapView.collageRegion.show(collageView.render());
   Lizard.mapView.leafletRegion.show(leafletView.render());
-  Lizard.mapView.layerRegion.show(layersView.render());
+
+  Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
+  Lizard.mapView.workspaceRegion.show(workspaceView.render());
+  Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
   //correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
     collection: locationCollection,
     map: leafletView
   });
+
+  //workspaceCollection.fetch();
+
   //locationCollection.fetch();
 
   // $('.drawer-item').popover({

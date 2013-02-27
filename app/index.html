@@ -152,20 +152,17 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown mappage" id="favorite">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Favorites</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
                     </li>
-                    <p data-group="favorite" id="favoriteRegion"></p>
+                    <p data-group="favorite" id="workspaceListRegion"></p>
                     <li class="metrics-dropdown mappage" id="workspace">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Workspace</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen</a>
                     </li>
                     <p data-group="favorite"  id="workspaceRegion"></p>
                     <li class="metrics-dropdown mappage" id="maplayers">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Alle kaartlagen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
                     </li>
-                    <p data-group="favorite" id="mapLayersRegion"></p>
-                    <li>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"><i class="icon-question-sign"></i> Help</a>
-                    </li>
+                    <p data-group="favorite" class="hide" id="extraLayerRegion"></p>
                 </ul>
             </div>
             <div class="" id="collageRegion"></div>
@@ -275,6 +272,13 @@
         </span>
       </div>
     </script>
+
+    <script type="text/template" id="workspace-template">
+        <label class="checkbox">
+            <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
+        </label>
+    </script>
+
 
     <script type="text/template" id="collageitem-template">
       <span class="action remove">
@@ -797,7 +801,9 @@
         <!-- Views -->
         <script src="scripts/lizard/lizard.views.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
-
+        <script src="scripts/lizard/views/WorkspaceList.js"></script>
+        <script src="scripts/lizard/views/ActiveWorkspace.js"></script>
+        <script src="scripts/lizard/views/ExtraLayerList.js"></script>
 
 
 		<!-- Utility code -->

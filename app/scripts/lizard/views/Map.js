@@ -71,9 +71,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
   },
   initWorkspace: function() {
+    var that = this;
     this.workspace.each(function(model) {
-      this.addLayer(model);
-      debugger
+      that.addLayer(model);
     });
 
   },
@@ -85,15 +85,15 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       this.listenTo(this.workspace, "reset", this.resetWorkspace, this);
       this.listenTo(this.workspace, "sort", this.sortWorkspace, this);
       this.listenTo(this.workspace, "change:visibility", this.changeVisibilityLayer, this);
-      this.listenTo(this.workspace, "sync", this.syncWorkspace, this);
+      //this.listenTo(this.workspace, "sync", this.syncWorkspace, this);
     }
   },
   //add layer from workspace to Map (if visible)
   addLayer: function(layerModel){
     console.log('addLayer');
-
     if (layerModel.get('visibility')) {
-      this.mapCanvas.addLayer(layerModel.getLeafletLayer());
+      var index = this.workspace.indexOf(this.layerModel);
+      this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer(index));
       layerModel.set('addedToMap', true);
     }
   },
@@ -101,18 +101,22 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   removeLayer: function(layerModel) {
     console.log('removeLayer');
 
-    this.mapCanvas.removeLayer(layerModel.getLeafletLayer());
+    this.mapCanvas.removeLayer(layerModel.get('layer').getLeafletLayer());
     layerModel.set('addedToMap', false);
   },
   //remove all layers of workspace from map
-  resetWorkspace: function() {
+  resetWorkspace: function(newModels, oldRef) {
     console.log('resetWorkspace');
-
     var that = this;
-    this.workspace.each(function(layerModel){
+
+    oldRef.previousModels.forEach(function(layerModel){
       if (layerModel.get('addedToMap')) {
         that.removeLayer(layerModel);
       }
+    });
+
+    this.workspace.each(function(layerModel){
+      that.addLayer(layerModel);
     });
   },
   //reorder layers
@@ -127,9 +131,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     console.log('changeVisibilityLayer');
 
     if (layerModel.get('visibility')) {
-      this.mapCanvas.addLayer(layerModel.getLeafletLayer());
+      this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer());
     } else {
-      this.mapCanvas.removeLayer(layerModel.getLeafletLayer());
+      this.mapCanvas.removeLayer(layerModel.get('layer').getLeafletLayer());
     }
   },
   //add all layers after sync of workspace
