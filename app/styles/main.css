@@ -44,6 +44,26 @@ div#brand {
     padding: 10px;
 }
 
+.footer span a {
+    color: #555;
+    text-decoration: none;
+    filter: gray; /* IE6-9 */
+    filter: url(filters.svg#grayscale);
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    -o-transition: filter 1s ease-out opacity 1s ease-out;
+    -ms-transition: filter 1s ease-out opacity 1s ease-out;
+    -moz-transition: filter 1s ease-out opacity 1s ease-out;
+    -webkit-transition: filter 1s ease-out opacity 1s ease-out;
+    transition: filter 1s ease-out opacity 1s ease-out;
+}
+
+.footer span a:hover{
+    filter: none;
+    -webkit-filter: grayscale(0);
+    text-decoration: none;
+}
+
 .jumbotron {
     position: relative;
     padding: 60px 0 0;

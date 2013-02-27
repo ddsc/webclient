@@ -6,7 +6,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   collection: null, //locationCollection,
   map: null,
   initialize: function(options) {
-    debugger
     this.collection = options.collection;
     this.map = options.map;
 
@@ -49,6 +48,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
       } catch (e) {
         console.log('location has no geometry. error: ' + e)
       }
+
     }
   },
   popupContent: Lizard.Views.TimeserieView,

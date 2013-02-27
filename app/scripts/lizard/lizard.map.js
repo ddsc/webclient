@@ -9,7 +9,6 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'collageRegion': '#collageRegion',
     'modalitems' : '#location-modal-collapsables',
     'favoriteRegion': '#favoriteRegion',
-    // 'mapLayersRegion': '#mapLayersRegion',
     'layerRegion' : '#mapLayersRegion'
   },
   onShow: Lizard.Visualsearch.init
@@ -88,10 +87,10 @@ Lizard.Map.map = function(lonlatzoom){
   });
   //locationCollection.fetch();
 
-  $('.drawer-item').popover({
-    html: true,
-    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-  });
+  // $('.drawer-item').popover({
+  //   html: true,
+  //   template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+  // });
 
 
 
