@@ -261,7 +261,7 @@ Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 /* LAYER VIEWS */
-Lizard.Views.WMSItem = Backbone.Marionette.ItemView.extend({
+Lizard.Views.LayerItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
   initialize: function () {
@@ -286,11 +286,11 @@ Lizard.Views.WMSItem = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.Layer = Lizard.Views.WMSItem.extend({
+Lizard.Views.LayerListItem = Lizard.Views.LayerItem.extend({
   template: '#layeritem-template'
 });
 
-Lizard.Views.WorkspaceItem = Lizard.Views.WMSItem.extend({
+Lizard.Views.WorkspaceItem = Lizard.Views.LayerItem.extend({
   template: '#workspaceitem-template'
 });
 
@@ -301,7 +301,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   collection: null, //layerCollection,
   tagName: 'ul',
   className: 'ui-sortable drawer-group wms_sources',
-  itemView: Lizard.Views.Layer,
+  itemView: Lizard.Views.LayerItem,
   events: {
     drop: 'drop'
   },

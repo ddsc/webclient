@@ -3,7 +3,7 @@
 //
 Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   markers: null,
-  collection: locationCollection,
+  collection: null, //locationCollection,
   map: null,
   onShow: function() {
       this.markers = new L.MarkerClusterGroup({

@@ -1,34 +1,44 @@
-Lizard.Layers.WMSItem = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  className: 'drawer-item',
-  initialize: function () {
-    this.model.bind('change', this.render);
+//  Class for WMS Layers
+//
+//
+Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
+  defaults: {
+    display_name: '',
+    visibility: false,
+    opacity: 100,
+    order: 0,
+    //extra info and links
+    description: null,
+    metadata: null,
+    legend_url: null,
+    enable_search: null,
+    //program settings
+    type: null, //='wms'
+    addedToMap: false,
+    //specific settings for wms overlays
+    layer_name: '',
+    styles: null,
+    format: 'image/png',
+    height: null,
+    width: null,
+    tiled: null,
+    transparent: true,
+    wms_url: ''
   },
-  onBeforeRender: function () {
-    this.el.setAttribute("id", this.model.attributes.display_name);
-  },
-  events: {
-    'click .layer-item .indicator': 'toggleVisibility'
-  },
-  toggleVisibility: function () {
-    if(this.model.attributes.visibility) {
-      this.model.set({ visibility: false });
-      window.mapCanvas.removeLayer(this.model.attributes.lyr);
-    } else {
-      this.model.set({ visibility: true });
-      var lyr = L.tileLayer.wms(this.model.attributes.wms_url, {
-        zIndex: 100 - this.$el.index(),
-        layers: this.model.attributes.layer_name,
-        format: this.model.attributes.format,
-        transparent: this.model.attributes.transparent,
-        opacity: this.model.attributes.opacity,
+  getLeafletLayer: function() {
+    if (!this.leafletLayer) {
+      this.leafletLayer = L.tileLayer.wms(this.attributes.wms_url, {
+        //zIndex: 100 - this.$el.index(), todo
+        layers: this.attributes.layer_name,
+        format: this.attributes.format,
+        transparent: this.attributes.transparent,
+        opacity: this.attributes.opacity,
         attribution: 'DDSC'
       });
-      this.model.set({lyr: lyr});
-      window.mapCanvas.addLayer(lyr);
     }
+    return this.leafletLayer;
   },
-  updateOrder: function() {
-    console.log($(this.model.attributes.display_name).index());
+  getFeatureInfo: function() {
+    //todo
   }
 });
