@@ -82,10 +82,11 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.layerRegion.show(layersView.render());
 
   //correct place for this?
-  Layers.DdscMarkerLayer({
+  Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
     collection: locationCollection,
-    map: leafletView.mapCanvas
-  })
+    map: leafletView
+  });
+  //locationCollection.fetch();
 
   $('.drawer-item').popover({
     html: true,
