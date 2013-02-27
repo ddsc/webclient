@@ -8,6 +8,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   initialize: function(options) {
     this.collection = options.collection;
     this.map = options.map;
+    console.log(this.map);
 
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
@@ -42,8 +43,10 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
             bbModel: model,
             code: attributes.code
           });
+
         //marker.on('mouseover', this.updateInfo);
-        marker.on('click', that.map.showPopup); //todo
+        marker.on('click', that.showPopup);
+        // marker.on('click ' that.showPopup);
         this.markers.addLayer(marker);
       } catch (e) {
         console.log('location has no geometry. error: ' + e)
@@ -51,7 +54,12 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
 
     }
   },
-  popupContent: Lizard.Views.TimeserieView,
-  largePopupContent: Lizard.Views.TimeserieView,
-  getMouseOverContent: null
+  showPopup: function(e) {
+    var marker = e.target;
+    var innerStuff = Lizard.Popups.DdscTimeseries.getPopupContent(marker);
+    marker.bindPopup(innerStuff);
+    marker.openPopup();
+  },
+  // largePopupContent: Lizard.Views.TimeserieView,
+  // getMouseOverContent: null
 });
