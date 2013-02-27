@@ -6,7 +6,6 @@
 // a 'workspaceCollection' on click on a specific object.
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
-  //collection: null,
   workspace: null, //set on initialisation
   mapCanvas: null,
   //modalInfo:Lizard.Utils.Map.modalInfo,
@@ -17,21 +16,34 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     options.lon; //= (options.lon ? options.lon : 5.16082763671875);
     options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     options.zoom; //= (options.zoom ? options.zoom : 7);
+    this.workspace = options.workspace;
   },
-  deltaportaal: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
-    layers: 'deltaportaal',
-    format: 'image/png',
-    transparent: true,
-    reuseTiles: true,
-    attribution: "Dijkdata"
-  }),
-  //cloudmade: L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Map data &copy;' }),
+  //background layer
+  backgroundLayers: {
+    waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
+      layers: 'deltaportaal',
+      format: 'image/png',
+      transparent: true,
+      reuseTiles: true,
+      attribution: "Dijkdata"
+    }),
+    openstreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors'
+    })
+  },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
-    this.mapCanvas = L.map('map', { layers: [this.deltaportaal], center: new L.LatLng(this.options.lat, this.options.lon), zoom: this.options.zoom});
+    this.workspace = this.options.workspace;
+
+    this.mapCanvas = L.map('map', { layers: [this.backgroundLayers.waterkaart],
+      center: new L.LatLng(this.options.lat, this.options.lon),
+      zoom: this.options.zoom
+    });
+
     L.control.scale().addTo(this.mapCanvas);
-    //window.mapCanvas = this.mapCanvas;
-    $('#modal').on('show', this.updateModal);
+    this.layerSwitcher = L.control.layers(this.backgroundLayers, {}).addTo(this.mapCanvas);
+
+    $('#modal').on('show', this.updateModal); //todo: ref to modal
     $('#map').css('height', $(window).height()-100);
 
     var that = this;
@@ -53,5 +65,82 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     };
 
     that.mapCanvas.on('moveend', mapMove);
+
+    this.initWorkspace();
+    this._initialEvents();
+
+  },
+  initWorkspace: function() {
+    this.workspace.each(function(model) {
+      this.addLayer(model);
+      debugger
+    });
+
+  },
+  //todo: bind to workspace
+  _initialEvents: function(){
+    if (this.workspace){
+      this.listenTo(this.workspace, "add", this.addLayer, this);
+      this.listenTo(this.workspace, "remove", this.removeLayer, this);
+      this.listenTo(this.workspace, "reset", this.resetWorkspace, this);
+      this.listenTo(this.workspace, "sort", this.sortWorkspace, this);
+      this.listenTo(this.workspace, "change:visibility", this.changeVisibilityLayer, this);
+      this.listenTo(this.workspace, "sync", this.syncWorkspace, this);
+    }
+  },
+  //add layer from workspace to Map (if visible)
+  addLayer: function(layerModel){
+    console.log('addLayer');
+
+    if (layerModel.get('visibility')) {
+      this.mapCanvas.addLayer(layerModel.getLeafletLayer());
+      layerModel.set('addedToMap', true);
+    }
+  },
+  //remove layer from Map
+  removeLayer: function(layerModel) {
+    console.log('removeLayer');
+
+    this.mapCanvas.removeLayer(layerModel.getLeafletLayer());
+    layerModel.set('addedToMap', false);
+  },
+  //remove all layers of workspace from map
+  resetWorkspace: function() {
+    console.log('resetWorkspace');
+
+    var that = this;
+    this.workspace.each(function(layerModel){
+      if (layerModel.get('addedToMap')) {
+        that.removeLayer(layerModel);
+      }
+    });
+  },
+  //reorder layers
+  sortWorkspace: function() {
+    console.log('sortWorkspace - todo');
+
+
+
+  },
+  //set layer visibility
+  changeVisibilityLayer: function(layerModel) {
+    console.log('changeVisibilityLayer');
+
+    if (layerModel.get('visibility')) {
+      this.mapCanvas.addLayer(layerModel.getLeafletLayer());
+    } else {
+      this.mapCanvas.removeLayer(layerModel.getLeafletLayer());
+    }
+  },
+  //add all layers after sync of workspace
+  syncWorkspace: function() {
+    console.log('syncWorkspace');
+
+    var that = this;
+    this.workspace.each(function(layerModel){
+      if (!layerModel.get('addedToMap')) {
+        that.addLayer(layerModel);
+      }
+    });
   }
 });

@@ -62,13 +62,15 @@ Lizard.Map.map = function(lonlatzoom){
     leafletView = new Lizard.Views.Map({
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
-      zoom: lonlatzoom.split(',')[2]
+      zoom: lonlatzoom.split(',')[2],
+      workspace: layerCollection
     });
   } else {
     leafletView = new Lizard.Views.Map({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
-      zoom: 7
+      zoom: 7,
+      workspace: layerCollection
     });
   }
 

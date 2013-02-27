@@ -70,7 +70,21 @@ Lizard.Models.Layer = Backbone.Model.extend({
         transparent: true,
         wms_url: '',
         opacity: 100,
-        type: null
+        type: null,
+        addedToMap: false
+  },
+  getLeafletLayer: function() {
+    if (!this.leafletLayer) {
+      this.leafletLayer = L.tileLayer.wms(this.attributes.wms_url, {
+        //zIndex: 100 - this.$el.index(), todo
+        layers: this.attributes.layer_name,
+        format: this.attributes.format,
+        transparent: this.attributes.transparent,
+        opacity: this.attributes.opacity,
+        attribution: 'DDSC'
+      });
+    }
+    return this.leafletLayer;
   }
 });
 

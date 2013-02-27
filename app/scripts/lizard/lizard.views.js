@@ -268,7 +268,8 @@ Lizard.Views.WMSItem = Backbone.Marionette.ItemView.extend({
     this.model.bind('change', this.render);
   },
   onBeforeRender: function () {
-    this.el.setAttribute("id", this.model.attributes.display_name);
+    this.model.set('id',this.model.get('display_name'));
+    this.el.setAttribute("id", this.model.attributes.id);
   },
   events: {
     'click .layer-item .indicator': 'toggleVisibility'
@@ -276,23 +277,11 @@ Lizard.Views.WMSItem = Backbone.Marionette.ItemView.extend({
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
       this.model.set({ visibility: false });
-      window.mapCanvas.removeLayer(this.model.attributes.lyr);
     } else {
       this.model.set({ visibility: true });
-      var lyr = L.tileLayer.wms(this.model.attributes.wms_url, {
-        zIndex: 100 - this.$el.index(),
-        layers: this.model.attributes.layer_name,
-        format: this.model.attributes.format,
-        transparent: this.model.attributes.transparent,
-        opacity: this.model.attributes.opacity,
-        attribution: 'DDSC'
-      });
-      this.model.set({lyr: lyr});
-      window.mapCanvas.addLayer(lyr);
     }
   },
   updateOrder: function() {
-
     console.log($(this.model.attributes.display_name).index());
   }
 });
@@ -313,17 +302,30 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.Layer,
-  onDomRefresh: function () {
-    $('.drawer-group').sortable({});
-  /*onShow: function () {
-    $('.drawer-group').draggable('destroy').draggable({
-      connectToSortable: '#workspaceRegion',
-      revert: "invalid",
-      containment: '#weetnietwatditis',
-      helper: function(e, ui) {
-        return $(this).clone().css()
+  events: {
+    drop: 'drop'
+  },
+  drop: function(event, args) {
+    this.collection.move(args.item, args.index);
+  },
+  onShow: function () {
+    var that = this;
+    $('.drawer-group').sortable({
+      stop: function(event, ui) {
+        var item = that.collection.get(ui.item.attr('id'));
+        ui.item.trigger('drop', {item: item, index: ui.item.index()});
       }
-    });*/
+    });
+
+    /*onShow: function () {
+      $('.drawer-group').draggable('destroy').draggable({
+        connectToSortable: '#workspaceRegion',
+        revert: "invalid",
+        containment: '#weetnietwatditis',
+        helper: function(e, ui) {
+          return $(this).clone().css()
+        }
+      });*/
     $('.drawer-group').disableSelection();
   }
 });
