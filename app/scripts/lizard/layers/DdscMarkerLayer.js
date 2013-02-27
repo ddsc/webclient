@@ -5,8 +5,12 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   markers: null,
   collection: null, //locationCollection,
   map: null,
-  onShow: function() {
-      this.markers = new L.MarkerClusterGroup({
+  initialize: function(options) {
+    debugger
+    this.collection = options.collection;
+    this.map = options.map;
+
+    this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
       maxClusterRadius: 200
@@ -23,23 +27,31 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     });
     this.map.mapCanvas.addLayer(this.markers);
   },
-  drawonMap: function(collection, objects){
+  drawOnMap: function(collection, objects){
+    debugger
     var models = collection.models;
     for (var i in models){
       var model = models[i];
       var attributes = model.attributes;
       var point = model.attributes.point_geometry;
-      var leaflet_point = new L.LatLng(point[1], point[0]);
-      var marker = new L.Marker(leaflet_point,{
-        icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
-        clickable: true,
-        name: attributes.name,
-        bbModel: model,
-        code: attributes.code
-      });
-      //marker.on('mouseover', this.updateInfo);
-      //marker.on('click', Lizard.Utils.Map.modalInfo); //todo
-      this.markers.addLayer(marker);
+      try {
+          var leaflet_point = new L.LatLng(point[1], point[0]);
+          var marker = new L.Marker(leaflet_point,{
+            icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
+            clickable: true,
+            name: attributes.name,
+            bbModel: model,
+            code: attributes.code
+          });
+        //marker.on('mouseover', this.updateInfo);
+        //marker.on('click', Lizard.Utils.Map.modalInfo); //todo
+        this.markers.addLayer(marker);
+      } catch (e) {
+        console.log('location has no geometry. error: ' + e)
+      }
+
+
+
     }
   }
 });
