@@ -21,7 +21,8 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   updateOrder: function() {
     console.log($(this.model.attributes.display_name).index());
-        this.leafletLayer.setZIndex(100-index*2);
+        // this.leafletLayer.setZIndex(100-index*2);
+
   }
 
 });
@@ -36,6 +37,8 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   },
   drop: function(event, args) {
     this.collection.move(args.item, args.index);
+    args.item.set({order: args.index});
+    args.item.attributes.layer.leafletLayer.setZIndex(100 - args.index);
   },
   onShow: function () {
     var that = this;

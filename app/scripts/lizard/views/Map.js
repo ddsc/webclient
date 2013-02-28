@@ -49,7 +49,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.layerSwitcher = L.control.layers(this.backgroundLayers, {}).addTo(this.mapCanvas);
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal
-    $('#map').css('height', $(window).height()-100);
+    $('#map').css('height', $(window).height()- $('.footer').height() - $('.navbar').height() - 100);
 
     var that = this;
 
@@ -97,7 +97,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   addLayer: function(layerModel){
     if (layerModel.get('visibility')) {
       var index = this.workspace.indexOf(layerModel);
-      this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer(index));
+      layer = layerModel.get('layer').getLeafletLayer();
+      this.mapCanvas.addLayer(layer);
       layerModel.set('addedToMap', true);
     }
   },
@@ -124,11 +125,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
   },
   //reorder layers
-  sortWorkspace: function() {
-    console.log('sortWorkspace - todo');
-
-
-
+  sortWorkspace: function(e) {
+    console.log('sortWorkspace - now  happens in Lizard.Views.ActiveWorkspace drop');
   },
   //set layer visibility
   changeVisibilityLayer: function(layerModel) {
