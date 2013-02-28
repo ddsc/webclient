@@ -20,23 +20,27 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   //background layer
   backgroundLayers: {
-    waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
+    Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
       layers: 'deltaportaal',
       format: 'image/png',
       transparent: true,
       reuseTiles: true,
       attribution: "Dijkdata"
     }),
-    openstreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data © OpenStreetMap contributors'
-    })
+    }),
+    // mapbox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+    //   attribution: 'MapBox'
+    // }),
+    Google :new L.Google()
   },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
 
     this.mapCanvas = L.map('map', {
-      layers: [this.backgroundLayers.waterkaart],
+      layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
