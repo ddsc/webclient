@@ -4,3 +4,14 @@
 	-o-transition: -o-transform 0.25s ease-out, opacity 0.25s ease-in;
 	transition: transform 0.25s ease-out, opacity 0.25s ease-in;
 	}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+	background-color: rgba(180, 180, 180, 0.6);
+	}
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+	background-color: rgba(110, 110, 110, 0.6);
+	}
