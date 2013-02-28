@@ -96,7 +96,7 @@ Lizard.Popups.DdscTimeseries = {
     popupView.locationuuid = model.attributes.uuid;
     popupView.location = model.attributes.name;
     timeseriesCollection.reset();
-    timeseriesCollection.fetch({async: false,cache: true});
+    timeseriesCollection.fetch();
     popupContent = popupView.render().el;
     return popupContent;
   },

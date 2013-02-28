@@ -127,6 +127,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   //reorder layers
   sortWorkspace: function(e) {
     console.log('sortWorkspace - now  happens in Lizard.Views.ActiveWorkspace drop');
+        
   },
   //set layer visibility
   changeVisibilityLayer: function(layerModel) {
