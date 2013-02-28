@@ -90,9 +90,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   //add layer from workspace to Map (if visible)
   addLayer: function(layerModel){
-    console.log('addLayer');
     if (layerModel.get('visibility')) {
-      var index = this.workspace.indexOf(this.layerModel);
+      var index = this.workspace.indexOf(layerModel);
       this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer(index));
       layerModel.set('addedToMap', true);
     }

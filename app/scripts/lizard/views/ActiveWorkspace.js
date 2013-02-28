@@ -4,7 +4,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   className: 'drawer-item',
   initialize: function () {
     this.model.bind('change', this.render);
-    this.model.set('id',this.model.get('url'));
+    this.model.set('id', this.model.get('url'));
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
@@ -21,13 +21,14 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   updateOrder: function() {
     console.log($(this.model.attributes.display_name).index());
+        this.leafletLayer.setZIndex(100-index*2);
   }
 
 });
 
 Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.Layer(), //layerCollection,
-  tagName: 'ul',
+  tagName: 'ol',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.WorkspaceItem,
   events: {
@@ -41,7 +42,10 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     $('.drawer-group').sortable({
       stop: function(event, ui) {
         var item = that.collection.get(ui.item.attr('id'));
-        ui.item.trigger('drop', {item: item, index: ui.item.index()});
+        ui.item.trigger('drop', {
+          item: item, 
+          index: ui.item.index()
+        });
       }
     });
 

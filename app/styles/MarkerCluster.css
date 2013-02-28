@@ -5,13 +5,26 @@
 	transition: transform 0.25s ease-out, opacity 0.25s ease-in;
 	}
 
-.marker-cluster-small,
-.marker-cluster-medium,
-.marker-cluster-large {
-	background-color: rgba(180, 180, 180, 0.6);
+.marker-cluster-small{
+	background-color: rgba(210, 210, 210, 0.6);
 	}
-.marker-cluster-small div,
-.marker-cluster-medium div,
-.marker-cluster-large div {
+
+.marker-cluster-medium{
+	background-color: rgba(160, 160, 160, 0.6);
+	}
+
+.marker-cluster-large {
 	background-color: rgba(110, 110, 110, 0.6);
+	}
+
+.marker-cluster-small div {
+	background-color: rgba(190, 190, 190, 0.6);
+	}
+
+.marker-cluster-medium div {
+	background-color: rgba(140, 140, 140, 0.6);
+	}
+
+.marker-cluster-large div {
+	background-color: rgba(100, 100, 100, 0.6);
 	}

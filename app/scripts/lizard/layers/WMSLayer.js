@@ -26,12 +26,9 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
     wms_url: ''
   },
   getLeafletLayer: function(index) {
-    if (typeof(index) == 'undefined') {
-      index = 50;
-    }
     if (!this.leafletLayer) {
       this.leafletLayer = L.tileLayer.wms(this.attributes.wms_url, {
-        //zIndex: 100 - this.$el.index(), todo
+        zIndex: 100 - index,
         layers: this.attributes.layer_name,
         format: this.attributes.format,
         transparent: this.attributes.transparent,
@@ -39,7 +36,6 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
         attribution: 'DDSC'
       });
     }
-    this.leafletLayer.setZIndex(100-index*2);
     return this.leafletLayer;
   },
   getFeatureInfo: function() {
