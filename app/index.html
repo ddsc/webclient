@@ -45,6 +45,14 @@
     <link rel="stylesheet" href="styles/MarkerCluster.Default.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="styles/MarkerCluster.Default.ie.css" /><![endif]-->
 
+	<script src="scripts/vendor/raven.min.js"></script>
+	<!-- Only use raven logging to sentry if on staging or production.
+         i.e. test.dijkdata.nl or dijkdata.nl. -->
+	<script type="text/javascript">
+	  if (window.location.origin.indexOf('dijkdata.nl') !== -1) {
+        Raven.config('https://5cf7a2111d5d4f0b994bd3a83f32f8a9@sentry.lizard.net/5').install();
+	  }
+	</script>
     <script src="scripts/vendor/modernizr.min.js"></script>
 
     <!-- Template definitions -->
