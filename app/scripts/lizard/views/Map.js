@@ -35,10 +35,15 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
 
-    this.mapCanvas = L.map('map', { layers: [this.backgroundLayers.waterkaart],
+    this.mapCanvas = L.map('map', {
+      layers: [this.backgroundLayers.waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
+
+    var fullScreen = new L.Control.FullScreen();
+    this.mapCanvas.addControl(fullScreen);
+
 
     L.control.scale().addTo(this.mapCanvas);
     this.layerSwitcher = L.control.layers(this.backgroundLayers, {}).addTo(this.mapCanvas);
