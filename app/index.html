@@ -152,16 +152,17 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown mappage" id="favorite">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Favorites</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
                     </li>
-                    <p data-group="favorite" id="favoriteRegion"></p>
+                    <p data-group="favorite" id="workspaceListRegion"></p>
+                    <li class="metrics-dropdown mappage" id="workspace">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen</a>
+                    </li>
+                    <p data-group="favorite"  id="workspaceRegion"></p>
                     <li class="metrics-dropdown mappage" id="maplayers">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Alle kaartlagen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
                     </li>
-                    <p data-group="favorite" class="" id="mapLayersRegion"></p>
-                    <li>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp"><i class="icon-question-sign"></i> Help</a>
-                    </li>
+                    <p data-group="favorite" class="hide" id="extraLayerRegion"></p>
                 </ul>
             </div>
             <div class="" id="collageRegion"></div>
@@ -258,6 +259,26 @@
         </span>
 	  </div>
     </script>
+
+    <script type="text/template" id="workspaceitem-template">
+      <div class="layer-item">
+        <span class="action handle">
+            <i class="icon-globe"></i>
+        </span>
+        <span class="content handle"><%= display_name %> (<%= type %>)</span>
+        <span class="indicator">
+            <i class="<% if(visibility) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
+            <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
+        </span>
+      </div>
+    </script>
+
+    <script type="text/template" id="workspace-template">
+        <label class="checkbox">
+            <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
+        </label>
+    </script>
+
 
     <script type="text/template" id="collageitem-template">
       <span class="action remove">
@@ -608,6 +629,7 @@
         <div id="content">
         </div>
         <div class="row-fluid footer">
+            <span class="poweredby"><a href="http://lizard.net">Powered by <img id="lizardlogo" src="images/lizard_logo.png" /></a></span>
             <span class="warning">VIEWING IN <p class="visible-desktop">DESKTOP MODE</p><p class="visible-tablet">TABLET MODE</p><p class="visible-phone">PHONE MODE</p></span>
             <span class="pull-right">&copy; 2012-2013 Stichting IJkdijk en partners</span>
         </div>
@@ -766,13 +788,28 @@
 
         <script src="scripts/lizard/lizard.app.js"></script>
 
+        <!-- Models and Layers -->
         <script src="scripts/lizard/lizard.models.js"></script>
+        <script src="scripts/lizard/layers/MapLayer.js"></script>
+        <script src="scripts/lizard/layers/WMSLayer.js"></script>
+        <script src="scripts/lizard/layers/DdscMarkerLayer.js"></script>
+
+        <!-- Collections -->
         <script src="scripts/lizard/lizard.collections.js"></script>
+
+        <!-- Views -->
         <script src="scripts/lizard/lizard.views.js"></script>
+        <script src="scripts/lizard/views/Map.js"></script>
+        <script src="scripts/lizard/popups/DdscTimeseries.js"></script>
+        <script src="scripts/lizard/views/WorkspaceList.js"></script>
+        <script src="scripts/lizard/views/ActiveWorkspace.js"></script>
+        <script src="scripts/lizard/views/ExtraLayerList.js"></script>
+
 
 		<!-- Utility code -->
 		<script src="scripts/utilities.js"></script>
         <script src="scripts/lizard/lizard.visualsearch.js"></script>
+
 
         <!-- Application code, split into files -->
         <script src="scripts/lizard/lizard.home.js"></script>

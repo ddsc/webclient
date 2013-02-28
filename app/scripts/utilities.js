@@ -82,12 +82,19 @@ Lizard.Utils.DragDrop = {
   drag: function (e){
     sendThis = e.target.dataset.url;
     e.dataTransfer.setData("Text", sendThis);
+    console.log(e.target);
   },
 
   allowDrop: function (e){
     e.preventDefault();
   },
+  wmsdrop: function (e){
+    e.preventDefault();
+    var wms_layer= e.dataTransfer.getData("Text");
+    var $target = $(e.target);
 
+
+  },
   drop: function (e){
     e.preventDefault();
     var data_url = e.dataTransfer.getData("Text");

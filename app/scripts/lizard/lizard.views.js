@@ -245,78 +245,6 @@ Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
 });
 
 
-
-Lizard.Views.LayerCollection = Backbone.Marionette.CollectionView.extend({
-  collection: layerCollection,
-  itemView: Lizard.Views.Layer,
-  initialize: function() {
-    this.collection.fetch({
-      cache: true
-    });
-  }
-});
-
-/* LAYER VIEWS */
-Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  className: 'drawer-item',
-  template: '#layeritem-template',
-  initialize: function () {
-    this.model.bind('change', this.render);
-  },
-  onBeforeRender: function () {
-    this.el.setAttribute("id", this.model.attributes.display_name);
-  },
-  events: {
-    'click .layer-item .indicator': 'toggleVisibility'
-  },
-  toggleVisibility: function () {
-    if(this.model.attributes.visibility) {
-      this.model.set({ visibility: false });
-      window.mapCanvas.removeLayer(this.model.attributes.lyr);
-    } else {
-      this.model.set({ visibility: true });
-      var lyr = L.tileLayer.wms(this.model.attributes.wms_url, {
-        zIndex: 100 - this.$el.index(),
-        layers: this.model.attributes.layer_name,
-        format: this.model.attributes.format,
-        transparent: this.model.attributes.transparent,
-        opacity: this.model.attributes.opacity,
-        attribution: 'DDSC'
-      });
-      this.model.set({lyr: lyr});
-      window.mapCanvas.addLayer(lyr);
-    }
-  },
-  updateOrder: function() {
-
-    console.log($(this.model.attributes.display_name).index());
-  }
-});
-
-Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
-  initialize: function () {
-    this.collection.fetch();
-  },
-  collection: layerCollection,
-  tagName: 'ol',
-  className: 'ui-sortable drawer-group',
-  itemView: Lizard.Views.Layer,
-  onDomRefresh: function () {
-    $('.drawer-group').sortable({
-      'forcePlaceholderSize': true,
-      'handle': '.handle',
-      'axis': 'y',
-      update: function (event, ui) {
-        model = layerCollection.where({display_name: ui.item[0].id})[0];
-        model.attributes.lyr.setZIndex(100 - ui.item.index())
-      }
-    });
-    $('.drawer-group').disableSelection();
-  }
-});
-
-
 /* MENU VIEWS */
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
@@ -364,13 +292,14 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 
 
 
-// Instantiate the Views
+// Instantiate the Views - todo: only in pages or App please
 var filtercollectionview = new Lizard.Views.FilterCollection();
 var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 var locationcollectionview = new Lizard.Views.LocationCollection();
 var parametercollectionview = new Lizard.Views.ParameterCollection();
-var layercollectionview = new Lizard.Views.LayerCollection();
+//var layercollectionview = new Lizard.Views.LayerCollection();
 var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
+//var workspacecollectionview = new Lizard.Views.WorkspaceCollection();
 
 widgetcollectionview.collection.add([
   new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),

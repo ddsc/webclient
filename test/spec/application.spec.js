@@ -119,6 +119,41 @@
             });
         });
     });
+    
+    describe("workspaceCollection", function() {
+        it("checks if workspaceCollection is instantiated", function() {
+            expect(filterCollection instanceof Lizard.Collections.Workspace).to.be(true);
+        });
+        describe('#models', function(){
+            it("should show models to be an instance of Lizard.Models.Workspace", function(){
+                for (var i in workspaceCollection.models){
+                expect(workspaceCollection.models[i] instanceof Lizard.Models.Workspace).to.be(true);
+                }
+            });
+        });
+    });
+    
+    describe("timeseriesCollection", function() {
+        it("checks if timeseriesCollection is instantiated", function() {
+            expect(timeseriesCollection instanceof Lizard.Collections.Timeseries).to.be(true);
+        });
+        describe('#models', function(){
+            it("should show models to be an instance of Lizard.Models.Timeseries", function(){
+                for (var i in timeseriesCollection.models){
+                expect(timeseriesCollection.models[i] instanceof Lizard.Models.Timeseries).to.be(true);
+                }
+            });
+            describe("#events", function(){
+            it("checks if a timeserie model has events", function() {
+                for (var i in timeseriesCollection.models){
+                    var model = timeseriesCollection.models[i];
+                    var events = model.attributes.events;
+                  expect(events === String).to.be(true);
+                }
+              });
+            });
+        });
+    });
 
 })();
 
