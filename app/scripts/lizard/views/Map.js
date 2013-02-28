@@ -49,7 +49,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.layerSwitcher = L.control.layers(this.backgroundLayers, {}).addTo(this.mapCanvas);
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal
-    $('#map').css('height', $(window).height()-100);
+    $('#map').css('height', ($(window).height()-175));
 
     var that = this;
 
