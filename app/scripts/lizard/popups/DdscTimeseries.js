@@ -6,38 +6,28 @@
 
 Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   template:function(model){
-    return _.template($('#location-modal-timeserie').html(), {
+    return _.template($('#location-popup-timeserie').html(), {
       name: model.name,
       uuid: model.url.split("eries/")[1].split("/")[0],
       events: model.events,
     }, {variable: 'timeserie'});
   },
   uuid: null,
-  events: {
-    'click .graph-this': "drawGraph",
-    'click .fav': 'toggleFavorite',
-  },
   tagName: 'li',
-  toggleFavorite: function() {
-    var favorite = this.model.get('favorite');
-    if(favorite) {
-      this.model.set({"favorite": false});
-      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
-    } else {
-      this.model.set({"favorite": true});
-      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
-    }
-    uuid = this.uuid;
-    type = 'timeseries';
-    Lizard.Utils.Favorites.toggleSelected(this.model);
+  events: {
+    'click' : "openModal"
   },
-  // One Timeserie has many Events. An Events list is only
-  // loaded when it is explcitly chosen, with caching.
-  drawGraph: function(clickedon){
-    // Gets the element that is clicked and it's datasets
-    var data_url = clickedon.target.dataset.url;
-    // $('#modal-graph-wrapper').removeClass('hidden');
-    // $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
+  openModal: function() {
+    var model = this.model;
+    $('#modal-graph-wrapper').find('.flot-graph').empty();
+    modalView = new Lizard.Map.ModalTimeseriesView();
+    modalView.locationuuid = model.attributes.uuid;
+    modalView.location = model.attributes.name;
+    Lizard.mapView.modalitems.show(modalView.render());
+    this.uuid = this.model.url.split("eries/")[1].split("/")[0];
+    $('#location-modal').modal();
+    console.log($('#location-modal').find('#' + this.uuid));
+    $('#location-modal').find('#' + this.uuid).collapse();
   }
 });
 
@@ -53,13 +43,32 @@ Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.Map.ModalTimeserie = Lizard.Map.TimeserieView.extend({
-  template:function(model){
+  template: function(model){
     return _.template($('#location-modal-timeserie').html(), {
       name: model.name,
       uuid: model.url.split("eries/")[1].split("/")[0],
       events: model.events,
     }, {variable: 'timeserie'});
   },
+  events: {
+    'click .graph-this': "drawGraph",
+    'click .fav': 'toggleFavorite',
+  },
+  toggleFavorite: function() {
+    var favorite = this.model.get('favorite');
+    if(favorite) {
+      this.model.set({"favorite": false});
+      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
+    } else {
+      this.model.set({"favorite": true});
+      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
+    }
+    uuid = this.uuid;
+    type = 'timeseries';
+    Lizard.Utils.Favorites.toggleSelected(this.model);
+  },
+  // One Timeserie has many Events. An Events list is only
+  // loaded when it is explcitly chosen, with caching.
   drawGraph: function(clickedon){
     // Gets the element that is clicked and it's datasets
     var data_url = clickedon.target.dataset.url;
