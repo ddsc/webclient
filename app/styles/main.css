@@ -102,19 +102,23 @@ div#brand {
 }
 
 
-ol.drawer-group{
+ol.drawer-group,
+ul.wms_sources {
     font-size: .9em;
 }
-ol.drawer-group span{
+ol.drawer-group span,
+ul.wms_sources span {
     list-style: none;
 }
 
-ol.drawer-group {
+ol.drawer-group,
+ul.wms_sources {
     padding: 8px 10px;
     position: relative;
     margin: 0;
 }
-ol.drawer-group li{
+ol.drawer-group li,
+ul.wms_sources li {
     list-style: none;
     position: relative;
     border: none;
@@ -129,16 +133,19 @@ ol.drawer-group li{
     cursor: pointer;
 }
 
-ol.drawer-group li.active{
+ol.drawer-group li.active,
+ul.wms_sources li.active {
     background: -webkit-linear-gradient(top,#e7e7e7 0%,#e7e7e7 0%,#dbdbdb 100%);
 }
 
-ol.drawer-group span.handle{
+ol.drawer-group span.handle,
+ul.wms_sources span.handle{
     cursor: pointer;
     cursor: url(http://maps.gstatic.com/intl/en_us/mapfiles/openhand_8_8.cur) 10 10,move;
 }
 
-ol.drawer-group span.action {
+ol.drawer-group span.action,
+ul.wms_sources span.action {
     position: absolute;
     left: 0px;
     top: 35%;
@@ -147,12 +154,14 @@ ol.drawer-group span.action {
     height: 28px;
     border-right: 1px solid #fff;
 }
-ol.drawer-group span a {
+ol.drawer-group span a,
+ul.wms_sources span a {
     text-decoration: none;
     color: #000;
 }
 
-ol.drawer-group span.indicator {
+ol.drawer-group span.indicator,
+ul.wms_sources span.indicator {
     position: absolute;
     right: 19px;
     top: 4px;
@@ -160,7 +169,8 @@ ol.drawer-group span.indicator {
     height: 19px;
 }
 
-ol.drawer-group h4 {
+ol.drawer-group h4,
+ul.wms_sources h4 {
     color: #fff;
     font-size: 12px;
     font-weight: bold;
@@ -589,7 +599,8 @@ p#selectionRegion{
     color: #0084B4;
 }
 
-ul.timeserie-actions, ul.timeserie-actions li {
+ul.timeserie-actions, 
+ul.timeserie-actions li {
     font-size: .98em;
     list-style: none;
     cursor: pointer;

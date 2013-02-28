@@ -11,7 +11,7 @@ Lizard.Views.Workspace = Marionette.ItemView.extend({
         workspace.set('selected', false);
       })
       this.model.set('selected', true);
-      this.model.trigger('select_workspace',this.model);
+      this.model.trigger('select_workspace', this.model);
     }
   }/*,
   modelEvents: {
