@@ -21,6 +21,18 @@ Lizard.Home.home = function(){
   
   var homeView = new Lizard.Home.DefaultView();
 
+
+  var index = lunr(function () {
+    this.field('title', {boost: 10})
+    this.field('body')
+    this.ref('id')
+  });
+  timeseriesCollection.each(function(ts) {
+    console.log(ts);
+  });
+  // console.log(index);
+
+
   Lizard.App.content.show(homeView);
   Backbone.history.navigate('home');
 };
