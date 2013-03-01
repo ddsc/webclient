@@ -48,7 +48,7 @@ Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
   onBeforeRender: function(){
     this.collection.url = settings.timeseries_url +
-      '?location=' + this.locationuuid;
+      '&location=' + this.locationuuid;
   }
 });
 

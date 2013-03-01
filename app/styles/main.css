@@ -532,6 +532,7 @@ input.input-medium.search-query {
 }
 
 
+#workspaceListRegion ul li label,
 #favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
@@ -543,7 +544,9 @@ input.input-medium.search-query {
     cursor: pointer;
 }
 
-#favoriteRegion ul, 
+#workspaceListRegion ul,
+#workspaceListRegion ul li,
+#favoriteRegion ul,
 #favoriteRegion ul li,
 #filtersRegion ul, 
 #filtersRegion ul li,
@@ -564,6 +567,7 @@ input.input-medium.search-query {
 position: absolute
 }*/
 
+p#workspaceListRegion,
 p#filtersRegion,
 p#locationsRegion,
 p#parametersRegion{
@@ -789,6 +793,7 @@ ul.workspace-actions, ul.workspace-actions li {
 ul.workspace-actions li {
 
 }
+
 
 /**
  * Turn mouse cursor in a spinner on Ajax requests.

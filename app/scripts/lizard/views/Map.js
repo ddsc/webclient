@@ -30,10 +30,12 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data © OpenStreetMap contributors'
     }),
-    // mapbox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
-    //   attribution: 'MapBox'
-    // }),
-    Google :new L.Google()
+    MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+      attribution: 'MapBox'
+    }),
+    Terrain: new L.Google("TERRAIN", {detectRetina: true}),
+    Satellite :new L.Google("SATELLITE", {detectRetina: true}),
+    Hybrid :new L.Google("HYBRID", {detectRetina: true})
   },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
@@ -43,6 +45,39 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
+    });
+
+    var drawnItems = new L.FeatureGroup();
+    this.mapCanvas.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+      draw: {
+        position: 'topleft',
+        polygon: false,
+        circle: false,
+        rectangle: false,
+        polyline: false,
+        marker: {
+          title: 'Annoteren op de kaart'
+        }
+      },
+      edit: {
+        featureGroup: drawnItems
+      }
+    });
+    this.mapCanvas.addControl(drawControl);
+
+    this.mapCanvas.on('draw:created', function (e) {
+      var type = e.layerType,
+        layer = e.layer;
+
+      if (type === 'marker') {
+        var popup = L.popup()
+          .setContent('<div style="height:200px;">'+$('#leaflet-annotation-template').html()+'</div>');
+        layer.bindPopup(popup);
+      }
+
+      drawnItems.addLayer(layer);
     });
 
     var fullScreen = new L.Control.FullScreen();
