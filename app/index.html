@@ -256,13 +256,29 @@
         <div id="map" style="height:90%;"></div>
     </script>
 
+    <script type="text/template" id="leaflet-annotation-template">
+        <div class="span11">
+            <h5>Annotatie</h5>
+            <form class="form-inline">
+                <div class="control-group">
+                  <input type="text" class="input" placeholder="key">
+                  <input type="text" class="input" placeholder="value">
+                </div>
+                <div class="control-group">
+                  <input type="text" class="input" placeholder="key">
+                  <input type="text" class="input" placeholder="value">
+                </div>
+              <button type="submit" class="btn">Opslaan</button>
+            </form>            
+        </div>
+    </script>
 
     <script type="text/template" id="layeritem-template">
 	  <div class="layer-item">
         <span class="action handle">
             <i class="icon-globe"></i>
         </span>
-        <span class="content handle"><%= display_name %> (<%= type %>)</span>
+        <span class="content handle"><%= display_name %></span>
         <span class="indicator">
             <i class="<% if(visibility) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
             <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
@@ -284,9 +300,11 @@
     </script>
 
     <script type="text/template" id="workspace-template">
-        <label class="checkbox">
-            <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
-        </label>
+        
+            <label class="checkbox">
+                <input class="hide" type="checkbox" class="filterCheckbox" <%if(selected){%>class="selected" CHECKED<%}%>><i class="icon-tag"></i> <%= name %> <span class="state hide"><%= selected %></span>
+            </label>
+        
     </script>
 
 
@@ -535,12 +553,6 @@
 	  <ul class="nav pull-right">
 		<li class="dropdown" id="loginRegion">
 		</li>
-		<!-- <li>
-		  <form class="navbar-form pull-right">
-			<label for="searchbox" class="hide">Zoeken</label>
-			<input id="searchbox" class="input-large" style="height:30px;" type="text" placeholder="Zoeken" autocomplete="off">
-		  </form>
-		</li> -->
 	  </ul>
 	</script>
 
@@ -621,12 +633,7 @@
 			  <ul class="nav pull-right">
 				<li class="dropdown" id="loginRegion">
 				</li>
-				<li>
-				  <form class="navbar-form pull-right">
-					<label for="searchbox" class="hide">Zoeken</label>
-					<input id="searchbox" class="input-large" style="height:30px;" type="text" placeholder="Zoeken" autocomplete="off">
-				  </form>
-				</li>
+
 			  </ul>
             </div>
 		  </div>
@@ -808,9 +815,11 @@
         <script src="scripts/lizard/layers/MapLayer.js"></script>
         <script src="scripts/lizard/layers/WMSLayer.js"></script>
         <script src="scripts/lizard/layers/DdscMarkerLayer.js"></script>
+        <script src="scripts/lizard/models/Annotation.js"></script>
 
         <!-- Collections -->
         <script src="scripts/lizard/lizard.collections.js"></script>
+        <script src="scripts/lizard/collections/Annotation.js"></script>
 
         <!-- Views -->
         <script src="scripts/lizard/lizard.views.js"></script>
@@ -833,7 +842,6 @@
         <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
-        <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.overview.js"></script>
         <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 

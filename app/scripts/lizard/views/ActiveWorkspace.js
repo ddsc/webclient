@@ -24,7 +24,6 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
         // this.leafletLayer.setZIndex(100-index*2);
 
   }
-
 });
 
 Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
@@ -46,7 +45,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       stop: function(event, ui) {
         var item = that.collection.get(ui.item.attr('id'));
         ui.item.trigger('drop', {
-          item: item, 
+          item: item,
           index: ui.item.index()
         });
       }

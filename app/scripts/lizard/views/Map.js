@@ -30,9 +30,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data © OpenStreetMap contributors'
     }),
-    // mapbox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
-    //   attribution: 'MapBox'
-    // }),
+    MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+      attribution: 'MapBox'
+    }),
     Terrain: new L.Google("TERRAIN", {detectRetina: true}),
     Satellite :new L.Google("SATELLITE", {detectRetina: true}),
     Hybrid :new L.Google("HYBRID", {detectRetina: true})
@@ -72,7 +72,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         layer = e.layer;
 
       if (type === 'marker') {
-        layer.bindPopup('A popup!');
+        var popup = L.popup()
+          .setContent('<div style="height:200px;">'+$('#leaflet-annotation-template').html()+'</div>');
+        layer.bindPopup(popup);
       }
 
       drawnItems.addLayer(layer);
