@@ -1,4 +1,4 @@
-//create default layout, including regions
+// Create default layout, including regions
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
   regions: {
@@ -12,7 +12,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   onShow: Lizard.Visualsearch.init
 });
 
-//create router
+// Create router
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'map': 'map',
@@ -31,7 +31,7 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
   tagName: 'li'
 });
 
-// create collection for this page
+// Create collection for this page
 workspaceCollection = new Lizard.Collections.Workspace();
 layerCollection = new Lizard.Collections.Layer();
 
@@ -91,7 +91,7 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.workspaceRegion.show(workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
-  //correct place for this?
+  // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
     collection: locationCollection,
     map: leafletView
@@ -112,7 +112,7 @@ Lizard.Map.map = function(lonlatzoom){
   if(lonlatzoom) {
     Backbone.history.navigate('map/' + lonlatzoom);
   } else {
-    Backbone.history.navigate('map/');
+    Backbone.history.navigate('map');
   }
 
 };

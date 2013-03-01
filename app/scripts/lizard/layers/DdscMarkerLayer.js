@@ -49,7 +49,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
         // marker.on('click ' that.showPopup);
         this.markers.addLayer(marker);
       } catch (e) {
-        console.log('location has no geometry. error: ' + e)
+        console.log('Location has no geometry. Error: ' + e);
       }
 
     }
