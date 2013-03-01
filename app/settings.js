@@ -1,4 +1,4 @@
-var extra = ''; //page_size=0
+var extra = '?page_size=300'; //page_size=0
 
 var domain = (domain ? domain : 'http://test.api.dijkdata.nl/api/v0/');
 
