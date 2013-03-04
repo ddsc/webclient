@@ -22,12 +22,13 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     $('#modal-graph-wrapper').find('.flot-graph').empty();
     modalView = new Lizard.Map.ModalTimeseriesView();
     modalView.locationuuid = model.attributes.uuid;
-    modalView.location = model.attributes.name;
+    // modalView.location = model.attributes.name;
     Lizard.mapView.modalitems.show(modalView.render());
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
     $('#location-modal').modal();
-    console.log($('#location-modal').find('#' + this.uuid));
-    $('#location-modal').find('#' + this.uuid).collapse();
+    // this.model.set({onOpen: true})
+    var item = modalView.children.findByModel(this.model);
+    item.openfromPopup(this.uuid);
   }
 });
 
@@ -42,7 +43,7 @@ Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
   }
 });
 
-Lizard.Map.ModalTimeserie = Lizard.Map.TimeserieView.extend({
+Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
   template: function(model){
     return _.template($('#location-modal-timeserie').html(), {
       name: model.name,
@@ -69,17 +70,22 @@ Lizard.Map.ModalTimeserie = Lizard.Map.TimeserieView.extend({
   },
   // One Timeserie has many Events. An Events list is only
   // loaded when it is explcitly chosen, with caching.
-  drawGraph: function(clickedon){
+  drawGraph: function() {
     // Gets the element that is clicked and it's datasets
-    var data_url = clickedon.target.dataset.url;
+    var data_url = this.model.attributes.events;
     $('#modal-graph-wrapper').removeClass('hidden');
     $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
+  },
+  openfromPopup: function() {
+    uuid = this.model.url.split("eries/")[1].split("/")[0];
+    this.drawGraph();
+    $('#location-modal').find('#' + uuid).collapse();
   }
 });
 
 // Modal view that opens when clicking on a location
 Lizard.Map.ModalTimeseriesView = Lizard.Map.TimeseriesView.extend({
-  itemView: Lizard.Map.ModalTimeserie,
+  itemView: Lizard.Map.ModalTimeserieView,
   onRender: function (model){
     $('#location-modal-label').html(this.location);
   }
