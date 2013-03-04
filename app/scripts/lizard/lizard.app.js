@@ -20,6 +20,7 @@ Proj4js.defs["EPSG:28992"]= "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.3876
 // Define Lizard namespace
 Lizard = {};
 Lizard.Layers = {};
+Lizard.Layers.Custom = {};
 Lizard.Popups = {};
 Lizard.Map = {};
 

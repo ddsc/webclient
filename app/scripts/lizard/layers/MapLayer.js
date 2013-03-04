@@ -1,3 +1,6 @@
+
+LAYER_CLASSES = {}
+
 //  Base class for layers
 //
 //

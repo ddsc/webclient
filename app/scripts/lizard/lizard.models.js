@@ -57,7 +57,16 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
   initialize: function(obj) {
     this.set('display_name', obj.wms_source.display_name);
     this.set('type', obj.wms_source.type);
-    this.set('layer', new Lizard.Layers.WMSLayer(obj.wms_source));
+
+    //temp until API is fixed. todo
+    try {
+      this.set('type', obj.wms_source.metadata.type);
+    } catch(e) {
+
+    }
+    var layerClass = LAYER_CLASSES[this.get('type')];
+
+    this.set('layer', new layerClass(obj.wms_source));
     this.get('layer').set('order', this.get('order'));
     this.on('change:order', function(model){
       model.get('layer').set('order',model.get('order'));

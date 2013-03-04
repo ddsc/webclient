@@ -38,12 +38,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     Hybrid :new L.Google("HYBRID", {detectRetina: true})
   },
   extraLayers: {
-  grondwater:  L.tileLayer.wms("http://www.dinoloket.nl/arcgis/rest/services/dinoloket/gw_gwst_rd_dynamic/MapServer/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image", {
-    layers: 'test',
-    format: 'png32',
-    transparent: true,
-    attribution: "Dijkdata"
-  })
   },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
@@ -121,59 +115,21 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.initWorkspace();
     this._initialEvents();
 
-    this.mapCanvas.on('click', this.onMapClick)
+    this.mapCanvas.on('click', this.onMapClick);
 
   },
   onMapClick: function(event) {
+    var that = this;
     var coords = event.latlng;
 
-    geometry = event.latlng;
-    imageDisplay = this.getSize(); //x, y
+    layer = null; //todo
 
-    var base_url = 'http://www.dinoloket.nl/arcgis/rest/services/dinoloket/gw_gwst_rd_dynamic/MapServer/identify?'
 
-    var source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
-    var dest = new Proj4js.Proj('EPSG:28992');     //destination coordinates in RDS
 
-    // transforming point coordinates
-    var p = new Proj4js.Point(event.latlng.lng,event.latlng.lat,0);   //any object will do as long as it has 'x' and 'y' properties
-    var p_rds = Proj4js.transform(source, dest, p);      //do the transformation.  x and y are modified in place
-
-    param = {
-      geometry:'{"x":'+ p_rds.x +',"y":'+ p_rds.y +'}',
-      layers:'top:0',
-      f:'json',
-      returnGeometry:true,
-      mapExtent: '118894,466402.4,143086,480917.6',//this.getBounds().toBBoxString(),
-      geometryType:'esriGeometryPoint',
-      sr: '28992',
-      imageDisplay: this.getSize().x + ',' + this.getSize().y + ',256',
-      tolerance:'15',
-      layerDefs:'{}'
-    }
-
-    var url = base_url + $.param(param)
-
-    $.ajax({
-      url: 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url}),
-      dataType: "html",
-      type: "GET",
-      //async: false,
-      success: function(data) {
-        debugger;
-        if (data.indexOf("<table") != -1) {
-          popup.setContent(data);
-          popup.setLatLng(e.latlng);
-          map.openPopup(popup);
-
-          // dork with the default return table - get rid of geoserver fid column, apply bootstrap table styling
-          /*if ($(".featureInfo th:nth-child(1)").text() == "fid") $('.featureInfo td:nth-child(1), .featureInfo th:nth-child(1)').hide();
-           $("caption.featureInfo").removeClass("featureInfo");
-           $("table.featureInfo").addClass("table").addClass("table-striped").addClass("table-condensed").addClass("table-hover").removeClass("featureInfo");*/
-        }
-      }
+    layer.getFeatureInfo(event, {}, function(data) {
+      var popup = L.popup().setContent(layer.getPopupContent(data)).setLatLng(coords);
+      that.openPopup(popup);
     });
-
   },
   initWorkspace: function() {
     var that = this;
