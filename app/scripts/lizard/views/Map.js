@@ -133,7 +133,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     var base_url = 'http://www.dinoloket.nl/arcgis/rest/services/dinoloket/gw_gwst_rd_dynamic/MapServer/identify?'
 
     var source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
-    var dest = new Proj4js.Proj('EPSG:28992');     //destination coordinates in LCC, south of France
+    var dest = new Proj4js.Proj('EPSG:28992');     //destination coordinates in RDS
 
     // transforming point coordinates
     var p = new Proj4js.Point(event.latlng.lng,event.latlng.lat,0);   //any object will do as long as it has 'x' and 'y' properties
@@ -217,19 +217,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       that.addLayer(layerModel);
     });
   },
-//  //reorder layers
-//  sortWorkspace: function() {
-//    console.log('sortWorkspace - now  happens in Lizard.Views.ActiveWorkspace drop');
-//    var that = this;
-//    this.workspace.each( function(workspaceItem) {
-//      debugger;
-//      var layer = workspaceItem.get('layer');
-//      var index = that.workspace.indexOf(workspaceItem);
-//      layer.getLeafletLayer().setZIndex(50 - 2 * index);
-//    });
-//  },
   changeOrderOfLayer: function(layerModel) {
-    var layer = layerModel.get('layer').getLeafletLayer().setZIndex(100 - 2 * layerModel.get('order'));
+    var layer = layerModel.get('layer').getLeafletLayer().setZIndex(100 - layerModel.get('order'));
   },
   //set layer visibility
   changeVisibilityLayer: function(layerModel) {
