@@ -47,14 +47,6 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="styles/MarkerCluster.Default.ie.css" /><![endif]-->
     <link rel="stylesheet" href="styles/MarkerCluster.css" />
 
-	<script src="scripts/vendor/raven.min.js"></script>
-	<!-- Only use raven logging to sentry if on staging or production.
-         i.e. test.dijkdata.nl or dijkdata.nl. -->
-	<script type="text/javascript">
-	  if (window.location.origin.indexOf('dijkdata.nl') !== -1) {
-        Raven.config('https://5cf7a2111d5d4f0b994bd3a83f32f8a9@sentry.lizard.net/5').install();
-	  }
-	</script>
     <script src="scripts/vendor/modernizr.min.js"></script>
 
     <!-- Template definitions -->
@@ -341,8 +333,8 @@
 
     <script type="text/template" id="location-modal-timeserie">
         <div class="timeserie-item oselect">
-            <h5 data-toggle="collapse" data-target="#<%=timeserie.uuid%>"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5>
-            <div id="<%=timeserie.uuid%>" class="collapse">
+            <h5 class="modal-collapse-toggle"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5></a>
+            <div id="<%=timeserie.uuid%>" class="collapse modaltimeserie" >
                 <ul class="timeserie-actions">
                     <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
                     <li class="graph-this" data-url="<%= timeserie.events%>"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Teken Grafiek</li>
@@ -351,6 +343,13 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="location-popup-timeserie">
+        <div class="timeserie-item oselect">
+            <h5 class="popup-toggle"><i class="icon-bar-chart">
+            </i>&nbsp;<%= timeserie.name %></h5>
         </div>
     </script>
 
@@ -779,6 +778,7 @@
         <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
+        <script src="scripts/vendor/backbone-localstorage.js"></script>
         <script src="scripts/vendor/backbone.marionette.min.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
@@ -811,6 +811,15 @@
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.tooltip.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload.js"></script>
+
+        <script src="scripts/vendor/raven.min.js"></script>
+        <!-- Only use raven logging to sentry if on staging or production.
+               i.e. test.dijkdata.nl or dijkdata.nl. -->
+        <script type="text/javascript">
+          if (window.location.host.indexOf('dijkdata.nl') !== -1) {
+              Raven.config('https://5cf7a2111d5d4f0b994bd3a83f32f8a9@sentry.lizard.net/5').install();
+          }
+        </script>
 
         <script src="scripts/lizard/lizard.app.js"></script>
 
