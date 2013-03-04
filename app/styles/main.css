@@ -805,3 +805,12 @@ html.busy, html.busy * {
 }
 
 .leaflet-control-zoom-fullscreen { background-image: url('../images/icon-fullscreen.png'); }
+
+/** Leaflet overrrides
+**/
+.leaflet-popup-content {
+    width: 300px;
+    }
+.leaflet-popup-content ul{
+    list-style: none;
+}
