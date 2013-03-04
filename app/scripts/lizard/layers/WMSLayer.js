@@ -28,7 +28,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
   getLeafletLayer: function() {
     if (!this.leafletLayer) {
       this.leafletLayer = L.tileLayer.wms(this.attributes.wms_url, {
-        zIndex: 100 - this.order,
+        zIndex: 100 - this.attributes.order,
         layers: this.attributes.layer_name,
         format: this.attributes.format,
         transparent: this.attributes.transparent,

@@ -18,11 +18,6 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     } else {
       this.model.set({ visibility: true });
     }
-  },
-  updateOrder: function() {
-    console.log($(this.model.attributes.display_name).index());
-        // this.leafletLayer.setZIndex(100-index*2);
-
   }
 });
 
@@ -36,8 +31,16 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   },
   drop: function(event, args) {
     this.collection.move(args.item, args.index);
-    args.item.set({order: args.index});
-    args.item.attributes.layer.leafletLayer.setZIndex(100 - args.index);
+    this.updateOrderFieldOfItems();
+    //args.item.set({order: args.index});
+    //args.item.attributes.layer.leafletLayer.setZIndex(100 - args.index);
+  },
+  updateOrderFieldOfItems: function() {
+    index=0;
+    this.collection.each(function(workspaceItem) {
+      workspaceItem.set('order',index);
+      index = index + 1;
+    });
   },
   onShow: function () {
     var that = this;
