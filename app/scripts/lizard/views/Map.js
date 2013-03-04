@@ -160,7 +160,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       type: "GET",
       //async: false,
       success: function(data) {
-        debugger;
         if (data.indexOf("<table") != -1) {
           popup.setContent(data);
           popup.setLatLng(e.latlng);

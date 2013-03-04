@@ -1,4 +1,4 @@
-Lizard.collections.Annotation = Backbone.Collection.extend({
+Lizard.Models.Annotation = Backbone.Collection.extend({
 	localStorage: new Backbone.LocalStorage("annotations"),
-	model: Lizard.models.Annotation
+	model: Lizard.Models.Annotation
 });

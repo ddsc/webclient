@@ -22,13 +22,13 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     $('#modal-graph-wrapper').find('.flot-graph').empty();
     modalView = new Lizard.Map.ModalTimeseriesView();
     modalView.locationuuid = model.attributes.uuid;
-    // modalView.location = model.attributes.name;
+    modalView.location = model.attributes.name;
     Lizard.mapView.modalitems.show(modalView.render());
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
+    this.model.set({onOpen: true});
     $('#location-modal').modal();
-    // this.model.set({onOpen: true})
-    var item = modalView.children.findByModel(this.model);
-    item.openfromPopup(this.uuid);
+    // var item = modalView.children.findByModel(this.model);
+    // item.openfromPopup(this.uuid);
   }
 });
 
@@ -40,7 +40,7 @@ Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
   onBeforeRender: function(){
     this.collection.url = settings.timeseries_url +
       '&location=' + this.locationuuid;
-  }
+  },
 });
 
 Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
@@ -51,9 +51,23 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
       events: model.events,
     }, {variable: 'timeserie'});
   },
+  uuid: null,
+  onRender: function() {
+    this.uuid = this.model.url.split("eries/")[1].split("/")[0];
+    if (this.model.attributes.onOpen){
+      $('#' + this.uuid).collapse({toggle: true});
+    } else {
+      $('#' + this.uuid).collapse();
+      this.collapseToggle()
+    }
+  },
   events: {
     'click .graph-this': "drawGraph",
     'click .fav': 'toggleFavorite',
+    'click .modal-collapse-toggle': 'collapseToggle',
+  },
+  collapseToggle: function(){
+    $('#' + this.uuid).collapse('toggle');
   },
   toggleFavorite: function() {
     var favorite = this.model.get('favorite');
@@ -79,7 +93,7 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
   openfromPopup: function() {
     uuid = this.model.url.split("eries/")[1].split("/")[0];
     this.drawGraph();
-    $('#location-modal').find('#' + uuid).collapse();
+    // $('#' + uuid).collapse();
   }
 });
 
