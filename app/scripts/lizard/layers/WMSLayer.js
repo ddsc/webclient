@@ -17,7 +17,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
     type: null, //='wms'
     addedToMap: false,
     proxyForWms: false,//todo: add support
-    proxyForGetInfo: false,
+    proxyForGetInfo: true,//todo: for the time being, until supported by Lizard-wms
     //specific settings for wms overlays
     layer_name: '',
     styles: null,
@@ -48,9 +48,9 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
   //event: leaflet click event
   //map: leaflet map object
   //callback: function called after a successful fetch of data
-  getFeatureInfo: function(event, map, callback) {//todo: tot hier gekomen
+  getFeatureInfo: function(event, map, options, callback) {//todo: tot hier gekomen
     var url = this._getFeatureInfoRequestUrl(event, map);
-    if (this.proxyForGetInfo) {
+    if (this.get('proxyForGetInfo')) {
       url = 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url})
     }
 
@@ -66,7 +66,30 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
 
   },
   _getFeatureInfoRequestUrl: function(event, map) {
-    return 'todo';//todo
+
+    var params = {
+      BBOX: map.getBounds().toBBoxString(),
+      WIDTH: map.getSize().x,
+      HEIGHT: map.getSize().y,
+      X: map.layerPointToContainerPoint(event.layerPoint).x,
+      Y: map.layerPointToContainerPoint(event.layerPoint).y,
+      SERVICE: 'WMS',
+      VERSION: '1.1.1',
+      REQUEST: 'GetFeatureInfo',
+      LAYERS: this.get('layer_name'),
+      QUERY_LAYERS: this.get('layer_name'),
+      STYLES: this.get('styles'),
+      FORMAT: this.get('format'),
+      FEATURE_COUNT: 5,
+      INFO_FORMAT: 'text/html',
+      SRS: 'EPSG:4326'
+    }
+
+    var url = this.get('wms_url') + '?'+ $.param(params);
+    return url;
+  },
+  getPopupContent: function(data) {
+    debugger;
   }
 });
 

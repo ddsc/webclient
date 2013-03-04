@@ -2,11 +2,14 @@ Lizard.Views.Workspace = Marionette.ItemView.extend({
   template: '#workspace-template',
   tagName: 'li',
   className: 'drawer-item',
+  initialize: function () {
+    this.model.bind('change', this.render);
+  },
   events: {
-    'click input': 'toggle'
+    'click .layer-item': 'select'
   },
   //create a radio button (one workspace selected at a time)
-  toggle: function(e) {
+  select: function(e) {
     if(this.model.get('selected') === false) {
       this.model.collection.each(function(workspace) {
         workspace.set('selected', false);
@@ -40,7 +43,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   workspaceView: null,
   collection: null, //workspaceCollection,
   tagName: 'ul',
-  className: 'wms_sources',
+  className: 'wms_sources drawer-group',
   itemView: Lizard.Views.Workspace, //todo: make radio button
   selectWorkspace: function(selectedModel) {
     this.workspaceView.setWorkspace(selectedModel);

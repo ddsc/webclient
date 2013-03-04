@@ -113,7 +113,7 @@ ul.wms_sources span {
 
 ol.drawer-group,
 ul.wms_sources {
-    padding: 8px 10px;
+    padding: 3px 10px 3px;
     position: relative;
     margin: 0;
 }
@@ -167,6 +167,10 @@ ul.wms_sources span.indicator {
     top: 4px;
     width: 19px;
     height: 19px;
+}
+span.chevron-right {
+    position: absolute;
+    right: 0px;
 }
 
 ol.drawer-group h4,
@@ -535,6 +539,10 @@ input.input-medium.search-query {
     width: 120px;
 }
 
+#workspaceRegion .selected,
+#workspaceListRegion .selected {
+    font-weight: bold;
+}
 
 #workspaceListRegion ul li label,
 #favoriteRegion ul li label,
@@ -548,8 +556,7 @@ input.input-medium.search-query {
     cursor: pointer;
 }
 
-#workspaceListRegion ul,
-#workspaceListRegion ul li,
+
 #favoriteRegion ul,
 #favoriteRegion ul li,
 #filtersRegion ul, 

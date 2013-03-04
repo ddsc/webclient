@@ -1,5 +1,5 @@
 Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
-  template: '#layeritem-template',
+  template: '#workspaceitem-template',
   tagName: 'li',
   className: 'drawer-item',
   initialize: function () {
@@ -10,13 +10,23 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     this.el.setAttribute("id", this.model.attributes.id);
   },
   events: {
-    'click .layer-item .indicator': 'toggleVisibility'
+    'click .layer-item .indicator': 'toggleVisibility',
+    'click .layer-item .content': 'select'
   },
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
       this.model.set({ visibility: false });
     } else {
       this.model.set({ visibility: true });
+    }
+  },
+  select: function(e) {
+    if(this.model.get('selected') === false) {
+      this.model.collection.each(function(workspaceItem) {
+        workspaceItem.set('selected', false);
+      });
+      this.model.set('selected', true);
+      //this.model.trigger('select_layer', this.model);
     }
   }
 });

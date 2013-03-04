@@ -2,8 +2,39 @@
 //
 //
 Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
+  defaults: {
+    display_name: '',
+    visibility: false,
+    opacity: 100,
+    order: 0,
+    //extra info and links
+    description: null,
+    metadata: null,
+    legend_url: null,
+    enable_search: true,
+    //program settings
+    type: 'dino', //='wms'
+    addedToMap: false,
+    proxyForWms: false,//todo: add support
+    proxyForGetInfo: true,
+    //specific settings for wms overlays
+    layer_name: '',
+    styles: null,
+    format: 'png32',
+    height: null,
+    width: null,
+    tiled: null,
+    transparent: true,
+    wms_url: ''
+  },
+  initialize: function () {
+    this.set('type', 'dino');
+    this.set('proxyForGetInfo', true);
+
+  },
   _getNewLeafletLayer: function() {
     return  L.tileLayer.wms(this.get('wms_url') + "/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image", {
+      zIndex: 100 - this.attributes.order,
       layers: 'test',
       format: 'png32',
       transparent: true,

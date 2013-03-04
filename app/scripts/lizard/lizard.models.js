@@ -74,7 +74,8 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
   },
   defaults: {
     order: 0,
-    visibility: true
+    visibility: true,
+    selected: false
   }
 });
 
@@ -86,7 +87,7 @@ Lizard.Models.Workspace = Backbone.AssociatedModel.extend({
   }],
   defaults: {
     name: '',
-    id: null,
+    id: "",
     selected: false
   }
 });
