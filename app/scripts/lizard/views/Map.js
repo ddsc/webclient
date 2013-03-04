@@ -131,8 +131,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     imageDisplay = this.getSize(); //x, y
 
     var base_url = 'http://www.dinoloket.nl/arcgis/rest/services/dinoloket/gw_gwst_rd_dynamic/MapServer/identify?'
-    // geometry=&layers=top%3A0&f=json&returnGeometry=true&
-    // mapExtent=118894%2C466402%2E4%2C143086%2C480917%2E6&geometryType=esriGeometryPoint&sr=28992&imageDisplay=900%2C540%2C96&tolerance=3&layerDefs=%7B%7D
 
     var source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
     var dest = new Proj4js.Proj('EPSG:28992');     //destination coordinates in LCC, south of France
