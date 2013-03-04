@@ -27,8 +27,12 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
     this.model.set({onOpen: true});
     $('#location-modal').modal();
-    // var item = modalView.children.findByModel(this.model);
-    // item.openfromPopup(this.uuid);
+    var item = modalView.children.findByModel(this.model);
+    console.log(item)
+    if (item._isShown){
+      console.log('ik kom hier langs')
+      item.openfromPopup();
+    }
   }
 });
 
@@ -52,14 +56,18 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
     }, {variable: 'timeserie'});
   },
   uuid: null,
-  onRender: function() {
-    this.uuid = this.model.url.split("eries/")[1].split("/")[0];
-    if (this.model.attributes.onOpen){
-      $('#' + this.uuid).collapse({toggle: true});
-    } else {
-      $('#' + this.uuid).collapse();
-      this.collapseToggle()
-    }
+  initialize: function() {
+    this.uuid = this.model.url.split("eries/")[1].split("/")[0];    
+  },
+  openfromPopup: function() {
+    // this.$el.find('.graph-this').trigger('click');
+
+    // if (this.model.attributes.onOpen){
+    //   $('#' + this.uuid).collapse({toggle: true});
+    // } else {
+    //   $('#' + this.uuid).collapse();
+    //   this.collapseToggle()
+    // }
   },
   events: {
     'click .graph-this': "drawGraph",
@@ -90,11 +98,6 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
     $('#modal-graph-wrapper').removeClass('hidden');
     $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
   },
-  openfromPopup: function() {
-    uuid = this.model.url.split("eries/")[1].split("/")[0];
-    this.drawGraph();
-    // $('#' + uuid).collapse();
-  }
 });
 
 // Modal view that opens when clicking on a location
