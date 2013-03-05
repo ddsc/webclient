@@ -17,11 +17,25 @@ a {
 div#brand {
     display: block;
     float: left;
-    padding: 10px 23px 10px;
-    width: 30px;
-    height: 20px;
-    background-image: url('../images/ddsc-logo.png');
+    margin: 10px 23px 10px;
+    width: 72px;
+    height: 21px;
+    background-image: url('../images/ddsc-logo-bw-nav.png');
+    background-position: 0 -18px;
     background-repeat: no-repeat;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-out;
+    -moz-transition: background 0.2s ease-out;
+    -webkit-transition: background 0.2s ease-out;
+    transition: background 0.2s ease-out;
+}
+div#brand:hover {
+    background-position: 0 5;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -webkit-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in;
 }
 
 #map {
@@ -841,7 +855,7 @@ html.busy, html.busy * {
 /** Leaflet overrrides
 **/
 .leaflet-popup-content {
-    width: 300px;
+    width: 350px;
     }
 .leaflet-popup-content ul{
     list-style: none;
