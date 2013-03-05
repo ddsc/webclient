@@ -194,7 +194,6 @@
             </div>
             <div id="location-modal-footer" class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <button class="btn btn-primary">Sla op in Collage</button>
             </div>
         </div>
 
@@ -340,23 +339,31 @@
 
     <script type="text/template" id="location-modal-timeserie">
         <div class="timeserie-item oselect">
-            <h5 class="modal-collapse-toggle"><i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %></h5></a>
-            <div id="<%=timeserie.uuid%>" class="collapse modaltimeserie" >
-                <ul class="timeserie-actions">
-                    <li class="fav"><i class="icon-star-empty"></i>Favoriet</li>
-                    <li class="graph-this" data-url="<%= timeserie.events%>"><i class="icon-circle-arrow-right hidden-phone"></i><i class="icon-circle-arrow-up hidden-tablet hidden-desktop"></i>Teken Grafiek</li>
-                    <li class="add">
-                        <i class="icon-plus"></i> Voeg toe aan collage
-                    </li>
-                </ul>
-            </div>
+            <h5 class="modaltimeserie">
+            <i class="icon-star-empty fav"></i> &nbsp;
+              <span class="graph-this" data-url="<%= timeserie.events%>">
+                <i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %>
+              </span>
+              <span class="pull-right">
+                <span class="badge badge-info"><%= Math.floor(Math.random() * 10)/10 %></span>
+                <i class="icon-comment"></i>
+                <span class="miniscule"><%= Math.floor(Math.random() * 10) %>
+                </span>
+              </span>
+            </h5>
         </div>
     </script>
 
     <script type="text/template" id="location-popup-timeserie">
         <div class="timeserie-item oselect">
             <h5 class="popup-toggle"><i class="icon-bar-chart">
-            </i>&nbsp;<%= timeserie.name %><span class="icon-comment pull-right"></span></h5>
+            </i>&nbsp;<%= timeserie.name %>
+              <span class="pull-right">
+                <span class="badge badge-info"><%= Math.floor(Math.random() * 10)/10 %></span>
+                <i class="icon-comment"></i>
+                <span class="miniscule"><%= Math.floor(Math.random() * 10) %></span>
+              </span>
+            </h5>
         </div>
     </script>
 
