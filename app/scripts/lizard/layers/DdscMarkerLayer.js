@@ -58,7 +58,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   showPopup: function(e) {
     var marker = e.target;
     var innerStuff = Lizard.Popups.DdscTimeseries.getPopupContent(marker);
-    marker.bindPopup(innerStuff, { minWidth: 400, maxWidth: 450});
+    marker.bindPopup(innerStuff, { minWidth: 400, maxWidth: 450, maxHeight: 300});
     marker.openPopup();
   },
   // largePopupContent: Lizard.Views.TimeserieView,

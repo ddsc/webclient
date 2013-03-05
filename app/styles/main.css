@@ -570,16 +570,23 @@ input.input-medium.search-query {
     font-weight: bold;
 }
 
+#ddsc_temp ul li div,
 #workspaceListRegion ul li label,
 #favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
 #parametersRegion ul li label,
-#selectionRegion ul li label{
+#selectionRegion ul li label,
+#extraLayersRegion ul li label,
+{
     font-size: .95em;
     padding-left: -15px !important;
     margin-left: -15px !important;
     cursor: pointer;
+}
+
+#ddsc_temp ul{
+    margin-left: 10px;
 }
 
 
@@ -594,20 +601,19 @@ input.input-medium.search-query {
 #selectionRegion ul, 
 #selectionRegion ul li,
 #location-modal-body ul,
-#location-modal-body ul li{
+#location-modal-body ul li,
+#extraLayersRegion ul li,
+#ddsc_temp ul li{
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-/*#favoriteRegion ul{
-position: absolute
-}*/
-
 p#workspaceListRegion,
 p#filtersRegion,
 p#locationsRegion,
-p#parametersRegion{
+p#parametersRegion,
+p#extraLayersRegion{
     height: 150px;
     overflow-y: auto;
     overflow-x: none;
@@ -625,8 +631,14 @@ p#selectionRegion{
     overflow:auto;
 }
 
+.ddsc-item{
+    margin-top: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
 .favorite-item h5,
-.timeserie-item h5 {
+.timeserie-item h5,
+.ddsc-item h5 {
     text-decoration: none; 
     text-overflow: ellipsis; 
     padding: 0;
