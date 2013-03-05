@@ -860,3 +860,24 @@ html.busy, html.busy * {
 .leaflet-popup-content ul{
     list-style: none;
 }
+
+
+
+
+ul.homepage-list{
+    padding: 3px;
+    margin: 0;
+}
+
+ul.homepage-list li{
+    vertical-align: middle;
+    list-style: none;
+    padding: 1;
+    margin: 0;
+}
+ul.homepage-list li button {
+    margin: 25px;
+}
+ul.homepage-list li.odd{
+    background-color: #f7f7f7;
+}
