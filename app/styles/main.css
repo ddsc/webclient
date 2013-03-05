@@ -13,6 +13,10 @@ a {
 	cursor: pointer;
 }
 
+h3, h4, h5{
+    font-family: Lato, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
 
 div#brand {
     display: block;
@@ -251,7 +255,9 @@ input.input-medium.search-query {
 
 }
 #threecol-wrapper h3 {
-     font: normal 200 21px/1.2 Pill, "Helvetica Neue", Helvetica, sans-serif;
+     /*font: normal 200 21px/1.2 Pill, "Helvetica Neue", Helvetica, sans-serif;*/
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
 }
 
 /* Graph stuff*/
@@ -327,6 +333,9 @@ input.input-medium.search-query {
 .modaltimeserie{
     height: auto;
 }
+.miniscule{
+    font-size: 0.65em;
+}
 
 #modal-graph-wrapper{
     height: 300px;
@@ -341,6 +350,9 @@ input.input-medium.search-query {
     opacity: 0.5;
 }
 
+.popup-toggle > .pull-right{
+    margin-right:5px;
+}
 
 .flot-graph > span.loading { background-image: url('../images/loading.gif'); }
 .flot-graph > span.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
@@ -854,9 +866,8 @@ html.busy, html.busy * {
 
 /** Leaflet overrrides
 **/
-.leaflet-popup-content {
-    width: 350px;
-    }
+
+
 .leaflet-popup-content ul{
     list-style: none;
 }

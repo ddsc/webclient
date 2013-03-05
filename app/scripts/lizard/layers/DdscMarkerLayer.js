@@ -41,7 +41,8 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
             clickable: true,
             name: attributes.name,
             bbModel: model,
-            code: attributes.code
+            code: attributes.code,
+            
           });
 
         //marker.on('mouseover', this.updateInfo);
@@ -57,7 +58,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   showPopup: function(e) {
     var marker = e.target;
     var innerStuff = Lizard.Popups.DdscTimeseries.getPopupContent(marker);
-    marker.bindPopup(innerStuff);
+    marker.bindPopup(innerStuff, { minWidth: 400, maxWidth: 450});
     marker.openPopup();
   },
   // largePopupContent: Lizard.Views.TimeserieView,
