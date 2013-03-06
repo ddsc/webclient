@@ -141,13 +141,17 @@
     </script>
 
     <script type="text/template" id="homepage-searchresult-template">    
-      <div> 
-         <h5>Zoekresultaten</h5>
-         <ul class="homepage-list">
-           <% for(var name in data) { %>
-               <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#map"><%= data[name].attributes.name %></a></li>
-           <% } %>
-         </ul>
+      <div class="span12 measure-details" id="homepage-searchresults">
+        <div class="measure-info-header"> 
+           <h4><em class="icon-search icon-white"></em>&nbsp;Zoekresultaten voor "<%=term%>"</h4>
+        </div>
+        <div id="graphs">
+           <ul class="homepage-list">
+             <% for(var name in data) { %>
+                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#map"><%= data[name].attributes.name %></a></li>
+             <% } %>
+           </ul>
+        </div>
       </div>
     </script>
 

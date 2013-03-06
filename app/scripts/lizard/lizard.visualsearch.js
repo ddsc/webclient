@@ -50,7 +50,7 @@ Lizard.Visualsearch = {
               var render_results = [];
               _.each(search_results, function(sr) { render_results.push(timeseriesCollection.get(sr.ref)); });
               $('#homepage-search-results').html("");
-              $('#homepage-search-results').append(_.template(search_results_view, { data:render_results }));
+              $('#homepage-search-results').append(_.template(search_results_view, { data:render_results, term: search.attributes.value }));
             }
           });
         },

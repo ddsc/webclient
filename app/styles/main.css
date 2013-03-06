@@ -908,3 +908,7 @@ ul.homepage-list li .icon-chevron-right {
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
 }
+
+#homepage-searchresults {
+    margin-top: -20px;
+}
