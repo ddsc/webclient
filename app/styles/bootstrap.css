@@ -5601,6 +5601,7 @@ a.badge:hover {
 
 .pull-right {
   float: right;
+  -moz-top: -13px;
 }
 
 .pull-left {
