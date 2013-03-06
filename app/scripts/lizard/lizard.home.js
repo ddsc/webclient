@@ -21,16 +21,27 @@ Lizard.Home.home = function(){
   
   var homeView = new Lizard.Home.DefaultView();
 
-
-  var index = lunr(function () {
-    this.field('title', {boost: 10})
-    this.field('body')
-    this.ref('id')
+  // This is lunr.js, see http://lunrjs.com/ for more information
+  // Define the search index for timeseries
+  var timeseries_idx = lunr(function () {
+    this.field('name', {boost: 10});
+    this.ref('id');
   });
-  timeseriesCollection.each(function(ts) {
-    console.log(ts);
+  // Fetch the entire timeseries collection...
+  timeseriesCollection.fetch({
+    success: function(e) {
+      // ...and on success, loop over every model in the collection
+      _.each(e.models, function(ts) {
+        // Then, add each model to the timeseries index.
+        timeseries_idx.add({
+          'name': ts.attributes.name,
+          'id': ts.id
+        });
+      });
+    }
   });
-  // console.log(index);
+  window.timeseries_idx = timeseries_idx; // Attach to the window variable
+  console.log('timeseries_idx:', timeseries_idx);
 
 
   Lizard.App.content.show(homeView);

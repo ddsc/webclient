@@ -24,8 +24,8 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Graphs.Timeseries = timeseriesCollection;
-Lizard.Graphs.Timeseries.fetch();
+// Lizard.Graphs.Timeseries = timeseriesCollection;
+// Lizard.Graphs.Timeseries.fetch();
 
 
 Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({

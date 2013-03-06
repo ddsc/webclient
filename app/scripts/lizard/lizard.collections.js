@@ -61,6 +61,11 @@ Lizard.Collections.Collage = Backbone.Collection.extend({
 
 /* TIMESERIES COLLECTIONS */
 Lizard.Collections.Timeseries = Backbone.Collection.extend({
+  initialize: function(){
+   this.fetch({
+      cache: false
+    });
+  },
   url: settings.timeseries_url,
   model: Lizard.Models.Timeserie
 });
@@ -82,39 +87,3 @@ filterCollection = new Lizard.Collections.Filter();
 locationCollection = new Lizard.Collections.Location();
 parameterCollection = new Lizard.Collections.Parameter();
 timeseriesCollection = new Lizard.Collections.Timeseries();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // layerCollection.fetch({success: function(layercollection) {
-  //   var lyrs = {};
-  //   // Add every layer in the collection to Leaflet
-  //   _.each(layercollection.models, function(model) {
-  //     // console.log('Adding layer "' + model.attributes.layer_name + '" to Leaflet');
-  //     var lyr = L.tileLayer.wms(model.attributes.wms_url, {
-  //       layers: model.attributes.layer_name,
-  //       format: model.attributes.format,
-  //       transparent: model.attributes.transparent,
-  //       opacity: model.attributes.opacity,
-  //       attribution: 'DDSC'
-  //     });
-  //     lyrs[model.attributes.display_name] = lyr;
-  //   });
-  //   L.control.layers([], lyrs).addTo(window.mapCanvas);
-  // }});
