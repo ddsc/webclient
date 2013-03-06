@@ -92,34 +92,23 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     $('#modal').on('show', this.updateModal); //todo: ref to modal
     $('#map').css('height', $(window).height()- $('.footer').height() - $('.navbar').height() - 100);
 
-    var that = this;
-
-    function fixzoom(e) {
-      that.mapCanvas.zoomOut(false);
-      that.mapCanvas.off('viewreset', fixzoom);
-    }
-    that.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
-    that.mapCanvas.on('viewreset', fixzoom);
-
-    // window.mapCanvas.invalidateSize()
 
     var mapMove = function(e) {
-      var c = that.mapCanvas.getCenter();
-      var z = that.mapCanvas.getZoom();
-      that.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
+      var c = this.mapCanvas.getCenter();
+      var z = this.mapCanvas.getZoom();
+      this.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
       Backbone.history.navigate('map/' + [c.lng, c.lat, z].join(','));
     };
 
-    that.mapCanvas.on('moveend', mapMove);
+    this.mapCanvas.on('moveend', _.bind(mapMove, this));
 
     this.initWorkspace();
     this._initialEvents();
 
-    this.mapCanvas.on('click', this.onMapClick, this);
+    this.mapCanvas.on('click', _.bind(this.onMapClick, this));
 
   },
   onMapClick: function(event) {
-    var that = this;
     var coords = event.latlng;
 
     var layers = this.workspace.where({selected:true});
@@ -132,7 +121,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         var content = layer.getPopupContent(data);
         if (content) {
           var popup = L.popup().setContent(content).setLatLng(coords);
-          that.mapCanvas.openPopup(popup);
+          this.mapCanvas.openPopup(popup);
         }
       });
     }

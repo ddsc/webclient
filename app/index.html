@@ -169,7 +169,7 @@
                     <li class="metrics-dropdown mappage" id="maplayers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
                     </li>
-                    <p data-group="favorite" class="hide" id="extraLayerRegion"></p>
+                    <p data-group="favorite" class="extra-layers" id="extraLayerRegions"></p>
                     <li class="metrics-dropdown mappage" id="ddsc_layers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-info"></i> DDSC Gegevens</a>
                     </li>
@@ -191,6 +191,7 @@
               </div>
               <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
           </li></ul></div>
+          <!-- done mocking -->
                 
                 </ul>
             </div>
@@ -306,13 +307,10 @@
 
     <script type="text/template" id="workspaceitem-template">
       <div class="layer-item <% if(selected) { %>selected<% } %>">
-        <span class="action handle">
-            <i class="icon-globe"></i>
+        <span class="action handle indicator">
+            <i class="icon-check<% if(!visibility) { %>-empty<%  } %>"></i>
         </span>
         <span class="content"><%= display_name %><i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
-        <span class="indicator">
-            <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
-        </span>
         <span class="chevron-right">
           <i class="icon-chevron-right"></i>
         </span>
