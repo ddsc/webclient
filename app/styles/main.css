@@ -178,7 +178,7 @@ ul.wms_sources span a {
     color: #000;
 }
 
-/*ol.drawer-group span.indicator,*/
+ol.drawer-group span.indicator,
 ul.wms_sources span.indicator {
     position: absolute;
     right: 19px;
@@ -901,14 +901,9 @@ ul.homepage-list li{
     padding: 1;
     margin: 0;
 }
-ul.homepage-list li .icon-chevron-right {
+ul.homepage-list li button {
     margin: 25px;
-    color: #ccc;
 }
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
-}
-
-#homepage-searchresults {
-    margin-top: -20px;
 }

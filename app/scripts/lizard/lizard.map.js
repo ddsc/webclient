@@ -86,15 +86,11 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(workspaceView.render());
 
-
-  Lizard.mapView.extraLayerRegion.on('show', openTooltip);
-  Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
-
-  function openTooltip(){
-    console.log('wsfasdfasdf')
-    $('#extraLayerRegion').popover();
-    $('#extraLayerRegion').popover('toggle');
-  }
+  extraLayersView;
+  extraLayersView.on('render', function(renderedView){
+    $('li#maplayers').attr('data-content', renderedView.$el.html());
+  });
+  extraLayersView.render();
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
