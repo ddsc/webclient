@@ -8,7 +8,6 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   initialize: function(options) {
     this.collection = options.collection;
     this.map = options.map;
-    console.log(this.map);
 
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
@@ -58,7 +57,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   showPopup: function(e) {
     var marker = e.target;
     var innerStuff = Lizard.Popups.DdscTimeseries.getPopupContent(marker);
-    marker.bindPopup(innerStuff, { minWidth: 400, maxWidth: 450, maxHeight: 300});
+    marker.bindPopup(innerStuff, {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
   },
   // largePopupContent: Lizard.Views.TimeserieView,

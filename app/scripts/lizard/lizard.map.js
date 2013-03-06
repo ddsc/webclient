@@ -97,16 +97,12 @@ Lizard.Map.map = function(lonlatzoom){
     map: leafletView
   });
 
-  //workspaceCollection.fetch();
-
-  //locationCollection.fetch();
-
-  // $('.drawer-item').popover({
-  //   html: true,
-  //   template: '<div class="popover"><div class="arrow"></div><div class="popover-inner layersview-popover"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-  // });
-
-
+  function fixzoom(e) {
+      leafletView.mapCanvas.zoomOut(false);
+      leafletView.mapCanvas.off('viewreset', fixzoom);
+    }
+    leafletView.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
+    leafletView.mapCanvas.on('viewreset', fixzoom);
 
   // Then tell backbone to set the navigation to #map
   if(lonlatzoom) {
