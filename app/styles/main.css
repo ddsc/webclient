@@ -912,3 +912,15 @@ ul.homepage-list li.odd{
 #homepage-searchresults {
     margin-top: -20px;
 }
+
+ul#homepage-livestream li {
+    padding: 10px;
+    height: 50px;
+
+}
+ul#homepage-livestream li em{
+    font-size:2em;
+}
+.spacer {
+    margin-top: 15px; /* define margin as you see fit */
+}
