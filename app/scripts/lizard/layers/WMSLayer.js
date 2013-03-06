@@ -89,7 +89,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
     return url;
   },
   getPopupContent: function(data) {
-    debugger;
+    return data;
   }
 });
 
