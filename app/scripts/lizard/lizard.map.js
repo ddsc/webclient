@@ -59,14 +59,10 @@ Lizard.Map.map = function(lonlatzoom){
     workspaceView: workspaceView
   });
 
-
-
   var extraLayersView = new Lizard.Views.LayerList({
     collection: layerCollection,
     workspace: workspaceView.collection
   });
-
-
 
   var leafletView;
   if(lonlatzoom) {
@@ -89,20 +85,22 @@ Lizard.Map.map = function(lonlatzoom){
 
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(workspaceView.render());
+
+
+  Lizard.mapView.extraLayerRegion.on('show', openTooltip);
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+
+  function openTooltip(){
+    console.log('wsfasdfasdf')
+    $('#extraLayerRegion').popover();
+    $('#extraLayerRegion').popover('toggle');
+  }
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
     collection: locationCollection,
     map: leafletView
   });
-
-  function fixzoom(e) {
-      leafletView.mapCanvas.zoomOut(false);
-      leafletView.mapCanvas.off('viewreset', fixzoom);
-    }
-    leafletView.mapCanvas.zoomIn(); // <-- TODO: Plz fix this hack which triggers a redraw of Leaflet. A gray screen will show if omitted.
-    leafletView.mapCanvas.on('viewreset', fixzoom);
 
   // Then tell backbone to set the navigation to #map
   if(lonlatzoom) {

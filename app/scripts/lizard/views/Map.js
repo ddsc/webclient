@@ -6,8 +6,9 @@
 // a 'workspaceCollection' on click on a specific object.
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
-  workspace: null, //set on initialisation
+  workspace: null, 
   mapCanvas: null,
+  //set on initialisation
   //modalInfo:Lizard.Utils.Map.modalInfo,
   //updateInfo: Lizard.Utils.Map.updateInfo,
   initialize: function(options) {
@@ -43,11 +44,24 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
 
-    this.mapCanvas = L.map('map', {
+    if (this.mapCanvas === null){
+      this.makemapCanvas();
+    } else {
+        this.mapCanvas.zoomIn();
+        this.mapCanvas.on('viewreset', this.fixzoom);
+      }
+  },
+  fixzoom: function(e){
+    this.mapCanvas.zoomOut(false);
+    this.mapCanvas.off('viewreset', this.fixzoom);
+    console.log('hai');
+  },
+  makemapCanvas: function (){
+  this.mapCanvas = L.map('map', {
       layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
-    });
+    })
 
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
@@ -106,7 +120,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this._initialEvents();
 
     this.mapCanvas.on('click', _.bind(this.onMapClick, this));
-
   },
   onMapClick: function(event) {
     var coords = event.latlng;
