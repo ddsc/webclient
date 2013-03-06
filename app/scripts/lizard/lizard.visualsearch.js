@@ -1,5 +1,3 @@
-'use strict';
-
 Lizard.Visualsearch = {
   init: function () {
     Lizard.Visualsearch.VS = VS.init({
@@ -20,10 +18,10 @@ Lizard.Visualsearch = {
                 filterCollection.url = settings.filters_url + '?' + extra;
                 locationCollection.fetch();
                 filterCollection.fetch();
-                console.log(url)
+                console.log(url);
                 url = url + extra;
-              })
-            } 
+              });
+            }
             else if (search.attributes.category === "location") {
               _.each(locationCollection.where({name : search.attributes.value}), function (model) {
                 url = url + '&location=' + model.attributes.uuid;
@@ -36,7 +34,7 @@ Lizard.Visualsearch = {
                 if (window.mapCanvas){
                   window.mapCanvas.setView(new L.LatLng(point[1], point[0]), 16);
                 }
-              })
+              });
             } else if (search.attributes.category === "filter") {
               _.each(filterCollection.where({name : search.attributes.value}), function (model) {
                 url = url + '&logicalgroups=' + model.id;
@@ -45,15 +43,18 @@ Lizard.Visualsearch = {
                 locationCollection.url = settings.locations_url + '?' + extra;
                 parameterCollection.fetch();
                 locationCollection.fetch();
-              })
+              });
+            } else {
+              search_results_view = $("#homepage-searchresult-template").html();
+              var search_results = timeseries_idx.search(search.attributes.value);
+              var render_results = [];
+              _.each(search_results, function(sr) { render_results.push(timeseriesCollection.get(sr.ref)); });
+              $('#homepage-search-results').html("");
+              $('#homepage-search-results').append(_.template(search_results_view, { data:render_results }));
             }
-            timeseriesCollection.url = url;
-            timeseriesCollection.fetch();
-            // var url = workspaceCollection.buildUrl();
-
           });
         },
-         facetMatches : function (callback) {
+        facetMatches : function(callback) {
            callback([
                'filter', 'location', 'parameter'
            ]);
@@ -76,9 +77,7 @@ Lizard.Visualsearch = {
             case 'parameter':
                 var pm = [];
                 var parameters = parameterCollection.models;
-                _.each(parameters, function (parameters) {
-                  pm.push({value: parameters.attributes.description}); 
-                });
+                _.each(parameters, function (parameters) { pm.push({value: parameters.attributes.description}); });
                 callback(pm);
               break;
         }
@@ -87,6 +86,6 @@ Lizard.Visualsearch = {
         Lizard.Visualsearch.VS.searchBox.setQuery("");
       }
     }
-  })
+  });
 }
 };

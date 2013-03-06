@@ -70,52 +70,29 @@
         </div>
       </div>
 
-      <div class="row-fluid hide" id="homepage-search-results">
-      <h2>Zoekresultaten</h2>
+      <div class="row-fluid" id="homepage-search-results">
       </div>
 
       <div class="row-fluid">
 
         <div class="span9 measure-details">
             <div class="measure-info-header">
-                <h4><em class="icon-map-marker"></em>&nbsp;Nieuwe meetlocaties</h4>
+                <h4><em class="icon-rss"></em>&nbsp;Live stream</h4>
             </div>
             <div id="measure">
               <ul class="homepage-list">
                 <li class="odd">
-                  <img src="http://maps.googleapis.com/maps/api/staticmap?center=Noordwijk&zoom=13&size=75x75&sensor=false"/>
-                  <a href="#">Noordwijk</a>
-                  <button type="button" class="btn btn-small pull-right">Ga naar locatie</button>
+                  <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Noordwijk</a>
+                  <i class="icon-chevron-right pull-right hidden-desktop"></i>
                 </li>
                 <li>
-                  <img src="http://maps.googleapis.com/maps/api/staticmap?center=Zandvoort&zoom=13&size=75x75&sensor=false"/>
-                  <a href="#">Zandvoort</a>
-                  <button type="button" class="btn btn-small pull-right">Ga naar locatie</button>
+                  <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Zandvoort</a>
+                  <i class="icon-chevron-right pull-right hidden-desktop"></i>
                 </li>              
               </ul>            
             </div>
 
-            <div class="measure-info-header">
-                <h4><em class="icon-exclamation-sign"></em>&nbsp;Waarschuwing inwinning data</h4>
-            </div>
-            <div id="measure">
-              <ul class="homepage-list">  
-                <li><em class="icon-exclamation-sign icon-white"></em>&nbsp;<a href="#">Sensor A</a></li>
-                <li><em class="icon-exclamation-sign icon-white"></em>&nbsp;<a href="#">Sensor B</a></li>
-                <li><em class="icon-exclamation-sign icon-white"></em>&nbsp;<a href="#">Sensor C</a></li>                
-              </ul>  
-            </div>
 
-            <div class="measure-info-header">
-                <h4><em class="icon-bell"></em>&nbsp;Nieuwe alarmen</h4>
-            </div>
-            <div id="measure">            
-              <ul class="homepage-list">  
-                <li><em class="icon-bell icon-white"></em>&nbsp;<a href="#">Boezem</a></li>
-                <li><em class="icon-bell icon-white"></em>&nbsp;<a href="#">Weer</a></li>
-                <li><em class="icon-bell icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>                
-              </ul>  
-            </div>
         </div>
 
 
@@ -123,39 +100,33 @@
 
         <div class="span3 measure-details pull-right">
             <div class="measure-info-header">
-                <h4>Alarmen</h4>
+                <h4>Status</h4>
             </div>
             <ul class="homepage-list">
-              <li><p><em class="icon-bell icon-white"></em>&nbsp;Er zijn <span class="badge badge-important">30 alarmen</span> actief</p></li>
-              <li><p><em class="icon-bell icon-white"></em>&nbsp;Geen data voor <span class="badge badge-warning">20 sensoren</span></p></li>
+              <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-important">30 alarmen actief</span></p></li>
+              <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-warning">20 sensoren zonder data</span></p></li>
             </ul>
 
         
             <div class="measure-info-header">
-                <h4>Favoriete kaarten</h4>
+                <h4>Kaarten</h4>
             </div>
             <div id="maps">
             <ul class="homepage-list">
               <li>
-                <img src="http://maps.googleapis.com/maps/api/staticmap?center=Noordwijk&zoom=13&size=60x60
-&sensor=false"/>
-                <a href="#">Algemeen</a>
+                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Algemeen</a>
               </li>
               <li>
-                <img src="http://maps.googleapis.com/maps/api/staticmap?center=Zandvoort&zoom=13&size=60x60
-&sensor=false"/>
-                <a href="#">Actueel</a>
+                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Actueel</a>
               </li>              
               <li>
-                <img src="http://maps.googleapis.com/maps/api/staticmap?center=Valkenburg&zoom=13&size=60x60
-&sensor=false"/>
-                <a href="#">Valkenburg</a>
+                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Valkenburg</a>
               </li>                            
             </ul>
             </div>
 
             <div class="measure-info-header">
-                <h4>Favoriete grafieken</h4>
+                <h4>Grafieken</h4>
             </div>
             <div id="graphs">
               <ul class="homepage-list">
@@ -167,8 +138,17 @@
         </div>        
 
       </div>
+    </script>
 
-
+    <script type="text/template" id="homepage-searchresult-template">    
+      <div> 
+         <h5>Zoekresultaten</h5>
+         <ul>
+           <% for(var name in data) { %>
+               <li><a href="#map"><%= data[name].attributes.name %></a></li>
+           <% } %>
+         </ul>
+      </div>
     </script>
 
     <script type="text/template" id="map-template">
