@@ -901,9 +901,14 @@ ul.homepage-list li{
     padding: 1;
     margin: 0;
 }
-ul.homepage-list li button {
+ul.homepage-list li .icon-chevron-right {
     margin: 25px;
+    color: #ccc;
 }
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
+}
+
+#homepage-searchresults {
+    margin-top: -20px;
 }
