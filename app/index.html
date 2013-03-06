@@ -186,10 +186,10 @@
                     </li>
                     <p data-group="favorite"  id="workspaceRegion"></p>
                     <!--<button type="button" id="" class="btn"> + Voeg kaartlaag toe</button>-->
-                    <li class="metrics-dropdown mappage" id="maplayers">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
+                    <li class="mappage extra-layers" id="maplayers">
+                        <a href="javascript:void(0);" data-toggle="popover" data-placement="right" data-content"jan"><em class="icon-chevron-down toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
                     </li>
-                    <p data-group="favorite" class="extra-layers" id="extraLayerRegions"></p>
+                    <!--<div id="extraLayerRegion" class="popover fade top"></div>-->
                     <li class="metrics-dropdown mappage" id="ddsc_layers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-info"></i> DDSC Gegevens</a>
                     </li>
@@ -242,9 +242,10 @@
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
-
       </div>
     </script>
+
+
 
 
     <script type="text/template" id="icon-template">
