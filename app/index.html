@@ -143,9 +143,9 @@
     <script type="text/template" id="homepage-searchresult-template">    
       <div> 
          <h5>Zoekresultaten</h5>
-         <ul>
+         <ul class="homepage-list">
            <% for(var name in data) { %>
-               <li><a href="#map"><%= data[name].attributes.name %></a></li>
+               <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#map"><%= data[name].attributes.name %></a></li>
            <% } %>
          </ul>
       </div>
