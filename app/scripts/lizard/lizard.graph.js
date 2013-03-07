@@ -24,50 +24,6 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
-  initialize: function() {
-    this.model.on('change', this.render, this);
-  },
-  tagName: 'li',
-  events: {
-    'click .fav': 'toggleFavorite',
-    'click .info': 'showInfoModal'
-  },
-  toggleFavorite: function(me) {
-    var favorite = this.model.get('favorite');
-    if(favorite) {
-      this.model.set({"favorite": false});
-      this.$el.find('i.icon-star').removeClass('icon-star').addClass('icon-star-empty');
-    } else {
-      this.model.set({"favorite": true});
-      this.$el.find('i.icon-star-empty').removeClass('icon-star-empty').addClass('icon-star');
-    }
-    Lizard.Utils.Favorites.toggleSelected(this.model);
-  },
-  showInfoModal: function(me) {
-    infoModalView = new Lizard.Views.InfoModal();
-    window.graphsView.infomodal.show(infoModalView.render());
-    $('#info-modal').modal();
-  },
-  template: function(model){
-      return _.template($('#timeserie-item-template').html(), {
-        name: model.name,
-        events: model.events,
-        favorite: model.favorite
-      }, {variable: 'timeserie'});
-    },
-});
-
-Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
-  collection: timeseriesCollection,
-  tagName: 'ul',
-  itemView: Lizard.Views.Timeserie,
-  initialize: function(){
-    this.collection.fetch({success: function(r,m,x){console.log(r)}})
-  }
-});
-
-
 Lizard.Graphs.graphs = function(){
   console.log('Lizard.Graphs.graphs()');
 

@@ -94,8 +94,6 @@ Lizard.Utils.DragDrop = {
     e.preventDefault();
     var wms_layer= e.dataTransfer.getData("Text");
     var $target = $(e.target);
-
-
   },
   drop: function (e){
     e.preventDefault();

@@ -651,13 +651,13 @@ div#selectionRegion{
     display: block; 
     cursor: pointer;
     overflow: hidden; 
-    white-space: normal;
+    white-space: nowrap;
     width: 100%; 
     height: 23px;    
     color: #0084B4;
 }
 .ddsc-item h5 {
-    white-space: normal;
+    white-space: nowrap;
 }
 
 ul.timeserie-actions, 
