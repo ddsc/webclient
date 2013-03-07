@@ -7,7 +7,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
-    'extraLayerRegion' : '#extraLayerRegion'
+    'extraLayerRegion' : '#extramaplayers'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -51,17 +51,12 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.App.content.show(Lizard.mapView);
 
 
-  var workspaceView = new Lizard.Views.ActiveWorkspace({
+  Lizard.workspaceView = new Lizard.Views.ActiveWorkspace({
   });
 
   var workspaceListView = new Lizard.Views.WorkspaceCollection({
     collection: workspaceCollection,
-    workspaceView: workspaceView
-  });
-
-  var extraLayersView = new Lizard.Views.LayerList({
-    collection: layerCollection,
-    workspace: workspaceView.collection
+    workspaceView: Lizard.workspaceView
   });
 
   var leafletView;
@@ -70,27 +65,22 @@ Lizard.Map.map = function(lonlatzoom){
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
       zoom: lonlatzoom.split(',')[2],
-      workspace: workspaceView.collection
+      workspace: Lizard.workspaceView.collection
     });
   } else {
     leafletView = new Lizard.Views.Map({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
       zoom: 7,
-      workspace: workspaceView.collection
+      workspace: Lizard.workspaceView.collection
     });
   }
 
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
-  Lizard.mapView.workspaceRegion.show(workspaceView.render());
-
-  extraLayersView;
-  extraLayersView.on('render', function(renderedView){
-    $('li#maplayers').attr('data-content', renderedView.$el.html());
-  });
-  extraLayersView.render();
+  Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
+  // Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({

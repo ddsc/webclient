@@ -181,10 +181,10 @@ ul.wms_sources span a {
 ol.drawer-group span.indicator,
 ul.wms_sources span.indicator {
     position: absolute;
-    right: 19px;
+    right: 2px;
     top: 4px;
     width: 19px;
-    height: 19px;
+    top: 10px;
 }
 span.chevron-right {
     position: absolute;
@@ -451,9 +451,6 @@ input.input-medium.search-query {
     display: inline-block;
     margin: 50px 0px 0px 46px;
 }
-
-
-
 
 
 .layersview-popover {
@@ -747,6 +744,16 @@ border-bottom-color: #167884 !important;
 }
 
 
+.popover{
+    overflow: auto;
+    height: 300px;
+}
+
+.popover-content{
+    padding:0;    
+}
+
+
 #demo{
 position: relative;
 /* margin-top: 20px; */
@@ -901,9 +908,26 @@ ul.homepage-list li{
     padding: 1;
     margin: 0;
 }
-ul.homepage-list li button {
+ul.homepage-list li .icon-chevron-right {
     margin: 25px;
+    color: #ccc;
 }
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
+}
+
+#homepage-searchresults {
+    margin-top: -20px;
+}
+
+ul#homepage-livestream li {
+    padding: 10px;
+    height: 50px;
+
+}
+ul#homepage-livestream li em{
+    font-size:2em;
+}
+.spacer {
+    margin-top: 15px; /* define margin as you see fit */
 }

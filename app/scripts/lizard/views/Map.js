@@ -139,8 +139,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       });
     }
 
-
-
   },
   initWorkspace: function() {
     var that = this;

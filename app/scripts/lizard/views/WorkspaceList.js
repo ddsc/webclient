@@ -17,17 +17,7 @@ Lizard.Views.Workspace = Marionette.ItemView.extend({
       this.model.set('selected', true);
       this.model.trigger('select_workspace', this.model);
     }
-  }/*,
-  modelEvents: {
-    'change:selected': 'modelChanged'
-  },
-  modelChanged: function() {
-    if (this.model.get('hidden') === true ) {
-      this.$el._addClass("hidden");
-    } else {
-      this.$el._removeClass("hidden");
-    }
-  }*/
+  }
 });
 
 Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({

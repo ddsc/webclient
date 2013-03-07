@@ -63,19 +63,38 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
         });
       }
     });
-
-    /*onShow: function () {
-     $('.drawer-group').draggable('destroy').draggable({
-     connectToSortable: '#workspaceRegion',
-     revert: "invalid",
-     containment: '#weetnietwatditis',
-     helper: function(e, ui) {
-     return $(this).clone().css()
-     }
-     });*/
     $('.drawer-group').disableSelection();
   },
   setWorkspace: function(workspace) {
     this.collection.reset(workspace.get('workspaceitems').models);
+  },
+  appendHtml: function(collectionView, itemView, index){
+    collectionView.$el.append(itemView.el);
+    if (collectionView.collection.length === index + 1){
+      var htmlcontent = '<li id="maplayers" class="drawer-handle">\
+                          <div class="layer-item">\
+                          <span class="action handle ">\
+                          <i class="icon-plus"></i></span>\
+                          Voeg Extra Kaartlaag toe \
+                          <div id="extramaplayers" class="hidden"></div>\
+                          </div></li>'
+      collectionView.$el.append(htmlcontent);
+        var extraLayersView = new Lizard.Views.LayerList({
+          collection: layerCollection,
+          workspace: Lizard.workspaceView.collection
+        });
+        extraLayersView.on('render', function(renderedView){
+          $('li#maplayers').popover({
+            title: "Kies een kaartlaag",
+            html: true,
+            content: function(){
+              return $('#extramaplayers').html();
+            }
+          });
+        });
+        Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+        // extraLayersView.render(); 
+        // 
+    }
   }
 });

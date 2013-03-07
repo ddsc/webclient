@@ -75,6 +75,7 @@
 
       <div class="row-fluid">
 
+<<<<<<< HEAD
         <div class="span9 measure-details">
             <div class="measure-info-header">
                 <h4><em class="icon-rss"></em>&nbsp;Live stream</h4>
@@ -94,22 +95,35 @@
 
 
         </div>
+=======
+>>>>>>> master
 
-
-
-
-        <div class="span3 measure-details pull-right">
+        <div class="span3 measure-details">
             <div class="measure-info-header">
+<<<<<<< HEAD
                 <h4>Status</h4>
             </div>
             <ul class="homepage-list">
               <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-important">30 alarmen actief</span></p></li>
               <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-warning">20 sensoren zonder data</span></p></li>
+=======
+                <h4><em class="icon-bell icon-white"></em>&nbsp;Status</h4>
+            </div>
+            <ul class="homepage-list">
+              <li><span class="badge badge-important">30 alarmen actief</span></li>
+              
+              <li><span class="badge badge-warning">20 sensoren in storing</span></li>
+              <li><span class="badge badge-success">2000 sensoren actief</span></li>
+>>>>>>> master
             </ul>
 
         
             <div class="measure-info-header">
+<<<<<<< HEAD
                 <h4>Kaarten</h4>
+=======
+                <h4><em class="icon-globe icon-white"></em>&nbsp;Kaart</h4>
+>>>>>>> master
             </div>
             <div id="maps">
             <ul class="homepage-list">
@@ -126,7 +140,11 @@
             </div>
 
             <div class="measure-info-header">
+<<<<<<< HEAD
                 <h4>Grafieken</h4>
+=======
+                <h4><em class="icon-signal icon-white"></em>&nbsp;Grafiek</h4>
+>>>>>>> master
             </div>
             <div id="graphs">
               <ul class="homepage-list">
@@ -135,11 +153,104 @@
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>                
               </ul>  
             </div>
-        </div>        
+
+<<<<<<< HEAD
+      </div>
+    </script>
+
+=======
+            <div class="measure-info-header">
+                <h4><em class="icon-th icon-white"></em>&nbsp;Dashboard</h4>
+            </div>
+            <div id="graphs">
+              <ul class="homepage-list">
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 1</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 2</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 3</a></li>                
+              </ul>  
+            </div>            
+        </div>     
+        <div class="span9 measure-details">
+            <div class="measure-info-header">
+                <h4><em class="icon-rss"></em>&nbsp;Livestream</h4>
+            </div>
+            <div id="measure">
+              <ul class="homepage-list" id="homepage-livestream">
+                <li class="">
+                  <div class="span1">
+                    <em class="icon-globe icon-white"></em>
+                  </div>
+                  <div class="span5">
+                    <strong><a href="#">Nieuwe sensor aangemaakt</a></strong><br/>
+                    <small>Oost Z2162 Kruin</small>
+                  </div>
+                  <div class="span2 pull-right text-right">
+                    <small class="text-right muted">3 minuten geleden</small>
+                  </div>
+                </li>
+                <li class="odd">
+                  <div class="span1">
+                    <em class="icon-bell icon-white"></em>
+                  </div>
+                  <div class="span5">
+                    <strong><a href="#">Alarm</a></strong><br/>
+                    <small>Boezem, Amstelland</small>
+                  </div>
+                  <div class="span2 pull-right text-right">
+                    <small class="text-right muted">9 minuten geleden</small>
+                  </div>                
+                </li>
+                <li class="">
+                  <div class="span1">
+                    <em class="icon-comment icon-white"></em>
+                  </div>
+                  <div class="span5">
+                    <strong><a href="#">Annotatie toegevoegd</a></strong><br/>
+                    <small>Grechtdijk, Woerden, NL</small>
+                  </div>
+                  <div class="span2 pull-right text-right">
+                    <small class="text-right muted">12 minuten geleden</small>
+                  </div>                
+                </li>
+                <li class="odd">
+                  <div class="span1">
+                    <em class="icon-info-sign icon-white"></em>
+                  </div>
+                  <div class="span5">
+                    <strong><a href="#">Melding</a></strong><br/>
+                    <small>Afgelopen 24 uur 33 locaties zonder metingen</small>
+                  </div>
+                  <div class="span2 pull-right text-right">
+                    <small class="text-right muted">1 uur geleden</small>
+                  </div>                
+                </li>
+                <li class="">
+                  <div class="span1">
+                    <em class="icon-info-sign icon-white"></em>
+                  </div>
+                  <div class="span5">
+                    <strong><a href="#">Melding</a></strong><br/>
+                    <small>Dijk geinspecteerd, geen bijzonderheden</small>
+                  </div>
+                  <div class="span2 pull-right text-right">
+                    <small class="text-right muted">1 uur, 15 minuten geleden</small>
+                  </div>                
+                </li>
+              </ul>            
+            </div>
+
+
+        </div>
+
+
+
+
+   
 
       </div>
     </script>
 
+>>>>>>> master
     <script type="text/template" id="homepage-searchresult-template">    
       <div class="span12 measure-details" id="homepage-searchresults">
         <div class="measure-info-header"> 
@@ -170,11 +281,7 @@
                     </li> 
                     <p data-group="favorite"  id="workspaceRegion"></p>
                     <!--<button type="button" id="" class="btn"> + Voeg kaartlaag toe</button>-->
-                    <li class="mappage extra-layers" id="maplayers" rel="popover" data-placement="right"  data-original-title="what">
-                        <a href="javascript:void(0);"><em class="icon-chevron-right toggle"></em> <i class="icon-plus"></i> Extra kaartlagen</a>
-                    </li>
-                    <% $(function(){$('li#maplayers').popover({html: true});}); %>
-                    <li class="metrics-dropdown mappage" id="ddsc_layers">
+                     <li class="metrics-dropdown mappage" id="ddsc_layers">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-info"></i> DDSC Gegevens</a>
                     </li>
         <!-- mocking for demo -->
@@ -305,7 +412,6 @@
         <span class="content handle"><%= display_name %></span>
         <span class="indicator">
             <i class="<% if(visibility) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
-            <i class="icon-eye-<% if(visibility) { %>open<% } else { %>close<%  } %>"></i>
         </span>
 	  </div>
     </script>
@@ -667,8 +773,9 @@
             <div class="nav-collapse collapse" id="menu-bar">
 			  <ul class="nav">
 				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
-				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
-				<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
+				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
+    <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Tabel</a></li>    
+				<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Dashboard</a></li>
 
 			  </ul>
 			  <ul class="nav pull-right">
@@ -686,7 +793,7 @@
         <div class='notifications top-right'></div>
         <div id="content">
         </div>
-        <div class="row-fluid footer">
+        <div class="row-fluid spacer footer">
             <span>
                 <a href="http://lizard.net">Powered by <img id="lizardlogo" src="images/lizard_logo.png" /></a>
             </span>
