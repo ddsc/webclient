@@ -31,6 +31,12 @@ $('input[type=checkbox]').live('click', function(e) {
 });
 
 
+$('.VS-interface').live('focus', function(){
+    console.log('hs')
+
+})
+
+
 // Click handlers for toggling the filter/location/parameter UI
 $('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
