@@ -53,12 +53,8 @@
     <!-- Template definitions -->
     <script type="text/template" id="home-template">
       <header class="subhead hidden-phone hidden-tablet">
-        <img src="images/hero-big.png" class="offset4"/>
+        <img src="images/hero-big.png"/>
       </header>
-      <header class="subhead hidden-desktop">
-        <img src="images/hero-small.png"/>
-      </header>
-
       <div class="row-fluid" id="home-search-wrapper">
         <div class="span12">
           <div class="visual_search hidden-tablet hidden-phone"></div>
@@ -75,8 +71,6 @@
 
       <div class="row-fluid">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         <div class="span9 measure-details">
             <div class="measure-info-header">
                 <h4><em class="icon-rss"></em>&nbsp;Live stream</h4>
@@ -96,50 +90,23 @@
 
 
         </div>
-=======
->>>>>>> master
-
-        <div class="span3 measure-details">
-            <div class="measure-info-header">
-<<<<<<< HEAD
-                <h4>Status</h4>
-            </div>
-            <ul class="homepage-list">
-              <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-important">30 alarmen actief</span></p></li>
-              <li><p><em class="icon-bell icon-white"></em>&nbsp;<span class="badge badge-warning">20 sensoren zonder data</span></p></li>
-=======
-                <h4><em class="icon-bell icon-white"></em>&nbsp;Status</h4>
-            </div>
-            <ul class="homepage-list">
-=======
 
         <div class="span3 measure-details">
             <div class="measure-info-header">
                 <h4><em class="icon-bell icon-white"></em>&nbsp;Status</h4>
             </div>
             <ul class="homepage-list">
->>>>>>> master
               <li><span class="badge badge-important">30 alarmen actief</span></li>
               
               <li><span class="badge badge-warning">20 sensoren in storing</span></li>
               <li><span class="badge badge-success">2000 sensoren actief</span></li>
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
             </ul>
 
         
             <div class="measure-info-header">
-<<<<<<< HEAD
-<<<<<<< HEAD
                 <h4>Kaarten</h4>
-=======
                 <h4><em class="icon-globe icon-white"></em>&nbsp;Kaart</h4>
->>>>>>> master
-=======
-                <h4><em class="icon-globe icon-white"></em>&nbsp;Kaart</h4>
->>>>>>> master
+
             </div>
             <div id="maps">
             <ul class="homepage-list">
@@ -163,7 +130,8 @@
               <ul class="homepage-list">
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Boezem</a></li>
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Weer</a></li>
-                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>                
+                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
+                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Buitenwater</a></li>
               </ul>  
             </div>
       </div>
@@ -174,9 +142,9 @@
             </div>
             <div id="graphs">
               <ul class="homepage-list">
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 1</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 2</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 3</a></li>                
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DAM</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DMC systeem</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
               </ul>  
             </div>            
         </div>     
@@ -184,7 +152,7 @@
             <div class="measure-info-header">
                 <h4><em class="icon-rss"></em>&nbsp;Livestream</h4>
             </div>
-            <div id="measure">
+            <div id="liveFeed" >
               <ul class="homepage-list" id="homepage-livestream">
                 <li class="">
                   <div class="span1">
@@ -248,9 +216,15 @@
                 </li>
               </ul>            
             </div>
-
-
         </div>
+      <div class="span3 measure-details" id="measure-alarm">
+      </div>
+
+      <div class="span3 measure-details" id="measure-new-measurement">
+      </div>
+
+      <div class="span3 measure-details" id="measure-status">
+      </div>
 
       </div>
     </script>
@@ -293,6 +267,11 @@
             <ul><li>
               <div class="ddsc-item oselect">
               <h5><i class="icon-check"></i>&nbsp;Sensoren <span class="pull-right badge badge-info">3459</span></h5>
+              </div>
+              <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+          </li><li>
+              <div class="ddsc-item oselect">
+                   <h5><i class="icon-check"></i>&nbsp;Storingen<span class="pull-right badge badge-warning">30</span></h5>
               </div>
               <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
           </li><li>
@@ -778,8 +757,8 @@
 			  <ul class="nav">
 				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
 				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
-    <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Tabel</a></li>    
-				<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Dashboard</a></li>
+    <li class="graphs-menu"><a href="#graphs"><em class="icon-list icon-white"></em> Tabel</a></li>
+				<li class="overview-menu"><a href="#overview"><em class="icon-th icon-white"></em> Dashboard</a></li>
 
 			  </ul>
 			  <ul class="nav pull-right">

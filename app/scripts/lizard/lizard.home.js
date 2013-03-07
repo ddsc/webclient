@@ -1,11 +1,16 @@
 Lizard.Home = {};
 
-Lizard.Home.DefaultView = Backbone.Marionette.ItemView.extend({
+Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   template: '#home-template',
   className: 'home',
   onShow: Lizard.Visualsearch.init,
   onDomRefresh: function() {
     console.log('onDomRefresh');
+  },
+  regions: {
+    'measureAlarm': '#measure-alarm',
+    'measureNewMeasurement': '#measure-new-measurement',
+    'measureStatus' : '#measure-status'
   }
 });
 
@@ -18,8 +23,10 @@ Lizard.Home.Router = Backbone.Marionette.AppRouter.extend({
 
 Lizard.Home.home = function(){
   console.log('Lizard.Home.home()');
-  
-  var homeView = new Lizard.Home.DefaultView();
+
+  Lizard.homeView = new Lizard.Home.DefaultView();
+
+  Lizard.App.content.show(Lizard.homeView);
 
   // This is lunr.js, see http://lunrjs.com/ for more information
   // Define the search index for timeseries
@@ -43,8 +50,19 @@ Lizard.Home.home = function(){
   window.timeseries_idx = timeseries_idx; // Attach to the window variable
   console.log('timeseries_idx:', timeseries_idx);
 
+  function addWidgetToView(settings, view) {
+    var model = new Lizard.Models.Widget(settings);
+    var widget = new Lizard.Views.WidgetView({model: model, tagName: 'div'});
+    view.show(widget.render())
+  }
 
-  Lizard.App.content.show(homeView);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief'},
+                  Lizard.homeView.measureAlarm);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur'},
+                  Lizard.homeView.measureNewMeasurement);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren'},
+                  Lizard.homeView.measureStatus);
+
   Backbone.history.navigate('home');
 };
 
