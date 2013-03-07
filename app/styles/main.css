@@ -527,7 +527,7 @@ input.input-medium.search-query {
     margin-bottom: 0;
     border-radius: 0;
 }
-.sidenav p {
+.sidenav .measurement-items {
     padding: 5px 5px 3px 3px;
     margin: 0;
     border-left: 1px solid #e5e5e5;
@@ -614,16 +614,16 @@ input.input-medium.search-query {
     padding: 0;
 }
 
-p#workspaceListRegion,
-p#filtersRegion,
-p#locationsRegion,
-p#parametersRegion,
-p#extraLayersRegion{
+div#workspaceListRegion,
+div#filtersRegion,
+div#locationsRegion,
+div#parametersRegion,
+div#extraLayersRegion{
     height: 150px;
     overflow-y: auto;
     overflow-x: none;
 }
-p#selectionRegion{
+div#selectionRegion{
     height: 350px;
     overflow-y: auto;
     overflow-x: none;    

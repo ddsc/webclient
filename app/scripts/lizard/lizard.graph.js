@@ -6,11 +6,11 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'mainRegion': '#mainRegion',
-    'parametersRegion': 'p#parametersRegion',
-    'filtersRegion': 'p#filtersRegion',
+    'parametersRegion': '#parametersRegion',
+    'filtersRegion': '#filtersRegion',
     'favoriteRegion': '#favoriteRegion',
-    'locationsRegion': 'p#locationsRegion',
-    'selectionRegion': 'p#selectionRegion',
+    'locationsRegion': '#locationsRegion',
+    'selectionRegion': '#selectionRegion',
     'collagegraphRegion' : '#collageRegion',
     'infomodal': '#info-modal'
 
@@ -23,10 +23,6 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
       'graphs': 'graphs'
     }
 });
-
-// Lizard.Graphs.Timeseries = timeseriesCollection;
-// Lizard.Graphs.Timeseries.fetch();
-
 
 Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   initialize: function() {
@@ -63,9 +59,12 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
 });
 
 Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
-  collection: Lizard.Graphs.Timeseries,
+  collection: timeseriesCollection,
   tagName: 'ul',
   itemView: Lizard.Views.Timeserie,
+  initialize: function(){
+    this.collection.fetch({success: function(r,m,x){console.log(r)}})
+  }
 });
 
 
