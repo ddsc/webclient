@@ -53,12 +53,8 @@
     <!-- Template definitions -->
     <script type="text/template" id="home-template">
       <header class="subhead hidden-phone hidden-tablet">
-        <img src="images/hero-big.png" class="offset4"/>
+        <img src="images/hero-big.png"/>
       </header>
-      <header class="subhead hidden-desktop">
-        <img src="images/hero-small.png"/>
-      </header>
-
       <div class="row-fluid" id="home-search-wrapper">
         <div class="span12">
           <div class="visual_search hidden-tablet hidden-phone"></div>
@@ -112,7 +108,8 @@
               <ul class="homepage-list">
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Boezem</a></li>
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Weer</a></li>
-                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>                
+                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
+                <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Buitenwater</a></li>
               </ul>  
             </div>
 
@@ -121,9 +118,9 @@
             </div>
             <div id="graphs">
               <ul class="homepage-list">
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 1</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 2</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Dashboard 3</a></li>                
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DAM</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DMC systeem</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
               </ul>  
             </div>            
         </div>     
@@ -131,7 +128,7 @@
             <div class="measure-info-header">
                 <h4><em class="icon-rss"></em>&nbsp;Livestream</h4>
             </div>
-            <div id="measure">
+            <div id="liveFeed" >
               <ul class="homepage-list" id="homepage-livestream">
                 <li class="">
                   <div class="span1">
@@ -195,11 +192,15 @@
                 </li>
               </ul>            
             </div>
-
-
         </div>
+      <div class="span3 measure-details" id="measure-alarm">
+      </div>
 
+      <div class="span3 measure-details" id="measure-new-measurement">
+      </div>
 
+      <div class="span3 measure-details" id="measure-status">
+      </div>
 
 
    
@@ -740,8 +741,8 @@
 			  <ul class="nav">
 				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
 				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
-    <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Tabel</a></li>    
-				<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Dashboard</a></li>
+    <li class="graphs-menu"><a href="#graphs"><em class="icon-list icon-white"></em> Tabel</a></li>
+				<li class="overview-menu"><a href="#overview"><em class="icon-th icon-white"></em> Dashboard</a></li>
 
 			  </ul>
 			  <ul class="nav pull-right">
