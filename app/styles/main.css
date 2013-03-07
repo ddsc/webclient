@@ -57,6 +57,15 @@ div#brand:hover {
 #map:-moz-full-screen { width: 100% !important; height: 100% !important; }
 #map:full-screen { width: 100% !important; height: 100% !important; }
 
+#liveFeed {
+    overflow-y: auto;
+    height: 282;
+}
+
+.subhead img {
+    margin:auto;
+    display:block;
+}
 
 .footer {
     background-color: #fff;
@@ -211,7 +220,7 @@ ul.wms_sources h4 {
 
 
 #home-search-wrapper {
-    margin: 50px 0px 50px 0px;
+    margin: 20px 0px 30px 0px;
 }
 input.input-medium.search-query {
     width: 94%;
@@ -442,8 +451,7 @@ input.input-medium.search-query {
 
 .gauge-widget {
     width:200px; height:160px;
-    display: inline-block;
-    margin: 50px 0px 0px 46px;
+    margin: auto;
 }
 
 #g1, #g2, #g3 {
@@ -891,7 +899,7 @@ html.busy, html.busy * {
 
 
 ul.homepage-list{
-    padding: 3px;
+    padding: 6px;
     margin: 0;
 }
 

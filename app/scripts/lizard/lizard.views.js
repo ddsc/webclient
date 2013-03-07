@@ -123,20 +123,22 @@ Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
     var template = _.template( $("#widget-configuration").html(), {} );
     this.$el.html( template );
   },
-  modelEvents: {
-    'change': 'modelChanged'
-  },
-  collectionEvents: {
-    'add': 'modelAdded'
-  },
-  modelChanged: function() {
-    console.log('modelChanged()');
-  },
-  modelAdded: function() {
-    console.log('modelAdded()');
+  onShow: function() {
+    var that = this;
+    this.justGageRef = new JustGage({
+      id: this.model.get('gaugeId'),
+      value: getRandomInt(650, 980),
+      min: 350,
+      max: 980,
+      title: this.model.get('title'),
+      label: this.model.get('label')
+    });
+    setInterval(function() { // <-- commented during development...
+      that.justGageRef.refresh(getRandomInt(350,980));
+    }, getRandomInt(20000,100000));
   }
-
 });
+
 
 Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
   template:function(model){
@@ -218,20 +220,6 @@ Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
           }
         }
     }).data('gridster');
-
-    _.each(self.collection.models, function(model) {
-      var jg = new JustGage({
-        id: model.attributes.gaugeId,
-        value: getRandomInt(650, 980),
-        min: 350,
-        max: 980,
-        title: model.attributes.title,
-        label: model.attributes.label
-      });
-      setInterval(function() { // <-- commented during development...
-        jg.refresh(getRandomInt(350,980));
-      }, getRandomInt(2000,5000));
-    });
   }
 });
 
