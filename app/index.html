@@ -306,7 +306,43 @@
     </script>
 
 
+    <script type="text/template" id="tabular-template">
+      <div class="row-fluid">
+        <div class="span12" id="tabularRegion">
 
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td colspan="2">Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+
+        </div>
+      </div>
+    </script>
 
     <script type="text/template" id="icon-template">
         Some icon
@@ -611,7 +647,7 @@
         <h4>Collage</h4>
     </script>
 
-    <script type="text/template" id="overview-template">
+    <script type="text/template" id="dashboard-template">
       <div class="row-fluid">
         <div class="span12" id="dashboardRegion"></div>
       </div>
@@ -742,18 +778,15 @@
             <a href="#"><div id="brand" href="#"></div></a>
 
             <div class="nav-collapse collapse" id="menu-bar">
-			  <ul class="nav">
-				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
-				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
-    <li class="graphs-menu"><a href="#graphs"><em class="icon-list icon-white"></em> Tabel</a></li>
-				<li class="overview-menu"><a href="#overview"><em class="icon-th icon-white"></em> Dashboard</a></li>
-
-			  </ul>
-			  <ul class="nav pull-right">
-				<li class="dropdown" id="loginRegion">
-				</li>
-
-			  </ul>
+      			  <ul class="nav">
+        				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
+        				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
+                <li class="tabular-menu"><a href="#tabular"><em class="icon-list icon-white"></em> Tabel</a></li>
+        				<li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li>
+      			  </ul>
+      			  <ul class="nav pull-right">
+        				<li class="dropdown" id="loginRegion"></li>
+      			  </ul>
             </div>
 		  </div>
         </div>
@@ -975,7 +1008,8 @@
         <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
-        <script src="scripts/lizard/lizard.overview.js"></script>
+        <script src="scripts/lizard/lizard.tabular.js"></script>
+        <script src="scripts/lizard/lizard.dashboard.js"></script>
         <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 
         <script src="scripts/lizard/models/Annotation.js"></script>
