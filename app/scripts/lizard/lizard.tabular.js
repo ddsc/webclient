@@ -23,7 +23,7 @@ Lizard.Tabular.tabular = function(){
   var tabularView = new Lizard.Tabular.DefaultLayout();
   Lizard.App.content.show(tabularView);
 
-  tabularView.tabularRegion.show(widgetcollectionview.render());
+  // tabularView.tabularRegion.show(widgetcollectionview.render());
   Backbone.history.navigate('tabular');
 };
 
