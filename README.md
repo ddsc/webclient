@@ -1,5 +1,4 @@
 
-
 # DDSC Webclient
 
 **DDSC Webclient** is a javascript application built with [Backbone](http://backbonejs.org/), [Backbone-Marionette](http://marionettejs.com/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/), [Leaflet](http://leafletjs.com/) and [more](https://github.com/ddsc/webclient/tree/master/app/scripts/vendor)...
@@ -33,6 +32,17 @@ And point a browser to localhost 3051.
 The 'yeoman server' step is optional, you can also serve it with nginx, apache or just: 
     
     $ python -m SimpleHTTPServer
+
+
+
+## Coding hints / tips
+
+ * Using .get() and .set() is preferred over attributes (Backbone)
+ * Initializing views, collections, models should be done in the appropiate places: for application wide stuff, do it in lizard.app.js, for page-specific things, do it on the pagename.lizard.js.
+ * Views in seperate files under lizard/views/ClassName.js
+ * Models and collections should for now be in lizard.models.js and lizard.collections.js (because they're usually small)
+ * Templates: single lines/small templates may be used 'inline' in the view-code. Large chunks deserve a place in index.html for the designers merit (or later, external and loaded async).
+ 
 
 
 
