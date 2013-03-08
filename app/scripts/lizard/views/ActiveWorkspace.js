@@ -29,6 +29,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
+    $(this.el).find('.toggle-layer-configuration i').toggleClass('icon-chevron-right icon-chevron-down');
   },
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
