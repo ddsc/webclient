@@ -928,6 +928,9 @@ ul.homepage-list li .icon-chevron-right {
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
 }
+div.odd {
+    background-color: #f7f7f7;   
+}
 
 #homepage-searchresults {
     margin-top: -20px;
@@ -938,7 +941,7 @@ ul#homepage-livestream li {
     height: 50px;
 
 }
-ul#homepage-livestream li em{
+#liveFeed em{
     font-size:2em;
 }
 .spacer {
