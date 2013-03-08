@@ -123,7 +123,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   onMapClick: function(event) {
     var coords = event.latlng;
-
+    var that = this;
     var layers = this.workspace.where({selected:true});
 
     if (layers.length < 1) {
@@ -134,12 +134,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         var content = layer.getPopupContent(data);
         if (content) {
           var popup = L.popup().setContent(content).setLatLng(coords);
-          this.mapCanvas.openPopup(popup);
+          that.mapCanvas.openPopup(popup);
         }
       });
     }
-
-
 
   },
   initWorkspace: function() {

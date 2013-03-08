@@ -6,6 +6,7 @@ body {
     /*background-image: url('../images/noisy_grid.png');*/
     /*background-image: url('../images/project_papper.png');*/
     /*background-image: url('../images/subtle_freckles.png');*/
+    background-image: url('../images/cardboard_flat_white.png');
 }
 
 /* Will be compiled down to a single stylesheet with your sass files */
@@ -57,9 +58,18 @@ div#brand:hover {
 #map:-moz-full-screen { width: 100% !important; height: 100% !important; }
 #map:full-screen { width: 100% !important; height: 100% !important; }
 
+#liveFeed {
+    overflow-y: auto;
+    height: 282;
+}
+
+.subhead img {
+    margin:auto;
+    display:block;
+}
 
 .footer {
-    background-color: #fff;
+    /*background-color: #fff;*/
 }
 .footer span {
     color: #ccc;
@@ -178,13 +188,13 @@ ul.wms_sources span a {
     color: #000;
 }
 
-/*ol.drawer-group span.indicator,*/
+ol.drawer-group span.indicator,
 ul.wms_sources span.indicator {
     position: absolute;
-    right: 19px;
+    right: 2px;
     top: 4px;
     width: 19px;
-    height: 19px;
+    top: 10px;
 }
 span.chevron-right {
     position: absolute;
@@ -211,7 +221,7 @@ ul.wms_sources h4 {
 
 
 #home-search-wrapper {
-    margin: 50px 0px 50px 0px;
+    margin: 20px 0px 30px 0px;
 }
 input.input-medium.search-query {
     width: 94%;
@@ -442,8 +452,7 @@ input.input-medium.search-query {
 
 .gauge-widget {
     width:200px; height:160px;
-    display: inline-block;
-    margin: 50px 0px 0px 46px;
+    margin: auto;
 }
 
 #g1, #g2, #g3 {
@@ -451,9 +460,6 @@ input.input-medium.search-query {
     display: inline-block;
     margin: 50px 0px 0px 46px;
 }
-
-
-
 
 
 .layersview-popover {
@@ -522,7 +528,7 @@ input.input-medium.search-query {
     margin-bottom: 0;
     border-radius: 0;
 }
-.sidenav p {
+.sidenav .measurement-items{
     padding: 5px 5px 3px 3px;
     margin: 0;
     border-left: 1px solid #e5e5e5;
@@ -546,7 +552,7 @@ input.input-medium.search-query {
     box-shadow: 0 8px 16px -8px #222;
     margin-top: 20px;
 }
-.measure-details p { padding: 5px; }
+.measure-details div { padding: 5px; }
 .measure-info-header {
     border-bottom: 1px solid #EEE;
     background-color: whiteSmoke;
@@ -609,16 +615,16 @@ input.input-medium.search-query {
     padding: 0;
 }
 
-p#workspaceListRegion,
-p#filtersRegion,
-p#locationsRegion,
-p#parametersRegion,
-p#extraLayersRegion{
+div#workspaceListRegion,
+div#filtersRegion,
+div#locationsRegion,
+div#parametersRegion,
+div#extraLayersRegion{
     height: 150px;
     overflow-y: auto;
     overflow-x: none;
 }
-p#selectionRegion{
+div#selectionRegion{
     height: 350px;
     overflow-y: auto;
     overflow-x: none;    
@@ -629,6 +635,10 @@ p#selectionRegion{
     margin-top: 5px;
     border-bottom: 1px solid #ccc;
     overflow:auto;
+}
+
+.info {
+    right: 2px;
 }
 
 .ddsc-item{
@@ -646,13 +656,13 @@ p#selectionRegion{
     display: block; 
     cursor: pointer;
     overflow: hidden; 
-    white-space: normal;
+    white-space: nowrap;
     width: 100%; 
     height: 23px;    
     color: #0084B4;
 }
 .ddsc-item h5 {
-    white-space: normal;
+    white-space: nowrap;
 }
 
 ul.timeserie-actions, 
@@ -744,6 +754,16 @@ border-bottom-color: #167884 !important;
   -webkit-background-clip: padding-box;
      -moz-background-clip: padding-box;
           background-clip: padding-box;
+}
+
+
+.popover{
+    overflow: auto;
+    height: 300px;
+}
+
+.popover-content{
+    padding:0;    
 }
 
 
@@ -891,7 +911,7 @@ html.busy, html.busy * {
 
 
 ul.homepage-list{
-    padding: 3px;
+    padding: 6px;
     margin: 0;
 }
 
@@ -924,3 +944,4 @@ ul#homepage-livestream li em{
 .spacer {
     margin-top: 15px; /* define margin as you see fit */
 }
+
