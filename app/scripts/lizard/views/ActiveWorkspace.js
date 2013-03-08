@@ -70,31 +70,37 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   },
   appendHtml: function(collectionView, itemView, index){
     collectionView.$el.append(itemView.el);
-    if (collectionView.collection.length === index + 1){
-      var htmlcontent = '<li id="maplayers" class="drawer-handle">\
-                          <div class="layer-item">\
-                          <span class="action handle ">\
-                          <i class="icon-plus"></i></span>\
-                          Voeg Extra Kaartlaag toe \
-                          <div id="extramaplayers" class="hidden"></div>\
-                          </div></li>'
-      collectionView.$el.append(htmlcontent);
-        var extraLayersView = new Lizard.Views.LayerList({
-          collection: layerCollection,
-          workspace: Lizard.workspaceView.collection
-        });
-        extraLayersView.on('render', function(renderedView){
-          $('li#maplayers').popover({
-            title: "Kies een kaartlaag",
-            html: true,
-            content: function(){
-              return $('#extramaplayers').html();
-            }
+    // render extra element to add maplayers
+    if (collectionView.$el.find('#maplayers').html() === undefined){
+      // but append it to the bottom of the list
+      if (collectionView.collection.length === index + 1){
+        var htmlcontent = '<li id="maplayers" class="drawer-handle">\
+                            <div class="layer-item">\
+                            <span class="action handle ">\
+                            <i class="icon-plus"></i></span>\
+                            Voeg Extra Kaartlaag toe \
+                            <div id="extramaplayers" class="hidden"></div>\
+                            </div></li>'
+          collectionView.$el.append(htmlcontent);
+          var extraLayersView = new Lizard.Views.LayerList({
+            collection: layerCollection,
+            workspace: Lizard.workspaceView.collection
           });
-        });
-        Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
-        // extraLayersView.render(); 
-        // 
+          extraLayersView.on('render', function(renderedView){
+            $('li#maplayers').popover({
+              title: "Kies een kaartlaag",
+              html: true,
+              content: function(){
+                return $('#extramaplayers').html();
+              }
+            });
+          });
+          Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+      }
+    } else {
+      // move the extra button to the bottom again
+      var maplayers = $('#maplayers')
+        maplayers.insertAfter(maplayers.siblings());
     }
   }
 });
