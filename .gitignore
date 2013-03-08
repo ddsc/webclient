@@ -18,3 +18,7 @@ bin
 parts
 src
 etc/*.nginx.conf
+
+node_modules/
+temp/
+dist/
