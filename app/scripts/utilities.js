@@ -31,6 +31,12 @@ $('input[type=checkbox]').live('click', function(e) {
 });
 
 
+$('.VS-interface').live('focus', function(){
+    console.log('hs')
+
+})
+
+
 // Click handlers for toggling the filter/location/parameter UI
 $('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
@@ -94,8 +100,6 @@ Lizard.Utils.DragDrop = {
     e.preventDefault();
     var wms_layer= e.dataTransfer.getData("Text");
     var $target = $(e.target);
-
-
   },
   drop: function (e){
     e.preventDefault();
