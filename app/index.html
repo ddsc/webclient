@@ -243,36 +243,35 @@
                     <li class="metrics-dropdown mappage" id="workspace">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen</a>
                     </li> 
-                    <div class="measurement-items" data-group="workspaceitem"  id="workspaceRegion"></div>
-                    <!--<button type="button" id="" class="btn"> + Voeg kaartlaag toe</button>-->
-                     <li class="metrics-dropdown mappage" id="ddsc_layers">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-info"></i> DDSC Gegevens</a>
+                    <div class="measurement-items hide" data-group="workspaceitem"  id="workspaceRegion"></div>
+                </ul>
+                <br class="spacer">
+                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">                
+                    <li class="metrics-dropdown mappage" id="ddsc_layers">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-info-sign"></i> DDSC Gegevens</a>
                     </li>
-        <!-- mocking for demo -->
-            <div data-group="ddsc_layers" class="" id="ddsc_temp">
-            <ul><li>
-              <div class="ddsc-item oselect">
-              <h5><i class="icon-check"></i>&nbsp;Sensoren <span class="pull-right badge badge-info">3459</span></h5>
-              </div>
-              <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
-          </li><li>
-              <div class="ddsc-item oselect">
-                   <h5><i class="icon-check"></i>&nbsp;Storingen<span class="pull-right badge badge-warning">30</span></h5>
-              </div>
-              <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
-          </li><li>
-              <div class="ddsc-item oselect">
-              <h5><i class="icon-check"></i>&nbsp;Alarmen<span class="pull-right badge badge-important">2</span></h5>
-              </div>
-              <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
-          </li><li>
-              <div class="ddsc-item oselect">
-              <h5><i class="icon-check"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">19 </span></h5>
-              </div>
-              <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
-          </li></ul></div>
-          <!-- done mocking -->
-                
+                    <div data-group="ddsc_layers" class="" id="ddsc_temp">
+                    <ul><li>
+                      <div class="ddsc-item oselect">
+                      <h5><i class="icon-check"></i>&nbsp;Sensoren <span class="pull-right badge badge-info">3459</span></h5>
+                      </div>
+                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+                  </li><li>
+                      <div class="ddsc-item oselect">
+                           <h5><i class="icon-check"></i>&nbsp;Storingen<span class="pull-right badge badge-warning">30</span></h5>
+                      </div>
+                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+                  </li><li>
+                      <div class="ddsc-item oselect">
+                      <h5><i class="icon-check"></i>&nbsp;Alarmen<span class="pull-right badge badge-important">2</span></h5>
+                      </div>
+                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+                  </li><li>
+                      <div class="ddsc-item oselect">
+                      <h5><i class="icon-check"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">19 </span></h5>
+                      </div>
+                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
+                  </li></ul></div>
                 </ul>
             </div>
             <div class="" id="collageRegion"></div>
@@ -426,10 +425,19 @@
         <span class="action handle indicator">
             <i class="icon-check<% if(!visibility) { %>-empty<%  } %>"></i>
         </span>
-        <span class="content"><%= display_name %><i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
-        <span class="chevron-right">
+        <span class="content"><%= display_name %>&nbsp;<i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
+        <span class="toggle-layer-configuration chevron-right">
           <i class="icon-chevron-right"></i>
         </span>
+        <div class="layer-configuration hide">
+          <div>
+            <div class="opacity-slider" style="margin-top:2px;"></div>
+          </div>
+          <div class="spacer">
+            <button type="button" class="btn btn-mini btn-inverse">Zoom naar gebied</button>
+            <button type="button" class="btn btn-mini btn-danger">Verwijderen</button>
+          </div>          
+        </div>
       </div>
     </script>
 
@@ -506,36 +514,6 @@
         </div>
     </script>
 
-
-    <script type="text/template" id="testview-template">
-
-        <div class="visible-phone"><div style="height:20px;"></div></div>
-        <span id="summary">
-            <h5>Modelbinder example</h5>
-            <p>Dit is een voorbeeld van <a href="https://github.com/theironcook/Backbone.ModelBinder">model binding met de de-facto standaard</a> voor Backbone.</p>
-            <p>Verander de voor/achternaam. Het object wordt (op het blur event) bi-directioneel aangepast.</p>
-            <blockquote>
-                <code style="white-space: pre;" />
-            </blockquote>
-        </span>
-
-        <div id="personFields">
-            <form class="form-horizontal">
-              <div class="control-group">
-                <label class="control-label" for="firstName">First Name</label>
-                <div class="controls">
-                  <input type="text" name="firstName" id="firstName" placeholder="John">
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="lastName">Last Name</label>
-                <div class="controls">
-                  <input type="text" name="lastName" id="lastName" placeholder="Doe">
-                </div>
-              </div>
-            </form>
-        </div>
-    </script>
 
     <script id="node-template" type="text/template">
         <li><a href="<%= name %>"><%= nodeName %></a></li>
@@ -688,7 +666,7 @@
     </script>
 
     <script type="text/template" id="widgetview-template">
-
+      <i class="widget-configuration icon-cog" style="color:#ccc;cursor:pointer;position:absolute;right:0px;padding:5px;"></i>
       <div class="gauge-widget" id="<%=gaugeId%>"></div>
     </script>
 
