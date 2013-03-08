@@ -51,8 +51,7 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.App.content.show(Lizard.mapView);
 
 
-  Lizard.workspaceView = new Lizard.Views.ActiveWorkspace({
-  });
+  Lizard.workspaceView = new Lizard.Views.ActiveWorkspace();
 
   var workspaceListView = new Lizard.Views.WorkspaceCollection({
     collection: workspaceCollection,

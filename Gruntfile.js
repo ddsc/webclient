@@ -10,37 +10,6 @@ module.exports = function( grunt ) {
     // Project configuration
     // ---------------------
 
-    // specify an alternate install location for Bower
-    bower: {
-      dir: 'app/components'
-    },
-
-    // Coffee to JS compilation
-    coffee: {
-      compile: {
-        files: {
-          'temp/scripts/*.js': 'app/scripts/**/*.coffee' 
-        },
-        options: {
-          basePath: 'app/scripts'
-        }
-      }
-    },
-
-    // compile .scss/.sass to .css using Compass
-    compass: {
-      dist: {
-        // http://compass-style.org/help/tutorials/configuration-reference/#configuration-properties
-        options: {
-          css_dir: 'temp/styles',
-          sass_dir: 'app/styles',
-          images_dir: 'app/images',
-          javascripts_dir: 'temp/scripts',
-          force: true
-        }
-      }
-    },
-
     // generate application cache manifest
     manifest:{
       dest: ''
@@ -51,59 +20,7 @@ module.exports = function( grunt ) {
       all: ['test/**/*.html']
     },
 
-    // default watch configuration
-    watch: {
-      coffee: {
-        files: 'app/scripts/**/*.coffee',
-        tasks: 'coffee reload'
-      },
-      compass: {
-        files: [
-          'app/styles/**/*.{scss,sass}'
-        ],
-        tasks: 'compass reload'
-      },
-      reload: {
-        files: [
-          'app/*.html',
-          'app/styles/**/*.css',
-          'app/scripts/**/*.js',
-          'app/images/**/*'
-        ],
-        tasks: 'reload'
-      }
-    },
 
-    // default lint configuration, change this to match your setup:
-    // https://github.com/cowboy/grunt/blob/master/docs/task_lint.md#lint-built-in-task
-    lint: {
-      files: [
-        'Gruntfile.js',
-        'app/scripts/**/*.js',
-        'spec/**/*.js'
-      ]
-    },
-
-    // specifying JSHint options and globals
-    // https://github.com/cowboy/grunt/blob/master/docs/task_lint.md#specifying-jshint-options-and-globals
-    jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        browser: true
-      },
-      globals: {
-        jQuery: true
-      }
-    },
 
     // Build configuration
     // -------------------
@@ -113,77 +30,73 @@ module.exports = function( grunt ) {
     // final build output
     output: 'dist',
 
-    mkdirs: {
-      staging: 'app/'
-    },
-
-    // Below, all paths are relative to the staging directory, which is a copy
-    // of the app/ directory. Any .gitignore, .ignore and .buildignore file
-    // that might appear in the app/ tree are used to ignore these values
-    // during the copy process.
-
-    // concat css/**/*.css files, inline @import, output a single minified css
-    css: {
-      'styles/main.css': ['styles/**/*.css']
-    },
-
-    // renames JS/CSS to prepend a hash of their contents for easier
-    // versioning
-    rev: {
-      js: 'scripts/**/*.js',
-      css: 'styles/**/*.css',
-      img: 'images/**'
-    },
-
-    // usemin handler should point to the file containing
-    // the usemin blocks to be parsed
-    'usemin-handler': {
-      html: 'index.html'
-    },
-
-    // update references in HTML/CSS to revved files
-    usemin: {
-      html: ['**/*.html'],
-      css: ['**/*.css']
-    },
-
-    // HTML minification
-    html: {
-      files: ['**/*.html']
-    },
-
-    // Optimizes JPGs and PNGs (with jpegtran & optipng)
-    img: {
-      dist: '<config:rev.img>'
-    },
-
-    // rjs configuration. You don't necessarily need to specify the typical
-    // `path` configuration, the rjs task will parse these values from your
-    // main module, using http://requirejs.org/docs/optimization.html#mainConfigFile
-    //
-    // name / out / mainConfig file should be used. You can let it blank if
-    // you're using usemin-handler to parse rjs config from markup (default
-    // setup)
-    rjs: {
-      // no minification, is done by the min task
-      optimize: 'none',
-      baseUrl: './scripts',
-      wrap: true,
-      name: 'main'
-    },
-
-    // While Yeoman handles concat/min when using
-    // usemin blocks, you can still use them manually
     concat: {
-      dist: ''
+      dist: {
+        src: ['app/scripts/vendor/**/*.js'],
+        dest: 'dist/vendor.js'
+      }
     },
-
-    min: {
-      dist: ''
+    uglify: {
+      dist: {
+        files: {
+          'dist/vendor.min.js': [
+            'app/scripts/vendor/jquery-1.8.3.js',
+            'app/scripts/vendor/jquerypp.js',
+            'app/scripts/vendor/jquery-ui-1.9.2.custom.js',
+            'app/scripts/vendor/jquery.ui.touch-punch.js',
+            'app/scripts/vendor/jstree.js',
+            'app/scripts/vendor/globalize.js',
+            'app/scripts/vendor/cultures/globalize.cultures.js',
+            'app/scripts/vendor/leaflet.js',
+            'app/scripts/vendor/leaflet.markercluster-src.js',
+            'app/scripts/vendor/leaflet.draw.js',
+            'app/scripts/vendor/leaflet.google.js',
+            'app/scripts/vendor/Control.FullScreen.js',
+            'app/scripts/vendor/proj4js-combined.js',
+            'app/scripts/vendor/tile.stamen.js',
+            'app/scripts/vendor/r2d3.v2.js',
+            'app/scripts/vendor/d3.v2.js',
+            'app/scripts/vendor/rickshaw.min.js',
+            'app/scripts/vendor/crossfilter.js',
+            'app/scripts/vendor/dc.min.js',
+            'app/scripts/vendor/highcharts.js',
+            'app/scripts/vendor/raphael.js',
+            'app/scripts/vendor/justgage.1.0.1.js',
+            'app/scripts/vendor/gauge.min.js',
+            'app/scripts/vendor/keymaster.min.js',
+            'app/scripts/vendor/augment.min.js',
+            'app/scripts/vendor/lunr.js',
+            'app/scripts/vendor/Three.js',
+            'app/scripts/vendor/heyoffline.js',
+            'app/scripts/vendor/async.min.js',
+            'app/scripts/vendor/json2.js',
+            'app/scripts/vendor/underscore.js',
+            'app/scripts/vendor/jquery.gridster.js',
+            'app/scripts/vendor/viewport.js',
+            'app/scripts/vendor/backbone-0.9.10.js',
+            'app/scripts/vendor/backbone-associations-min.js',
+            'app/scripts/vendor/backbone.fetch-cache.js',
+            'app/scripts/vendor/backbone.babysitter.js',
+            'app/scripts/vendor/backbone-localstorage.js',
+            'app/scripts/vendor/backbone.marionette.min.js',
+            'app/scripts/vendor/backbone.modelbinder.js',
+            'app/scripts/vendor/backbone.collectionbinder.js',
+            'app/scripts/vendor/visualsearch.js',
+            'app/scripts/vendor/bootstrap.js',
+            'app/scripts/vendor/fuelux/loader.js',
+            'app/scripts/vendor/bootstrap-notify.js'
+          ]
+        }
+      }
     }
   });
 
+
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+
   // Alias the `test` task to run the `mocha` task instead
   grunt.registerTask('test', 'server:phantom mocha');
+  grunt.registerTask('default', ['uglify']);
 
 };

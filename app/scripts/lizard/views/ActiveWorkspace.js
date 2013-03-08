@@ -9,9 +9,26 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
   },
+  onRender: function() {
+    $('.opacity-slider').slider({
+        value:100,
+        min: 0,
+        max: 100,
+        range: "min",
+        step: 1,
+        stop: function( event, ui ) {
+          console.log(ui.value);
+          $('.top-right').notify({message: {text: 'Transparantie op ' + ui.value + '%'}}).show();
+        }
+    });
+  },
   events: {
     'click .layer-item .indicator': 'toggleVisibility',
-    'click .layer-item .content': 'select'
+    'click .layer-item .content': 'select',
+    'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration'
+  },
+  toggleLayerConfiguration: function() {
+    $(this.el).find('.layer-configuration').toggle('fast');
   },
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
@@ -65,6 +82,9 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     });
     $('.drawer-group').disableSelection();
   },
+  onClose: function(){
+    console.log('closing', this);
+  },
   setWorkspace: function(workspace) {
     this.collection.reset(workspace.get('workspaceitems').models);
   },
@@ -80,7 +100,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
                             <i class="icon-plus"></i></span>\
                             Voeg Extra Kaartlaag toe \
                             <div id="extramaplayers" class="hidden"></div>\
-                            </div></li>'
+                            </div></li>';
           collectionView.$el.append(htmlcontent);
           var extraLayersView = new Lizard.Views.LayerList({
             collection: layerCollection,
@@ -99,7 +119,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       }
     } else {
       // move the extra button to the bottom again
-      var maplayers = $('#maplayers')
+      var maplayers = $('#maplayers');
         maplayers.insertAfter(maplayers.siblings());
     }
   }
