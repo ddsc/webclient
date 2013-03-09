@@ -49,11 +49,14 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.Layer(), //layerCollection,
   tagName: 'ol',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.WorkspaceItem,
+  emptyView: Marionette.ItemView.extend({
+    template: "#empty-workspace-list-message"
+  }),
   events: {
     drop: 'drop'
   },
@@ -86,10 +89,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   onClose: function(){
     console.log('closing', this);
   },
-  setWorkspace: function(workspace) {
-    this.collection.reset(workspace.get('workspaceitems').models);
-  },
-  appendHtml: function(collectionView, itemView, index){
+  /*appendHtml: function(collectionView, itemView, index){
     collectionView.$el.append(itemView.el);
     // render extra element to add maplayers
     if (collectionView.$el.find('#maplayers').html() === undefined){
@@ -123,5 +123,55 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       var maplayers = $('#maplayers');
         maplayers.insertAfter(maplayers.siblings());
     }
+  }*/
+});
+
+Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
+  template: "#template-layout-active-workspace",
+  workspaceItemListView: null,
+  model: null,
+  buttonExtraLayersAdded: false,
+  regions: {
+    list: "#list",
+    workspaceItemRegion: "#workspaceRegion"
+  },
+
+  initialize: function() {
+    this.workspaceItemListView = new Lizard.Views.WorkspaceItemList();
+    this.model = new Lizard.Models.Workspace();
+    this.on('render', this.renderCollection, this);
+  },
+  setWorkspace: function(workspace) {
+    this.model = workspace;
+    this.workspaceItemListView.collection.reset(workspace.get('workspaceitems').models);
+    this.render();
+
+  },
+  renderCollection: function() {
+
+    this.workspaceItemRegion.show(this.workspaceItemListView);
+    if (!this.buttonExtraLayersAdded) {
+      this.workspaceItemListView.$el.append('\
+        <li id="extra-maplayer-button" class="drawer-handle"> \
+          <div class="layer-item">\
+            <span class="action handle ">\
+              <i class="icon-plus"></i>\
+            </span>\
+            Voeg Extra Kaartlaag toe \
+            <div id="extramaplayers" class="hidden"></div>\
+          </div>\
+        </li>');
+      this.buttonExtraLayersAdded = true;
+    } else {
+      var button = this.workspaceItemListView.$el.find('#extra-maplayer-button')
+      button.remove();
+      this.workspaceItemListView.$el.append(button);
+    }
+
+  },
+  getCollection: function() {
+    return this.workspaceItemListView.collection;
   }
+
+
 });
