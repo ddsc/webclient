@@ -10,15 +10,20 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     this.el.setAttribute("id", this.model.attributes.id);
   },
   onRender: function() {
+    var that = this;
     $('.opacity-slider').slider({
-        value:100,
+        value: that.model.get('opacity'),
         min: 0,
         max: 100,
         range: "min",
         step: 1,
         stop: function( event, ui ) {
-          console.log(ui.value);
-          $('.top-right').notify({message: {text: 'Transparantie op ' + ui.value + '%'}}).show();
+          that.model.unbind('change'); // This prevents the item from re-rendering...
+          that.model.set('opacity', ui.value);
+          $('.top-right').notify({
+            message: {
+              text: 'Transparantie ' + ui.value + '%'
+            }}).show();
         }
     });
   },
@@ -94,13 +99,13 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     if (collectionView.$el.find('#maplayers').html() === undefined){
       // but append it to the bottom of the list
       if (collectionView.collection.length === index + 1){
-        var htmlcontent = '<li id="maplayers" class="drawer-handle">\
-                            <div class="layer-item">\
-                            <span class="action handle ">\
-                            <i class="icon-plus"></i></span>\
-                            Voeg Extra Kaartlaag toe \
-                            <div id="extramaplayers" class="hidden"></div>\
-                            </div></li>';
+        var htmlcontent = '<li id="maplayers" class="drawer-handle">' +
+                          '<div class="layer-item">' +
+                          '<span class="action handle ">' +
+                          '<i class="icon-plus"></i></span>' +
+                          'Voeg Extra Kaartlaag toe' +
+                          '<div id="extramaplayers" class="hidden"></div>' +
+                          '</div></li>';
           collectionView.$el.append(htmlcontent);
           var extraLayersView = new Lizard.Views.LayerList({
             collection: layerCollection,

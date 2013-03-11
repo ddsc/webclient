@@ -18,7 +18,9 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   onShow: Lizard.Visualsearch.init,
   triggers: {
     'hover #sidebar': 'ui:expand:sidebar',
-    'mouseleave #sidebar': 'ui:collapse:sidebar'
+    // 'mouseleave #sidebar': 'ui:collapse:sidebar',
+    'hover #mainRegion': 'ui:expand:mainregion',
+    'mouseleave #mainRegion': 'ui:collapse:mainregion'
   }
 });
 
@@ -35,15 +37,22 @@ Lizard.Graphs.graphs = function(){
   var graphsView = new Lizard.Graphs.DefaultLayout();
 
   graphsView.on('ui:expand:sidebar', function(args) {
-    console.log(args);
     $('#sidebar').removeClass('span3').addClass('span5');
     $('#mainRegion').removeClass('span9').addClass('span7');
   });
   graphsView.on('ui:collapse:sidebar', function(args) {
-    console.log(args);
     $('#sidebar').removeClass('span5').addClass('span3');
     $('#mainRegion').removeClass('span7').addClass('span9');
   });
+  graphsView.on('ui:expand:mainregion', function(args) {
+    $('#sidebar').removeClass('span5').addClass('span3');
+    $('#mainRegion').removeClass('span7').addClass('span9');
+  });
+  graphsView.on('ui:collapse:mainregion', function(args) {
+    $('#sidebar').removeClass('span3').addClass('span5');
+    $('#mainRegion').removeClass('span9').addClass('span7');
+  });
+
 
   window.graphsView = graphsView;
 
