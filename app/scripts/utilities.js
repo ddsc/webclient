@@ -4,30 +4,30 @@ if(typeof(console) === 'undefined') {
     console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
 }
 
+
+
+
+
+
+
+
+
+
+
+
 $('input[type=checkbox]').live('click', function(e) {
   var el = $(this);
   if(el.is(':checked')) {
     el.parent().css('font-weight', 'bold');
-    // el.parent().css('background', '#bae483');
-    // el.parent().css('border-bottom', '1px solid rgba(255, 255, 255, 0.1)');
-    // el.parent().css('-moz-box-shadow', 'inset 0 3px 5px rgba(0, 0, 0, 0.1)');
-    // el.parent().css('-webkit-box-shadow', 'inset 0 3px 5px rgba(0, 0, 0, 0.1)');
-    // el.parent().css('box-shadow', 'inset 0 3px 5px rgba(0, 0, 0, 0.1)');
-    // el.parent().css('-webkit-border-radius', '10px');
-    // el.parent().css('-moz-border-radius', '10px');
-    // el.parent().css('border-radius', '10px');
   } else {
     el.parent().css('font-weight', 'normal');
-    // el.parent().css('background', 'none');
-    // el.parent().css('border-bottom', 'none');
-    // el.parent().css('-moz-box-shadow', 'none');
-    // el.parent().css('-webkit-box-shadow', 'none');
-    // el.parent().css('box-shadow', 'none');
-    // el.parent().css('-webkit-border-radius', 'none');
-    // el.parent().css('-moz-border-radius', 'none');
-    // el.parent().css('border-radius', 'none');
   }
   return true;
+});
+
+
+$('.VS-interface').live('focus', function(){
+    console.log('hs');
 });
 
 
@@ -61,7 +61,7 @@ Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {
   toggleSelected: function (model){
-    uuid = model.url.split("eries/")[1].split("/")[0];;
+    uuid = model.url.split("eries/")[1].split("/")[0];
     if (favoriteCollection.where({timeserie: uuid}).length === 0){
             name = model.attributes.name;
             var favorite = favoriteCollection.create({
@@ -75,7 +75,7 @@ Lizard.Utils.Favorites = {
     }
     else {
       favorite = favoriteCollection.where({timeserie: uuid})[0];
-      favorite.destroy({wait:true})
+      favorite.destroy({wait:true});
     }
   }
 };
@@ -94,8 +94,6 @@ Lizard.Utils.DragDrop = {
     e.preventDefault();
     var wms_layer= e.dataTransfer.getData("Text");
     var $target = $(e.target);
-
-
   },
   drop: function (e){
     e.preventDefault();

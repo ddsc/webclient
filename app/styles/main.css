@@ -6,6 +6,7 @@ body {
     /*background-image: url('../images/noisy_grid.png');*/
     /*background-image: url('../images/project_papper.png');*/
     /*background-image: url('../images/subtle_freckles.png');*/
+    background-image: url('../images/cardboard_flat_white.png');
 }
 
 /* Will be compiled down to a single stylesheet with your sass files */
@@ -61,6 +62,12 @@ div#brand:hover {
     overflow-y: auto;
     height: 282;
 }
+#liveFeed em{
+    font-size:2em;
+}
+#liveFeed .row-fluid {
+    width: 98%;
+}
 
 .subhead img {
     margin:auto;
@@ -68,7 +75,7 @@ div#brand:hover {
 }
 
 .footer {
-    background-color: #fff;
+    /*background-color: #fff;*/
 }
 .footer span {
     color: #ccc;
@@ -470,10 +477,18 @@ input.input-medium.search-query {
 
 .layer-item span.content{
     text-transform:capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;    
 }
 
 
-
+#sidebar,
+#mainRegion{ 
+    transition: width ease-out .15s;
+    -webkit-transition: width ease-out .15s;
+    -moz-transition: width ease-out .15s;
+    -o-transition: width ease-out .15s;
+}
 
 .sidenav {
     padding: 0;
@@ -527,7 +542,7 @@ input.input-medium.search-query {
     margin-bottom: 0;
     border-radius: 0;
 }
-.sidenav p {
+.sidenav .measurement-items{
     padding: 5px 5px 3px 3px;
     margin: 0;
     border-left: 1px solid #e5e5e5;
@@ -551,7 +566,7 @@ input.input-medium.search-query {
     box-shadow: 0 8px 16px -8px #222;
     margin-top: 20px;
 }
-.measure-details p { padding: 5px; }
+.measure-details div { padding: 5px; }
 .measure-info-header {
     border-bottom: 1px solid #EEE;
     background-color: whiteSmoke;
@@ -614,16 +629,16 @@ input.input-medium.search-query {
     padding: 0;
 }
 
-p#workspaceListRegion,
-p#filtersRegion,
-p#locationsRegion,
-p#parametersRegion,
-p#extraLayersRegion{
+div#workspaceListRegion,
+div#filtersRegion,
+div#locationsRegion,
+div#parametersRegion,
+div#extraLayersRegion{
     height: 150px;
     overflow-y: auto;
     overflow-x: none;
 }
-p#selectionRegion{
+div#selectionRegion{
     height: 350px;
     overflow-y: auto;
     overflow-x: none;    
@@ -634,6 +649,10 @@ p#selectionRegion{
     margin-top: 5px;
     border-bottom: 1px solid #ccc;
     overflow:auto;
+}
+
+.info {
+    right: 2px;
 }
 
 .ddsc-item{
@@ -651,13 +670,13 @@ p#selectionRegion{
     display: block; 
     cursor: pointer;
     overflow: hidden; 
-    white-space: normal;
+    white-space: nowrap;
     width: 100%; 
     height: 23px;    
     color: #0084B4;
 }
 .ddsc-item h5 {
-    white-space: normal;
+    white-space: nowrap;
 }
 
 ul.timeserie-actions, 
@@ -923,6 +942,9 @@ ul.homepage-list li .icon-chevron-right {
 ul.homepage-list li.odd{
     background-color: #f7f7f7;
 }
+div.odd {
+    background-color: #f7f7f7;   
+}
 
 #homepage-searchresults {
     margin-top: -20px;
@@ -932,9 +954,6 @@ ul#homepage-livestream li {
     padding: 10px;
     height: 50px;
 
-}
-ul#homepage-livestream li em{
-    font-size:2em;
 }
 .spacer {
     margin-top: 15px; /* define margin as you see fit */
