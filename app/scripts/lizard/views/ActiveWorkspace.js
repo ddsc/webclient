@@ -64,30 +64,23 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       }
     });
     $('.drawer-group').disableSelection();
-  },
-  setWorkspace: function(workspace) {
-    this.collection.reset(workspace.get('workspaceitems').models);
-  },
-  appendHtml: function(collectionView, itemView, index){
-    collectionView.$el.append(itemView.el);
-    // render extra element to add maplayers
-    if (collectionView.$el.find('#maplayers').html() === undefined){
+    console.log($('#maplayers'));
+    if ($('#extramaplayers-button').html() === undefined){
       // but append it to the bottom of the list
-      if (collectionView.collection.length === index + 1){
-        var htmlcontent = '<li id="maplayers" class="drawer-handle">\
+        var htmlcontent = '<li id="extramaplayers-button" class="drawer-handle">\
                             <div class="layer-item">\
                             <span class="action handle ">\
                             <i class="icon-plus"></i></span>\
                             Voeg Extra Kaartlaag toe \
                             <div id="extramaplayers" class="hidden"></div>\
                             </div></li>'
-          collectionView.$el.append(htmlcontent);
+          this.$el.append(htmlcontent);
           var extraLayersView = new Lizard.Views.LayerList({
             collection: layerCollection,
             workspace: Lizard.workspaceView.collection
           });
           extraLayersView.on('render', function(renderedView){
-            $('li#maplayers').popover({
+            $('li#maplayers-button').popover({
               title: "Kies een kaartlaag",
               html: true,
               content: function(){
@@ -96,11 +89,17 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
             });
           });
           Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
-      }
-    } else {
-      // move the extra button to the bottom again
-      var maplayers = $('#maplayers')
-        maplayers.insertAfter(maplayers.siblings());
     }
-  }
+  },
+  onRender: function(){
+    var maplayers = $('#extramaplayers-button');
+    // maplayers.insertAfter(maplayers.siblings());
+  },
+  setWorkspace: function(workspace) {
+    this.collection.reset(workspace.get('workspaceitems').models);
+  },
+  // appendHtml: function(collectionView, itemView, index){
+  //   collectionView.$el.append(itemView.el);
+  //   // render extra element to add maplayers
+  // }
 });
