@@ -52,7 +52,11 @@ Lizard.Map.map = function(lonlatzoom){
 
 
   Lizard.workspaceView = new Lizard.Views.ActiveWorkspace();
-
+  var extraLayersView = new Lizard.Views.LayerList({
+    collection: layerCollection,
+    workspace: Lizard.workspaceView.collection
+  });
+  
   var workspaceListView = new Lizard.Views.WorkspaceCollection({
     collection: workspaceCollection,
     workspaceView: Lizard.workspaceView
@@ -79,7 +83,7 @@ Lizard.Map.map = function(lonlatzoom){
 
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
-  // Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+  Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({

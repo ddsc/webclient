@@ -14,14 +14,14 @@ Lizard.Views.LayerListItem = Backbone.Marionette.ItemView.extend({
     this.el.setAttribute("id", this.model.attributes.id);
   },
   events: {
-    'click .layer-item .indicator': 'toggleVisibility'
+    'click .layer-item': 'addtoWorkspace'
   },
-  toggleVisibility: function () {
+  addtoWorkspace: function () {
     if(this.model.attributes.selected) {
       this.model.set({ selected: false }); //todo: remove from workspace
     } else {
       this.model.set({ selected: true });
-      this.model.trigger('add_to_workspace', this.model);
+      this.model.trigger('pushtoWorkspace', this.model);
     }
   }
 });
@@ -32,8 +32,8 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
     this.workspace = options.workspace;
     this.collection.fetch();
     this.listenTo(this.collection, 
-      "add_to_workspace",
-      this.add_to_workspace,
+      "pushtoWorkspace",
+      this.pushtoWorkspace,
       this
     );
   },
@@ -42,12 +42,17 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
   className: 'wms_sources',
   itemView: Lizard.Views.LayerListItem,
-  add_to_workspace: function(model) {
-    this.workspace.push(new Lizard.Models.WorkspaceItem({
-      wms_source:model.toJSON(), 
-      visibility:true,
-      display_name: model.get('display_name'), 
-      type:  model.get('type') 
-    }));
+  pushtoWorkspace: function(model) {
+    if (this.workspace.get(model.id) === undefined){
+      newmodel = new Lizard.Models.WorkspaceItem({
+        wms_source:model.toJSON(),
+        visibility:true,
+        display_name: model.get('display_name'), 
+        type:  model.get('type') 
+      });
+      this.workspace.push(newmodel);
+    } else {
+      this.workspace.remove(model.id);
+    }
   }
 });

@@ -11,7 +11,7 @@ body {
 
 /* Will be compiled down to a single stylesheet with your sass files */
 a {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 h3, h4, h5{
@@ -117,7 +117,7 @@ div#brand:hover {
 
 }
 .jumbotron .container {
-	padding: 0px 20px 0px 20px;
+    padding: 0px 20px 0px 20px;
 }
 
 .jumbotron h1 { font-size: 40px; }
@@ -591,7 +591,7 @@ input.input-medium.search-query {
 }
 
 #ddsc_temp ul li div,
-#workspaceListRegion ul li label,
+#workspaceListRegion ul li,
 #favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
@@ -676,7 +676,7 @@ div#selectionRegion{
     color: #0084B4;
 }
 .ddsc-item h5 {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 ul.timeserie-actions, 

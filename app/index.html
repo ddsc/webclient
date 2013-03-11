@@ -239,17 +239,19 @@
                     <li class="metrics-dropdown mappage" id="favorite">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
                     </li>
-                    <div data-group="favorite" id="workspaceListRegion"></div>
+                    <div data-group="favorite" class="measurement-items" id="workspaceListRegion"></div>
                     <li class="metrics-dropdown mappage" id="workspace">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen</a>
                     </li> 
                     <div data-group="workspaceitem" class="measurement-items hide" id="workspaceRegion"></div>
-                       <div id="extramaplayers-button" class="drawer-handle">
+                       <div id="extramaplayers-button" class="measurement-items drawer-handle">
                           <div class="layer-item">
                           <span class="action handle ">
                           <i class="icon-plus"></i></span>
                           Voeg Extra Kaartlaag toe 
-                          <div id="extramaplayers" class="hidden"></div>
+                          <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+                            <div id="extramaplayers" class="modal-body"></div>
+                          </div>
                           </div>
                         </div>
                     <!--<button type="button" id="" class="btn"> + Voeg kaartlaag toe</button>-->

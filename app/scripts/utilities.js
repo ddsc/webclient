@@ -43,6 +43,11 @@ $('li.metrics-dropdown').live("click", function(e){
   }
 });
 
+$('#extramaplayers-button').live("click", function(e){
+    e.preventDefault();
+    $('#extramodal').modal();
+});
+
 // $('em.reset').live("click", function(e){
 //   e.preventDefault();
 //   console.log("Resetting collections");

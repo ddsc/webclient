@@ -64,42 +64,8 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       }
     });
     $('.drawer-group').disableSelection();
-    console.log($('#maplayers'));
-    if ($('#extramaplayers-button').html() === undefined){
-      // but append it to the bottom of the list
-        var htmlcontent = '<li id="extramaplayers-button" class="drawer-handle">\
-                            <div class="layer-item">\
-                            <span class="action handle ">\
-                            <i class="icon-plus"></i></span>\
-                            Voeg Extra Kaartlaag toe \
-                            <div id="extramaplayers" class="hidden"></div>\
-                            </div></li>'
-          this.$el.append(htmlcontent);
-          var extraLayersView = new Lizard.Views.LayerList({
-            collection: layerCollection,
-            workspace: Lizard.workspaceView.collection
-          });
-          extraLayersView.on('render', function(renderedView){
-            $('li#maplayers-button').popover({
-              title: "Kies een kaartlaag",
-              html: true,
-              content: function(){
-                return $('#extramaplayers').html();
-              }
-            });
-          });
-          Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
-    }
-  },
-  onRender: function(){
-    var maplayers = $('#extramaplayers-button');
-    // maplayers.insertAfter(maplayers.siblings());
   },
   setWorkspace: function(workspace) {
     this.collection.reset(workspace.get('workspaceitems').models);
-  },
-  // appendHtml: function(collectionView, itemView, index){
-  //   collectionView.$el.append(itemView.el);
-  //   // render extra element to add maplayers
-  // }
+  }
 });
