@@ -6,14 +6,10 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'mainRegion': '#mainRegion',
-    'parametersRegion': '#parametersRegion',
-    'filtersRegion': '#filtersRegion',
+    'presetsRegion': '#presetsRegion',
     'favoriteRegion': '#favoriteRegion',
-    'locationsRegion': '#locationsRegion',
     'selectionRegion': '#selectionRegion',
-    'collagegraphRegion' : '#collageRegion',
     'infomodal': '#info-modal'
-
   },
   onShow: Lizard.Visualsearch.init,
   triggers: {
@@ -61,15 +57,11 @@ Lizard.Graphs.graphs = function(){
   var timeserieView = new Lizard.Views.Timeseries();
   
   graphsView.favoriteRegion.show(favoritecollectionview.render());
-  graphsView.filtersRegion.show(filtercollectionview.render());
-  graphsView.locationsRegion.show(locationcollectionview.render());
-  graphsView.parametersRegion.show(parametercollectionview.render());
+
   graphsView.selectionRegion.show(timeserieView.render());
-  graphsView.collagegraphRegion.show(collageView.render());
 
   // var timeserieView = new Lizard.Graphs.TimeserieView();
   // graphsView.mainRegion.show(timeserieView.render());
-
 
   window.graphsView = graphsView; // so it's available outside this controller
 
