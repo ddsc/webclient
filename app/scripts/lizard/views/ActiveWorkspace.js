@@ -9,26 +9,9 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
   },
-  onRender: function() {
-    $('.opacity-slider').slider({
-        value:100,
-        min: 0,
-        max: 100,
-        range: "min",
-        step: 1,
-        stop: function( event, ui ) {
-          console.log(ui.value);
-          $('.top-right').notify({message: {text: 'Transparantie op ' + ui.value + '%'}}).show();
-        }
-    });
-  },
   events: {
     'click .layer-item .indicator': 'toggleVisibility',
-    'click .layer-item .content': 'select',
-    'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration'
-  },
-  toggleLayerConfiguration: function() {
-    $(this.el).find('.layer-configuration').toggle('fast');
+    'click .layer-item .content': 'select'
   },
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
