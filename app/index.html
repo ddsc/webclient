@@ -443,15 +443,14 @@
         </span>
         <span class="content"><%= display_name %>&nbsp;<i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
         <span class="toggle-layer-configuration chevron-right">
-          <i class="icon-chevron-right"></i>
+          <i class="icon-chevron-down"></i>
         </span>
         <div class="layer-configuration hide">
           <div>
             <div class="opacity-slider" style="margin-top:2px;"></div>
           </div>
           <div class="spacer">
-            <button type="button" class="btn btn-mini btn-inverse">Zoom naar gebied</button>
-            <button type="button" class="btn btn-mini btn-danger">Verwijderen</button>
+            <button type="button" class="btn btn-mini btn-danger btn-delete-layer">Verwijderen</button>
           </div>          
         </div>
       </div>
@@ -573,7 +572,7 @@
 
     <script type="text/template" id="graphs-template">
       <div class="row-fluid">
-        <div class="span3" id="sidebar">
+        <div class="span5" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                   <li class="metrics-dropdown" id="presets">
@@ -611,7 +610,7 @@
                 <div class="" id="collageRegion"></div>
         </div>
 
-        <div class="span9" id="mainRegion">
+        <div class="span7" id="mainRegion">
             <div class="row-fluid">
                 <div id="drop-one" class="span12 drop empty">
                     <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">

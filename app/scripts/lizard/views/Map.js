@@ -8,7 +8,7 @@
 
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
-  workspace: null, 
+  workspace: null,
   mapCanvas: null,
   //set on initialisation
   //modalInfo:Lizard.Utils.Map.modalInfo,
@@ -63,7 +63,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
-    })
+    });
 
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
@@ -158,6 +158,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       this.listenTo(this.workspace, "remove", this.removeLayer, this);
       this.listenTo(this.workspace, "reset", this.resetWorkspace, this);
       this.listenTo(this.workspace, "change:visibility", this.changeVisibilityLayer, this);
+      this.listenTo(this.workspace, "change:opacity", this.changeOpacityLayer, this);
       this.listenTo(this.workspace, "change:order", this.changeOrderOfLayer, this);
     }
   },
@@ -187,6 +188,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace.each(function(layerModel){
       that.addLayer(layerModel);
     });
+  },
+  changeOpacityLayer: function(layerModel) {
+    console.log('Changing opacity to', layerModel.get('opacity'));
+    var layer = layerModel.get('layer').getLeafletLayer().setOpacity(layerModel.get('opacity'));
+    return layer;
   },
   changeOrderOfLayer: function(layerModel) {
     var layer = layerModel.get('layer').getLeafletLayer().setZIndex(100 - layerModel.get('order'));
