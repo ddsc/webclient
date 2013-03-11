@@ -57,7 +57,6 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
   initialize: function(obj) {
     this.set('display_name', obj.wms_source.display_name);
     this.set('type', obj.wms_source.type);
-    this.id = obj.wms_source.id;
     //temp until API is fixed. todo
     try {
       this.set('type', obj.wms_source.metadata.type);

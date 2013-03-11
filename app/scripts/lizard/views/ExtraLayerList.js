@@ -18,9 +18,9 @@ Lizard.Views.LayerListItem = Backbone.Marionette.ItemView.extend({
   },
   addtoWorkspace: function () {
     if(this.model.attributes.selected) {
-      this.model.set({ selected: false }); //todo: remove from workspace
+      this.model.set({ inworkspace: false }); //todo: remove from workspace
     } else {
-      this.model.set({ selected: true });
+      this.model.set({ inworkspace: true });
       this.model.trigger('pushtoWorkspace', this.model);
     }
   }
@@ -43,16 +43,17 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   className: 'wms_sources',
   itemView: Lizard.Views.LayerListItem,
   pushtoWorkspace: function(model) {
-    if (this.workspace.get(model.id) === undefined){
+    var workspacemodel = this.workspace.where({display_name: model.get('display_name')});
+    if (workspacemodel.length === 0){
       newmodel = new Lizard.Models.WorkspaceItem({
         wms_source:model.toJSON(),
         visibility:true,
         display_name: model.get('display_name'), 
         type:  model.get('type') 
       });
-      this.workspace.push(newmodel);
+      this.workspace.add(newmodel);
     } else {
-      this.workspace.remove(model.id);
+      this.trigger('removefromWorkspace', workspacemodel[0]);   
     }
   }
 });
