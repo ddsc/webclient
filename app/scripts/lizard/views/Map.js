@@ -4,6 +4,8 @@
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'workspaceCollection' on click on a specific object.
+
+
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null, 
@@ -57,7 +59,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     console.log('hai');
   },
   makemapCanvas: function (){
-  this.mapCanvas = L.map('map', {
+    this.mapCanvas = L.map('map', {
       layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
@@ -101,6 +103,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
 
     L.control.scale().addTo(this.mapCanvas);
+    var legend = new Lizard.Views.MapLegend(this.workspace);
+    this.mapCanvas.addControl(legend);
+
+
     this.layerSwitcher = L.control.layers(this.backgroundLayers, this.extraLayers).addTo(this.mapCanvas);
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal

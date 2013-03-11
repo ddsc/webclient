@@ -58,6 +58,68 @@ div#brand:hover {
 #map:-moz-full-screen { width: 100% !important; height: 100% !important; }
 #map:full-screen { width: 100% !important; height: 100% !important; }
 
+.leaflet-control-legend {
+    box-shadow: 0 1px 7px rgba(0,0,0,0.4);
+    background: #f8f8f9;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    width:22px;
+    height:22px;
+}
+
+leaflet-control-legend-icon {
+    width: 36px;
+    height: 36px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.leaflet-control-legend-toggle {
+    background-image: url(images/layers.png);
+    width: 36px;
+    height: 36px;
+}
+
+.leaflet-control-legend-expanded {
+    /*width: 300px;*/
+    height: 36px;
+}
+
+.leaflet-touch .leaflet-control-legend-toggle {
+    width: 44px;
+    height: 44px;
+}
+.leaflet-control-legend .leaflet-control-legend-list,
+.leaflet-control-legend-expanded .leaflet-control-legend-toggle {
+    display: none;
+}
+.leaflet-control-legend-expanded .leaflet-control-legend-list {
+    display: block;
+    position: relative;
+}
+.leaflet-control-legend-expanded {
+    margin-right: 22px;
+    padding: 6px 10px 6px 6px;
+    color: #333;
+    background: #fff;
+}
+.leaflet-control-legend-selector {
+    margin-top: 2px;
+    position: relative;
+    top: 1px;
+}
+.leaflet-control-legend label {
+    display: block;
+}
+.leaflet-control-legend-separator {
+    height: 0;
+    border-top: 1px solid #ddd;
+    margin: 5px -10px 5px -6px;
+}
+
+
+
 #liveFeed {
     overflow-y: auto;
     height: 282;
