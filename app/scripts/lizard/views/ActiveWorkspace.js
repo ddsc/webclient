@@ -34,7 +34,9 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     'click .layer-item .btn-delete-layer': 'deleteLayer'
   },
   deleteLayer: function(e) {
-    console.log('Deleting layer', e);
+    this.model.collection.remove(this.model.id);
+    // ^^^ TODO: Why doesn't this trigger an onItemRemoved event on the CollectionView?
+    // or, in other words, why does the UI not update itself here?
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
@@ -77,6 +79,9 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       workspaceItem.set('order',index);
       index = index + 1;
     });
+  },
+  onItemRemoved: function() {
+    console.log('REMOVED ONE FROM ME!');
   },
   onShow: function () {
     var that = this;
