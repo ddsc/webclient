@@ -30,7 +30,11 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   events: {
     'click .layer-item .indicator': 'toggleVisibility',
     'click .layer-item .content': 'select',
-    'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration'
+    'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration',
+    'click .layer-item .btn-delete-layer': 'deleteLayer'
+  },
+  deleteLayer: function(e) {
+    console.log('Deleting layer', e);
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
