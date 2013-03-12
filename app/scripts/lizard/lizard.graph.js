@@ -54,8 +54,6 @@ Lizard.Graphs.graphs = function(){
   });
 
 
-  window.graphsView = graphsView;
-
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
   var timeserieView = new Lizard.Views.Timeseries();

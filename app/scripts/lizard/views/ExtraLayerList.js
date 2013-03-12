@@ -12,6 +12,7 @@ Lizard.Views.LayerListItem = Backbone.Marionette.ItemView.extend({
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
+
   },
   events: {
     'click .layer-item': 'addtoWorkspace'
@@ -36,9 +37,6 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       this.pushtoWorkspace,
       this
     );
-  },
-  onItemRemoved: function(e) {
-    console.log('item removed!!!!!!!!!!', e);
   },
   collection: null, //layerCollection,
   workspace: null,

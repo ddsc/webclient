@@ -117,20 +117,19 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
     this.model = new Lizard.Models.Workspace();
     this.on('render', this.renderCollection, this);
     Lizard.App.vent.on('removeItem', _.bind(this.onItemRemoved, this));
-
+    this.workspaceItemListView.collection.on('reset', this.render)
   },
   setWorkspace: function(workspace) {
     this.model = workspace;
     this.workspaceItemListView.collection.reset(workspace.get('workspaceitems').models);
-    this.workspaceItemListView.collection.on('add', this.render)
-    this.workspaceItemListView.render();
+    // this.workspaceItemListView.render();
   },
   onItemRemoved: function(model) {
     this.workspaceItemListView.collection.remove(model);
-    this.workspaceItemListView.render();
+    // this.workspaceItemListView.render();
   },
   renderCollection: function() {
-    this.workspaceItemRegion.show(this.workspaceItemListView);
+    this.workspaceItemRegion.show(this.workspaceItemListView.render());
   },
   getCollection: function() {
     return this.workspaceItemListView.collection;
