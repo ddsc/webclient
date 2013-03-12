@@ -23,7 +23,7 @@ div#brand {
     background-image: url('../images/ddsc-logo-bw-nav.png');
     background-position: 0 -18px;
     background-repeat: no-repeat;
-    -o-transition: background 0.2s ease-in;
+    -o-transition: background 0.2s ease-out;
     -ms-transition: background 0.2s ease-out;
     -moz-transition: background 0.2s ease-out;
     -webkit-transition: background 0.2s ease-out;
@@ -592,6 +592,42 @@ input.input-medium.search-query {
     margin-left: -16px;
     opacity: .25;
 }
+
+i.chevron-closed{
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transition: transform ease-out .2s;
+    -moz-transition: transform ease-out .2s;
+    -ms-transition: transform ease-out .2s;
+    -o-transition: transform ease-out .2s;
+    transition: transform ease-out .2s;
+}
+
+i.chevron-open{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transition: transform ease-in .2s;
+    -moz-transition: transform ease-in .2s;
+    -ms-transition: transform ease-in .2s;
+    -o-transition: transform ease-in .2s;
+    transition: transform ease-in .2s;
+}
+
 .sidenav > .active > a {
     position: relative;
     z-index: 2;
