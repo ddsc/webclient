@@ -56,12 +56,15 @@ Lizard.Home.home = function(){
     view.show(widget.render())
   }
 
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief'},
-                  Lizard.homeView.measureAlarm);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur'},
-                  Lizard.homeView.measureNewMeasurement);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren'},
-                  Lizard.homeView.measureStatus);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:100, value:50,
+      levelColors:['FFFF00','FF0000']},
+      Lizard.homeView.measureAlarm);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:20000, value:18000,
+      levelColors:['FFFF00','00CC00']},
+      Lizard.homeView.measureNewMeasurement);
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:200, value:20,
+      levelColors:['FFFF00','FF0000']},
+      Lizard.homeView.measureStatus);
 
   Backbone.history.navigate('home');
 };

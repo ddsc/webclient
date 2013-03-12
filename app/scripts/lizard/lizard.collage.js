@@ -15,10 +15,9 @@ CollageItemView = Backbone.Marionette.ItemView.extend({
     this.close();
   },
   toggleItem: function() {
-    (this.model.attributes.incollage ? 
-      this.model.set({incollage: false}) : 
-      this.model.set({incollage: true}));
+    var item = (this.model.attributes.incollage ? this.model.set({incollage: false}) : this.model.set({incollage: true}));
     this.$('.icon-ok').toggleClass('hidden');
+    return item;
   }
 });
 
@@ -56,7 +55,7 @@ Lizard.Collage.collage = function(){
   var collageView = new Lizard.Collage.DefaultLayout();
   
   Lizard.App.content.show(collageView);
-  var collageView = new CollageView();
+  // var collageView = new CollageView();
 
 
   window.collageView = collageView; // so it's available outside this controller

@@ -166,7 +166,7 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
     // note: first tick is tickIndex 1, but only sometimes (???)
-    var isFirstOrLast = tickIndex == 1 || tickIndex == (tickLength - 2);
+    var isFirstOrLast = tickIndex === 1 || tickIndex === (tickLength - 2);
 
     var t = axis.tickSize[0] * timeUnitSize[axis.tickSize[1]];
     var span = axis.max - axis.min;
@@ -238,7 +238,7 @@ function loadPlotData ($graph, dataUrl, callback, force) {
         'height': '100%'
     });
     $graph.addClass('flot-graph');
-    if ($graph.height() == 0) {
+    if ($graph.height() === 0) {
         console.error('Height of the graph element seems to be 0');
     }
 
@@ -262,7 +262,7 @@ function loadPlotDataOld ($graph, dataUrl, callback, force) {
     var loadedDataUrls = $graph.data('loadedDataUrls');
     if (force !== true && loadedDataUrls) {
         $.each(loadedDataUrls, function (idx, loadedDataUrl) {
-            if (loadedDataUrl == dataUrl) {
+            if (loadedDataUrl === dataUrl) {
                 // data from this URL is already loaded, do nothing
                 return;
             }
@@ -288,7 +288,7 @@ function loadPlotDataOld ($graph, dataUrl, callback, force) {
         'height': '100%'
     });
     $graph.addClass('flot-graph');
-    if ($graph.height() == 0) {
+    if ($graph.height() === 0) {
         console.error('Height of the graph element seems to be 0');
     }
 

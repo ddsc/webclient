@@ -6,7 +6,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
-    'workspaceRegion': '#workspaceRegion',
+    'workspaceRegion': '#activeWorkspaceRegion',
     'extraLayerRegion' : '#extramaplayers'
   },
   onShow: Lizard.Visualsearch.init
@@ -68,14 +68,14 @@ Lizard.Map.map = function(lonlatzoom){
       lon: lonlatzoom.split(',')[0],
       lat: lonlatzoom.split(',')[1],
       zoom: lonlatzoom.split(',')[2],
-      workspace: Lizard.workspaceView.collection
+      workspace: Lizard.workspaceView.getCollection()
     });
   } else {
     leafletView = new Lizard.Views.Map({
       lon: 5.16082763671875,
       lat: 51.95442214470791,
       zoom: 7,
-      workspace: Lizard.workspaceView.collection
+      workspace: Lizard.workspaceView.getCollection()
     });
   }
 

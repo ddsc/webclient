@@ -2,8 +2,8 @@ Lizard.views.Collage = Backbone.Marionette.ItemView.extend({
     tagName: 'li',
     template: '#name-template-delete',
     events: {
-        'click .collageItem': 'selectItem',
-		'click .icon-remove': 'removeItem'
+      'click .collageItem': 'selectItem',
+  		'click .icon-remove': 'removeItem'
     },
     selectItem: function() {
         this.trigger('selectItem', this.model);

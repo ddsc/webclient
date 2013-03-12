@@ -38,7 +38,20 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
   }
 });
 
-Lizard.Models.Widget = Backbone.Model.extend({});
+Lizard.Models.Widget = Backbone.Model.extend({
+  defaults: {
+    col:3,
+    row:1,
+    size_x:2,
+    size_y:2,
+    //gaugeId:_.uniqueId('gauge_'), todo, add to initialisation
+    title:'Title',
+    label:'%',
+    min:0,
+    max:100,
+    refreshRate: 50000
+  }
+});
 
 Lizard.Models.Collage = Backbone.Model.extend({
   defaults: {

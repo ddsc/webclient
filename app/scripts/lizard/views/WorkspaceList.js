@@ -40,8 +40,5 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   },
   onDomRefresh: function () {
     $('.drawer-group').disableSelection();
-  },
-  onItemRemoved: function(e) {
-    console.log('item removed!!!!!!!!!!', e);
   }
 });

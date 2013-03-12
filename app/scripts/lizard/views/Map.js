@@ -4,6 +4,8 @@
 // * The infobox is update on "hover"
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'workspaceCollection' on click on a specific object.
+
+
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null,
@@ -14,9 +16,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log('LeafletView');
     // (value ? this.series.push(value) : 'nothing');
-    options.lon; //= (options.lon ? options.lon : 5.16082763671875);
-    options.lat; //= (options.lat ? options.lat : 51.95442214470791);
-    options.zoom; //= (options.zoom ? options.zoom : 7);
+    this.lon = options.lon; //= (options.lon ? options.lon : 5.16082763671875);
+    this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
+    this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
   },
   //background layer
@@ -57,7 +59,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     console.log('hai');
   },
   makemapCanvas: function (){
-  this.mapCanvas = L.map('map', {
+    this.mapCanvas = L.map('map', {
       layers: [this.backgroundLayers.Waterkaart],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
@@ -101,6 +103,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
 
     L.control.scale().addTo(this.mapCanvas);
+    var legend = new Lizard.Views.MapLegend(this.workspace);
+    this.mapCanvas.addControl(legend);
+
+
     this.layerSwitcher = L.control.layers(this.backgroundLayers, this.extraLayers).addTo(this.mapCanvas);
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal
