@@ -15,5 +15,8 @@ Lizard.views.Collage = Backbone.Marionette.ItemView.extend({
 });
 
 Lizard.views.CollageList = Backbone.Marionette.CollectionView.extend({
-    itemView: Lizard.views.Collage
+  itemView: Lizard.views.Collage,
+  onItemRemoved: function(e) {
+    console.log('item removed!!!!!!!!!!', e);
+  }
 });

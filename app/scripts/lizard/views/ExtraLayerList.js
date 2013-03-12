@@ -37,6 +37,9 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       this
     );
   },
+  onItemRemoved: function(e) {
+    console.log('item removed!!!!!!!!!!', e);
+  },
   collection: null, //layerCollection,
   workspace: null,
   tagName: 'ul',
