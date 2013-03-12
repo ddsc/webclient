@@ -4,6 +4,7 @@ Lizard.Graphs = {};
 Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
+    'presetsRegion': '#presetsRegion',
     'sidebarRegion': '#sidebarRegion',
     'mainRegion': '#mainRegion',
     'parametersRegion': '#parametersRegion',
@@ -59,6 +60,11 @@ Lizard.Graphs.graphs = function(){
   Lizard.App.content.show(graphsView);
   var collageView = new CollageView();
   var timeserieView = new Lizard.Views.Timeseries();
+
+  var collageListView = new Lizard.Views.CollageList({
+    collection: collageCollection
+  });
+  graphsView.presetsRegion.show(collageListView);
   
   graphsView.favoriteRegion.show(favoritecollectionview.render());
   graphsView.filtersRegion.show(filtercollectionview.render());
