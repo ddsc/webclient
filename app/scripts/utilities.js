@@ -43,6 +43,11 @@ $('li.metrics-dropdown').live("click", function(e){
   }
 });
 
+$('#extramaplayers-button').live("click", function(e){
+    e.preventDefault();
+    $('#extramodal').modal();
+});
+
 Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {

@@ -12,16 +12,17 @@ Lizard.Views.LayerListItem = Backbone.Marionette.ItemView.extend({
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
+
   },
   events: {
-    'click .layer-item .indicator': 'toggleVisibility'
+    'click .layer-item': 'addtoWorkspace'
   },
-  toggleVisibility: function () {
+  addtoWorkspace: function () {
     if(this.model.attributes.selected) {
-      this.model.set({ selected: false }); //todo: remove from workspace
+      this.model.set({ inworkspace: false }); //todo: remove from workspace
     } else {
-      this.model.set({ selected: true });
-      this.model.trigger('add_to_workspace', this.model);
+      this.model.set({ inworkspace: true });
+      this.model.trigger('pushtoWorkspace', this.model);
     }
   }
 });
@@ -31,26 +32,29 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   initialize: function (options) {
     this.workspace = options.workspace;
     this.collection.fetch();
-    this.listenTo(this.collection,
-      "add_to_workspace",
-      this.add_to_workspace,
+    this.listenTo(this.collection, 
+      "pushtoWorkspace",
+      this.pushtoWorkspace,
       this
     );
-  },
-  onItemRemoved: function(e) {
-    console.log('item removed!!!!!!!!!!', e);
   },
   collection: null, //layerCollection,
   workspace: null,
   tagName: 'ul',
   className: 'wms_sources',
   itemView: Lizard.Views.LayerListItem,
-  add_to_workspace: function(model) {
-    this.workspace.push(new Lizard.Models.WorkspaceItem({
-      wms_source:model.toJSON(),
-      visibility:true,
-      display_name: model.get('display_name'),
-      type: model.get('type')
-    }));
+  pushtoWorkspace: function(model) {
+    var workspacemodel = this.workspace.where({display_name: model.get('display_name')});
+    if (workspacemodel.length === 0){
+      newmodel = new Lizard.Models.WorkspaceItem({
+        wms_source:model.toJSON(),
+        visibility:true,
+        display_name: model.get('display_name'), 
+        type:  model.get('type') 
+      });
+      this.workspace.add(newmodel);
+    } else {
+      this.workspace.remove(workspacemodel[0]);   
+    }
   }
 });

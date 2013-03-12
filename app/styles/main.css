@@ -1,22 +1,17 @@
 body {
-    /*background-image: url('../images/tiny_grid.png');*/
-    /*background-image: url('../images/diagonales_decalees.png');*/
-    /*background-image: url('../images/furley_bg.png');*/
-    /*background-image: url('../images/graphy.png');*/
-    /*background-image: url('../images/noisy_grid.png');*/
-    /*background-image: url('../images/project_papper.png');*/
-    /*background-image: url('../images/subtle_freckles.png');*/
+
+    /*fallback*/
     background-image: url('../images/cardboard_flat_white.png');
+    /* image with opacity layer */
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
 }
 
 /* Will be compiled down to a single stylesheet with your sass files */
 a {
-	cursor: pointer;
-}
-
-h3, h4, h5{
-    font-family: Lato, Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    cursor: pointer;
 }
 
 div#brand {
@@ -179,7 +174,7 @@ leaflet-control-legend-icon {
 
 }
 .jumbotron .container {
-	padding: 0px 20px 0px 20px;
+    padding: 0px 20px 0px 20px;
 }
 
 .jumbotron h1 { font-size: 40px; }
@@ -558,7 +553,7 @@ input.input-medium.search-query {
 
 
 .sidenav {
-    padding: 0;
+    padding: 5px 15px;
     background-color: white;
     border-radius: 6px;
     box-shadow: 0 8px 16px -8px #222;
@@ -619,6 +614,16 @@ input.input-medium.search-query {
     background: whitesmoke;
 }
 
+.add-map-item{
+    padding: 5px 5px 3px 3px;
+    margin: 0;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    font-size: 0.85em;
+    font-style: italic;
+    background: whitesmoke;
+}
+
 
 /* measure details area */
 .overview { margin-bottom: 35px; }
@@ -658,7 +663,7 @@ input.input-medium.search-query {
 }
 
 #ddsc_temp ul li div,
-#workspaceListRegion ul li label,
+#workspaceListRegion ul li,
 #favoriteRegion ul li label,
 #filtersRegion ul li label, 
 #locationsRegion ul li label, 
@@ -743,7 +748,7 @@ div#selectionRegion{
     color: #0084B4;
 }
 .ddsc-item h5 {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 ul.timeserie-actions, 
@@ -813,7 +818,6 @@ border-top-color: #167884 !important;
 border-bottom-color: #167884 !important;
 }
 
-
 .modal {
   position: fixed;
   top: 50%;
@@ -837,6 +841,9 @@ border-bottom-color: #167884 !important;
           background-clip: padding-box;
 }
 
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0.3;
+}
 
 .popover{
     overflow: auto;

@@ -47,9 +47,9 @@ Lizard.Graphs.graphs = function(){
   /*graphsView.on('ui:collapse:mainregion', function(args) {
     $('#sidebar').removeClass('span3').addClass('span5');
     $('#mainRegion').removeClass('span9').addClass('span7');
+
   });*/
 
-  window.graphsView = graphsView;  //todo: why window?
   Lizard.App.content.show(graphsView);
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
