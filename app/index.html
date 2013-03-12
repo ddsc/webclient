@@ -738,7 +738,12 @@
     </script>
 
     <script type="text/template" id="annotations-template">
-      <h4>Annotations</h4>
+      <p>Annotaties</p>
+      <%if(isLoading){%>
+          <span class="lazy loading" style="width: 100%; height: 100px;"></span>
+      <%}else{%>
+          Er zijn <strong><%= annotationsCount %></strong> notities gevonden.
+      <%}%>
     </script>
 
   </head>
@@ -981,8 +986,8 @@
         <script src="scripts/lizard/views/FavoriteCollection.js"></script>
         <script src="scripts/lizard/views/Annotations.js"></script>
 
-    		<!-- Utility code -->
-		    <script src="scripts/utilities.js"></script>
+		<!-- Utility code -->
+	    <script src="scripts/utilities.js"></script>
         <script src="scripts/lizard/lizard.visualsearch.js"></script>
 
 
@@ -998,6 +1003,7 @@
         <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 
         <script src="scripts/lizard/models/Annotation.js"></script>
+        <script src="scripts/lizard/models/Annotations.js"></script>
         <script src="scripts/lizard/collections/Annotation.js"></script>
 
 

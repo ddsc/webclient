@@ -427,18 +427,20 @@ input.input-medium.search-query {
     margin-right:5px;
 }
 
-.flot-graph > span.loading { background-image: url('../images/loading.gif'); }
-.flot-graph > span.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
-.flot-graph > span {
-    background-color: #222222;
+span.lazy.loading { background-image: url('../images/loading.gif'); }
+span.lazy.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
+span.lazy {
+    background-color: #333;
     background-position: center center;
     background-repeat: no-repeat;
-    bottom: 0;
     display: block;
-    left: 0;
+    width: 100%;
+    height: 100%;
+    /*left: 0;
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
+    top: 0;*/
 }
 
 
