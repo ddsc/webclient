@@ -11,7 +11,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   onRender: function() {
     var that = this;
-    $('.opacity-slider').slider({
+    that.$el.find('.opacity-slider').slider({
         value: that.model.get('opacity'),
         min: 0,
         max: 100,
@@ -178,11 +178,8 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
       button.remove();
       this.workspaceItemListView.$el.append(button);
     }
-
   },
   getCollection: function() {
     return this.workspaceItemListView.collection;
   }
-
-
 });

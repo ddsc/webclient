@@ -53,104 +53,6 @@ Lizard.Views.ItemView = Backbone.Marionette.ItemView.extend({
   tagName: 'li'
 });
 
-Lizard.Views.Filter = Lizard.Views.ItemView.extend({
-  template: '#filterview-template',
-  events: {
-    'click input': 'toggle'
-  },
-  toggle: function(e) {
-    uuid = this.model.get('id');
-    type = 'logicalgroups';
-    Lizard.Utils.Favorites.toggleSelected(uuid, type);
-  },
-});
-
-Lizard.Views.Location = Lizard.Views.ItemView.extend({
-  template: '#locationview-template',
-  events: {
-    'click input': 'toggle'
-  },
-  toggle: function(e) {
-  }
-});
-
-Lizard.Views.Parameter = Lizard.Views.ItemView.extend({
-  className: '',
-  template: '#parameterview-template',
-  events: {
-    'click input': 'toggle'
-  },
-  toggle: function(e) {
-    if(this.model.get('selected') === false) {
-      this.model.set('selected', true);
-    } else {
-      this.model.set('selected', false);
-    }
-  },
-  modelEvents: {
-    'change:hidden': 'modelChanged'
-  },
-  modelChanged: function() {
-    if (this.model.get('hidden') === true ) {
-      this.$el._addClass("hidden");
-    } else {
-      this.$el._removeClass("hidden");
-    }
-  },
-});
-
-Lizard.Views.WidgetView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    // console.log('Lizard.Views.WidgetView initializing');
-    that = this;
-  },
-  tagName: 'li',
-  className: 'new',
-  template: '#widgetview-template',
-  attributes: {
-    "data-col": "1", // << this needs to be dynamic!
-    "data-row": "1",
-    "data-sizex": "2",
-    "data-sizey": "2"
-  },
-  events: {
-    'click .icon-cog': 'configureWidget'
-  },
-  configureWidget: function(e) {
-    // alert('test');
-    // console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
-    e.preventDefault();
-    var template = _.template( $("#widget-configuration").html(), {} );
-    this.$el.html( template );
-  },
-  onShow: function() {
-    var that = this;
-    var settings = {
-      id: this.model.get('gaugeId'),
-      value: getRandomInt(this.model.get('min'), this.model.get('max')),
-      min: this.model.get('min'),
-      max: this.model.get('max'),
-      title: this.model.get('title'),
-      label: this.model.get('label')
-    }
-
-    if (this.model.get('levelColors')) {
-      settings['levelColors'] = this.model.get('levelColors');
-    }
-
-    if (this.model.get('value')) {
-      settings['value'] = this.model.get('value');
-    }
-
-    this.justGageRef = new JustGage(settings);
-
-    if (!this.model.get('value')) {
-      setInterval(function() { // <-- commented during development...
-        that.justGageRef.refresh(getRandomInt(that.model.get('min'),that.model.get('max')));
-      }, getRandomInt(that.model.get('refreshRate') * 0.7,that.model.get('refreshRate') * 1.3))
-    }
-  }
-});
 
 Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
   template:function(model){
@@ -210,31 +112,6 @@ Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.Parameter,
 });
 
-Lizard.Views.WidgetCollectionView = Backbone.Marionette.CollectionView.extend({
-  // Creates the Gridster UL element
-  collection: new Lizard.Collections.Widget(),
-  tagName: 'ul',
-  className: 'gridster',
-  itemView: Lizard.Views.WidgetView,
-
-  initialize: function(){
-    this.listenTo(this.collection, 'reset', this.render, this);
-  },
-  onShow: function() {
-    var self = this;
-    var gridster = $('.gridster').gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [140, 140],
-        draggable: {
-          stop: function(event, ui) {
-            console.log('Syncing dashboard: ', gridster.serialize());
-            $('.top-right').notify({message: {text: 'Saving your dashboard layout!'}}).show();
-          }
-        }
-    }).data('gridster');
-  }
-});
-
 
 Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
   collection: favoriteCollection,
@@ -289,23 +166,3 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	}
 
 });
-
-
-
-// Instantiate the Views - todo: only in pages or App please
-var filtercollectionview = new Lizard.Views.FilterCollection();
-var favoritecollectionview = new Lizard.Views.FavoriteCollection();
-var locationcollectionview = new Lizard.Views.LocationCollection();
-var parametercollectionview = new Lizard.Views.ParameterCollection();
-//var layercollectionview = new Lizard.Views.LayerCollection();
-var widgetcollectionview = new Lizard.Views.WidgetCollectionView();
-//var workspacecollectionview = new Lizard.Views.WorkspaceCollection();
-
-widgetcollectionview.collection.add([
-  new Lizard.Models.Widget({col:3,row:5,size_x:2,size_y:2,gaugeId:1,title:'Amstel',label:'Verplaatsing (m/s)'}),
-  new Lizard.Models.Widget({col:1,row:1,size_x:2,size_y:2,gaugeId:2,title:'Waternet',label:'Debiet (m3)'}),
-  new Lizard.Models.Widget({col:3,row:3,size_x:2,size_y:2,gaugeId:3,title:'Rijn',label:'Volume (m3)'}),
-  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:4,title:'Dijk 22',label:'Sulfiet'}),
-  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:5,title:'Dijk 23',label:'Temperatuur (c)'}),
-  new Lizard.Models.Widget({col:3,row:1,size_x:2,size_y:2,gaugeId:6,title:'Dijk 24',label:'Druk'})
-]);

@@ -43,20 +43,6 @@ $('li.metrics-dropdown').live("click", function(e){
   }
 });
 
-// $('em.reset').live("click", function(e){
-//   e.preventDefault();
-//   console.log("Resetting collections");
-//   _.each(filtercollectionview.collection.models, function(model) {
-//     model.set('selected', false);
-//   });
-//   _.each(locationcollectionview.collection.models, function(model) {
-//     model.set('selected', false);
-//   });
-//   _.each(parametercollectionview.collection.models, function(model) {
-//     model.set('selected', false);
-//   });
-// });
-
 Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {
