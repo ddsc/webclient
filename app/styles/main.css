@@ -747,7 +747,6 @@ border-top-color: #167884 !important;
 border-bottom-color: #167884 !important;
 }
 
-
 .modal {
   position: fixed;
   top: 50%;
@@ -771,6 +770,9 @@ border-bottom-color: #167884 !important;
           background-clip: padding-box;
 }
 
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0.3;
+}
 
 .popover{
     overflow: auto;
