@@ -84,9 +84,6 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
       index = index + 1;
     });
   },
-  onItemRemoved: function() {
-    console.log('REMOVED ONE FROM ME!');
-  },
   onShow: function () {
     var that = this;
     $('.drawer-group').sortable({

@@ -31,7 +31,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   initialize: function (options) {
     this.workspace = options.workspace;
     this.collection.fetch();
-    this.listenTo(this.collection, 
+    this.listenTo(this.collection,
       "add_to_workspace",
       this.add_to_workspace,
       this
@@ -47,10 +47,10 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.LayerListItem,
   add_to_workspace: function(model) {
     this.workspace.push(new Lizard.Models.WorkspaceItem({
-      wms_source:model.toJSON(), 
+      wms_source:model.toJSON(),
       visibility:true,
-      display_name: model.get('display_name'), 
-      type:  model.get('type') 
+      display_name: model.get('display_name'),
+      type: model.get('type')
     }));
   }
 });

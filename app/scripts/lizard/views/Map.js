@@ -16,9 +16,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log('LeafletView');
     // (value ? this.series.push(value) : 'nothing');
-    options.lon; //= (options.lon ? options.lon : 5.16082763671875);
-    options.lat; //= (options.lat ? options.lat : 51.95442214470791);
-    options.zoom; //= (options.zoom ? options.zoom : 7);
+    this.lon = options.lon; //= (options.lon ? options.lon : 5.16082763671875);
+    this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
+    this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
   },
   //background layer
