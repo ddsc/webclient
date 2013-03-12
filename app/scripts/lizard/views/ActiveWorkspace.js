@@ -65,14 +65,11 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   tagName: 'ol',
   className: 'ui-sortable drawer-group wms_sources',
   itemView: Lizard.Views.WorkspaceItem,
-  initialize: function () {
-    Lizard.App.vent.on('removeItem', _.bind(this.onItemRemoved, this));
-  },
   emptyView: Marionette.ItemView.extend({
     template: "#empty-workspace-list-message"
   }),
   events: {
-    drop: 'drop',
+    drop: 'drop'
   },
   drop: function(event, args) {
     this.collection.move(args.item, args.index);
@@ -87,9 +84,7 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
       index = index + 1;
     });
   },
-  onItemRemoved: function(model) {
-    this.collection.remove(model);
-  },
+
   onShow: function () {
     var that = this;
     $('.drawer-group').sortable({
@@ -102,9 +97,6 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
       }
     });
     $('.drawer-group').disableSelection();
-  },
-  setWorkspace: function(workspace) {
-    this.collection.reset(workspace.get('workspaceitems').models);
   },
   onClose: function(){
     console.log('closing', this);
@@ -124,34 +116,21 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
     this.workspaceItemListView = new Lizard.Views.WorkspaceItemList();
     this.model = new Lizard.Models.Workspace();
     this.on('render', this.renderCollection, this);
+    Lizard.App.vent.on('removeItem', _.bind(this.onItemRemoved, this));
+
   },
   setWorkspace: function(workspace) {
     this.model = workspace;
     this.workspaceItemListView.collection.reset(workspace.get('workspaceitems').models);
-    this.render();
-
+    this.workspaceItemListView.collection.on('add', this.render)
+    this.workspaceItemListView.render();
+  },
+  onItemRemoved: function(model) {
+    this.workspaceItemListView.collection.remove(model);
+    this.workspaceItemListView.render();
   },
   renderCollection: function() {
-
     this.workspaceItemRegion.show(this.workspaceItemListView);
-    /*if (!this.buttonExtraLayersAdded) {
-      this.workspaceItemListView.$el.append('\
-        <li id="extra-maplayer-button" class="drawer-handle"> \
-          <div class="layer-item">\
-            <span class="action handle ">\
-              <i class="icon-plus"></i>\
-            </span>\
-            Voeg Extra Kaartlaag toe \
-            <div id="extramaplayers" class="hidden"></div>\
-          </div>\
-        </li>');
-      this.buttonExtraLayersAdded = true;
-    } else {
-      var button = this.workspaceItemListView.$el.find('#extra-maplayer-button')
-      button.remove();
-      this.workspaceItemListView.$el.append(button);
-    }*/
-
   },
   getCollection: function() {
     return this.workspaceItemListView.collection;

@@ -54,7 +54,7 @@ Lizard.Map.map = function(lonlatzoom){
   Lizard.workspaceView = new Lizard.Views.ActiveWorkspace();
   var extraLayersView = new Lizard.Views.LayerList({
     collection: layerCollection,
-    workspace: Lizard.workspaceView.collection
+    workspace: Lizard.workspaceView.getCollection()
   });
 
   var workspaceListView = new Lizard.Views.WorkspaceCollection({
@@ -78,8 +78,6 @@ Lizard.Map.map = function(lonlatzoom){
       workspace: Lizard.workspaceView.getCollection()
     });
   }
-
-  extraLayersView.on('removefromWorkspace', leafletView.removeLayer)
 
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
