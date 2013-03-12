@@ -77,6 +77,9 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
       cache: false
     });
   },
+  comparator: function(timeserie) {
+    return timeserie.get('name');
+  },
   url: settings.timeseries_url,
   model: Lizard.Models.Timeserie
 });

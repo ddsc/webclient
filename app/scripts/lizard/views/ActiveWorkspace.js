@@ -5,13 +5,42 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   initialize: function () {
     this.model.bind('change', this.render);
     this.model.set('id', this.model.get('url'));
+    window.collectionJantje = this
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
   },
+  onRender: function() {
+    var that = this;
+    $('.opacity-slider').slider({
+        value: that.model.get('opacity'),
+        min: 0,
+        max: 100,
+        range: "min",
+        step: 1,
+        stop: function( event, ui ) {
+          that.model.unbind('change'); // This prevents the item from re-rendering...
+          that.model.set('opacity', ui.value);
+          $('.top-right').notify({
+            message: {
+              text: 'Transparantie ' + ui.value + '%'
+            }}).show();
+        }
+    });
+  },
   events: {
     'click .layer-item .indicator': 'toggleVisibility',
-    'click .layer-item .content': 'select'
+    'click .layer-item .content': 'select',
+    'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration',
+    'click .layer-item .btn-delete-layer': 'deleteLayer'
+  },
+  deleteLayer: function(e) {
+    this.model.collection.remove(this.model.id);
+    // ^^^ TODO: Why doesn't this trigger an onItemRemoved event on the CollectionView?
+    // or, in other words, why does the UI not update itself here?
+  },
+  toggleLayerConfiguration: function() {
+    $(this.el).find('.layer-configuration').toggle('fast');
   },
   toggleVisibility: function () {
     if(this.model.attributes.visibility) {
@@ -51,6 +80,9 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       workspaceItem.set('order',index);
       index = index + 1;
     });
+  },
+  onItemRemoved: function() {
+    console.log('REMOVED ONE FROM ME!');
   },
   onShow: function () {
     var that = this;

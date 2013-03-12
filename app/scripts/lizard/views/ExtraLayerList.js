@@ -37,6 +37,9 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       this
     );
   },
+  onItemRemoved: function(e) {
+    console.log('item removed!!!!!!!!!!', e);
+  },
   collection: null, //layerCollection,
   workspace: null,
   tagName: 'ul',
@@ -53,7 +56,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       });
       this.workspace.add(newmodel);
     } else {
-      this.trigger('removefromWorkspace', workspacemodel[0]);   
+      this.workspace.remove(workspacemodel[0]);   
     }
   }
 });

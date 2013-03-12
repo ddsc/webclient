@@ -51,7 +51,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
   getFeatureInfo: function(event, map, options, callback) {//todo: tot hier gekomen
     var url = this._getFeatureInfoRequestUrl(event, map);
     if (this.get('proxyForGetInfo')) {
-      url = 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url})
+      url = 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url});
     }
 
     $.ajax({
@@ -83,7 +83,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
       FEATURE_COUNT: 5,
       INFO_FORMAT: 'text/html',
       SRS: 'EPSG:4326'
-    }
+    };
 
     var url = this.get('wms_url') + '?'+ $.param(params);
     return url;
@@ -94,4 +94,4 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
 });
 
 //add type to type index
-LAYER_CLASSES['wms'] = Lizard.Layers.WMSLayer
+LAYER_CLASSES['wms'] = Lizard.Layers.WMSLayer;
