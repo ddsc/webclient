@@ -5,7 +5,6 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   initialize: function () {
     this.model.bind('change', this.render);
     this.model.set('id', this.model.get('url'));
-    window.collectionJantje = this;
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
@@ -106,6 +105,7 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   },
   setWorkspace: function(workspace) {
     this.collection.reset(workspace.get('workspaceitems').models);
+  },
   onClose: function(){
     console.log('closing', this);
   }
@@ -120,7 +120,6 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
     list: "#list",
     workspaceItemRegion: "#workspaceRegion"
   },
-
   initialize: function() {
     this.workspaceItemListView = new Lizard.Views.WorkspaceItemList();
     this.model = new Lizard.Models.Workspace();
@@ -135,7 +134,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
   renderCollection: function() {
 
     this.workspaceItemRegion.show(this.workspaceItemListView);
-    if (!this.buttonExtraLayersAdded) {
+    /*if (!this.buttonExtraLayersAdded) {
       this.workspaceItemListView.$el.append('\
         <li id="extra-maplayer-button" class="drawer-handle"> \
           <div class="layer-item">\
@@ -151,7 +150,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
       var button = this.workspaceItemListView.$el.find('#extra-maplayer-button')
       button.remove();
       this.workspaceItemListView.$el.append(button);
-    }
+    }*/
 
   },
   getCollection: function() {

@@ -309,6 +309,16 @@
             <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen <br><%=name%></a>
         </li>
         <div class="measurement-items" data-group="workspaceitem"  id="workspaceRegion"></div>
+        <div id="extramaplayers-button" class="measurement-items drawer-handle">
+            <div class="layer-item">
+            <span class="action handle ">
+            <i class="icon-plus"></i></span>
+            Voeg Extra Kaartlaag toe 
+            <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+              <div id="extramaplayers" class="modal-body"></div>
+            </div>
+            </div>
+          </div>
     </script>
 
     <script type="text/template" id="empty-workspace-list-message">
