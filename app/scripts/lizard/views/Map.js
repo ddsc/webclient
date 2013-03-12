@@ -20,25 +20,24 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
-  },
-  //background layer
-  backgroundLayers: {
-    Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
-      layers: 'deltaportaal',
-      format: 'image/png',
-      transparent: true,
-      reuseTiles: true,
-      attribution: "Dijkdata"
-    }),
-    OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data © OpenStreetMap contributors'
-    }),
-    MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
-      attribution: 'MapBox'
-    }),
-    Terrain: new L.Google("TERRAIN", {detectRetina: true}),
-    Satellite :new L.Google("SATELLITE", {detectRetina: true}),
-    Hybrid :new L.Google("HYBRID", {detectRetina: true})
+    this.backgroundLayers = {
+      Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
+        layers: 'deltaportaal',
+        format: 'image/png',
+        transparent: true,
+        reuseTiles: true,
+        attribution: "Dijkdata"
+      }),
+      OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data © OpenStreetMap contributors'
+      }),
+      MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+        attribution: 'MapBox'
+      }),
+      Terrain: new L.Google("TERRAIN", {detectRetina: true}),
+      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
+      Hybrid :new L.Google("HYBRID", {detectRetina: true})
+    };
   },
   extraLayers: {
   },
@@ -48,12 +47,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     
     if (this.mapCanvas === null){
       this.makemapCanvas();
-      } 
-  },
-  fixzoom: function(e){
-    this.mapCanvas.zoomOut(false);
-    this.mapCanvas.off('viewreset', this.fixzoom);
-    console.log('hai');
+    } 
   },
   makemapCanvas: function (){
     this.mapCanvas = L.map('map', {
@@ -61,7 +55,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
-    //debugger
 
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
