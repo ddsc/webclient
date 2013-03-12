@@ -232,7 +232,7 @@ ul.wms_sources li.active {
 ol.drawer-group span.handle,
 ul.wms_sources span.handle{
     cursor: pointer;
-    cursor: url(http://maps.gstatic.com/intl/en_us/mapfiles/openhand_8_8.cur) 10 10,move;
+    cursor: url(../images/openhand_8_8.cur) 10 10,move;
 }
 
 ol.drawer-group span.action,
@@ -243,8 +243,8 @@ ul.wms_sources span.action {
     /*background: url(../images/layer-handle.png) no-repeat center center;*/
     width: 14px;
     height: 28px;
-    border-right: 1px solid #fff;
 }
+
 ol.drawer-group span a,
 ul.wms_sources span a {
     text-decoration: none;
@@ -599,10 +599,11 @@ i.chevron-closed{
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
-    -webkit-transform-origin: 0 0;
-    -moz-transform-origin: 0 0;
-    -ms-transform-origin: 0 0;
-    transform-origin: 0 0;
+    -webkit-transform-origin: 5px 5px;
+    -moz-transform-origin: 5px 5px;
+    -ms-transform-origin: 5px 5px;
+    -o-transform-origin: 5px 5px;
+    transform-origin: 5px 5px;
     -webkit-transition: transform ease-out .2s;
     -moz-transition: transform ease-out .2s;
     -ms-transition: transform ease-out .2s;
@@ -616,11 +617,11 @@ i.chevron-open{
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
-    -webkit-transform-origin: 0 0;
-    -moz-transform-origin: 0 0;
-    -ms-transform-origin: 0 0;
-    -o-transform-origin: 0 0;
-    transform-origin: 0 0;
+    -webkit-transform-origin: 5px 5px;
+    -moz-transform-origin: 5px 5px;
+    -ms-transform-origin: 5px 5px;
+    -o-transform-origin: 5px 5px;
+    transform-origin: 5px 5px;
     -webkit-transition: transform ease-in .2s;
     -moz-transition: transform ease-in .2s;
     -ms-transition: transform ease-in .2s;
