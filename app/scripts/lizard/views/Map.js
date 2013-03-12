@@ -167,18 +167,22 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     if (layerModel.get('visibility')) {
       this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer());
       layerModel.set('addedToMap', true);
+      var extralayersmodel = layerCollection.where({display_name: layerModel.get('display_name')});
+      extralayersmodel[0].set('addedToMap', true);
     }
   },
   //remove layer from Map
   removeLayer: function(layerModel) {
     this.mapCanvas.removeLayer(layerModel.get('layer').getLeafletLayer());
     layerModel.set('addedToMap', false);
+    var extralayersmodel = layerCollection.where({display_name: layerModel.get('display_name')});
+    extralayersmodel[0].set('addedToMap', false);
   },
   //remove all layers of workspace from map
   resetWorkspace: function(newModels, oldRef) {
     console.log('resetWorkspace');
     var that = this;
-
+    console.log(oldRef);
     oldRef.previousModels.forEach(function(layerModel){
       if (layerModel.get('addedToMap')) {
         that.removeLayer(layerModel);

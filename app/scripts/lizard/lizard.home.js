@@ -52,7 +52,7 @@ Lizard.Home.home = function(){
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
-    var widget = new Lizard.Views.WidgetView({model: model, tagName: 'div'});
+    var widget = new Lizard.Views.GageWidget({model: model, tagName: 'div'});
     view.show(widget.render())
   }
 

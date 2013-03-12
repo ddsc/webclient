@@ -11,7 +11,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   onRender: function() {
     var that = this;
-    $('.opacity-slider').slider({
+    that.$el.find('.opacity-slider').slider({
         value: that.model.get('opacity'),
         min: 0,
         max: 100,
@@ -34,9 +34,9 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     'click .layer-item .btn-delete-layer': 'deleteLayer'
   },
   deleteLayer: function(e) {
-    this.model.collection.remove(this.model.id);
-    // ^^^ TODO: Why doesn't this trigger an onItemRemoved event on the CollectionView?
-    // or, in other words, why does the UI not update itself here?
+    // The collection belonging to this model, is not the same
+    // as the workspace it is in.
+    Lizard.App.vent.trigger('removeItem', this.model);
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
@@ -84,6 +84,7 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
       index = index + 1;
     });
   },
+
   onShow: function () {
     var that = this;
     $('.drawer-group').sortable({
@@ -99,42 +100,7 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   },
   onClose: function(){
     console.log('closing', this);
-  },
-  /*appendHtml: function(collectionView, itemView, index){
-    collectionView.$el.append(itemView.el);
-    // render extra element to add maplayers
-    if (collectionView.$el.find('#maplayers').html() === undefined){
-      // but append it to the bottom of the list
-      if (collectionView.collection.length === index + 1){
-        var htmlcontent = '<li id="maplayers" class="drawer-handle">' +
-                          '<div class="layer-item">' +
-                          '<span class="action handle ">' +
-                          '<i class="icon-plus"></i></span>' +
-                          'Voeg Extra Kaartlaag toe' +
-                          '<div id="extramaplayers" class="hidden"></div>' +
-                          '</div></li>';
-          collectionView.$el.append(htmlcontent);
-          var extraLayersView = new Lizard.Views.LayerList({
-            collection: layerCollection,
-            workspace: Lizard.workspaceView.collection
-          });
-          extraLayersView.on('render', function(renderedView){
-            $('li#maplayers').popover({
-              title: "Kies een kaartlaag",
-              html: true,
-              content: function(){
-                return $('#extramaplayers').html();
-              }
-            });
-          });
-          Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
-      }
-    } else {
-      // move the extra button to the bottom again
-      var maplayers = $('#maplayers');
-        maplayers.insertAfter(maplayers.siblings());
-    }
-  }*/
+  }
 });
 
 Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
@@ -146,43 +112,26 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
     list: "#list",
     workspaceItemRegion: "#workspaceRegion"
   },
-
   initialize: function() {
     this.workspaceItemListView = new Lizard.Views.WorkspaceItemList();
     this.model = new Lizard.Models.Workspace();
     this.on('render', this.renderCollection, this);
+    Lizard.App.vent.on('removeItem', _.bind(this.onItemRemoved, this));
+    this.workspaceItemListView.collection.on('reset', this.render)
   },
   setWorkspace: function(workspace) {
     this.model = workspace;
     this.workspaceItemListView.collection.reset(workspace.get('workspaceitems').models);
-    this.render();
-
+    // this.workspaceItemListView.render();
+  },
+  onItemRemoved: function(model) {
+    this.workspaceItemListView.collection.remove(model);
+    // this.workspaceItemListView.render();
   },
   renderCollection: function() {
-
-    this.workspaceItemRegion.show(this.workspaceItemListView);
-    if (!this.buttonExtraLayersAdded) {
-      this.workspaceItemListView.$el.append('\
-        <li id="extra-maplayer-button" class="drawer-handle"> \
-          <div class="layer-item">\
-            <span class="action handle ">\
-              <i class="icon-plus"></i>\
-            </span>\
-            Voeg Extra Kaartlaag toe \
-            <div id="extramaplayers" class="hidden"></div>\
-          </div>\
-        </li>');
-      this.buttonExtraLayersAdded = true;
-    } else {
-      var button = this.workspaceItemListView.$el.find('#extra-maplayer-button')
-      button.remove();
-      this.workspaceItemListView.$el.append(button);
-    }
-
+    this.workspaceItemRegion.show(this.workspaceItemListView.render());
   },
   getCollection: function() {
     return this.workspaceItemListView.collection;
   }
-
-
 });
