@@ -11,7 +11,7 @@ var settings = {
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
     collages_url: domain + 'collages/',
-    workspace_url: domain + 'workspaces/',
+    workspace_url: 'http://test.api.dijkdata.nl/api/v0/' + 'workspaces/',
 	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/?page_size=100',
 	account_url: domain + 'account/',
 	login_token_url: domain + 'account/login-url/',

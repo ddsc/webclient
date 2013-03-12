@@ -27,8 +27,7 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   initialize: function(options) {
     this.listenTo(this.collection,
       "select_collage",
-      this.selectCollage,
-      this
+      this.selectCollage
     );
   },
   collection: null, //workspaceCollection,
@@ -56,6 +55,7 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
 
       }
     });
+    Backbone.history.navigate('graphs/' + selectedModel.id)
   },
   onDomRefresh: function () {
     $('.drawer-group').disableSelection();
