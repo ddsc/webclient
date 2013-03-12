@@ -100,7 +100,8 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
   var annotationsModelInstance = new Lizard.Models.Annotations();
   var annotationsView = new Lizard.Views.AnnotationsView({
-    model: annotationsModelInstance
+    model: annotationsModelInstance,
+    mapView: leafletView
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
