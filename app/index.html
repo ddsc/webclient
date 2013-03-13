@@ -43,7 +43,7 @@
     -->
 
     <link href="styles/ui-darkness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
-    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
     <link href="styles/bootstrap-notify.css" rel="stylesheet">
     <link href="styles/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <!--[if IE7]>
@@ -60,7 +60,7 @@
         }
     </style>
 
-    <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="styles/fuelux-responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/leaflet.css" />
     <link rel="stylesheet" href="styles/leaflet.draw.css" />
@@ -417,18 +417,21 @@
 
     <script type="text/template" id="leaflet-annotation-template">
         <div class="span11">
-            <h5>Annotatie</h5>
-            <form class="form-inline">
-                <div class="control-group">
-                  <input type="text" class="input" placeholder="key">
-                  <input type="text" class="input" placeholder="value">
+              <fieldset>
+                <textarea namerows="4" id="annotation-textarea" placeholder="Uw annotatie" style="resize:none;"></textarea>
+                <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
+                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;">
+                  <span>Sleep hier uw bestand</span>
                 </div>
-                <div class="control-group">
-                  <input type="text" class="input" placeholder="key">
-                  <input type="text" class="input" placeholder="value">
-                </div>
-              <button type="submit" class="btn">Opslaan</button>
-            </form>            
+
+                <label class="radio inline">
+                  <input type="radio" id="scope" value="public"> Openbaar
+                </label>
+                <label class="radio inline controls-row">
+                  <input type="radio" id="scope" value="private" checked> Privé
+                </label>
+                <button type="submit" class="btn spacer btn-small pull-right btn-primary">Opslaan</button>
+              </fieldset>
         </div>
     </script>
 
@@ -775,8 +778,8 @@
       			  <ul class="nav">
         				<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
         				<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
-                <li class="tabular-menu"><a href="#tabular"><em class="icon-list icon-white"></em> Tabel</a></li>
-        				<li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li>
+                <!-- DISABLING FOR NOW <li class="tabular-menu"><a href="#tabular"><em class="icon-list icon-white"></em> Tabel</a></li> -->
+        				<!-- DISABLING FOR NOW <li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li> -->
       			  </ul>
       			  <ul class="nav pull-right">
         				<li class="dropdown" id="loginRegion"></li>
@@ -812,19 +815,17 @@
         <script src="scripts/vendor/jquerypp.js"></script>
 
         <!-- Lizard globals, order matters -->
-        <script src="localsettings.js"></script>
+        <!--<script src="localsettings.js"></script>-->
         <script src="settings.js"></script>
 
         <!-- jQuery UI and touch support -->
         <script src="scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
 
-        <!-- jsTree -->
-        <script src="scripts/vendor/jstree.js"></script>
 
-        <!-- jQuery-based i18n -->
+         <!-- jQuery-based i18n  -->
         <script src="scripts/vendor/globalize.js"></script>
-        <script src="scripts/vendor/cultures/globalize.cultures.js"></script>
+        <script src="scripts/vendor/cultures/globalize.culture.nl.js"></script>
 
         <!-- Slippy map rendering alternative to OpenLayers -->
         <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
@@ -837,31 +838,10 @@
         <script src="scripts/vendor/tile.stamen.js"></script>
 
         <!-- The most versatile graph library around -->
-            <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
-        <script src="scripts/vendor/d3.v2.js"></script>
-
-        <!-- Rickshaw is a graph library built around d3.js -->
-        <script src="scripts/vendor/rickshaw.min.js"></script>
-
-        <!-- Powerful time-series filtering tool -->
-        <script src="scripts/vendor/crossfilter.js"></script>
-
-        <!-- Higher level D3-based graphing library with Crossfilter support  -->
-        <script src="scripts/vendor/dc.min.js"></script>
-
-        <!-- Quick charts lib -->
-        <script src="scripts/vendor/highcharts.js"></script>
-        <!-- The most versatile graph library around -->
         <script src="scripts/vendor/raphael.js"></script>
 
         <!-- Gauges lib based on raphael -->
         <script src="scripts/vendor/justgage.1.0.1.js"></script>
-
-        <!-- The most versatile graph library around, depends on Raphael.js -->
-        <script src="scripts/vendor/morris.min.js"></script>
-
-        <!-- Timeserie visualization lib -->
-        <script src="scripts/vendor/cubism.js"></script>
 
         <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
         <script src="scripts/vendor/gauge.min.js"></script>
@@ -878,9 +858,6 @@
         <!-- Solr inspired local JSON search -->
         <script src="scripts/vendor/augment.min.js"></script>
         <script src="scripts/vendor/lunr.js"></script>
-
-        <!-- The go-to library for anything WebGL/Canvas related -->
-        <script src="scripts/vendor/Three.js"></script>
 
         <!-- Drop-in script for detecting offline state -->
         <script src="scripts/vendor/heyoffline.js"></script>
@@ -921,7 +898,7 @@
 
 
         <!-- Backbone -->
-        <script src="scripts/vendor/backbone-0.9.10.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
@@ -940,7 +917,7 @@
         <!--<![endif]-->
 
         <!-- Twitter Bootstrap base javascript -->
-        <script src="scripts/vendor/bootstrap.js"></script>
+        <script src="scripts/vendor/bootstrap.min.js"></script>
         <!-- <script src="scripts/vendor/fuelux/loader.js"></script> -->
 
         <script src="scripts/vendor/bootstrap-notify.js"></script>
