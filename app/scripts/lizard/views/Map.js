@@ -164,6 +164,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   //add layer from workspace to Map (if visible)
   addLayer: function(layerModel){
+    // Set opacity 'on add' (either as specified API-side or modified locally)
+    layerModel.get('layer').getLeafletLayer().setOpacity(layerModel.get('opacity')/100);
     if (layerModel.get('visibility')) {
       this.mapCanvas.addLayer(layerModel.get('layer').getLeafletLayer());
       layerModel.set('addedToMap', true);
