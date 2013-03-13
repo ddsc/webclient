@@ -3,5 +3,4 @@ Lizard.Models.Annotation = Backbone.Model.extend({
 		var origUrl = Backbone.Model.prototype.url.call(this);
 		return origUrl += _.last(origUrl) === '/' ? '' : '/';
 	}
-
 });

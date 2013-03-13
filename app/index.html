@@ -417,18 +417,19 @@
 
     <script type="text/template" id="leaflet-annotation-template">
         <div class="span11">
-            <h5>Annotatie</h5>
-            <form class="form-inline">
-                <div class="control-group">
-                  <input type="text" class="input" placeholder="key">
-                  <input type="text" class="input" placeholder="value">
+              <fieldset>
+                <label>Annotatie</label>
+                <textarea namerows="4" style="resize:none;"></textarea>
+                <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
+                <div class="file-dropzone" style="background-color:#e4e8ed;border:1px dashed #ccc;width:200px;height:20px;">
+                  <span>Sleep hier uw bestand</span>
                 </div>
-                <div class="control-group">
-                  <input type="text" class="input" placeholder="key">
-                  <input type="text" class="input" placeholder="value">
-                </div>
-              <button type="submit" class="btn">Opslaan</button>
-            </form>            
+                <label class="radio"><input type="radio" name="scope" id="scope" value="public">Openbaar</label>
+                <label class="radio"><input type="radio" name="scope" id="scope" value="private" checked>Privé</label>
+                  <button type="submit" class="btn btn-small btn-primary">Opslaan en sluiten</button>
+                  <button type="button" class="btn close-btn btn-small" onclick="javascript:console.log(this);">Sluiten</button>
+              </fieldset>
+
         </div>
     </script>
 

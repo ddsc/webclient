@@ -77,7 +77,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         rectangle: false,
         polyline: false,
         marker: {
-          title: 'Annoteren op de kaart'
+          title: 'Annotatie plaatsen'
         }
       },
       edit: {
@@ -92,7 +92,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
       if (type === 'marker') {
         var popup = L.popup()
-          .setContent('<div style="height:200px;">'+$('#leaflet-annotation-template').html()+'</div>');
+          .setContent('<div style="height:220px;">'+$('#leaflet-annotation-template').html()+'</div>');
         layer.bindPopup(popup);
       }
 
@@ -141,7 +141,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     if (layers.length < 1) {
       $('.top-right').notify({
-      message: {text: 'Selecteer eerst een kaartlaag'},
+      message: {text: 'Selecteer eerst een kaartlaag s.v.p.'},
       type: 'warning'
       }).show();
     } else {
