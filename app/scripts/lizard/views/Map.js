@@ -119,7 +119,12 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       var z = this.mapCanvas.getZoom();
       this.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
       var lonlatzoom = [c.lng, c.lat, z].join(',');
-      Lizard.App.vent.trigger('mapPan', lonlatzoom);
+      var url = Backbone.history.fragment.split('/');
+      if (url.length === 3){
+        Backbone.history.navigate('map/' + lonlatzoom + '/' + url[2]);
+      } else {
+        Backbone.history.navigate('map/' + lonlatzoom);
+      }
     };
 
     this.mapCanvas.on('moveend', _.bind(mapMove, this));

@@ -43,6 +43,9 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
     if (selectedModel.attributes.lon_lat_zoom){
       Lizard.App.vent.trigger('workspaceZoom', selectedModel.attributes.lon_lat_zoom);
       Backbone.history.navigate('map/' + selectedModel.attributes.lon_lat_zoom + '/' + selectedModel.id);
+    } else {
+      var urlfragment = Backbone.history.fragment.split('/');
+      Backbone.history.navigate(urlfragment[0] + '/' + urlfragment[1] + '/' + selectedModel.id);
     }
   },
   onShow: function () {
