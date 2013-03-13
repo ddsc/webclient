@@ -91,8 +91,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
       if (type === 'marker') {
         var popup = L.popup()
-          .setContent('<div style="height:220px;">'+$('#leaflet-annotation-template').html()+'</div>');
-        layer.bindPopup(popup);
+          .setContent('<div style="height:175px;">'+$('#leaflet-annotation-template').html()+'</div>');
       }
 
       drawnItems.addLayer(layer);

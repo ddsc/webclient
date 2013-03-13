@@ -418,18 +418,20 @@
     <script type="text/template" id="leaflet-annotation-template">
         <div class="span11">
               <fieldset>
-                <label>Annotatie</label>
-                <textarea namerows="4" style="resize:none;"></textarea>
+                <textarea namerows="4" id="annotation-textarea" placeholder="Uw annotatie" style="resize:none;"></textarea>
                 <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
-                <div class="file-dropzone" style="background-color:#e4e8ed;border:1px dashed #ccc;width:200px;height:20px;">
+                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;">
                   <span>Sleep hier uw bestand</span>
                 </div>
-                <label class="radio"><input type="radio" name="scope" id="scope" value="public">Openbaar</label>
-                <label class="radio"><input type="radio" name="scope" id="scope" value="private" checked>Privé</label>
-                  <button type="submit" class="btn btn-small btn-primary">Opslaan en sluiten</button>
-                  <button type="button" class="btn close-btn btn-small" onclick="javascript:console.log(this);">Sluiten</button>
-              </fieldset>
 
+                <label class="radio inline">
+                  <input type="radio" id="scope" value="public"> Openbaar
+                </label>
+                <label class="radio inline controls-row">
+                  <input type="radio" id="scope" value="private" checked> Privé
+                </label>
+                <button type="submit" class="btn spacer btn-small pull-right btn-primary">Opslaan</button>
+              </fieldset>
         </div>
     </script>
 
