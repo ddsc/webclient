@@ -17,8 +17,13 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
         max: 100,
         range: "min",
         step: 1,
-        stop: function( event, ui ) {
+        create: function( event, ui ) {
           that.model.unbind('change'); // This prevents the item from re-rendering...
+        },
+        slide: function( event, ui ) {
+          that.model.set('opacity', ui.value);
+        },
+        stop: function( event, ui ) {
           that.model.set('opacity', ui.value);
           $('.top-right').notify({
             message: {
