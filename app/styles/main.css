@@ -1070,3 +1070,6 @@ ul#homepage-livestream li {
     margin-top: 15px; /* define margin as you see fit */
 }
 
+.featureInfo {
+    width: 200px !important;
+}
