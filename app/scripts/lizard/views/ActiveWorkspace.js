@@ -27,7 +27,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
           that.model.set('opacity', ui.value);
           $('.top-right').notify({
             message: {
-              text: 'Transparantie ' + ui.value + '%'
+              text: 'Transparantie van kaartlaag "' + that.model.get('display_name') + '" is nu ' + ui.value + '%'
             }}).show();
         }
     });
