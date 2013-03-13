@@ -114,6 +114,19 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
 };
 
+Lizard.App.vent.on('mapPan', Lizard.Map.navigate);
+// Lizard.App.vent.on('', )
+
+Lizard.Map.navigate = function(lonlatzoom, workspacekey){
+  if(lonlatzoom && workspacekey){
+    Backbone.history.navigate('map/' + lonlatzoom + '/' + workspacekey);
+  } else if (lonlatzoom) {
+    Backbone.history.navigate('map/' + lonlatzoom);
+  } else {
+    Backbone.history.navigate('map');
+  }
+};
+
 Lizard.App.addInitializer(function(){
   Lizard.Map.router = new Lizard.Map.Router({
     controller: Lizard.Map
