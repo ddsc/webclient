@@ -467,6 +467,17 @@
       </div>
     </script>
 
+    <script type="text/template" id="collage-template">
+        <div class="layer-item <% if(selected) { %>selected<% } %>">
+        <span class="action handle">
+            <i class="icon-signal"></i>
+        </span>
+            <span class="content"><%= name %></span>
+            <span class="indicator"></span>
+
+        </div>
+    </script>
+
 
     <script type="text/template" id="collageitem-template">
       <span class="action remove">
@@ -576,15 +587,15 @@
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                   <li class="metrics-dropdown" id="presets">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-signal"></i> Grafieken</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-signal"></i> Grafiek</a>
                     </li>
-                    <div data-group="presets" class="hide measurement-items" id="presetsRegion"></div>
+                    <div data-group="presets" class="measurement-items" id="presetsRegion"></div>
                     <li class="metrics-dropdown" id="favorites">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-star"></i> Favorieten</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-star"></i> Favoriet</a>
                     </li>
                     <div data-group="favorites" class="hide measurement-items" id="favoriteRegion"></div>
                     <li class="metrics-dropdown" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeks</a>
                     </li>
                     <div class="measurement-items">
                       <div class="row-fluid">
@@ -593,18 +604,6 @@
                     </div>
                     <div data-group="selection" class="measurement-items " id="selectionRegion">
                     </div>
-                    <!--<li class="metrics-dropdown" id="filters">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-tag"></i> Filters (<%=  filtercollectionview.collection.models.length %>)</a>
-                    </li>
-                    <p data-group="filters" class="hide" id="filtersRegion"></p>
-                    <li class="metrics-dropdown" id="locations">
-                        <a href="javascript:void(0)"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Locaties (<%=  locationcollectionview.collection.models.length %>)</a>
-                    </li>
-                    <p data-group="locations" class="hide" id="locationsRegion"></p>
-                    <li class="metrics-dropdown" id="parameters">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-flag"></i> Parameters (<%=  parametercollectionview.collection.models.length %>)</a>
-                    </li>
-                    <p data-group="parameters" class="hide" id="parametersRegion"></p> -->
                 </ul>
                 </div>
                 <div class="" id="collageRegion"></div>
@@ -635,10 +634,6 @@
     <script type="text/template" id="graph-slot"></script>
 
     <script type="text/template" id="drop-boxes"></script>
-
-    <script type="text/template" id="collage-template">
-        <h4>Collage</h4>
-    </script>
 
     <script type="text/template" id="dashboard-template">
       <div class="row-fluid">
@@ -987,10 +982,11 @@
         <script src="scripts/lizard/views/WorkspaceList.js"></script>
         <script src="scripts/lizard/views/ActiveWorkspace.js"></script>
         <script src="scripts/lizard/views/ExtraLayerList.js"></script>
-      <script src="scripts/lizard/views/GageWidget.js"></script>
-      <script src="scripts/lizard/views/WidgetCollection.js"></script>
+        <script src="scripts/lizard/views/GageWidget.js"></script>
+        <script src="scripts/lizard/views/WidgetCollection.js"></script>
 
         <script src="scripts/lizard/views/CollageList.js"></script>
+        <script src="scripts/lizard/views/FavoriteCollection.js"></script>
 
     		<!-- Utility code -->
 		    <script src="scripts/utilities.js"></script>
