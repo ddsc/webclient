@@ -54,6 +54,14 @@ Lizard.Graphs.graphs = function(){
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
   var timeserieView = new Lizard.Views.Timeseries();
+
+  var collageListView = new Lizard.Views.CollageList({
+    collection: collageCollection
+  });
+
+  collageCollection.fetch();
+
+  graphsView.presetsRegion.show(collageListView.render());
   
   graphsView.favoriteRegion.show(favoritecollectionview.render());
   graphsView.selectionRegion.show(timeserieView.render());

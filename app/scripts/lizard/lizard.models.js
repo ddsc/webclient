@@ -56,7 +56,8 @@ Lizard.Models.Widget = Backbone.Model.extend({
 Lizard.Models.Collage = Backbone.Model.extend({
   defaults: {
     data: '',
-    id: null
+    id: null,
+    selected: false
   },
   url: function() {
     var origUrl = Backbone.Model.prototype.url.call(this);
@@ -108,7 +109,7 @@ Lizard.Models.Workspace = Backbone.AssociatedModel.extend({
   }
 });
 
-Lizard.Models.Favorite = Lizard.Models.Collage.extend();
+Lizard.Models.Favorite = Lizard.Models.Collage.extend(); //todo: ??
 
 Lizard.Models.Account = Backbone.Model.extend({
 	url: settings.account_url,
