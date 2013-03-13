@@ -53,7 +53,23 @@ Lizard.Models.Widget = Backbone.Model.extend({
   }
 });
 
-Lizard.Models.Collage = Backbone.Model.extend({
+
+Lizard.Models.CollageItem = Backbone.AssociatedModel.extend({
+  initialize: function(obj) {
+    debugger;
+  },
+  defaults: {
+    graph_index: 0,
+    timeseries: []
+  }
+});
+
+Lizard.Models.Collage = Backbone.AssociatedModel.extend({
+  relations: [{
+    type: Backbone.Many, //nature of the relationship
+    key: 'collageitems', //attribute of collage relating to workspaceItems
+    relatedModel: Lizard.Models.CollageItem //AssociatedModel for attribute key
+  }],
   defaults: {
     data: '',
     id: null,
