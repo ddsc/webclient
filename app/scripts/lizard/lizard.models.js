@@ -56,7 +56,7 @@ Lizard.Models.Widget = Backbone.Model.extend({
 
 Lizard.Models.CollageItem = Backbone.AssociatedModel.extend({
   initialize: function(obj) {
-    debugger;
+    // debugger; 
   },
   defaults: {
     graph_index: 0,
