@@ -16,7 +16,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'map': 'map',
-      'map/:lonlatzoom': 'map' // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
+      'map/:lonlatzoom': 'map', // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
+      'map/:lonlatzoom/:workspacekey': 'map' // workspace is a primary key that refers to a specific workspace
     }
 });
 
@@ -41,7 +42,7 @@ layerCollection = new Lizard.Collections.Layer();
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(lonlatzoom){
+Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
@@ -79,6 +80,17 @@ Lizard.Map.map = function(lonlatzoom){
     });
   }
 
+  if (workspacekey){
+    workspaceCollection.listenTo(workspaceCollection, 'gotAll', function(collection){
+      workspace = collection.get(workspacekey);
+      collection.each(function(worksp) {
+        worksp.set('selected', false);
+      });
+      workspace.set('selected', true);
+      workspace.trigger('select_workspace', workspace);
+    })
+  }
+
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
@@ -92,7 +104,9 @@ Lizard.Map.map = function(lonlatzoom){
   });
 
   // Then tell backbone to set the navigation to #map
-  if(lonlatzoom) {
+  if(lonlatzoom && workspacekey){
+    Backbone.history.navigate('map/' + lonlatzoom + '/' + workspacekey);
+  } else if (lonlatzoom) {
     Backbone.history.navigate('map/' + lonlatzoom);
   } else {
     Backbone.history.navigate('map');
