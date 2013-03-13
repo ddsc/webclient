@@ -133,7 +133,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     var layers = this.workspace.where({selected:true});
 
     if (layers.length < 1) {
-      alert('selecteer eerst een kaartlaag');
+      $('.top-right').warn({
+      message: {
+        text: 'Selecteer eerst een kaartlaag'
+      }}).show();
     } else {
       var layer = layers[0].get('layer');
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
