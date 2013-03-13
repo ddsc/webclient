@@ -194,8 +194,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
   },
   changeOpacityLayer: function(layerModel) {
-    console.log('Changing opacity to', layerModel.get('opacity'));
-    var layer = layerModel.get('layer').getLeafletLayer().setOpacity(layerModel.get('opacity'));
+    var layer = layerModel.get('layer').getLeafletLayer().setOpacity(layerModel.get('opacity')/100);
     return layer;
   },
   changeOrderOfLayer: function(layerModel) {
