@@ -538,6 +538,10 @@ input.input-medium.search-query {
     text-overflow: ellipsis;    
 }
 
+.layer-item.selected {
+    font-weight: bold;
+}
+
 
 #sidebar,
 #mainRegion{ 
@@ -692,11 +696,6 @@ i.chevron-open{
     padding: 1em;
     background-color: #fff;
     width: 120px;
-}
-
-#workspaceRegion .selected,
-#workspaceListRegion .selected {
-    font-weight: bold;
 }
 
 #ddsc_temp ul li div,
