@@ -182,7 +182,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   resetWorkspace: function(newModels, oldRef) {
     console.log('resetWorkspace');
     var that = this;
-    console.log(oldRef);
     oldRef.previousModels.forEach(function(layerModel){
       if (layerModel.get('addedToMap')) {
         that.removeLayer(layerModel);
