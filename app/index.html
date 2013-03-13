@@ -43,7 +43,7 @@
     -->
 
     <link href="styles/ui-darkness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
-    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
     <link href="styles/bootstrap-notify.css" rel="stylesheet">
     <link href="styles/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <!--[if IE7]>
@@ -60,7 +60,7 @@
         }
     </style>
 
-    <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="styles/fuelux-responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/leaflet.css" />
     <link rel="stylesheet" href="styles/leaflet.draw.css" />
@@ -815,19 +815,17 @@
         <script src="scripts/vendor/jquerypp.js"></script>
 
         <!-- Lizard globals, order matters -->
-        <script src="localsettings.js"></script>
+        <!--<script src="localsettings.js"></script>-->
         <script src="settings.js"></script>
 
         <!-- jQuery UI and touch support -->
         <script src="scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
 
-        <!-- jsTree -->
-        <script src="scripts/vendor/jstree.js"></script>
 
-        <!-- jQuery-based i18n -->
+         <!-- jQuery-based i18n  -->
         <script src="scripts/vendor/globalize.js"></script>
-        <script src="scripts/vendor/cultures/globalize.cultures.js"></script>
+        <script src="scripts/vendor/cultures/globalize.culture.nl.js"></script>
 
         <!-- Slippy map rendering alternative to OpenLayers -->
         <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
@@ -840,31 +838,10 @@
         <script src="scripts/vendor/tile.stamen.js"></script>
 
         <!-- The most versatile graph library around -->
-            <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
-        <script src="scripts/vendor/d3.v2.js"></script>
-
-        <!-- Rickshaw is a graph library built around d3.js -->
-        <script src="scripts/vendor/rickshaw.min.js"></script>
-
-        <!-- Powerful time-series filtering tool -->
-        <script src="scripts/vendor/crossfilter.js"></script>
-
-        <!-- Higher level D3-based graphing library with Crossfilter support  -->
-        <script src="scripts/vendor/dc.min.js"></script>
-
-        <!-- Quick charts lib -->
-        <script src="scripts/vendor/highcharts.js"></script>
-        <!-- The most versatile graph library around -->
         <script src="scripts/vendor/raphael.js"></script>
 
         <!-- Gauges lib based on raphael -->
         <script src="scripts/vendor/justgage.1.0.1.js"></script>
-
-        <!-- The most versatile graph library around, depends on Raphael.js -->
-        <script src="scripts/vendor/morris.min.js"></script>
-
-        <!-- Timeserie visualization lib -->
-        <script src="scripts/vendor/cubism.js"></script>
 
         <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
         <script src="scripts/vendor/gauge.min.js"></script>
@@ -881,9 +858,6 @@
         <!-- Solr inspired local JSON search -->
         <script src="scripts/vendor/augment.min.js"></script>
         <script src="scripts/vendor/lunr.js"></script>
-
-        <!-- The go-to library for anything WebGL/Canvas related -->
-        <script src="scripts/vendor/Three.js"></script>
 
         <!-- Drop-in script for detecting offline state -->
         <script src="scripts/vendor/heyoffline.js"></script>
@@ -924,7 +898,7 @@
 
 
         <!-- Backbone -->
-        <script src="scripts/vendor/backbone-0.9.10.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone.babysitter.js"></script>
@@ -943,7 +917,7 @@
         <!--<![endif]-->
 
         <!-- Twitter Bootstrap base javascript -->
-        <script src="scripts/vendor/bootstrap.js"></script>
+        <script src="scripts/vendor/bootstrap.min.js"></script>
         <!-- <script src="scripts/vendor/fuelux/loader.js"></script> -->
 
         <script src="scripts/vendor/bootstrap-notify.js"></script>
