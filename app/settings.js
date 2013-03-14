@@ -24,10 +24,7 @@ var settings = {
  *
  * For this to work, the API server must explicitly respond with:
  * Access-Control-Allow-Credentials: true
- * Access-Control-Allow-Origin: http://production-server
- * Access-Control-Allow-Origin: http://staging-server
- * Access-Control-Allow-Origin: http://127.0.0.1
- * et cetera
+ * Access-Control-Allow-Origin: [origin_sent_in_request]
  *
  * Note: this must be executed before any Ajax calls!
  */

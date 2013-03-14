@@ -1,10 +1,3 @@
-// Initialization code needed to run before eerything
-$.ajaxSetup({
-	xhrFields: {
-		withCredentials: true
-	}
-});
-
 Backbone.Collection.prototype.move = function(model, toIndex) {
   var fromIndex = this.indexOf(model);
   if (fromIndex === -1) {

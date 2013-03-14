@@ -7,7 +7,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#activeWorkspaceRegion',
-    'extraLayerRegion' : '#extramaplayers'
+    'extraLayerRegion' : '#extramaplayers',
+    'annotationsRegion' : '#annotationsRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -95,6 +96,13 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+
+  var annotationsModelInstance = new Lizard.Models.Annotations();
+  var annotationsView = new Lizard.Views.AnnotationsView({
+    model: annotationsModelInstance,
+    mapView: leafletView
+  });
+  Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
