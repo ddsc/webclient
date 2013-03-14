@@ -33,7 +33,6 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
 });
 
 // Create collection for this page
-workspaceCollection = new Lizard.Collections.Workspace();
 layerCollection = new Lizard.Collections.Layer();
 
 
@@ -44,6 +43,10 @@ layerCollection = new Lizard.Collections.Layer();
 
 Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
+
+  if (!lonlatzoom || lonlatzoom.length < 2) {
+    lonlatzoom = '5.16082763671875,51.95442214470791,7'
+  }
 
   // Instantiate Map's default layout
   Lizard.mapView = new Lizard.Map.DefaultLayout();
@@ -63,22 +66,13 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     workspaceView: Lizard.workspaceView
   });
 
-  var leafletView;
-  if(lonlatzoom) {
-    leafletView = new Lizard.Views.Map({
-      lon: lonlatzoom.split(',')[0],
-      lat: lonlatzoom.split(',')[1],
-      zoom: lonlatzoom.split(',')[2],
-      workspace: Lizard.workspaceView.getCollection()
-    });
-  } else {
-    leafletView = new Lizard.Views.Map({
-      lon: 5.16082763671875,
-      lat: 51.95442214470791,
-      zoom: 7,
-      workspace: Lizard.workspaceView.getCollection()
-    });
-  }
+  var leafletView = new Lizard.Views.Map({
+    lon: lonlatzoom.split(',')[0],
+    lat: lonlatzoom.split(',')[1],
+    zoom: lonlatzoom.split(',')[2],
+    workspace: Lizard.workspaceView.getCollection()
+  });
+
 
   if (workspacekey){
     workspaceCollection.listenTo(workspaceCollection, 'gotAll', function(collection){

@@ -55,9 +55,6 @@ Lizard.Models.Widget = Backbone.Model.extend({
 
 
 Lizard.Models.CollageItem = Backbone.AssociatedModel.extend({
-  initialize: function(obj) {
-    debugger;
-  },
   defaults: {
     graph_index: 0,
     timeseries: []
@@ -71,9 +68,10 @@ Lizard.Models.Collage = Backbone.AssociatedModel.extend({
     relatedModel: Lizard.Models.CollageItem //AssociatedModel for attribute key
   }],
   defaults: {
-    data: '',
+    name: '',
     id: null,
-    selected: false
+    selected: false,
+    icon: 'icon-globe'
   },
   url: function() {
     var origUrl = Backbone.Model.prototype.url.call(this);
@@ -120,18 +118,46 @@ Lizard.Models.Workspace = Backbone.AssociatedModel.extend({
   }],
   defaults: {
     name: '',
-    id: "",
-    selected: false
+    id: null,
+    selected: false,
+    icon: 'icon-globe'
   }
 });
 
 Lizard.Models.Favorite = Lizard.Models.Collage.extend(); //todo: ??
 
+
 Lizard.Models.Account = Backbone.Model.extend({
 	url: settings.account_url,
 	defaults: {
 		authenticated: false,
+    initialZoom: '5.16082763671875,51.95442214470791,7',//todo: use for initialisation of map
+    initialPeriod: '1m'//todo: what is a good period notation //todo: use for initialisation of graphs
 	}
 });
+
+
+Lizard.Models.CurrentState = Backbone.Model.extend({
+  //url: settings.account_url,
+  defaults: {
+    alarms: 2,
+    storingen: 5,//todo: use for initialisation of map
+    activeSensors: 1000 ,//todo: what is a good period notation //todo: use for initialisation of graphs
+    newMeasurementsPastHour: 18000
+  }
+});
+
+Lizard.Models.LiveFeed = Backbone.Model.extend({
+  //url: settings.account_url,
+  defaults: {
+    authenticated: false,
+    initialZoom: '5.16082763671875,51.95442214470791,7',//todo: use for initialisation of map
+    initialPeriod: '1m'//todo: what is a good period notation //todo: use for initialisation of graphs
+  }
+});
+
+
+
+
 
 // Lizard.Models.AccountToken = Backbone.Model.extend

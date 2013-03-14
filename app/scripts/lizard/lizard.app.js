@@ -32,11 +32,21 @@ Lizard.App.addRegions({
   content: '#content',
 });
 
-
 // Start Backbone's url router
 Lizard.App.on('initialize:after', function() {
   var loginView = new Lizard.Views.Menu();
   loginView.render();
 
   Backbone.history.start();
+});
+
+Lizard.App.on('initialize:before', function() {
+
+  //account =
+
+  workspaceCollection = new Lizard.Collections.Workspace();
+  workspaceCollection.fetch();
+
+  collageCollection = new Lizard.Collections.Collage();
+  collageCollection.fetch();
 });

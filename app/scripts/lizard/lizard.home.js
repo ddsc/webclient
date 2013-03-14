@@ -10,7 +10,9 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   regions: {
     'measureAlarm': '#measure-alarm',
     'measureNewMeasurement': '#measure-new-measurement',
-    'measureStatus' : '#measure-status'
+    'measureStatus' : '#measure-status',
+    'map_links': '#maps',
+    'graph_links': '#graphs'
   }
 });
 
@@ -65,6 +67,19 @@ Lizard.Home.home = function(){
   addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:200, value:20,
       levelColors:['FFFF00','FF0000']},
       Lizard.homeView.measureStatus);
+
+
+  var workspaceSelectionView = new Lizard.Views.HomePageList({
+    collection: workspaceCollection
+  });
+
+  var collageSelectionView = new Lizard.Views.HomePageList({
+    collection: collageCollection
+  });
+
+
+  Lizard.homeView.map_links.show(workspaceSelectionView);
+  Lizard.homeView.graph_links.show(collageSelectionView);
 
   Backbone.history.navigate('home');
 };

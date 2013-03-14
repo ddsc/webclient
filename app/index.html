@@ -140,7 +140,7 @@
             <div class="measure-info-header">
                 <h4><em class="icon-th icon-white"></em>&nbsp;Dashboard</h4>
             </div>
-            <div id="graphs">
+            <div id="dashboards">
               <ul class="homepage-list">
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DAM</a></li>
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DMC systeem</a></li>
@@ -213,7 +213,11 @@
       </div>
     </script>
 
-    <script type="text/template" id="homepage-searchresult-template">    
+    <script type="text/template" id="homepage-item-template">
+        <em class="<%=icon%> icon-white"></em>&nbsp;<a href="#map/_/<%=id%> "><%=name%></a>
+    </script>
+
+    <script type="text/template" id="homepage-searchresult-template">
       <div class="span12 measure-details" id="homepage-searchresults">
         <div class="measure-info-header"> 
            <h4><em class="icon-search icon-white"></em>&nbsp;Zoekresultaten voor "<%=term%>"</h4>
@@ -695,28 +699,21 @@
     </script>
 
 	<script type="text/template" id="menu-template">
-	  <ul class="nav">
-		<li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
-		<li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
-		<li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
+      <ul class="nav">
+        <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
+        <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
+        <li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
 
-	  </ul>
-	  <ul class="nav pull-right">
-		<li class="dropdown" id="loginRegion">
-		</li>
-	  </ul>
-	</script>
-
-	<script type="text/template" id="login-template">
-	  <a id="login" href="#">
-		<span id="login">Log in
-		  <i class="icon-user icon-white"></i>
-		</span>
-	  </a>
+      </ul>
+      <ul class="nav pull-right">
+        <li class="dropdown" id="loginRegion">
+        </li>
+      </ul>
 	</script>
 
 	<script type="text/template" id="loggedin-template">
-	  <a id="account-dropdown" class="dropdown-toggle" data-toggle="dropdown"
+      <% if (authenticated === true) { %>
+      <a id="account-dropdown" class="dropdown-toggle" data-toggle="dropdown"
 		 href="#">
 		<span id="logout"><%= user.first_name %> <%= user.last_name %>
 		  <i class="icon-user icon-white"></i>
@@ -730,6 +727,13 @@
 		<li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
 		<li><a href="#" id="logout">Uitloggen</a></li>
 	  </ul>
+    <% } else { %>
+    <a id="login" href="#">
+    <span id="login">Log in
+      <i class="icon-user icon-white"></i>
+    </span>
+    </a>
+    <% } %>
 	</script>
 
     <script type="text/template" id="help-template">
@@ -971,6 +975,7 @@
 
         <script src="scripts/lizard/views/CollageList.js"></script>
         <script src="scripts/lizard/views/FavoriteCollection.js"></script>
+        <script src="scripts/lizard/views/HomePageList.js"></script>
 
     		<!-- Utility code -->
 		    <script src="scripts/utilities.js"></script>

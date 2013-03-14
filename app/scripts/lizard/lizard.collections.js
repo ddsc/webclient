@@ -97,7 +97,6 @@ Lizard.Collections.Workspace = Backbone.Collection.extend({
 
 
 
-collageCollection = new Lizard.Collections.Collage();
 favoriteCollection = new Lizard.Collections.Favorite();
 filterCollection = new Lizard.Collections.Filter();
 locationCollection = new Lizard.Collections.Location();
