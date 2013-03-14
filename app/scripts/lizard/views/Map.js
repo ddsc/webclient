@@ -20,7 +20,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
-    Lizard.App.vent.on('workspaceZoom', _.bind(this.zoomTo, this));
   },
   //background layer
   backgroundLayers: {
@@ -93,6 +92,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       if (type === 'marker') {
         var popup = L.popup()
           .setContent('<div style="height:175px;">'+$('#leaflet-annotation-template').html()+'</div>');
+        // $('#annotation-textarea').focus();
+        layer.bindPopup(popup).openPopup();
       }
 
       drawnItems.addLayer(layer);
@@ -117,13 +118,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       var c = this.mapCanvas.getCenter();
       var z = this.mapCanvas.getZoom();
       this.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
-      var lonlatzoom = [c.lng, c.lat, z].join(',');
-      var url = Backbone.history.fragment.split('/');
-      if (url.length === 3){
-        Backbone.history.navigate('map/' + lonlatzoom + '/' + url[2]);
-      } else {
-        Backbone.history.navigate('map/' + lonlatzoom);
-      }
+      Backbone.history.navigate('map/' + [c.lng, c.lat, z].join(','));
     };
 
     this.mapCanvas.on('moveend', _.bind(mapMove, this));
@@ -139,10 +134,12 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     var layers = this.workspace.where({selected:true});
 
     if (layers.length < 1) {
+      // alert('selecteer eerst een kaartlaag');
       $('.top-right').notify({
-      message: {text: 'Selecteer eerst een kaartlaag s.v.p.'},
-      type: 'warning'
-      }).show();
+        message: {
+          text: 'Selecteer eerst een kaartlaag s.v.p.'
+        }}).show();
+      return true;
     } else {
       var layer = layers[0].get('layer');
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
@@ -154,11 +151,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       });
     }
 
-  },
-  zoomTo: function(lonlatzoom){
-    this.mapCanvas.setView(new L.LatLng(
-      lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
-      lonlatzoom.split(',')[2]);
   },
   initWorkspace: function() {
     var that = this;
@@ -198,6 +190,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   resetWorkspace: function(newModels, oldRef) {
     console.log('resetWorkspace');
     var that = this;
+    console.log(oldRef);
     oldRef.previousModels.forEach(function(layerModel){
       if (layerModel.get('addedToMap')) {
         that.removeLayer(layerModel);
