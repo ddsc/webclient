@@ -27,8 +27,7 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   initialize: function(options) {
     this.listenTo(this.collection,
       "select_collage",
-      this.selectCollage,
-      this
+      this.selectCollage
     );
   },
   collection: null, //workspaceCollection,

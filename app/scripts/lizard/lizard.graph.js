@@ -60,7 +60,9 @@ Lizard.Graphs.graphs = function(collageid){
     collection: collageCollection
   });
 
-  collageCollection.fetch();
+  collageCollection.fetch({success: function(col){
+    col.trigger('gotAll', col);
+  }});
 
   graphsView.presetsRegion.show(collageListView.render());
   
@@ -69,10 +71,12 @@ Lizard.Graphs.graphs = function(collageid){
 
   // And set URL to #graphs
   if (collageid) {
-    var selectedCollage = collageCollection.get(collageid);
-    selectedCollage.set('selected', true);
-    collageCollection.trigger('select_collage', selectedCollage);
+    collageCollection.listenTo(collageCollection, 'gotAll', function(col){
+      var selectedCollage = collageCollection.get(collageid);
+      selectedCollage.set('selected', true);
+      col.trigger('select_collage', selectedCollage);
     // Backbone.history.navigate('graphs/' + collageid)
+    })
   } else {
   Backbone.history.navigate('graphs');
   }

@@ -798,7 +798,7 @@ ul.timeserie-actions li {
 
 /************ BOOTSTRAP OVERRIDES ************/
 .navbar {
-    z-index: 1000;
+    z-index: 1500;
 }
 .navbar-inner{
     background: rgb(23,127,140); /* Old browsers */
