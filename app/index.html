@@ -243,13 +243,22 @@
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                    <div id="workspaceRegion">
-                        <li class="metrics-dropdown mappage" id="favorite">
-                            <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
-                        </li>
-                        <div class="measurement-items" data-group="workspace" id="workspaceListRegion"></div>
+                    <li class="metrics-dropdown mappage" id="favorite">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
+                    </li>
+                    <div class="measurement-items" data-group="workspace" id="workspaceListRegion"></div>
+                    <li class="metrics-dropdown mappage">
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen <br><%=name%></a>
+                    </li>
+                    <div class="measurement-items" data-group="workspaceitem"  id="workspaceRegion"></div>
+                    <div id="extramaplayers-button" class="add-map-item drawer-handle">
+                    <div class="layer-item">
+                        <span class="action handle "><i class="icon-plus"></i></span>
+                        Voeg Extra Kaartlaag toe
+                        <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+                            <div id="extramaplayers" class="modal-body"></div>
+                        </div>
                     </div>
-                    <div id="activeWorkspaceRegion"></div>
                 </ul>
                 <br class="spacer">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
@@ -308,20 +317,6 @@
     </script>
 
     <script type="text/template" id="template-layout-active-workspace">
-        <li class="metrics-dropdown mappage">
-            <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen <br><%=name%></a>
-        </li>
-        <div class="measurement-items" data-group="workspaceitem"  id="workspaceRegion"></div>
-        <div id="extramaplayers-button" class="add-map-item drawer-handle">
-            <div class="layer-item">
-            <span class="action handle ">
-            <i class="icon-plus"></i></span>
-            Voeg Extra Kaartlaag toe 
-            <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
-              <div id="extramaplayers" class="modal-body"></div>
-            </div>
-            </div>
-          </div>
     </script>
 
     <script type="text/template" id="empty-workspace-list-message">

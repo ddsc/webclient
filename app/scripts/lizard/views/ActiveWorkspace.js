@@ -3,8 +3,13 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
   initialize: function () {
-    this.model.bind('change', this.render);
     this.model.set('id', this.model.get('url'));
+    this.model.bind('change', this.reRender, this);
+  },
+  reRender: function(){
+    if (!this.model.hasChanged('opacity')) {
+      this.render();
+    }
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
@@ -18,10 +23,10 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
         range: "min",
         step: 1,
         create: function( event, ui ) {
-          that.model.unbind('change'); // This prevents the item from re-rendering...
+          //that.model.unbind('change:opacity'); // This prevents the item from re-rendering...
         },
         slide: function( event, ui ) {
-          that.model.set('opacity', ui.value);
+          //that.model.set('opacity', ui.value);
         },
         stop: function( event, ui ) {
           that.model.set('opacity', ui.value);
@@ -36,12 +41,13 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     'click .layer-item .indicator': 'toggleVisibility',
     'click .layer-item .content': 'select',
     'click .layer-item .toggle-layer-configuration': 'toggleLayerConfiguration',
-    'click .layer-item .btn-delete-layer': 'deleteLayer'
+    'click .layer-item .btn-delete-layer': 'removeLayer'
   },
-  deleteLayer: function(e) {
+  removeLayer: function(e) {
     // The collection belonging to this model, is not the same
     // as the workspace it is in.
-    Lizard.App.vent.trigger('removeItem', this.model);
+    this.model.trigger('removeItem', this.model);
+    debugger
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
@@ -65,7 +71,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.Layer(), //layerCollection,
   tagName: 'ol',
   className: 'ui-sortable drawer-group wms_sources',
@@ -76,7 +82,15 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   events: {
     drop: 'drop'
   },
+  initialize: function() {
+    this.collection.on('reset', this.render, this);
+    this.collection.on('removeItem', this.removeItem, this);
+  },
+  _initialEvents: function(){
+    //this.collection.on("removeItems", this.onItemRemoveds, this);
+  },
   drop: function(event, args) {
+    debugger;
     this.collection.move(args.item, args.index);
     this.updateOrderFieldOfItems();
     //args.item.set({order: args.index});
@@ -89,7 +103,14 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
       index = index + 1;
     });
   },
-
+  setWorkspace: function(workspace) {
+    this.model = workspace;
+    this.collection.reset(workspace.get('workspaceitems').models);
+  },
+  removeItem: function(model) {
+    this.collection.remove(model);
+    this.render();
+  },
   onShow: function () {
     var that = this;
     $('.drawer-group').sortable({
@@ -105,38 +126,10 @@ Lizard.Views.WorkspaceItemList = Backbone.Marionette.CollectionView.extend({
   },
   onClose: function(){
     console.log('closing', this);
+  },
+  getCollection: function() {
+    return this.collection;
   }
 });
 
-Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
-  template: "#template-layout-active-workspace",
-  workspaceItemListView: null,
-  model: null,
-  buttonExtraLayersAdded: false,
-  regions: {
-    list: "#list",
-    workspaceItemRegion: "#workspaceRegion"
-  },
-  initialize: function() {
-    this.workspaceItemListView = new Lizard.Views.WorkspaceItemList();
-    this.model = new Lizard.Models.Workspace();
-    this.on('render', this.renderCollection, this);
-    Lizard.App.vent.on('removeItem', _.bind(this.onItemRemoved, this));
-    this.workspaceItemListView.collection.on('reset', this.render);
-  },
-  setWorkspace: function(workspace) {
-    this.model = workspace;
-    this.workspaceItemListView.collection.reset(workspace.get('workspaceitems').models);
-    // this.workspaceItemListView.render();
-  },
-  onItemRemoved: function(model) {
-    this.workspaceItemListView.collection.remove(model);
-    // this.workspaceItemListView.render();
-  },
-  renderCollection: function() {
-    this.workspaceItemRegion.show(this.workspaceItemListView.render());
-  },
-  getCollection: function() {
-    return this.workspaceItemListView.collection;
-  }
-});
+

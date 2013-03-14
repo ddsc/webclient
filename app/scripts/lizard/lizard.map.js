@@ -6,7 +6,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'leafletRegion': '#leafletRegion',
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
-    'workspaceRegion': '#activeWorkspaceRegion',
+    'workspaceRegion': '#workspaceRegion',
     'extraLayerRegion' : '#extramaplayers'
   },
   onShow: Lizard.Visualsearch.init
