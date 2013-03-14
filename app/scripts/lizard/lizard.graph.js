@@ -22,11 +22,12 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
 
 Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
-      'graphs': 'graphs'
+      'graphs': 'graphs',
+      'graphs/:collageid': 'graphs' // if collage is present with id then show
     }
 });
 
-Lizard.Graphs.graphs = function(){
+Lizard.Graphs.graphs = function(collageid){
   console.log('Lizard.Graphs.graphs()');
 
   // Instantiate Graphs's default layout
@@ -59,7 +60,9 @@ Lizard.Graphs.graphs = function(){
     collection: collageCollection
   });
 
-  collageCollection.fetch();
+  collageCollection.fetch({success: function(col){
+    col.trigger('gotAll', col);
+  }});
 
   graphsView.presetsRegion.show(collageListView.render());
   
@@ -67,7 +70,15 @@ Lizard.Graphs.graphs = function(){
   graphsView.selectionRegion.show(timeserieView.render());
 
   // And set URL to #graphs
+  if (collageid) {
+    collageCollection.listenTo(collageCollection, 'gotAll', function(col){
+      var selectedCollage = collageCollection.get(collageid);
+      selectedCollage.set('selected', true);
+      col.trigger('select_collage', selectedCollage);
+    })
+  } else {
   Backbone.history.navigate('graphs');
+  }
 };
 
 Lizard.App.addInitializer(function(){
