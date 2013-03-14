@@ -35,7 +35,7 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
 // Create collection for this page
 workspaceCollection = new Lizard.Collections.Workspace();
 layerCollection = new Lizard.Collections.Layer();
-
+window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 
 // Instantiate the Leaflet Marionnette View.
 // This way you can talk with Leaflet after initializing the map.
@@ -51,9 +51,8 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-
   Lizard.workspaceView = new Lizard.Views.ActiveWorkspace();
-  var extraLayersView = new Lizard.Views.LayerList({
+  extraLayersView = new Lizard.Views.LayerList({
     collection: layerCollection,
     workspace: Lizard.workspaceView.getCollection()
   });

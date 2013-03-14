@@ -1,5 +1,5 @@
-// var extra = '?page_size=300'; //
-var extra = '?page_size=1000';
+var extra = '?page_size=300'; //
+// var extra = '?page_size=1000';
 
 
 var domain = (domain ? domain : 'http://test.api.dijkdata.nl/api/v0/');
@@ -7,7 +7,7 @@ var domain = (domain ? domain : 'http://test.api.dijkdata.nl/api/v0/');
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/' + extra,
+    locations_url: domain + 'locations/' + extra +'&has_geometry=true',
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
     collages_url: domain + 'collages/',

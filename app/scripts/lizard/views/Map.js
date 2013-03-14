@@ -45,13 +45,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
-
+    
     if (this.mapCanvas === null){
       this.makemapCanvas();
-    } else {
-        this.mapCanvas.zoomIn();
-        this.mapCanvas.on('viewreset', this.fixzoom);
-      }
+      } 
   },
   fixzoom: function(e){
     this.mapCanvas.zoomOut(false);
@@ -64,6 +61,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
+    //debugger
 
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
@@ -190,7 +188,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   resetWorkspace: function(newModels, oldRef) {
     console.log('resetWorkspace');
     var that = this;
-    console.log(oldRef);
     oldRef.previousModels.forEach(function(layerModel){
       if (layerModel.get('addedToMap')) {
         that.removeLayer(layerModel);

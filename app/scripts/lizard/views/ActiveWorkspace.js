@@ -131,7 +131,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.Layout.extend({
   },
   onItemRemoved: function(model) {
     this.workspaceItemListView.collection.remove(model);
-    // this.workspaceItemListView.render();
+    this.workspaceItemListView.render();
   },
   renderCollection: function() {
     this.workspaceItemRegion.show(this.workspaceItemListView.render());
