@@ -71,8 +71,8 @@ Lizard.Graphs.graphs = function(collageid){
   if (collageid) {
     var selectedCollage = collageCollection.get(collageid);
     selectedCollage.set('selected', true);
-    selectedCollage.trigger('select_collage', selectedCollage);
-    Backbone.history.navigate('graphs/' + collageid)
+    collageCollection.trigger('select_collage', selectedCollage);
+    // Backbone.history.navigate('graphs/' + collageid)
   } else {
   Backbone.history.navigate('graphs');
   }
