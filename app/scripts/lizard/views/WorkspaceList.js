@@ -40,10 +40,9 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.Workspace, //todo: make radio button
   selectWorkspace: function(selectedModel) {
     this.workspaceView.setWorkspace(selectedModel);
-    
-    if (selectedModel.attributes.lon_lat_zoom){
-      Lizard.App.vent.trigger('workspaceZoom', selectedModel.attributes.lon_lat_zoom);
-      Backbone.history.navigate('map/' + selectedModel.attributes.lon_lat_zoom + '/' + selectedModel.id);
+    if (selectedModel.get('lon_lat_zoom').length > 2){
+      Lizard.App.vent.trigger('workspaceZoom', selectedModel.get('lon_lat_zoom'));
+      Backbone.history.navigate('map/' + selectedModel.get('lon_lat_zoom') + '/' + selectedModel.id);
     } else {
       var urlfragment = Backbone.history.fragment.split('/');
       Backbone.history.navigate(urlfragment[0] + '/' + urlfragment[1] + '/' + selectedModel.id);
