@@ -4,19 +4,16 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   className: 'drawer-item',
   initialize: function () {
     this.model.set('id', this.model.get('url'));
-    this.model.bind('change', this.reRender, this);
+    this.model.bind('change:selected change:visibility', this.reRender, this);
   },
   reRender: function(){
-    if (!this.model.hasChanged('opacity')) {
-      this.render();
-    }
+    this.render();
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);
   },
   onRender: function() {
     var that = this;
-    debugger
     that.$el.find('.opacity-slider').slider({
         value: that.model.get('opacity'),
         min: 0,
