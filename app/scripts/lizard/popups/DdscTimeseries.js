@@ -19,7 +19,6 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   },
   openModal: function() {
     var model = this.model;
-    $('#modal-graph-wrapper').find('.flot-graph').empty();
     modalView = new Lizard.Map.ModalTimeseriesView();
     modalView.locationuuid = model.attributes.uuid;
     modalView.location = model.attributes.name;
@@ -105,6 +104,17 @@ Lizard.Map.ModalTimeseriesView = Lizard.Map.TimeseriesView.extend({
   itemView: Lizard.Map.ModalTimeserieView,
   onRender: function (model){
     $('#location-modal-label').html(this.location);
+    this.emptyGraph();
+  },
+  emptyGraph: function(){
+    var graph_elements = $('.flot-graph');
+
+    _.each(graph_elements, function(graph_element) {
+      var plot = $(graph_elements).data('plot');
+      if (plot) {
+          plot.removeAllDataUrls();
+        } 
+    });
   }
 });
 

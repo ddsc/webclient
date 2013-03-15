@@ -100,6 +100,9 @@ Lizard.Utils.DragDrop = {
   },
 };
 
+/**
+ * Code related to initializing jQuery Flot.
+ */
 (function (global) {
 
 /**
@@ -205,6 +208,11 @@ function timeTickFormatter (v, axis, tickIndex, tickLength) {
     return rt;
 }
 
+/**
+ * Initializes a Flot plot on element $graph, and load point data from
+ * dataUrl. If $graph already contains a plot, simple adds the data
+ * from dataUrl as a second line in the plot.
+ */
 function loadPlotData ($graph, dataUrl, callback, force) {
     // no dataUrl or element, nothing to do
     if (!$graph || !dataUrl) {
@@ -238,121 +246,10 @@ function loadPlotData ($graph, dataUrl, callback, force) {
     plot.addDataUrl(dataUrl);
 }
 
-function loadPlotDataOld ($graph, dataUrl, callback, force) {
-    // no dataUrl or element, nothing to do
-    if (!$graph || !dataUrl) {
-        return;
-    }
-
-    // check if data is already loaded
-    var loadedDataUrls = $graph.data('loadedDataUrls');
-    if (force !== true && loadedDataUrls) {
-        $.each(loadedDataUrls, function (idx, loadedDataUrl) {
-            if (loadedDataUrl === dataUrl) {
-                // data from this URL is already loaded, do nothing
-                return;
-            }
-        });
-    }
-
-    // the wonders of asynchronous programming
-    // do nothing if data is still loading
-    if ($graph.data('isLoading') === true) {
-        return;
-    }
-
-    // check if element is visible
-    // flot can't draw on an invisible surface
-    if ($graph.is(':hidden')) {
-        return;
-    }
-
-    // ensure relative positioning, add a class name, force explicit height/width
-    $graph.css({
-        'position': 'relative',
-        'width': '100%',
-        'height': '100%'
-    });
-    $graph.addClass('flot-graph');
-    if ($graph.height() === 0) {
-        console.error('Height of the graph element seems to be 0');
-    }
-
-    // initialize the graph, if it doesn't exist already
-    var plot = $graph.data('plot');
-    if (!plot) {
-        plot = initializePlot($graph);
-        $graph.data('plot', plot);
-    }
-
-    // add a spinner
-    var $loading = $('<span class="loading" />');
-    $graph.append($loading);
-    $graph.data('isLoading', true);
-
-    // remove spinner when loading has finished (either with or without an error)
-    function loadingFinished () {
-        $graph.data('isLoading', false);
-        $loading.remove();
-    }
-
-    // swap out graph for an error icon when we failed to retrieve the data
-    function showError () {
-        var $broken = $('<span class="broken" />');
-        $broken.click(function (event) {
-            $broken.remove();
-            loadPlotData($graph, dataUrl, callback, true);
-        });
-        $graph.append($broken);
-    }
-
-    // call callback on success
-    function loadingSuccess () {
-        // update loadedDataUrls
-        var loadedDataUrls = $graph.data('loadedDataUrls');
-        if (!loadedDataUrls) {
-            loadedDataUrls = [];
-        }
-        loadedDataUrls.push(dataUrl);
-        $graph.data('loadedDataUrls', loadedDataUrls);
-
-        // set attribute and call callback when drawing has finished
-        if (typeof callback !== 'undefined') {
-            callback();
-        }
-    }
-
-    // for flot graphs, grab the JSON data and call Flot
-    $.get(dataUrl, {}, undefined, 'json')
-    .done(function (data, textStatus, jqXHR) {
-        loadingFinished();
-
-        // target element might have been hidden in the meantime
-        // so check if element is visible again:
-        // we can't draw on an invisible surface
-        if ($graph.is(':hidden')) {
-            return;
-        }
-
-        // add the data
-        $.each(data, function (idx, line) {
-            addPlotLine(plot, line);
-        });
-        redraw(plot);
-        loadingSuccess();
-        // try {
-        // }
-        // catch (Exception) {
-            // // we probably recieved some malformed data
-            // showError();
-        // }
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        loadingFinished();
-        showError();
-    });
-}
-
+/**
+ * Allow graphs to be loaded on any HTML element. This essentially
+ * describes the "API" for all your plotting needs.
+ */
 $.fn.loadPlotData = function (dataUrl, callback, force) {
     if (typeof dataUrl === 'undefined') {
         // get the data url from the element instead
@@ -361,53 +258,11 @@ $.fn.loadPlotData = function (dataUrl, callback, force) {
     loadPlotData($(this), dataUrl, callback, force);
 };
 
-function redraw (plot) {
-    plot.setupGrid();
-    plot.draw();
-    plot.triggerRedrawOverlay();
-}
-
-function addPlotLine (plot, line, dataUrl) {
-    var currentData = plot.getData();
-    var newData = $.extend(true, [], currentData);
-    var parameter_pk_to_yaxis = {};
-    var allocatedYAxes = 0;
-
-    // unset old colors so Flot determines a new color from the default colormap
-    $.each(newData, function (idx, line) {
-        delete line['color'];
-    });
-
-    // determine yaxis per parameter
-    var yAxes = plot.getYAxes();
-    $.each(yAxes, function (idx, axis) {
-        if ('parameter_pk' in axis) {
-            parameter_pk_to_yaxis[axis.parameter_pk] = axis.n;
-            allocatedYAxes++; // can't properly get the length of an associative array
-        }
-    });
-
-    // add the new data
-    // create a new axis only when we discover a new parameter
-    var yaxis = 0;
-    if (line.parameter_pk in parameter_pk_to_yaxis) {
-        yaxis = parameter_pk_to_yaxis[line.parameter_pk];
-    }
-    else {
-        // allocate a new axis
-        yaxis = allocatedYAxes + 1;
-        // set the axisLabel and parameter
-        yAxes[yaxis].parameter_pk = line.parameter_pk;
-        yAxes[yaxis].axisLabel = line.parameter_name;
-    }
-    line.yaxis = yaxis;
-    newData.push(line);
-
-    plot.setData(newData);
-}
-
+/**
+ * Initialize an empty jQuery Flot plot on passed element.
+ */
 function initializePlot($container) {
-    // define a set of options used for all graphs
+    // define a set of sane options used for all graphs
     var defaultOpts = {
         series: {
             points: { show: true, hoverable: true, radius: 1 },
@@ -415,7 +270,8 @@ function initializePlot($container) {
             lines: { show: true }
         },
         yaxes: [
-            // allocate at least 5 axes
+            // allocate at least five axes, but don't reserve space
+            // for the last three
             {
                 axisLabel: '',
                 zoomRange: [false, false],
@@ -458,7 +314,7 @@ function initializePlot($container) {
                 mode: 'time',
                 zoomRange: [1 * timeUnitSize['minute'], 400 * timeUnitSize['year']],
                 tickFormatter: timeTickFormatter,
-                labelHeight: 28 // always reserve enough vertical space for time label
+                labelHeight: 28 // always reserve enough vertical space for the time label
             }
         ],
         grid: {
@@ -473,6 +329,7 @@ function initializePlot($container) {
         }
     };
 
+    // update the default options based on the users platform
     if (isAppleMobile) {
         $.extend(defaultOpts, {
             // enable touch
@@ -489,20 +346,24 @@ function initializePlot($container) {
             // enable pan & zoom
             pan: { interactive: false },
             zoom: { interactive: true },
+            // enable a mouse tooltip
             tooltip: {
                 enabled: true,
                 monthNames: monthNames,
                 dayNames: dayNames
             },
+            // enable buttons for zoom / pan
             zoombuttons: {
                 enabled: true
             }
         });
     }
 
+    // initialize an empty Flot plot
     var finalOpts = $.extend({}, defaultOpts);
     var plot = $.plot($container, [], finalOpts);
 
+    // make sure all plots on the document scroll in synch with this plot
     bindPanZoomEvents($container);
 
     return plot;

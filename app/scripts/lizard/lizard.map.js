@@ -7,7 +7,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
-    'extraLayerRegion' : '#extramaplayers'
+    'extraLayerRegion' : '#extramaplayers',
+    'annotationsRegion' : '#annotationsRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -34,7 +35,7 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
 
 // Create collection for this page
 layerCollection = new Lizard.Collections.Layer();
-
+window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 
 // Instantiate the Leaflet Marionnette View.
 // This way you can talk with Leaflet after initializing the map.
@@ -54,9 +55,8 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   // And add it to the #content div
   Lizard.App.content.show(Lizard.mapView);
 
-
   Lizard.workspaceView = new Lizard.Views.ActiveWorkspace();
-  var extraLayersView = new Lizard.Views.LayerList({
+  extraLayersView = new Lizard.Views.LayerList({
     collection: layerCollection,
     workspace: Lizard.workspaceView.getCollection()
   });
@@ -90,6 +90,13 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+
+  var annotationsModelInstance = new Lizard.Models.Annotations();
+  var annotationsView = new Lizard.Views.AnnotationsView({
+    model: annotationsModelInstance,
+    mapView: leafletView
+  });
+  Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({

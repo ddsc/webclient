@@ -23,7 +23,6 @@ Lizard.Views.MapLegend = L.Control.extend({
   },
 
   onRemove: function (map) {
-    debugger;
   },
 
 

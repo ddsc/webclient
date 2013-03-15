@@ -1,5 +1,5 @@
-// var extra = '?page_size=300'; //
-var extra = '?page_size=1000';
+var extra = '?page_size=300'; //
+// var extra = '?page_size=1000';
 
 
 var domain = (domain ? domain : 'http://test.api.dijkdata.nl/api/v0/');
@@ -7,11 +7,11 @@ var domain = (domain ? domain : 'http://test.api.dijkdata.nl/api/v0/');
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/' + extra,
+    locations_url: domain + 'locations/' + extra +'&has_geometry=true',
     filters_url: domain +'logicalgroups/' + extra ,
     timeseries_url: domain + 'timeseries/' + extra,
     collages_url: domain + 'collages/',
-    workspace_url: domain + 'workspaces/',
+    workspace_url: 'http://test.api.dijkdata.nl/api/v0/' + 'workspaces/',
 	layers_url: 'http://test.api.dijkdata.nl/api/v0/' + 'layers/?page_size=100',
 	account_url: domain + 'account/',
 	login_token_url: domain + 'account/login-url/',
@@ -24,10 +24,7 @@ var settings = {
  *
  * For this to work, the API server must explicitly respond with:
  * Access-Control-Allow-Credentials: true
- * Access-Control-Allow-Origin: http://production-server
- * Access-Control-Allow-Origin: http://staging-server
- * Access-Control-Allow-Origin: http://127.0.0.1
- * et cetera
+ * Access-Control-Allow-Origin: [origin_sent_in_request]
  *
  * Note: this must be executed before any Ajax calls!
  */

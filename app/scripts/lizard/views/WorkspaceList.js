@@ -40,6 +40,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.Workspace, //todo: make radio button
   selectWorkspace: function(selectedModel) {
     this.workspaceView.setWorkspace(selectedModel);
+    
     if (selectedModel.attributes.lon_lat_zoom){
       Lizard.App.vent.trigger('workspaceZoom', selectedModel.attributes.lon_lat_zoom);
       Backbone.history.navigate('map/' + selectedModel.attributes.lon_lat_zoom + '/' + selectedModel.id);
