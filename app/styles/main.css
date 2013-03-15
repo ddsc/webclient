@@ -1035,8 +1035,10 @@ html.busy, html.busy * {
 
 
 ul.homepage-list{
-    padding: 6px;
+    padding: 3px;
     margin: 0;
+    height: 67px;
+    overflow-y: auto;
 }
 
 ul.homepage-list li{
@@ -1044,6 +1046,10 @@ ul.homepage-list li{
     list-style: none;
     padding: 1;
     margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
 }
 ul.homepage-list li .icon-chevron-right {
     margin: 25px;

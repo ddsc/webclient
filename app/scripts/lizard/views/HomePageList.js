@@ -5,9 +5,7 @@ Lizard.Views.HomePageItem = Backbone.Marionette.ItemView.extend({
     'click a': 'select'
   },
   select: function(e) {
-    debugger;
     this.model.trigger('select_link_item', this.model);
-
   }
 });
 

@@ -11,8 +11,11 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'measureAlarm': '#measure-alarm',
     'measureNewMeasurement': '#measure-new-measurement',
     'measureStatus' : '#measure-status',
-    'map_links': '#maps',
-    'graph_links': '#graphs'
+    'map_links': '#map-links',
+    'graph_links': '#graph-links',
+    'dashboard_links': '#dashboard-links',
+    'status': '#status-overview'
+    //liveFeed: '#liveFeed'
   }
 });
 
@@ -52,19 +55,26 @@ Lizard.Home.home = function(){
   window.timeseries_idx = timeseries_idx; // Attach to the window variable
   console.log('timeseries_idx:', timeseries_idx);
 
+  var statusOverview = new Marionette.ItemView({
+    template: '#homepage-status-template',
+    model: currentStatus
+  });
+
+  Lizard.homeView.status.show(statusOverview);
+
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
     var widget = new Lizard.Views.GageWidget({model: model, tagName: 'div'});
     view.show(widget.render())
   }
 
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:100, value:50,
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:30, value: currentStatus.get('alarms'),
       levelColors:['FFFF00','FF0000']},
       Lizard.homeView.measureAlarm);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:20000, value:18000,
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:20000, value: currentStatus.get('newMeasurementsLastHour'),
       levelColors:['FFFF00','00CC00']},
       Lizard.homeView.measureNewMeasurement);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:200, value:20,
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:100, value: currentStatus.get('storingen'),
       levelColors:['FFFF00','FF0000']},
       Lizard.homeView.measureStatus);
 

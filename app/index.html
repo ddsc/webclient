@@ -100,36 +100,34 @@
             <div class="measure-info-header">
                 <h4><em class="icon-bell icon-white"></em>&nbsp;Status</h4>
             </div>
-            <ul class="homepage-list">
-              <li><span class="badge badge-important">30 alarmen actief</span></li>
-              
-              <li><span class="badge badge-warning">20 sensoren in storing</span></li>
-              <li><span class="badge badge-success">2000 sensoren actief</span></li>
-            </ul>
-
-        
+            <div id="status-overview">
+              <ul class="homepage-list">
+                <li><span class="badge badge-important">5 alarmen actief</span></li>
+                <li><span class="badge badge-warning">20 sensoren in storing</span></li>
+                <li><span class="badge badge-success">2000 sensoren actief</span></li>
+              </ul>
+            </div>
             <div class="measure-info-header">
                 <h4><em class="icon-globe icon-white"></em>&nbsp;Kaart</h4>
-
             </div>
-            <div id="maps">
-            <ul class="homepage-list">
-              <li>
-                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Algemeen</a>
-              </li>
-              <li>
-                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Actueel</a>
-              </li>              
-              <li>
-                <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Valkenburg</a>
-              </li>                            
-            </ul>
+            <div id="map-links">
+              <ul class="homepage-list">
+                <li>
+                  <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Algemeen</a>
+                </li>
+                <li>
+                  <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Actueel</a>
+                </li>
+                <li>
+                  <em class="icon-globe icon-white"></em>&nbsp;<a href="#">Valkenburg</a>
+                </li>
+              </ul>
             </div>
 
             <div class="measure-info-header">
                 <h4><em class="icon-signal icon-white"></em>&nbsp;Grafiek</h4>
             </div>
-            <div id="graphs">
+            <div id="graph-links">
               <ul class="homepage-list">
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Boezem</a></li>
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Weer</a></li>
@@ -140,11 +138,11 @@
             <div class="measure-info-header">
                 <h4><em class="icon-th icon-white"></em>&nbsp;Dashboard</h4>
             </div>
-            <div id="dashboards">
+            <div id="dashboard-links">
               <ul class="homepage-list">
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DAM</a></li>
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DMC systeem</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Grechtdijk lang langer langstttttttttttttttt</a></li>
               </ul>  
             </div>            
         </div>     
@@ -232,10 +230,13 @@
       </div>
     </script>
 
-
-
-
-
+    <script type="text/template" id="homepage-status-template">
+      <ul class="homepage-list">
+        <li><span class="badge badge-important"><%= alarms %> alarmen actief</span></li>
+        <li><span class="badge badge-warning"><%= storingen %> in storing</span></li>
+        <li><span class="badge badge-success"><%= activeSensors %> sensoren actief</span></li>
+      </ul>
+    </script>
 
     <script type="text/template" id="map-template">
       <div class="row-fluid">

@@ -142,8 +142,8 @@ Lizard.Models.CurrentState = Backbone.Model.extend({
   defaults: {
     alarms: 2,
     storingen: 5,//todo: use for initialisation of map
-    activeSensors: 1000 ,//todo: what is a good period notation //todo: use for initialisation of graphs
-    newMeasurementsPastHour: 18000
+    activeSensors: 100 ,//todo: what is a good period notation //todo: use for initialisation of graphs
+    newMeasurementsLastHour: 1800
   }
 });
 

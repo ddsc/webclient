@@ -91,7 +91,7 @@ Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
 /* MENU VIEWS */
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
-	model: new Lizard.Models.Account(),
+	model: null,
 	el: '#loginRegion',
 	template: '#loggedin-template',
 	events: {
@@ -100,17 +100,8 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	},
 
 	initialize: function(){
-    this.model.bind('change', this.render);
+    this.model.on('change', this.render);
     console.log('initialize LoginView');
-		var that = this;
-		this.model.fetch({
-			success: function(model, response, data){
-				if (model.get('authenticated') === true){
-					that.render();
-					$('#account-dropdown').dropdown();
-				}
-			}
-		});
 	},
 
 	doLogin: function(e){

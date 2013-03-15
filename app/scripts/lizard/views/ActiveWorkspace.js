@@ -47,7 +47,6 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     // The collection belonging to this model, is not the same
     // as the workspace it is in.
     this.model.trigger('removeItem', this.model);
-    debugger
   },
   toggleLayerConfiguration: function() {
     $(this.el).find('.layer-configuration').toggle('fast');
