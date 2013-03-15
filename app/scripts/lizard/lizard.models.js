@@ -142,22 +142,18 @@ Lizard.Models.CurrentState = Backbone.Model.extend({
   defaults: {
     alarms: 2,
     storingen: 5,//todo: use for initialisation of map
-    activeSensors: 100 ,//todo: what is a good period notation //todo: use for initialisation of graphs
-    newMeasurementsLastHour: 1800
+    activeSensors: 102 ,//todo: what is a good period notation //todo: use for initialisation of graphs
+    newMeasurementsLastHour: 1811
   }
 });
 
 Lizard.Models.LiveFeed = Backbone.Model.extend({
   //url: settings.account_url,
   defaults: {
-    authenticated: false,
-    initialZoom: '5.16082763671875,51.95442214470791,7',//todo: use for initialisation of map
-    initialPeriod: '1m'//todo: what is a good period notation //todo: use for initialisation of graphs
+    icon: 'icon-globe',
+    title: 'Melding',
+    text: '...',
+    time: 'gisteren',
+    href: '#'
   }
 });
-
-
-
-
-
-// Lizard.Models.AccountToken = Backbone.Model.extend

@@ -14,6 +14,10 @@ a {
     cursor: pointer;
 }
 
+#content {
+  min-height: 700px; /*prefent lizard-logo on top of page*/
+}
+
 div#brand {
     display: block;
     float: left;
@@ -124,6 +128,7 @@ leaflet-control-legend-icon {
 }
 #liveFeed .row-fluid {
     width: 98%;
+    padding: 4px;
 }
 
 .subhead img {

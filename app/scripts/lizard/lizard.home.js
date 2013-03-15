@@ -14,8 +14,8 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'map_links': '#map-links',
     'graph_links': '#graph-links',
     'dashboard_links': '#dashboard-links',
-    'status': '#status-overview'
-    //liveFeed: '#liveFeed'
+    'status': '#status-overview',
+    'liveFeed': '#liveFeed'
   }
 });
 
@@ -60,7 +60,19 @@ Lizard.Home.home = function(){
     model: currentStatus
   });
 
+  var liveFeedView = new Marionette.CollectionView({
+    collection: liveFeedCollection,
+    tagName: 'div',
+    className: '',
+    itemView: Marionette.ItemView.extend({
+      template: '#homepage-livefeed-template',
+      tagName: 'div',
+      className: 'row-fluid'
+    })
+  });
+
   Lizard.homeView.status.show(statusOverview);
+  Lizard.homeView.liveFeed.show(liveFeedView);
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
@@ -68,13 +80,13 @@ Lizard.Home.home = function(){
     view.show(widget.render())
   }
 
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:30, value: currentStatus.get('alarms'),
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: currentStatus.get('alarms'),
       levelColors:['FFFF00','FF0000']},
       Lizard.homeView.measureAlarm);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:20000, value: currentStatus.get('newMeasurementsLastHour'),
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:2000, value: currentStatus.get('newMeasurementsLastHour'),
       levelColors:['FFFF00','00CC00']},
       Lizard.homeView.measureNewMeasurement);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:100, value: currentStatus.get('storingen'),
+  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:20, value: currentStatus.get('storingen'),
       levelColors:['FFFF00','FF0000']},
       Lizard.homeView.measureStatus);
 
@@ -86,7 +98,6 @@ Lizard.Home.home = function(){
   var collageSelectionView = new Lizard.Views.HomePageList({
     collection: collageCollection
   });
-
 
   Lizard.homeView.map_links.show(workspaceSelectionView);
   Lizard.homeView.graph_links.show(collageSelectionView);

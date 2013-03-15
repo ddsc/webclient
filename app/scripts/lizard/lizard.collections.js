@@ -93,6 +93,10 @@ Lizard.Collections.Workspace = Backbone.Collection.extend({
   url: settings.workspace_url
 });
 
+Lizard.Collections.LiveFeed = Backbone.Collection.extend({
+  model: Lizard.Models.LiveFeed
+});
+
 
 
 
