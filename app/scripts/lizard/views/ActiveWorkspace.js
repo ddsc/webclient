@@ -3,14 +3,10 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   className: 'drawer-item',
   initialize: function () {
-    this.model.set('id', this.model.get('url'));
-    this.model.bind('change:selected change:visibility', this.reRender, this);
-  },
-  reRender: function(){
-    this.render();
+    this.model.bind('change:selected change:visibility', this.render, this);
   },
   onBeforeRender: function () {
-    this.el.setAttribute("id", this.model.attributes.id);
+    this.el.setAttribute("id", this.model.cid);
   },
   onRender: function() {
     var that = this;
@@ -82,23 +78,15 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   initialize: function() {
     this.collection.on('reset', this.render, this);
     this.collection.on('removeItem', this.removeItem, this);
+    this.collection.on('add remove', this.render, this);
+    this.on('render', this.afterRender, this);
   },
   _initialEvents: function(){
     //this.collection.on("removeItems", this.onItemRemoveds, this);
   },
   drop: function(event, args) {
-    debugger;
     this.collection.move(args.item, args.index);
-    this.updateOrderFieldOfItems();
-    //args.item.set({order: args.index});
-    //args.item.attributes.layer.leafletLayer.setZIndex(100 - args.index);
-  },
-  updateOrderFieldOfItems: function() {
-    index=0;
-    this.collection.each(function(workspaceItem) {
-      workspaceItem.set('order',index);
-      index = index + 1;
-    });
+    this.collection.updateOrderFieldOfItems();
   },
   setWorkspace: function(workspace) {
     this.model = workspace;
@@ -106,13 +94,12 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   },
   removeItem: function(model) {
     this.collection.remove(model);
-    this.render();
   },
   onShow: function () {
     var that = this;
     $('.drawer-group').sortable({
       stop: function(event, ui) {
-        var item = that.collection.get(ui.item.attr('id'));
+        var item = that.collection.get({cid: ui.item.attr('id')});
         ui.item.trigger('drop', {
           item: item,
           index: ui.item.index()
@@ -120,9 +107,6 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
       }
     });
     $('.drawer-group').disableSelection();
-  },
-  onClose: function(){
-    console.log('closing', this);
   },
   getCollection: function() {
     return this.collection;

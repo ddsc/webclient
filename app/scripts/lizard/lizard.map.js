@@ -8,7 +8,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
     'extraLayerRegion' : '#extramaplayers',
-    'annotationsRegion' : '#annotationsRegion'
+    //'annotationsRegion' : '#annotationsRegion'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -75,14 +75,19 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
 
   if (workspacekey){
-    workspaceCollection.listenTo(workspaceCollection, 'gotAll', function(collection){
+    var selectWorkspace = function(collection) {
       workspace = collection.get(workspacekey);
       collection.each(function(worksp) {
         worksp.set('selected', false);
       });
       workspace.set('selected', true);
       workspace.trigger('select_workspace', workspace);
-    })
+    }
+    if (workspaceCollection.models.length > 0) {
+      selectWorkspace(workspaceCollection);
+    } else {
+      workspaceCollection.once('sync', selectWorkspace)
+    }
   }
 
   Lizard.mapView.leafletRegion.show(leafletView.render());
@@ -91,12 +96,12 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
-  var annotationsModelInstance = new Lizard.Models.Annotations();
+  /*var annotationsModelInstance = new Lizard.Models.Annotations();
   var annotationsView = new Lizard.Views.AnnotationsView({
     model: annotationsModelInstance,
     mapView: leafletView
   });
-  Lizard.mapView.annotationsRegion.show(annotationsView.render());
+  Lizard.mapView.annotationsRegion.show(annotationsView.render());*/
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({

@@ -23,10 +23,6 @@ Lizard.Views.Workspace = Marionette.ItemView.extend({
 Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   initialize: function (options) {
     this.workspaceView = options.workspaceView;
-    this.collection.fetch({success: function(collection){
-      collection.trigger('gotAll', collection)
-      }
-    });
     this.listenTo(this.collection,
       "select_workspace",
       this.selectWorkspace,
@@ -37,7 +33,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   collection: null, //workspaceCollection,
   tagName: 'ul',
   className: 'wms_sources drawer-group',
-  itemView: Lizard.Views.Workspace, //todo: make radio button
+  itemView: Lizard.Views.Workspace,
   selectWorkspace: function(selectedModel) {
     this.workspaceView.setWorkspace(selectedModel);
     if (selectedModel.get('lon_lat_zoom').length > 2){
