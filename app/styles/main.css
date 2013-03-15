@@ -209,7 +209,7 @@ ul.wms_sources span {
 
 ol.drawer-group,
 ul.wms_sources {
-    padding: 3px 10px 3px;
+    padding: 3px 3px 3px 10px;
     position: relative;
     margin: 0;
 }
@@ -225,7 +225,6 @@ ul.wms_sources li {
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
-    background: #f3f3f3;
     cursor: pointer;
 }
 
