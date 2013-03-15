@@ -16,6 +16,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   },
   onRender: function() {
     var that = this;
+    debugger
     that.$el.find('.opacity-slider').slider({
         value: that.model.get('opacity'),
         min: 0,
