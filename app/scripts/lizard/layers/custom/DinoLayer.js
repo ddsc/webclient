@@ -14,6 +14,7 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
     enable_search: true,
     //program settings
     type: 'dino', //='wms'
+    subtype: null,
     addedToMap: false,
     proxyForWms: false,//todo: add support
     proxyForGetInfo: true,
@@ -29,11 +30,18 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
   },
   initialize: function () {
     this.set('type', 'dino');
+    this.set('subtype', this.get('options').subtype);
     this.set('proxyForGetInfo', true);
 
   },
   _getNewLeafletLayer: function() {
-    return  L.tileLayer.wms(this.get('wms_url') + "/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image", {
+    var extra_settings = "/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image";
+
+    if (this.get('subtype') === 'sondering') {
+      extra_settings += "&layerDefs=0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')"
+    }
+
+    return  L.tileLayer.wms(this.get('wms_url') + extra_settings, {
       zIndex: 100 - this.attributes.order,
       layers: 'test',
       format: 'png32',
@@ -72,6 +80,11 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
       tolerance:'15',
       layerDefs:'{}'
     }
+    if (this.get('subtype') === 'sondering') {
+      param.layerDefs = "0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')"
+
+    }
+
     var url = base_url + $.param(param);
     return url;
   },
@@ -79,12 +92,23 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
     var objects = $.evalJSON(data).results;
 
     if (objects.length > 0) {
-      var content = "<b>" + objects[0].value +
-        "</b><br><img src='http://www.dinoloket.nl/ulkgws-web/rest/gws/gwstchart/"+ objects[0].value +"001?width=300&height=300' style='width:300px;height:300px'></img>"
-      return content;
+      return this.getContent(objects[0]);
     } else {
       return false;
     }
+  },
+  getContent: function(object) {
+    if (this.get('subtype')==='boorprofiel'){
+      return "<b>" + object.value +
+        "</b><br><img src='http://www.dinoloket.nl/ulkbrh-web/rest/brh/mpcolumn/"+ object.value +"?width=200&height=400' style='width:200px;height:400px'></img>"
+    } else if (this.get('subtype')==='sondering') {
+      return "<b>" + object.value +
+        "</b><br><img src='//www.dinoloket.nl/ulkcpt-web/rest/cpt/cptchart/"+ object.value +"/4?width=300&height=300' style='width:300px;height:300px'></img>"
+   } else {
+      return "<b>" + object.value +
+        "</b><br><img src='http://www.dinoloket.nl/ulkgws-web/rest/gws/gwstchart/"+ object.value +"001?width=300&height=300' style='width:300px;height:300px'></img>"
+    }
+    //http://www.dinoloket.nl/ulkbrh-web/rest/brh/mpcolumn/B38E1380?height=365&width=200
   },
   getModalPopupContent: function() {
     return 'todo'; //todo

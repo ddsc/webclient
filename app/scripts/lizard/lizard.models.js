@@ -86,9 +86,10 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
     this.set('display_name', obj.wms_source.display_name);
     this.set('opacity', obj.wms_source.options.opacity*100);
     this.set('type', obj.wms_source.type);
-    //temp until API is fixed. todo
     try {
-      this.set('type', obj.wms_source.metadata.type);
+      if (obj.wms_source.options.type) {
+        this.set('type', obj.wms_source.options.type);
+      }
     } catch(e) {
 
     }

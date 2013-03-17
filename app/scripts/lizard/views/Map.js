@@ -144,7 +144,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
         var content = layer.getPopupContent(data);
         if (content) {
-          var popup = L.popup().setContent(content).setLatLng(coords);
+          var popup = L.popup({maxWidth: 525}).setContent(content).setLatLng(coords);
           that.mapCanvas.openPopup(popup);
         }
       });

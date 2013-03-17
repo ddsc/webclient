@@ -20,7 +20,7 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
           //that.model.unbind('change:opacity'); // This prevents the item from re-rendering...
         },
         slide: function( event, ui ) {
-          //that.model.set('opacity', ui.value);
+          that.model.set('opacity', ui.value);
         },
         stop: function( event, ui ) {
           that.model.set('opacity', ui.value);

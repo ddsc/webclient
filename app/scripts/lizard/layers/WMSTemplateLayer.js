@@ -1,8 +1,8 @@
 
-//  Class for WMS Layers
+//  Class for WMS Tamplate Layers
 //
 //
-Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
+Lizard.Layers.WMSTemplateLayer = Lizard.Layers.WMSLayer.extend({
   defaults: {
     display_name: '',
     visibility: false,
@@ -26,7 +26,13 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
     width: null,
     tiled: null,
     transparent: true,
-    wms_url: ''
+    wms_url: '',
+    template: _.template('<%= name %> - <br><i>implement template for this layer</i>')
+  },
+  initialize: function(obj) {
+    if (obj.options.template) {
+      this.template = _.template(obj.options.template)
+    }
   },
   getLeafletLayer: function() {
     if (!this.leafletLayer) {
@@ -80,8 +86,8 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
       QUERY_LAYERS: this.get('layer_name'),
       STYLES: this.get('styles'),
       FORMAT: this.get('format'),
-      FEATURE_COUNT: 5,
-      INFO_FORMAT: 'text/html',
+      FEATURE_COUNT: 1,
+      INFO_FORMAT: 'application/vnd.ogc.gml',
       SRS: 'EPSG:4326'
     };
 
@@ -89,14 +95,16 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
     return url;
   },
   getPopupContent: function(data) {
-    var xml = $.parseXML(data);
-    if ($(xml).find('table').length > 0) {
-      return '<div style="overflow:auto">' + data + '</div>';
+    var xml = $.xml2json(data);
+    var features = xml.featureMember
+    if (features) {
+      var feature = _(features).pairs()[0][1];
+      return this.template(feature);
     } else {
-      return false;
+      return false
     }
   }
 });
 
 //add type to type index
-LAYER_CLASSES['wms'] = Lizard.Layers.WMSLayer;
+LAYER_CLASSES['wms_template'] = Lizard.Layers.WMSTemplateLayer;
