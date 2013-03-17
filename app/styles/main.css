@@ -500,8 +500,34 @@ span.lazy {
 }
 
 
+.widget {
+  padding: 10px;
+}
 
+div.widget span.tlabel {
+  display: block;
+  float: left;
+  width: 110px;
+  padding-left:5px;
+}
 
+div.widget span.tvalue {
+  display: block;
+  float: left;
+  min-width: 40px;
+  text-align: right;
+  padding-right: 4px;
+}
+
+div.widget span.label {
+  min-width: 40px;
+  text-align: center;
+}
+
+div.widget li.theader {
+  border-bottom: 1px solid dimgray;
+  font-weight:bold;
+}
 
 
 #gauge-preview {

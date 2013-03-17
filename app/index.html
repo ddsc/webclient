@@ -634,14 +634,14 @@
             <div class="row-fluid">
                 <div id="drop-one" class="span12 drop empty">
                     <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe<h2>
+                        <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe</h2>
                     </div>
                 </div>
             </div>
             <div class="row-fluid">
                 <div id="drop-two" class="span12 drop empty">
                     <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2>Sleep je metingen hier naartoe<h2>
+                        <h2>Sleep je metingen hier naartoe</h2>
                     </div>
                 </div>
             </div>
@@ -698,8 +698,82 @@
     </script>
 
     <script type="text/template" id="widgetview-template">
-      <i class="widget-configuration icon-cog" style="color:#ccc;cursor:pointer;position:absolute;right:0px;padding:5px;"></i>
-      <div class="gauge-widget" id="<%=gaugeId%>"></div>
+      <!--i class="widget-configuration icon-cog" style="color:#ccc;cursor:pointer;position:absolute;right:0px;padding:5px;"></i-->
+      <div class="widget" id="<%= widgetId %>"></div>
+    </script>
+
+    <script type="text/template" id="gagewidget-template">
+
+    </script>
+
+    <script type="text/template" id="dashboard-logo">
+      <div style="padding-left:30px;padding-top:10px"><h2 style="margin-bottom:3px">DMC</h2>Dijk Monitoring en Conditioneringsysteem</div>
+    </script>
+
+    <script type="text/template" id="dashboard-list">
+      <h4>Dashboards:</h4>
+      <b><a href="#">DMC systeem</a></b><br>
+      <a href="#">DAM</a><br>
+      <a href="#">Grechtdijk</a>
+    </script>
+
+    <script type="text/template" id="graph-widget">
+      <div class="row-fluid">
+        <div id="widget-graph" class="drop">
+          <div class="flot-graph graph-drop">
+            <h2> Leeg </h2>
+          </div>
+        </div>
+      </div>
+    </script>
+
+
+    <script type="text/template" id="dmc-overview">
+      <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:left">
+        <h4>Linker buis</h4>
+        <lu>
+          <li class='theader'>Dijk</lu>
+          <li><span class='tlabel'>Waterniveau</span><span class='tvalue'>-1.42</span><span>mNAP</span></li>
+          <li><span class='tlabel'>Temperatuur</span><span class='tvalue'>10.5</span><span>&degC</span></li>
+          <li class='theader'>Pomp</li>
+          <li><span class='tlabel'>Status</span><td><span class="label label-success">aan</span></li>
+          <li><span class='tlabel'>Stroom</span><span class='tvalue'>0.5</span><span>A</span></li>
+          <li><span class='tlabel'>Persdruk</span><span class='tvalue'>0.5</span><span>bar</span></li>
+          <li><span class='tlabel'>Debiet</span><span class='tvalue'>2.0</span><span>m<sup>3</sup>/uur</span></li>
+          <li><span class="badge badge-warning">2 meldingen</span></li>
+        </lu>
+      </div>
+      <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:right">
+        <h4>Rechter buis</h4>
+        <lu>
+          <li class='theader'>Dijk</lu>
+        <li><span class='tlabel'>Waterniveau</span><span class='tvalue'>-1.42</span><span>mNAP</span></li>
+        <li><span class='tlabel'>Temperatuur</span><span class='tvalue'>10.4</span><span>&degC</span></li>
+        <li class='theader'>Pomp</li>
+        <li><span class='tlabel'>Status</span><td><span class="label">uit</span></li>
+        <li><span class='tlabel'>Stroom</span><span class='tvalue'>0.0</span><span>A</span></li>
+        <li><span class='tlabel'>Persdruk</span><span class='tvalue'>0.0</span><span>bar</span></li>
+        <li><span class='tlabel'>Debiet</span><span class='tvalue'>0.0</span><span>m<sup>3</sup>/uur</span></li>
+        </lu>
+      </div>
+    </script>
+
+    <script type="text/template" id="dmc-status">
+      <h4>Status DMC</h4>
+      <lu>
+        <li><span class="badge badge-success">Geen Storing</span></li>
+        <li><span class="badge badge-warning">Run test</span></li>
+        <li><span class="badge badge-warning">Kastdeur open</span></li>
+      </lu>
+    </script>
+
+    <script type="text/template" id="settings-button">
+      <button style="margin:10px" class="btn" type="button">Instellingen</button>
+    </script>
+
+
+    <script type="text/template" id="image-dmc">
+      <img style="margin:10px;width:570px;height:310px" src="/images/DMC.png"></button>
     </script>
 
     <script type="text/template" id="account-template">
@@ -961,12 +1035,12 @@
 
         <script src="scripts/vendor/raven.min.js"></script>
         <!-- Only use raven logging to sentry if on staging or production.
-               i.e. test.dijkdata.nl or dijkdata.nl. -->
+               i.e. test.dijkdata.nl or dijkdata.nl.
         <script type="text/javascript">
           if (window.location.host.indexOf('dijkdata.nl') !== -1) {
               Raven.config('https://5cf7a2111d5d4f0b994bd3a83f32f8a9@sentry.lizard.net/5').install();
           }
-        </script>
+        </script>-->
 
         <script src="scripts/lizard/lizard.app.js"></script>
 
@@ -994,7 +1068,9 @@
         <script src="scripts/lizard/views/ActiveWorkspace.js"></script>
         <script src="scripts/lizard/views/ExtraLayerList.js"></script>
         <script src="scripts/lizard/widgets/Widget.js"></script>
-        <script src="scripts/lizard/views/GageWidget.js"></script>
+        <script src="scripts/lizard/widgets/GageWidget.js"></script>
+        <script src="scripts/lizard/widgets/TemplateWidget.js"></script>
+        <script src="scripts/lizard/widgets/GraphWidget.js"></script>
         <script src="scripts/lizard/views/WidgetCollection.js"></script>
 
         <script src="scripts/lizard/views/CollageList.js"></script>
