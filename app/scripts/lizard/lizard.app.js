@@ -15,6 +15,7 @@ Lizard = {};
 Lizard.Layers = {};
 Lizard.Layers.Custom = {};
 Lizard.Popups = {};
+Lizard.Widgets = {};
 Lizard.Map = {};
 
 // Instantiate the Application()

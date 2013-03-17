@@ -1,27 +1,4 @@
-Lizard.Views.GageWidget = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
-    // console.log('Lizard.Views.WidgetView initializing');
-    that = this;
-  },
-  tagName: 'li',
-  className: 'new',
-  template: '#widgetview-template',
-  attributes: {
-    "data-col": "1", // << this needs to be dynamic!
-    "data-row": "1",
-    "data-sizex": "2",
-    "data-sizey": "2"
-  },
-  events: {
-    'click .icon-cog': 'configureWidget'
-  },
-  configureWidget: function(e) {
-    // alert('test');
-    // console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
-    e.preventDefault();
-    var template = _.template( $("#widget-configuration").html(), {} );
-    this.$el.html( template );
-  },
+Lizard.Views.GageWidget = Lizard.Widgets.Widget.extend({
   onShow: function() {
     var that = this;
     var settings = {
