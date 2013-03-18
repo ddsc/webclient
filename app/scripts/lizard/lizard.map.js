@@ -45,7 +45,7 @@ window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
 
-  if (!lonlatzoom || lonlatzoom.length < 2) {
+  if (!lonlatzoom || lonlatzoom.split(',').length < 2) {
     lonlatzoom = '5.16082763671875,51.95442214470791,7';
   }
 
@@ -121,7 +121,6 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   };
 
   Lizard.App.vent.on('mapPan', function(lonlatzoom){
-    console.log('jan');
       urlfragment = Backbone.history.fragment.split('/');
       if (urlfragment.length === 3){
         Backbone.history.navigate('map/' + lonlatzoom + '/' + urlfragment[2]);  

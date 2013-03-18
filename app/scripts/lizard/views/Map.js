@@ -85,8 +85,15 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.mapCanvas.addControl(drawControl);
 
     var that = this;
+    latlngs = [[52.106742,4.866035],
+    [52.105082,4.866464], 
+    [52.103144,4.868742], 
+    [52.102538,4.869257], 
+    [52.098979,4.866768 ], 
+    [52.097556,4.865695]];
     for (var i=0; i<6; i++){ 
-      var point = new L.LatLng(52.1029 + Math.random() / 750, 4.868 + Math.random()/500);
+
+      var point = new L.LatLng(latlngs[i][0], latlngs[i][1]);
       var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
         '<span class="author pull-right">21 November 2011</span></h4>'+
         '<img src="images/kwel.jpg" style="width: 100%"/>'+
@@ -190,6 +197,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.mapCanvas.on('click', _.bind(this.onMapClick, this));
   },
   zoomTo: function(lonlatzoom){
+    if (!lonlatzoom || lonlatzoom.split(',').length < 3) {
+      // console.log('ja')
+      lonlatzoom = '5.16082763671875,51.95442214470791,7';
+    };
+    console.log(this)
     this.mapCanvas.setView(new L.LatLng(
       lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
       lonlatzoom.split(',')[2]
