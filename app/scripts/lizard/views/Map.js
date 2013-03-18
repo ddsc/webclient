@@ -59,6 +59,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
     var mapCanvas = this.mapCanvas;
 
+    this.mapCanvas.on('click', function(e) {
+        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+    });
+
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
 
@@ -104,11 +108,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     // mock alarm layer
     var alarms = [
         {
-            location: [51.8, 4],
+            location: [52.103183906682105, 4.867994785308838],
             href: '#graphs/60'
         },
         {
-            location: [52.5, 5],
+            location: [52.10350023010808, 4.86868143081665],
             href: '#graphs/61'
         }
     ];
