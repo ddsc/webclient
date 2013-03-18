@@ -22,6 +22,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace = options.workspace;
     Lizard.App.vent.on('workspaceZoom', _.bind(this.zoomTo, this));
     this.backgroundLayers = {
+      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
         layers: 'deltaportaal',
         format: 'image/png',
@@ -36,7 +37,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         attribution: 'MapBox'
       }),
       Terrain: new L.Google("TERRAIN", {detectRetina: true}),
-      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Hybrid :new L.Google("HYBRID", {detectRetina: true})
     };
   },
@@ -48,11 +48,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     
     if (this.mapCanvas === null){
       this.makemapCanvas();
-    } 
+    }
   },
   makemapCanvas: function (){
     this.mapCanvas = L.map('map', {
-      layers: [this.backgroundLayers.Waterkaart],
+      layers: [this.backgroundLayers.Satellite],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
@@ -76,6 +76,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         featureGroup: drawnItems
       }
     });
+    window.mc = this.mapCanvas;
     this.mapCanvas.addControl(drawControl);
 
     this.mapCanvas.on('draw:created', function (e) {
