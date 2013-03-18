@@ -12,7 +12,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
     this.markers = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
-      maxClusterRadius: 200
+      maxClusterRadius: 10
     });
 
     // The collection is loaded and the scope "this" is bound to the

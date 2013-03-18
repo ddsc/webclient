@@ -1,9 +1,8 @@
-var extra = '?page_size=300'; //
+var extra = '?page_size=192'; //
 // var extra = '?page_size=1000';
 
 
 var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v0/');
-// var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v0/');
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,

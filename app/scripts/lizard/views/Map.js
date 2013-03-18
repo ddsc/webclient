@@ -52,7 +52,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   makemapCanvas: function (){
     this.mapCanvas = L.map('map', {
-      layers: [this.backgroundLayers.Waterkaart],
+      layers: [this.backgroundLayers.Hybrid],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
@@ -76,6 +76,17 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       }
     });
     this.mapCanvas.addControl(drawControl);
+
+    var that = this;
+    for (var i=0; i<6; i++){ 
+      var point = new L.LatLng(52 + Math.random() *2, 4.0 + Math.random());
+      var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
+        '<span class="author pull-right">Jan van Dijk</span></h4>'+
+        '<img src="images/kwel.jpg" style="width: 100%"/>'+
+        'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten.</div>');
+      var marker = new L.Marker(point).bindPopup(popup);
+      marker.addTo(that.mapCanvas);
+    }
 
     this.mapCanvas.on('draw:created', function (e) {
       var type = e.layerType,

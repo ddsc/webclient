@@ -118,8 +118,19 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     Backbone.history.navigate('map/' + lonlatzoom);
   } else {
     Backbone.history.navigate('map');
-  }
+  };
 
+  Lizard.App.vent.on('mapPan', function(lonlatzoom){
+    console.log('jan');
+      urlfragment = Backbone.history.fragment.split('/');
+      if (urlfragment.length === 3){
+        Backbone.history.navigate('map/' + lonlatzoom + '/' + urlfragment[2]);  
+      } else if (lonlatzoom) {
+      Backbone.history.navigate('map/' + lonlatzoom);
+      } else {
+        Backbone.history.navigate('map');
+      }
+    });
 };
 
 Lizard.App.addInitializer(function(){
