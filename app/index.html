@@ -306,7 +306,7 @@
             </div>
             <div class="row-fluid">
                 <div class="span12" id="leafletRegion"></div>
-                <!--div class="span2 sidenav" id="annotationsRegion"></div-->
+                <!--<div class="span2 sidenav" id="annotationsRegion"></div>-->
             </div>
         </div>
 
@@ -829,6 +829,9 @@
       <%}else{%>
           <p>Er zijn <strong><%= annotationsCount %></strong> notities gevonden.</p>
       <%}%>
+      <%if(annotationsCount > 0){%>
+          <button type="btn btn-info">Bekijk annotaties</button>
+      <%}%>
     </script>
 
   </head>
@@ -1032,10 +1035,11 @@
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.tooltip.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload.js"></script>
+        <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.legendonmouseover.nens.js"></script>
 
-        <script src="scripts/vendor/raven.min.js"></script>
         <!-- Only use raven logging to sentry if on staging or production.
                i.e. test.dijkdata.nl or dijkdata.nl.
+        <script src="scripts/vendor/raven.min.js"></script>
         <script type="text/javascript">
           if (window.location.host.indexOf('dijkdata.nl') !== -1) {
               Raven.config('https://5cf7a2111d5d4f0b994bd3a83f32f8a9@sentry.lizard.net/5').install();

@@ -325,7 +325,10 @@ function initializePlot($container) {
             autoHighlight: false
         },
         legend: {
-            show: true
+            show: false
+        },
+        legendonmouseover: {
+            enabled: true
         }
     };
 
