@@ -10,6 +10,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null,
   mapCanvas: null,
+  alarmLayer: null, // mock alarm layer
   //set on initialisation
   //modalInfo:Lizard.Utils.Map.modalInfo,
   //updateInfo: Lizard.Utils.Map.updateInfo,
@@ -99,6 +100,48 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         $(popup._contentNode).find('textarea').focus();
       }
     });
+
+    // mock alarm layer
+    var alarms = [
+        {
+            location: [51.8, 4],
+            href: '#graphs/60'
+        },
+        {
+            location: [52.5, 5],
+            href: '#graphs/61'
+        }
+    ];
+    var alarmIcon = L.icon({
+        iconUrl: 'scripts/vendor/images/marker-caution.png'
+    });
+    var alarmLayer = new L.FeatureGroup();
+    $.each(alarms, function() {
+        var alarm = this;
+        var marker = L.marker(
+            alarm.location,
+            {
+                icon: alarmIcon
+            }
+        );
+        marker.addTo(alarmLayer);
+        marker.on('click', function(e) {
+            window.location = alarm.href;
+        });
+    });
+    this.alarmLayer = alarmLayer;
+    $('.alarm-layer-toggler').click(function(e) {
+        var $icon = $(this).find('i');
+        if ($icon.hasClass('icon-check-empty')) {
+            $icon.addClass('icon-check').removeClass('icon-check-empty');
+            mapCanvas.addLayer(alarmLayer);
+        }
+        else {
+            $icon.addClass('icon-check-empty').removeClass('icon-check');
+            mapCanvas.removeLayer(alarmLayer);
+        }
+    });
+    // end mock alarm layer
 
     var fullScreen = new L.Control.FullScreen();
     this.mapCanvas.addControl(fullScreen);
