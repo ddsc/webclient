@@ -86,7 +86,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     var that = this;
     for (var i=0; i<6; i++){ 
-      var point = new L.LatLng(52 + Math.random() *2, 4.0 + Math.random());
+      var point = new L.LatLng(52.1029 + Math.random() / 750, 4.868 + Math.random()/500);
       var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
         '<span class="author pull-right">21 November 2011</span></h4>'+
         '<img src="images/kwel.jpg" style="width: 100%"/>'+
