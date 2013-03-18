@@ -10,6 +10,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null,
   mapCanvas: null,
+  alarmLayer: null, // mock alarm layer
   //set on initialisation
   //modalInfo:Lizard.Utils.Map.modalInfo,
   //updateInfo: Lizard.Utils.Map.updateInfo,
@@ -22,6 +23,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace = options.workspace;
     Lizard.App.vent.on('workspaceZoom', _.bind(this.zoomTo, this));
     this.backgroundLayers = {
+      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
         layers: 'deltaportaal',
         format: 'image/png',
@@ -36,7 +38,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         attribution: 'MapBox'
       }),
       Terrain: new L.Google("TERRAIN", {detectRetina: true}),
-      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Hybrid :new L.Google("HYBRID", {detectRetina: true})
     };
   },
@@ -48,13 +49,18 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     
     if (this.mapCanvas === null){
       this.makemapCanvas();
-    } 
+    }
   },
   makemapCanvas: function (){
     this.mapCanvas = L.map('map', {
-      layers: [this.backgroundLayers.Hybrid],
+      layers: [this.backgroundLayers.Satellite],
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
+    });
+    var mapCanvas = this.mapCanvas;
+
+    this.mapCanvas.on('click', function(e) {
+        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
     });
 
     var drawnItems = new L.FeatureGroup();
@@ -75,6 +81,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         featureGroup: drawnItems
       }
     });
+    window.mc = this.mapCanvas;
     this.mapCanvas.addControl(drawControl);
 
     var that = this;
@@ -95,12 +102,62 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       if (type === 'marker') {
         var popup = L.popup()
           .setContent('<div style="height:175px;">'+$('#leaflet-annotation-template').html()+'</div>');
-        // $('#annotation-textarea').focus();
-        layer.bindPopup(popup).openPopup();
+        // Keep things below in this order.
+        layer.bindPopup(popup);
+        drawnItems.addLayer(layer);
+        layer.openPopup();
+        // Close the popup when clicking the "Save" button.
+        // Need to use Leaflet internals because the public API doesn't offer this.
+        $(popup._contentNode).find('button[type="submit"]').click(
+            function() {
+                popup._close();
+            }
+        );
+        $(popup._contentNode).find('textarea').focus();
       }
-
-      drawnItems.addLayer(layer);
     });
+
+    // mock alarm layer
+    var alarms = [
+        {
+            location: [52.103183906682105, 4.867994785308838],
+            href: '#graphs/60'
+        },
+        {
+            location: [52.10350023010808, 4.86868143081665],
+            href: '#graphs/61'
+        }
+    ];
+    var alarmIcon = L.icon({
+        iconUrl: 'scripts/vendor/images/marker-caution.png'
+    });
+    var alarmLayer = new L.FeatureGroup();
+    $.each(alarms, function() {
+        var alarm = this;
+        var marker = L.marker(
+            alarm.location,
+            {
+                icon: alarmIcon
+            }
+        );
+        marker.addTo(alarmLayer);
+        marker.on('click', function(e) {
+            window.location = alarm.href;
+        });
+    });
+    this.alarmLayer = alarmLayer;
+    $('.alarm-layer-toggler').click(function(e) {
+        var $icon = $(this).find('i');
+        if ($icon.hasClass('icon-check-empty')) {
+            $icon.addClass('icon-check').removeClass('icon-check-empty');
+            mapCanvas.addLayer(alarmLayer);
+        }
+        else {
+            $icon.addClass('icon-check-empty').removeClass('icon-check');
+            mapCanvas.removeLayer(alarmLayer);
+        }
+    });
+    // end mock alarm layer
 
     var fullScreen = new L.Control.FullScreen();
     this.mapCanvas.addControl(fullScreen);
