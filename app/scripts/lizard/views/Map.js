@@ -88,9 +88,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     for (var i=0; i<6; i++){ 
       var point = new L.LatLng(52 + Math.random() *2, 4.0 + Math.random());
       var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
-        '<span class="author pull-right">Jan van Dijk</span></h4>'+
+        '<span class="author pull-right">21 November 2011</span></h4>'+
         '<img src="images/kwel.jpg" style="width: 100%"/>'+
-        'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten.</div>');
+        'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten. - Jan de Graaf</div>');
       var marker = new L.Marker(point).bindPopup(popup);
       marker.addTo(that.mapCanvas);
     }
