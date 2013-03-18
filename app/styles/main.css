@@ -476,9 +476,11 @@ span.lazy {
 
 .gridster .gs_w {
     background: #FFF;
-    cursor: pointer;
+    /*cursor: pointer;*/
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 16px -8px #222;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
 }
 
 .gridster .player {
