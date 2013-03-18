@@ -46,7 +46,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
 
   if (!lonlatzoom || lonlatzoom.length < 2) {
-    lonlatzoom = '5.16082763671875,51.95442214470791,7'
+    lonlatzoom = '5.16082763671875,51.95442214470791,7';
   }
 
   // Instantiate Map's default layout
@@ -82,11 +82,11 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       });
       workspace.set('selected', true);
       workspace.trigger('select_workspace', workspace);
-    }
+    };
     if (workspaceCollection.models.length > 0) {
       selectWorkspace(workspaceCollection);
     } else {
-      workspaceCollection.once('sync', selectWorkspace)
+      workspaceCollection.once('sync', selectWorkspace);
     }
   }
 
