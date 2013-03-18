@@ -56,6 +56,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       center: new L.LatLng(this.options.lat, this.options.lon),
       zoom: this.options.zoom
     });
+    var mapCanvas = this.mapCanvas;
 
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
@@ -84,11 +85,19 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       if (type === 'marker') {
         var popup = L.popup()
           .setContent('<div style="height:175px;">'+$('#leaflet-annotation-template').html()+'</div>');
-        // $('#annotation-textarea').focus();
-        layer.bindPopup(popup).openPopup();
+        // Keep things below in this order.
+        layer.bindPopup(popup);
+        drawnItems.addLayer(layer);
+        layer.openPopup();
+        // Close the popup when clicking the "Save" button.
+        // Need to use Leaflet internals because the public API doesn't offer this.
+        $(popup._contentNode).find('button[type="submit"]').click(
+            function() {
+                popup._close();
+            }
+        );
+        $(popup._contentNode).find('textarea').focus();
       }
-
-      drawnItems.addLayer(layer);
     });
 
     var fullScreen = new L.Control.FullScreen();
