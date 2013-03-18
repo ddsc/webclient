@@ -17,21 +17,28 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   events: {
     'click' : "openModal"
   },
-  openModal: function() {
+  openModal: function(e) {
     var model = this.model;
-    modalView = new Lizard.Map.ModalTimeseriesView();
-    modalView.locationuuid = model.attributes.uuid;
-    modalView.location = model.attributes.name;
+    options = {
+      locationuuid: model.attributes.uuid,
+      location: model.attributes.name,
+    }
+    modalView = new Lizard.Map.ModalTimeseriesView(options);
     Lizard.mapView.modalitems.show(modalView.render());
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
-    this.model.set({onOpen: true});
     $('#location-modal').modal();
-    var item = modalView.children.findByModel(this.model);
-    console.log(item)
-    if (item._isShown){
-      console.log('ik kom hier langs')
-      item.openfromPopup();
-    }
+    $('#location-modal').on('shown', _.bind(this.showGraph, e));
+  },
+  showGraph: function(){
+      console.log(this)
+      var data_url = this.target.dataset.url;
+      console.log(data_url, $('#modal-graph-wrapper'))
+      $('#modal-graph-wrapper').removeClass('hidden');
+      var flot_div = $('#modal-graph-wrapper').find('.flot-graph');
+      $(flot_div).loadPlotData(data_url + '?eventsformat=flot');
+  },
+  onClose: function(){
+    $('#location-modal').off('shown');
   }
 });
 
@@ -43,7 +50,7 @@ Lizard.Map.TimeseriesView = Backbone.Marionette.CollectionView.extend({
   onBeforeRender: function(){
     this.collection.url = settings.timeseries_url +
       '&location=' + this.locationuuid;
-  },
+  }
 });
 
 Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
@@ -55,18 +62,11 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
     }, {variable: 'timeserie'});
   },
   uuid: null,
-  initialize: function() {
-    this.uuid = this.model.url.split("eries/")[1].split("/")[0];    
-  },
-  openfromPopup: function() {
-    // this.$el.find('.graph-this').trigger('click');
-
-    // if (this.model.attributes.onOpen){
-    //   $('#' + this.uuid).collapse({toggle: true});
-    // } else {
-    //   $('#' + this.uuid).collapse();
-    //   this.collapseToggle()
-    // }
+  initialize: function(options) {
+    this.uuid = this.model.url.split("eries/")[1].split("/")[0];   
+    // // this.locationuuid = options.locationuuid;
+    // // this.location = options.location;
+    // this.clicked_url = options.model.attributes.events;
   },
   events: {
     'click .graph-this': "drawGraph",
