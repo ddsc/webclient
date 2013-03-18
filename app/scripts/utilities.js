@@ -326,9 +326,6 @@ function initializePlot($container) {
         },
         legend: {
             show: false
-        },
-        legendonmouseover: {
-            enabled: true
         }
     };
 
@@ -339,7 +336,11 @@ function initializePlot($container) {
             touch: { pan: 'xy', scale: 'x', autoWidth: false, autoHeight: false },
             // disable flot.navigate pan & zoom
             pan: { interactive: false },
-            zoom: { interactive: false }
+            zoom: { interactive: false },
+            // no mouseover stuff on iPad
+            legendonmouseover: {
+                enabled: false
+            }
         });
     }
     else {
@@ -357,6 +358,10 @@ function initializePlot($container) {
             },
             // enable buttons for zoom / pan
             zoombuttons: {
+                enabled: true
+            },
+            // draw the legend only when hovering above plot
+            legendonmouseover: {
                 enabled: true
             }
         });
