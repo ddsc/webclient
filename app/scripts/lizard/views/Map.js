@@ -111,6 +111,13 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         $(popup._contentNode).find('button[type="submit"]').click(
             function() {
                 popup._close();
+                $('.top-right')
+                .notify({
+                    message: {
+                        text: 'De annotatie is geplaatst.'
+                    }
+                })
+                .show();
             }
         );
         $(popup._contentNode).find('textarea').focus();
