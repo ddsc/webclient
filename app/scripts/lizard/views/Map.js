@@ -141,11 +141,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     // mock alarm layer
     var alarms = [
         {
-            location: [52.103183906682105, 4.867994785308838],
+            location: [52.10331000218847, 4.868552684783935],
             href: '#graphs/60'
         },
         {
-            location: [52.10350023010808, 4.86868143081665],
+            location: [52.10360005122914, 4.8697634923324585],
             href: '#graphs/61'
         }
     ];
