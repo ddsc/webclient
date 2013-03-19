@@ -21,7 +21,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
     this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
-    Lizard.App.vent.on('workspaceZoom', _.bind(this.zoomTo, this));
+    Lizard.App.vent.on('workspaceZoom', this.setInitialZoom, this);
     this.backgroundLayers = {
       Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
@@ -54,10 +54,13 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   makemapCanvas: function (){
     this.mapCanvas = L.map('map', {
       layers: [this.backgroundLayers.Satellite],
-      center: new L.LatLng(this.options.lat, this.options.lon),
-      zoom: this.options.zoom
+      center: new L.LatLng(this.lat, this.lon),
+      zoom: this.zoom
     });
     var mapCanvas = this.mapCanvas;
+
+    Lizard.App.vent.off('workspaceZoom', this.setInitialZoom, this);
+    Lizard.App.vent.on('workspaceZoom', this.zoomTo, this);
 
     this.mapCanvas.on('click', function(e) {
         console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
@@ -91,16 +94,20 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     [52.102538,4.869257], 
     [52.098979,4.866768 ], 
     [52.097556,4.865695]];
-    for (var i=0; i<6; i++){ 
 
+
+    var annotationLayer = new L.FeatureGroup();
+    for (var i=0; i<6; i++){
       var point = new L.LatLng(latlngs[i][0], latlngs[i][1]);
       var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
         '<span class="author pull-right">21 November 2011</span></h4>'+
         '<img src="images/kwel.jpg" style="width: 100%"/>'+
         'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten. - Jan de Graaf</div>');
       var marker = new L.Marker(point).bindPopup(popup);
-      marker.addTo(that.mapCanvas);
+      marker.addTo(annotationLayer);
     }
+    this.annotationLayer = annotationLayer;
+
 
     this.mapCanvas.on('draw:created', function (e) {
       var type = e.layerType,
@@ -155,11 +162,14 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
             }
         );
         marker.addTo(alarmLayer);
-        marker.on('click', function(e) {
-            window.location = alarm.href;
-        });
+        var popup =  new L.popup().setContent('<div><h4>Alarm: Hoge waterstand dijk</h4> '+
+          '<span class="author">Vandaag</span><br>'+
+          'Waterstand in de dijk is hoog. Alarm met urgentie hoog.<br>Bekijk waterdruk in dijk <a href="#graphs/60">hier<a>.</div>');
+        marker.bindPopup(popup);
     });
     this.alarmLayer = alarmLayer;
+    mapCanvas.addLayer(alarmLayer);
+
     $('.alarm-layer-toggler').click(function(e) {
         var $icon = $(this).find('i');
         if ($icon.hasClass('icon-check-empty')) {
@@ -171,6 +181,20 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
             mapCanvas.removeLayer(alarmLayer);
         }
     });
+
+    $('.annotation-layer-toggler').click(function(e) {
+      var $icon = $(this).find('i');
+      if ($icon.hasClass('icon-check-empty')) {
+        $icon.addClass('icon-check').removeClass('icon-check-empty');
+        mapCanvas.addLayer(annotationLayer);
+      }
+      else {
+        $icon.addClass('icon-check-empty').removeClass('icon-check');
+        mapCanvas.removeLayer(annotationLayer);
+      }
+    });
+
+
     // end mock alarm layer
 
     var fullScreen = new L.Control.FullScreen();
@@ -178,8 +202,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
 
     L.control.scale().addTo(this.mapCanvas);
-    var legend = new Lizard.Views.MapLegend(this.workspace);
-    this.mapCanvas.addControl(legend);
+    //var legend = new Lizard.Views.MapLegend(this.workspace);
+    //this.mapCanvas.addControl(legend);
 
 
     this.layerSwitcher = L.control.layers(this.backgroundLayers, this.extraLayers).addTo(this.mapCanvas);
@@ -196,19 +220,23 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       Lizard.App.vent.trigger('mapPan', lonlatzoom);
     };
 
-    this.mapCanvas.on('moveend', _.bind(mapMove, this));
+    this.mapCanvas.on('moveend', mapMove, this);
 
     this.initWorkspace();
     this._initialEvents();
 
     this.mapCanvas.on('click', _.bind(this.onMapClick, this));
   },
+  setInitialZoom: function(lonlatzoom) {
+    this.lon = lonlatzoom.split(',')[0];
+    this.lat = lonlatzoom.split(',')[1];
+    this.zoom = lonlatzoom.split(',')[2];
+  },
   zoomTo: function(lonlatzoom){
     if (!lonlatzoom || lonlatzoom.split(',').length < 3) {
       // console.log('ja')
       lonlatzoom = '5.16082763671875,51.95442214470791,7';
     };
-    debugger
     this.mapCanvas.setView(new L.LatLng(
       lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
       lonlatzoom.split(',')[2]

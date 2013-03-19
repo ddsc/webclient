@@ -140,9 +140,9 @@
             </div>
             <div id="dashboard-links">
               <ul class="homepage-list">
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DAM</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">DMC systeem</a></li>
-                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">DAM</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">DMC systeem</a></li>
+                <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">Grechtdijk</a></li>
               </ul>  
             </div>            
         </div>     
@@ -221,7 +221,7 @@
         <div id="graphs">
            <ul class="homepage-list">
              <% for(var name in data) { %>
-                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#map"><%= data[name].attributes.name %></a></li>
+                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#graph"><%= data[name].attributes.name %></a></li>
              <% } %>
            </ul>
         </div>
@@ -276,23 +276,23 @@
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
-                      <div class="ddsc-item oselect">
-                      <h5><i class="icon-check"></i>&nbsp;Sensoren <span class="pull-right badge badge-info">3459</span></h5>
+                      <div class="ddsc-item oselect sensor-layer-toggler">
+                      <h5><i class="icon-check"></i>&nbsp;Sensoren <span class="pull-right badge badge-info">192</span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item oselect">
-                           <h5><i class="icon-check"></i>&nbsp;Storingen<span class="pull-right badge badge-warning">30</span></h5>
+                           <h5><i class="icon-check-empty"></i>&nbsp;Storingen<span class="pull-right badge badge-warning">5</span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item oselect alarm-layer-toggler">
-                      <h5><i class="icon-check-empty"></i>&nbsp;Alarmen<span class="pull-right badge badge-important">2</span></h5>
+                      <h5><i class="icon-check"></i>&nbsp;Alarmen<span class="pull-right badge badge-important">2</span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
-                      <div class="ddsc-item oselect">
-                      <h5><i class="icon-check"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">19 </span></h5>
+                      <div class="ddsc-item oselect annotation-layer-toggler">
+                      <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">6 </span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li></ul></div>
@@ -554,9 +554,9 @@
             <h5 class="popup-toggle" data-url="<%= timeserie.events %>"><i class="icon-bar-chart">
             </i>&nbsp;<%= timeserie.name %>
               <span class="pull-right">
-                <span class="badge badge-info"><%= Math.floor(Math.random() * 10)/10 %></span>
+                <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
                 <i class="icon-comment"></i>
-                <span class="miniscule"><%= Math.floor(Math.random() * 10) %></span>
+                <span class="miniscule"><%= Math.floor(Math.pow(Math.random(),2) * 10) %></span>
               </span>
             </h5>
         </div>
