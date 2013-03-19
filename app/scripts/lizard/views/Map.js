@@ -48,12 +48,12 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace = this.options.workspace;
     
     if (this.mapCanvas === null){
-      this.makemapCanvas();
+      this.makemapCanvas('Satellite');
     }
   },
-  makemapCanvas: function (){
+  makemapCanvas: function (requestedBackground){
     this.mapCanvas = L.map('map', {
-      layers: [this.backgroundLayers.Satellite],
+      layers: [this.backgroundLayers[requestedBackground]],
       center: new L.LatLng(this.lat, this.lon),
       zoom: this.zoom
     });
@@ -141,16 +141,18 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     // mock alarm layer
     var alarms = [
         {
-            location: [52.10331000218847, 4.868552684783935],
+            location: [52.10311000218847, 4.8689634923324585],
             href: '#graphs/60'
         },
         {
-            location: [52.10360005122914, 4.8697634923324585],
+            location: [52.10360005122914, 4.8680634923324585],
             href: '#graphs/61'
         }
     ];
     var alarmIcon = L.icon({
-        iconUrl: 'scripts/vendor/images/marker-caution.png'
+        iconUrl: 'scripts/vendor/images/marker-caution.png',
+        iconAnchor: [16, 35],
+        popupAnchor: [0, -30]
     });
     var alarmLayer = new L.FeatureGroup();
     $.each(alarms, function() {
