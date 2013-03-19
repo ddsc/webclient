@@ -2,8 +2,9 @@ WIDGET_CLASSES = {};
 
 Lizard.Widgets.Widget = Backbone.Marionette.Layout.extend({
   initialize: function(){
-    // console.log('Lizard.Views.WidgetView initializing');
     that = this;
+    var widgetClass = WIDGET_CLASSES[this.model.get('type')];
+    this.contentView = new widgetClass({model: this.model});
   },
   tagName: 'li',
   className: 'new',
@@ -14,7 +15,7 @@ Lizard.Widgets.Widget = Backbone.Marionette.Layout.extend({
       "data-row": this.model.get('row'),
       "data-sizex": this.model.get('size_x'),
       "data-sizey": this.model.get('size_y')
-    }
+    };
   },
   regions: {
     'content': '.widget'
@@ -23,16 +24,9 @@ Lizard.Widgets.Widget = Backbone.Marionette.Layout.extend({
     'click .icon-cog': 'configureWidget'
   },
   configureWidget: function(e) {
-    // alert('test');
-    // console.log(this.model.attributes.label + ' of ' + this.model.attributes.title);
     e.preventDefault();
     var template = _.template( $("#widget-configuration").html(), {} );
     this.$el.html( template );
-  },
-  initialize: function() {
-    //initialize class for content
-    var widgetClass = WIDGET_CLASSES[this.model.get('type')];
-    this.contentView = new widgetClass({model: this.model});
   },
   onShow: function() {
     this.content.show(this.contentView.render());
