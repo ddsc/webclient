@@ -21,9 +21,6 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
 
 Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.Collage,
-  onItemRemoved: function(e) {
-    console.log('item removed!!!!!!!!!!', e);
-  },
   initialize: function(options) {
     this.listenTo(this.collection,
       "select_collage",
@@ -48,14 +45,14 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
     collageItems.each(function(collageItem) {
       var graph_el = $(graph_elements[collageItem.get('graph_index')]);
       graph_el.parent().removeClass('empty');
-      var timeseries = collageItem.get('timeseries')
+      var timeseries = collageItem.get('timeseries');
       for (var i in timeseries) {
         var timeserie = timeseries[i];
         graph_el.loadPlotData(timeserie);
 
       }
     });
-    Backbone.history.navigate('graphs/' + selectedModel.id)
+    Backbone.history.navigate('graphs/' + selectedModel.id);
   },
   onDomRefresh: function () {
     $('.drawer-group').disableSelection();
