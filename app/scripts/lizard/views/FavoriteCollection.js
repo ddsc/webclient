@@ -1,8 +1,9 @@
 Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
   template:function(model){
+    console.log(model);
     return _.template($('#favorite-item-template').html(), {
-      name: model.data.name,
-      uuid: "fav" + model.data.timeserie
+      name: model.name,
+      uuid: "fav" + model.timeserie
     }, {variable: 'favorite'});
   },
   onRender: function(){

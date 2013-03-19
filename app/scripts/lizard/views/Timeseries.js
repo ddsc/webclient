@@ -44,6 +44,7 @@ Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul',
   itemView: Lizard.Views.Timeserie,
   initialize: function(){
-    this.collection.fetch();
+    console.log('-------->', this.collection);
+    // this.collection.fetch();
   }
 });
