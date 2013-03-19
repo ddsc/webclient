@@ -6,7 +6,6 @@
 
 
 function format_value(value) {
-  debugger;
   if (typeof(value) == 'undefined') {
     return '-';
   } else if (typeof(value) === "number") {

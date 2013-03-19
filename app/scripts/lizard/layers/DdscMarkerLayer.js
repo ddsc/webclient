@@ -38,7 +38,8 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({
               iconUrl: 'scripts/vendor/images/marker-dam-3.png',
-              iconAnchor: [16,35]
+              iconAnchor: [16,35],
+              popupAnchor: [0, -30]
             }),
             clickable: true,
             name: attributes.name,
