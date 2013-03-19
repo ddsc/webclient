@@ -540,7 +540,7 @@
                 <i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %>
               </span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= Math.floor(Math.random() * 10)/10 %></span>
+                <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
                 <i class="icon-comment"></i>
                 <span class="miniscule"><%= Math.floor(Math.random() * 10) %>
                 </span>

@@ -22,6 +22,7 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
       name: model.name,
       uuid: model.url.split("eries/")[1].split("/")[0],
       events: model.events,
+      latest_value: model.latest_value,
     }, {variable: 'timeserie'});
   },
   uuid: null,
@@ -70,6 +71,7 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
       name: model.name,
       uuid: model.url.split("eries/")[1].split("/")[0],
       events: model.events,
+      latest_value: model.latest_value,
     }, {variable: 'timeserie'});
   },
   uuid: null,
