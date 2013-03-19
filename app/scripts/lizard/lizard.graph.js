@@ -13,10 +13,8 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   },
   onShow: Lizard.Visualsearch.init,
   triggers: {
-    'hover #sidebar': 'ui:expand:sidebar',
-    // 'mouseleave #sidebar': 'ui:collapse:sidebar',
-    'hover #mainRegion': 'ui:expand:mainregion',
-    //'mouseleave #mainRegion': 'ui:collapse:mainregion'
+    'click #sidebar': 'ui:expand:sidebar',
+    'hover #mainRegion': 'ui:expand:mainregion'
   }
 });
 
