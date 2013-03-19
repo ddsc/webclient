@@ -28,7 +28,7 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
 			collage: this._header.model.url()
 		});
 		input.val('');
-		this._collage_item_list.render()
+		this._collage_item_list.render();
 	},
 
 	// Broken working code.
@@ -44,7 +44,7 @@ Lizard.views.ActiveCollage = Backbone.Marionette.Layout.extend({
         this.collage_item_list.show(this._collage_item_list.render());
     },
     initialize: function () {
-        this._header = new Lizard.views.ActiveCollageHeader({model: this.model})
+        this._header = new Lizard.views.ActiveCollageHeader({model: this.model});
         this.header.show(this._header.render());
         this._collage_item_list = new Lizard.views.CollageItemList({collection: this.collection});
         this.collage_item_list.show(this._collage_item_list.render());
