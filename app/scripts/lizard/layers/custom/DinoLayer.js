@@ -38,7 +38,7 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
     var extra_settings = "/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image";
 
     if (this.get('subtype') === 'sondering') {
-      extra_settings += "&layerDefs=0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')"
+      extra_settings += "&layerDefs=0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')";
     }
 
     return  L.tileLayer.wms(this.get('wms_url') + extra_settings, {
@@ -47,11 +47,11 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
       format: 'png32',
       transparent: true,
       attribution: "dinodata"
-    })
+    });
   },
   _getFeatureInfoRequestUrl: function(event, map) {
 
-    var base_url = this.get('wms_url') + "/identify?"
+    var base_url = this.get('wms_url') + "/identify?";
 
     var bound_sw = map.getBounds().getSouthWest();
     var bound_ne = map.getBounds().getNorthEast();
@@ -79,10 +79,9 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
       imageDisplay: map.getSize().x + ',' + map.getSize().y + ',256',
       tolerance:'15',
       layerDefs:'{}'
-    }
+    };
     if (this.get('subtype') === 'sondering') {
-      param.layerDefs = "0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')"
-
+      param.layerDefs = "0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')";
     }
 
     var url = base_url + $.param(param);
@@ -100,13 +99,13 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
   getContent: function(object) {
     if (this.get('subtype')==='boorprofiel'){
       return "<b>" + object.value +
-        "</b><br><img src='http://www.dinoloket.nl/ulkbrh-web/rest/brh/mpcolumn/"+ object.value +"?width=200&height=400' style='width:200px;height:400px'></img>"
+        "</b><br><img src='http://www.dinoloket.nl/ulkbrh-web/rest/brh/mpcolumn/"+ object.value +"?width=200&height=400' style='width:200px;height:400px'></img>";
     } else if (this.get('subtype')==='sondering') {
       return "<b>" + object.value +
-        "</b><br><img src='//www.dinoloket.nl/ulkcpt-web/rest/cpt/cptchart/"+ object.value +"/4?width=300&height=300' style='width:300px;height:300px'></img>"
+        "</b><br><img src='//www.dinoloket.nl/ulkcpt-web/rest/cpt/cptchart/"+ object.value +"/4?width=300&height=300' style='width:300px;height:300px'></img>";
    } else {
       return "<b>" + object.value +
-        "</b><br><img src='http://www.dinoloket.nl/ulkgws-web/rest/gws/gwstchart/"+ object.value +"001?width=300&height=300' style='width:300px;height:300px'></img>"
+        "</b><br><img src='http://www.dinoloket.nl/ulkgws-web/rest/gws/gwstchart/"+ object.value +"001?width=300&height=300' style='width:300px;height:300px'></img>";
     }
     //http://www.dinoloket.nl/ulkbrh-web/rest/brh/mpcolumn/B38E1380?height=365&width=200
   },
@@ -116,4 +115,4 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
 });
 
 //add type to type index
-LAYER_CLASSES['dino'] = Lizard.Layers.Custom.DinoLayer
+LAYER_CLASSES['dino'] = Lizard.Layers.Custom.DinoLayer;
