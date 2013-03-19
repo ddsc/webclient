@@ -36,7 +36,10 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
       try {
           var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
-            icon: L.icon({iconUrl: 'scripts/vendor/images/marker-dam-3.png'}),
+            icon: L.icon({
+              iconUrl: 'scripts/vendor/images/marker-dam-3.png',
+              iconAnchor: [16,35]
+            }),
             clickable: true,
             name: attributes.name,
             bbModel: model,

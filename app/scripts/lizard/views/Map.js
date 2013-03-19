@@ -150,7 +150,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         }
     ];
     var alarmIcon = L.icon({
-        iconUrl: 'scripts/vendor/images/marker-caution.png'
+        iconUrl: 'scripts/vendor/images/marker-caution.png',
+        iconAnchor: [16, 35]
     });
     var alarmLayer = new L.FeatureGroup();
     $.each(alarms, function() {
