@@ -45,24 +45,21 @@
       var that = this;
       $tip = this.tip();
 
-      $tip.removeClass('in')
+      $tip.removeClass('in');
 
       function removeWithAnimation() {
         var timeout = setTimeout(function () {
-          $tip.off($.support.transition.end).detach()
-        }, 500)
+          $tip.off($.support.transition.end).detach();
+        }, 500);
 
         $tip.one($.support.transition.end, function () {
-          clearTimeout(timeout)
-          $tip.detach()
-        })
+          clearTimeout(timeout);
+          $tip.detach();
+        });
       }
 
-      $.support.transition && this.$tip.hasClass('fade') ?
-        removeWithAnimation() :
-        $tip.detach()
-
-      return this
+      $.support.transition && this.$tip.hasClass('fade') ? removeWithAnimation() : $tip.detach();
+      return this;
     }
 
   
@@ -70,41 +67,40 @@
       return $.extend({}, (inside ? {top: 0, left: 0} : this.$element.offset()), {
         width: this.$element[0].offsetWidth
       , height: this.$element[0].offsetHeight
-      })
+      });
     }
-
-  }
+  };
 
 
  /* LAYERBUBBLE PLUGIN DEFINITION
   * ========================= */
 
-  var old = $.fn.layerbubble
+  var old = $.fn.layerbubble;
 
   $.fn.layerbubble = function ( option ) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('layerbubble')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('tooltip', (data = new LayerBubble(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
+        , options = typeof option === 'object' && option;
+      if (!data) $this.data('tooltip', (data = new LayerBubble(this, options)));
+      if (typeof option === 'string') data[option]();
+    });
+  };
 
-  $.fn.layerbubble.Constructor = LayerBubble
+  $.fn.layerbubble.Constructor = LayerBubble;
 
   $.fn.layerbubble.defaults = {
     placement: 'top'
   , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-  }
+  };
 
 
  /* TOOLTIP NO CONFLICT
   * =================== */
 
   $.fn.layerbubble.noConflict = function () {
-    $.fn.layerbubble = old
-    return this
-  }
+    $.fn.layerbubble = old;
+    return this;
+  };
 
 }(window.jQuery);
