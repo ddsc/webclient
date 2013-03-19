@@ -311,6 +311,7 @@ function initializePlot($container) {
         xaxes: [
             {
                 axisLabel: 'Tijd',
+                timezone: 'browser',
                 mode: 'time',
                 zoomRange: [1 * timeUnitSize['minute'], 400 * timeUnitSize['year']],
                 tickFormatter: timeTickFormatter,
