@@ -89,10 +89,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     var that = this;
     latlngs = [[52.106742,4.866035],
-    [52.105082,4.866464], 
-    [52.103144,4.868742], 
-    [52.102538,4.869257], 
-    [52.098979,4.866768 ], 
+    [52.105082,4.866464],
+    [52.103144,4.868742],
+    [52.102538,4.869257],
+    [52.098979,4.866768 ],
     [52.097556,4.865695]];
 
 
@@ -236,7 +236,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     if (!lonlatzoom || lonlatzoom.split(',').length < 3) {
       // console.log('ja')
       lonlatzoom = '5.16082763671875,51.95442214470791,7';
-    };
+    }
     this.mapCanvas.setView(new L.LatLng(
       lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
       lonlatzoom.split(',')[2]
