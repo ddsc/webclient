@@ -44,14 +44,14 @@ Lizard.App.on('initialize:before', function() {
   liveFeedCollection.add([
     new Lizard.Models.LiveFeed({
       icon:'icon-bell',
-      href: '#',
+      href: '#map/4.865505695343018,52.10075209542472,16/11',
       title: 'Alarm: hoge waterstand in dijk',
       text: 'hoge waterstand, alarm met urgentie hoog',
       time: 'vandaag 12:55'
     }),
     new Lizard.Models.LiveFeed({
       icon:'icon-bell',
-      href: '#',
+      href: '#map/4.865505695343018,52.10075209542472,16/11',
       title: 'Alarm: hoge waterstand in dijk',
       text: 'hoge waterstand, alarm met urgentie middel',
       time: 'vandaag 12:00'

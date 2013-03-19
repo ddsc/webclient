@@ -4,6 +4,19 @@
 //todo: move these classes to lizard.views
 // Modal view that opens when clicking on a location
 
+
+function format_value(value) {
+  debugger;
+  if (typeof(value) == 'undefined') {
+    return '-';
+  } else if (typeof(value) === "number") {
+    return value.toFixed(2);
+  } else {
+    return value;
+  }
+}
+
+
 Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   template:function(model){
     return _.template($('#location-popup-timeserie').html(), {
