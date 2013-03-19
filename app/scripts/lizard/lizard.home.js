@@ -77,7 +77,7 @@ Lizard.Home.home = function(){
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
     var widget = new Lizard.Widgets.GageWidget({model: model, tagName: 'div'});
-    view.show(widget.render())
+    view.show(widget.render());
   }
 
   addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: currentStatus.get('alarms'),
