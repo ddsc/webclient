@@ -37,19 +37,10 @@ Lizard.Graphs.graphs = function(collageid){
     $('#sidebar').removeClass('span3').addClass('span5');
     $('#mainRegion').removeClass('span9').addClass('span7');
   });
-  /*graphsView.on('ui:collapse:sidebar', function(args) {
-    $('#sidebar').removeClass('span5').addClass('span3');
-    $('#mainRegion').removeClass('span7').addClass('span9');
-  });*/
   graphsView.on('ui:expand:mainregion', function(args) {
     $('#sidebar').removeClass('span5').addClass('span3');
     $('#mainRegion').removeClass('span7').addClass('span9');
   });
-  /*graphsView.on('ui:collapse:mainregion', function(args) {
-    $('#sidebar').removeClass('span3').addClass('span5');
-    $('#mainRegion').removeClass('span9').addClass('span7');
-
-  });*/
 
   Lizard.App.content.show(graphsView);
 
@@ -75,7 +66,7 @@ Lizard.Graphs.graphs = function(collageid){
       var selectedCollage = collageCollection.get(collageid);
       selectedCollage.set('selected', true);
       col.trigger('select_collage', selectedCollage);
-    })
+    });
   } else {
   Backbone.history.navigate('graphs');
   }
