@@ -208,7 +208,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       // console.log('ja')
       lonlatzoom = '5.16082763671875,51.95442214470791,7';
     };
-    debugger
     this.mapCanvas.setView(new L.LatLng(
       lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
       lonlatzoom.split(',')[2]
