@@ -12,7 +12,7 @@ Lizard.Widgets.GageWidget = Marionette.ItemView.extend({
       max: this.model.get('max'),
       title: this.model.get('title'),
       label: this.model.get('label')
-    }
+    };
 
     if (this.model.get('levelColors')) {
       settings['levelColors'] = this.model.get('levelColors');
@@ -27,9 +27,9 @@ Lizard.Widgets.GageWidget = Marionette.ItemView.extend({
     if (!this.model.get('value')) {
       setInterval(function() { // <-- commented during development...
         that.justGageRef.refresh(getRandomInt(that.model.get('min'),that.model.get('max')));
-      }, getRandomInt(that.model.get('refreshRate') * 0.7,that.model.get('refreshRate') * 1.3))
+      }, getRandomInt(that.model.get('refreshRate') * 0.7,that.model.get('refreshRate') * 1.3));
     }
-    return this
+    return this;
   }
 });
 
