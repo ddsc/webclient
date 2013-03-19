@@ -33,7 +33,7 @@
 
         function showTooltip (x, y, datapoint) {
             //var formatted = (new Date(datapoint[0])).toString();
-            var d = $.plot.dateGenerator(datapoint[0], plot.getXAxes()[0]);
+            var d = $.plot.dateGenerator(datapoint[0], plot.getXAxes()[0].options);
             var formatted = $.plot.formatDate(d, '%d %b %Y %H:%M:%S', monthNames, dayNames);
 
             // stop the hiding timeout if one is active

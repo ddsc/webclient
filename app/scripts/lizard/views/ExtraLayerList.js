@@ -31,7 +31,7 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
         that.syncWorkspaceItemCollection();
       }
     });
-    this.listenTo(this.collection, 
+    this.listenTo(this.collection,
       "pushtoWorkspace",
       this.pushtoWorkspace,
       this
@@ -84,13 +84,13 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
       newmodel = new Lizard.Models.WorkspaceItem({
         wms_source:model.toJSON(),
         visibility:true,
-        display_name: model.get('display_name'), 
-        type:  model.get('type') 
+        display_name: model.get('display_name'),
+        type:  model.get('type')
       });
       this.workspace.add(newmodel, {at:0});
       this.workspace.updateOrderFieldOfItems();
     } else {
-      this.workspace.remove(workspacemodel[0]);   
+      this.workspace.remove(workspacemodel[0]);
     }
   }
 });

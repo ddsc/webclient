@@ -40,7 +40,7 @@ Lizard.Views.MapLegend = L.Control.extend({
 
     if (this.options.collapsed) {
       L.DomEvent
-        .on(container, 'click', this._toggle, this)
+        .on(container, 'click', this._toggle, this);
       var link = this._layersLink = L.DomUtil.create('i', "leaflet-control-legend-icon icon-list icon-white ", container);
       link.href = '#';
       link.title = 'Legenda';

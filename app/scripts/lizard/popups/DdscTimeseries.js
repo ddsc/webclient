@@ -6,7 +6,7 @@
 
 
 function format_value(value) {
-  if (typeof(value) == 'undefined') {
+  if (typeof(value) === 'undefined') {
     return '-';
   } else if (typeof(value) === "number") {
     return value.toFixed(2);
@@ -34,7 +34,7 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     options = {
       locationuuid: model.attributes.uuid,
       location: model.attributes.name,
-    }
+    };
     modalView = new Lizard.Map.ModalTimeseriesView(options);
     Lizard.mapView.modalitems.show(modalView.render());
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
@@ -42,9 +42,8 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     $('#location-modal').on('shown', _.bind(this.showGraph, e));
   },
   showGraph: function(){
-      console.log(this)
       var data_url = this.target.dataset.url;
-      console.log(data_url, $('#modal-graph-wrapper'))
+      console.log(data_url, $('#modal-graph-wrapper'));
       $('#modal-graph-wrapper').removeClass('hidden');
       var flot_div = $('#modal-graph-wrapper').find('.flot-graph');
       $(flot_div).loadPlotData(data_url + '?eventsformat=flot');
@@ -75,10 +74,7 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
   },
   uuid: null,
   initialize: function(options) {
-    this.uuid = this.model.url.split("eries/")[1].split("/")[0];   
-    // // this.locationuuid = options.locationuuid;
-    // // this.location = options.location;
-    // this.clicked_url = options.model.attributes.events;
+    this.uuid = this.model.url.split("eries/")[1].split("/")[0];
   },
   events: {
     'click .graph-this': "drawGraph",
@@ -125,7 +121,7 @@ Lizard.Map.ModalTimeseriesView = Lizard.Map.TimeseriesView.extend({
       var plot = $(graph_elements).data('plot');
       if (plot) {
           plot.removeAllDataUrls();
-        } 
+        }
     });
   }
 });

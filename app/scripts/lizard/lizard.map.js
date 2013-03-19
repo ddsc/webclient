@@ -96,14 +96,6 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
-  /*
-  var annotationsModelInstance = new Lizard.Models.Annotations();
-  var annotationsView = new Lizard.Views.AnnotationsView({
-    model: annotationsModelInstance,
-    mapView: leafletView
-  });
-  Lizard.mapView.annotationsRegion.show(annotationsView.render());
-  */
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
@@ -118,12 +110,12 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     Backbone.history.navigate('map/' + lonlatzoom);
   } else {
     Backbone.history.navigate('map');
-  };
+  }
 
   Lizard.App.vent.on('mapPan', function(lonlatzoom){
       urlfragment = Backbone.history.fragment.split('/');
       if (urlfragment.length === 3){
-        Backbone.history.navigate('map/' + lonlatzoom + '/' + urlfragment[2]);  
+        Backbone.history.navigate('map/' + lonlatzoom + '/' + urlfragment[2]);
       } else if (lonlatzoom) {
       Backbone.history.navigate('map/' + lonlatzoom);
       } else {

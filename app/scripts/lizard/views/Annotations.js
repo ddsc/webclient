@@ -75,7 +75,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     templateHelpers: {
         showMessage: function(){
-            return 'hoi';
+            return '...';
         }
     }
 });

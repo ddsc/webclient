@@ -57,7 +57,7 @@ Lizard.Layers.WMSTemplateLayer = Lizard.Layers.WMSLayer.extend({
   getFeatureInfo: function(event, map, options, callback) {//todo: tot hier gekomen
     var url = this._getFeatureInfoRequestUrl(event, map);
     if (this.get('proxyForGetInfo')) {
-      url = 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url});
+      url = settings.wms_proxy_base_url + $.param({url: url});
     }
 
     $.ajax({
@@ -96,12 +96,12 @@ Lizard.Layers.WMSTemplateLayer = Lizard.Layers.WMSLayer.extend({
   },
   getPopupContent: function(data) {
     var xml = $.xml2json(data);
-    var features = xml.featureMember
+    var features = xml.featureMember;
     if (features) {
       var feature = _(features).pairs()[0][1];
       return this.template(feature);
     } else {
-      return false
+      return false;
     }
   }
 });

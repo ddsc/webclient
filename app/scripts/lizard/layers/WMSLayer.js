@@ -51,7 +51,7 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
   getFeatureInfo: function(event, map, options, callback) {//todo: tot hier gekomen
     var url = this._getFeatureInfoRequestUrl(event, map);
     if (this.get('proxyForGetInfo')) {
-      url = 'http://test.api.dijkdata.nl/api/v0/proxy/?' + $.param({url: url});
+      url = settings.wms_proxy_base_url + $.param({url: url});
     }
 
     $.ajax({
