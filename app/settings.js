@@ -5,6 +5,8 @@ var extra = '?page_size=192'; //
 var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v0/');
 var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/v0/');
 
+var wms_proxy_base_url = 'http://test.api.dijkdata.nl/api/v0/proxy/?';
+
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
     locations_url: domain + 'locations/' + extra +'&has_geometry=true',
