@@ -5,13 +5,13 @@ var extra = '?page_size=192'; //
 var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v0/');
 var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/v0/');
 
-var wms_proxy_base_url = 'http://test.api.dijkdata.nl/api/v0/proxy/?';
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/' + extra +'&has_geometry=true',
-    filters_url: domain +'logicalgroups/' + extra ,
-    timeseries_url: domain + 'timeseries/' + extra,
+    locations_url: domain + 'locations/?logicalgroup=6&has_geometry=true&page_size=300',
+    wms_proxy_base_url: test_domain + 'proxy/?',
+    filters_url: domain +'logicalgroups/' + extra,
+    timeseries_url: domain + 'timeseries/?logicalgroup=6&page_size=300',
     collages_url: test_domain + 'collages/',
     workspace_url: test_domain + 'workspaces/',
 	layers_url: test_domain + 'layers/?page_size=100',
