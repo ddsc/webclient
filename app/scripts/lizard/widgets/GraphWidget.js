@@ -10,7 +10,7 @@ Lizard.Widgets.GraphWidget = Marionette.ItemView.extend({
       $(that.el).loadPlotData(timeseries_url);
     });
 
-    return this
+    return this;
   }
 });
 
