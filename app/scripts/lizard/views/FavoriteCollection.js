@@ -29,8 +29,5 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
 
 Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
   collection: favoriteCollection,
-  itemView: Lizard.Views.FavoriteView,
-  initialize: function() {
-    //this.collection.fetch();
-  }
+  itemView: Lizard.Views.FavoriteView
 });
