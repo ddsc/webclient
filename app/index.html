@@ -735,10 +735,11 @@
           <li class='theader'>Dijk</lu>
           <li><span class='tlabel'>Waterniveau</span><span class='tvalue'><%= waterst_l.toFixed(2) %></span><span>mNAP</span></li>
           <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_l.toFixed(2) %></span><span>&degC</span></li>
+          <br>
           <li class='theader'>Pomp</li>
-          <li><span class='tlabel'>Status</span><td><span class="label">uit</span></li>
+          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
           <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
-          <li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_l.toFixed(2) %></span>liter</span></li>
+          <li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span>liter</span></li>
         </lu>
       </div>
       <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:right">
@@ -746,11 +747,12 @@
         <lu>
           <li class='theader'>Dijk</lu>
         <li><span class='tlabel'>Waterniveau</span><span class='tvalue'><%= waterst_r.toFixed(2) %></span><span>mNAP</span></li>
-        <li><span class='tlabel'>Temperatuur</span><span class='tvalue'>temp_r.toFixed(2)</span><span>&degC</span></li>
+        <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_r.toFixed(2) %></span><span>&degC</span></li>
+        <br>
         <li class='theader'>Pomp</li>
-        <li><span class='tlabel'>Status</span><td><span class="label">uit</span></li>
+        <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
         <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
-        <li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_r.toFixed(2) %></span><span>liter</span></li>
+        <li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>liter</span></li>
         </lu>
       </div>
     </script>
