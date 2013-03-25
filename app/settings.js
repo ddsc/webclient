@@ -14,10 +14,12 @@ var settings = {
     timeseries_url: domain + 'timeseries/?logicalgroup=6&page_size=300',
     collages_url: test_domain + 'collages/',
     workspace_url: test_domain + 'workspaces/',
-	layers_url: test_domain + 'layers/?page_size=100',
-	account_url: test_domain + 'account/',
-	login_token_url: test_domain + 'account/login-url/',
-	logout_token_url: test_domain + 'account/logout-url/'
+    layers_url: test_domain + 'layers/?page_size=100',
+    account_url: test_domain + 'account/',
+    login_token_url: test_domain + 'account/login-url/',
+    logout_token_url: test_domain + 'account/logout-url/',
+    annotations_count_url: domain + 'annotations/count/',
+    annotations_search_url: domain + 'annotations/search/'
 };
 
 /**
