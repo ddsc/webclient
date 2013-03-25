@@ -110,7 +110,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             });
             // hack: update the toggler as well
             $('.annotation-layer-toggler .badge').text(data.count);
-            if (data.result) {
+            if (data.results) {
                 self.updateAnnotationsLayer(data.results);
             }
         })
