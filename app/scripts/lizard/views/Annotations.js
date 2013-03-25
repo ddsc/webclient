@@ -99,7 +99,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.setIsLoading(true);
 
         // start a new XHR
-        this.currentXhr = $.ajax(url, urlParams, undefined, 'json')
+        this.currentXhr = $.ajax({
+            url: url,
+            data: urlParams,
+            dataType: 'json'
+        })
         .done(function (data, textStatus, jqXHR) {
             self.model.set({
                 annotationsCount: data.count
