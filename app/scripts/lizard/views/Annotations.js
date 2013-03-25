@@ -99,14 +99,14 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.setIsLoading(true);
 
         // start a new XHR
-        this.currentXhr = $.get(url, urlParams)
+        this.currentXhr = $.ajax(url, urlParams, undefined, 'json')
         .done(function (data, textStatus, jqXHR) {
             self.model.set({
                 annotationsCount: data.count
             });
             // hack: update the toggler as well
             $('.annotation-layer-toggler .badge').text(data.count);
-            if ('results' in data) {
+            if (data.result) {
                 self.updateAnnotationsLayer(data.results);
             }
         })
