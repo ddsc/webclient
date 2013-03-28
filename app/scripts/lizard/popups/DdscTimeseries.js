@@ -32,6 +32,7 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   },
   openModal: function(e) {
     var model = this.model;
+    var that = e;
     options = {
       locationuuid: model.attributes.uuid,
       location: model.attributes.name,
@@ -40,10 +41,10 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     Lizard.mapView.modalitems.show(modalView.render());
     this.uuid = this.model.url.split("eries/")[1].split("/")[0];
     $('#location-modal').modal();
-    $('#location-modal').on('shown', _.bind(this.showGraph, e));
+    $('#location-modal').on('shown', this.showGraph, that);
   },
-  showGraph: function(){
-      var data_url = this.target.dataset.url;
+  showGraph: function(that){
+      var data_url = that.target.dataset.url;
       console.log(data_url, $('#modal-graph-wrapper'));
       $('#modal-graph-wrapper').removeClass('hidden');
       var flot_div = $('#modal-graph-wrapper').find('.flot-graph');

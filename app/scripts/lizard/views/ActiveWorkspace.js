@@ -76,9 +76,9 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     drop: 'drop'
   },
   initialize: function() {
-    this.collection.on('reset', this.render, this);
-    this.collection.on('removeItem', this.removeItem, this);
-    this.collection.on('add remove', this.render, this);
+    this.collection.listenTo(this.collection, 'reset', this.render);
+    this.collection.listenTo(this.collection, 'removeItem', this.removeItem);
+    this.collection.listenTo(this.collection, 'add remove', this.render);
     // this.on('render', this.afterRender, this);
   },
   _initialEvents: function(){
@@ -112,7 +112,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     return this.collection;
   },
   onClose: function(){
-    // this.collection.off('reset removeItem add remove');
+    this.collection.off('reset removeItem add remove');
   }
 });
 
