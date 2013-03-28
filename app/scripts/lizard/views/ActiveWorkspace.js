@@ -76,10 +76,10 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
     drop: 'drop'
   },
   initialize: function() {
-    this.collection.on('reset', this.render, this);
-    this.collection.on('removeItem', this.removeItem, this);
-    this.collection.on('add remove', this.render, this);
-    this.on('render', this.afterRender, this);
+    this.collection.listenTo('reset', this.render, this);
+    this.collection.listenTo('removeItem', this.removeItem, this);
+    this.collection.listenTo('add remove', this.render, this);
+    this.listenTo('render', this.afterRender, this);
   },
   _initialEvents: function(){
     //this.collection.on("removeItems", this.onItemRemoveds, this);

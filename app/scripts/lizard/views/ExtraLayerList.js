@@ -8,7 +8,7 @@ Lizard.Views.LayerListItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   initialize: function () {
     this.model.set('id',this.model.get('url'));
-    this.model.on('change', this.render);
+    this.model.listenTo('change', this.render);
   },
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.attributes.id);

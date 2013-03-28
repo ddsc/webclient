@@ -1,11 +1,20 @@
 {
-  "name": "ddsc",
-  "version": "0.1.0",
-  "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-uglify": "",
-    "grunt-contrib-concat": "",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2"
-  }
+	"name": "ddsc-webclient",
+	"version": "0.1.0",
+	"description": "Levee data service center",
+	"repository": {
+	    "type": "git",
+	    "url": "git://github.com/ddsc/webclient.git"
+	},
+	"author": {
+		"name": "Nelen & Schuurmans",
+		"url": "http://nelen-schuurmans.nl",
+		"email": "info@nelen-schuurmans.nl"
+	},
+	"licenses":[{
+		"type": "MIT"
+	}],
+	"devDependencies": {
+		"backbone": "0.9"
+	}
 }
