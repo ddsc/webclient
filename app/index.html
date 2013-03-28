@@ -210,7 +210,7 @@
     </script>
 
     <script type="text/template" id="homepage-item-template">
-        <em class="<%=icon%> icon-white"></em>&nbsp;<a href="#map/_/<%=id%> "><%=name%></a>
+        <em class="<%=icon%> icon-white"></em>&nbsp;<a href="#graphs/<%=id%> "><%=name%></a>
     </script>
 
     <script type="text/template" id="homepage-searchresult-template">
@@ -446,13 +446,13 @@
 
     <script type="text/template" id="layeritem-template">
 	  <div class="layer-item">
+        <span class="indicato">
+            <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
+        </span>    
         <span class="action handle">
             <i class="icon-globe"></i>
         </span>
         <span class="content handle"><%= display_name %></span>
-        <span class="indicator">
-            <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
-        </span>
 	  </div>
     </script>
 
@@ -616,11 +616,6 @@
                     <li class="metrics-dropdown" id="selection">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
                     </li>
-                    <div class="measurement-items">
-                        <div class="row-fluid">
-                            <div class="span12 visual_search hidden-phone hidden-tablet"></div>
-                        </div>
-                    </div>
                     <div data-group="selection" class="measurement-items " id="selectionRegion"></div>
                 </ul>
                 </div>

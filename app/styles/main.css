@@ -582,7 +582,7 @@ div.widget li.theader {
 
 
 #sidebar,
-#mainRegion{ 
+#mainRegion{
     transition: width ease-out .15s;
     -webkit-transition: width ease-out .15s;
     -moz-transition: width ease-out .15s;
@@ -626,6 +626,19 @@ div.widget li.theader {
     margin-top: 2px;
     margin-right: -6px;
     opacity: .25;
+}
+
+.chevron-oneeighty {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: transform ease-out .2s;
+    -moz-transition: transform ease-out .2s;
+    -ms-transition: transform ease-out .2s;
+    -o-transition: transform ease-out .2s;
+    transition: transform ease-out .2s;
 }
 
 .sidenav .icon-chevron-right {

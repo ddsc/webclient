@@ -1,10 +1,8 @@
 /**
-ItemViews
+ ItemViews
 */
 
 Lizard.Views = {};
-
-
 
 Lizard.Views.Layer = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
