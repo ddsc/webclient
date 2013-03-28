@@ -1,6 +1,6 @@
 Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   initialize: function() {
-    this.model.listenTo('change', this.render, this);
+    this.model.on('change', this.render, this);
   },
   tagName: 'li',
   events: {
