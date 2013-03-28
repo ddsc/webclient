@@ -6,6 +6,9 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
       uuid: "fav" + model.timeserie
     }, {variable: 'favorite'});
   },
+  onClose: function() {
+    console.log("onClose!");
+  },
   onRender: function(){
     if (!window.mapCanvas){
       this.$el.find('.goto').toggle('hidden');
@@ -28,7 +31,8 @@ Lizard.Views.FavoriteView = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.FavoriteCollection = Lizard.Views.CollectionView.extend({
+Lizard.Views.FavoriteCollection = Marionette.CollectionView.extend({
+  tagName: 'ul',
   collection: favoriteCollection,
   itemView: Lizard.Views.FavoriteView
 });

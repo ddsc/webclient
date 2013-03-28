@@ -26,7 +26,7 @@ Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 Lizard.Graphs.graphs = function(collageid){
-  console.log('Lizard.Graphs.graphs()');
+ console.log('Lizard.Graphs.graphs()');
 
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Graphs.DefaultLayout();
@@ -55,7 +55,7 @@ Lizard.Graphs.graphs = function(collageid){
 
   graphsView.presetsRegion.show(collageListView.render());
   
-  graphsView.favoriteRegion.show(favoritecollectionview.render());
+  graphsView.favoriteRegion.show(favoritecollectionview);
   graphsView.selectionRegion.show(timeserieView.render());
 
   // And set URL to #graphs

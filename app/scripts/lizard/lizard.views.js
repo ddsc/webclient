@@ -54,40 +54,6 @@ Lizard.Views.ItemView = Backbone.Marionette.ItemView.extend({
 });
 
 
-
-
-/**
-CollectionViews
-*/
-
-Lizard.Views.CollectionView = Backbone.Marionette.CollectionView.extend({
-  tagName: 'ul',
-  initialize: function(){
-   this.collection.fetch({
-      cache: false
-    });
-    this.listenTo(this.collection, 'reset', this.render, this);
-  }
-});
-
-/*
-Lizard.Views.FilterCollection = Lizard.Views.CollectionView.extend({
-  collection: filterCollection,
-  itemView: Lizard.Views.Filter,
-});
-
-Lizard.Views.LocationCollection = Backbone.Marionette.CollectionView.extend({
-  collection: locationCollection,
-  itemView: Lizard.Views.Location,
-});
-
-Lizard.Views.ParameterCollection = Backbone.Marionette.CollectionView.extend({
-  collection: parameterCollection,
-  itemView: Lizard.Views.Parameter,
-});
-*/
-
-
 /* MENU VIEWS */
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({

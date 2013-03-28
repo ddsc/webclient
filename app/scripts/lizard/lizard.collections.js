@@ -91,7 +91,7 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
   model: Lizard.Models.Timeserie
 });
 
-Lizard.Collections.Favorite = Lizard.Collections.Collage.extend({
+Lizard.Collections.Favorite = Backbone.Collection.extend({
   model: Lizard.Models.Favorite
  });
 
