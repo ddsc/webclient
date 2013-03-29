@@ -42,9 +42,9 @@
 
     Heyoffline.prototype.options = {
       text: {
-        title: "Je bent momenteel offline",
+        title: "U bent momenteel offline",
         content: "Het lijkt erop dat u uw verbinding kwijt bent,                U kunt het beste wachten tot de verbinding weer terug is voordat u verder gaat.<br /><br />                Dit bericht zal automatisch verdwijnen zodra u weer online bent.",
-        button: "Relax, ik weet wat ik aan het doen ben"
+        button: "Ik weet wat ik aan het doen ben"
       },
       monitorFields: false,
       prefix: 'heyoffline',

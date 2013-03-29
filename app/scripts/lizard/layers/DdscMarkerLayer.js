@@ -24,7 +24,13 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
         console.log('Error this'+ response.responseText);
       }
     });
+    this.addToMap();
+  },
+  addToMap: function() {
     this.map.mapCanvas.addLayer(this.markers);
+  },
+  removeFromMap: function() {
+    this.map.mapCanvas.removeLayer(this.markers);
   },
   drawOnMap: function(collection, objects){
     var models = collection.models;

@@ -102,6 +102,18 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     map: leafletView
   });
 
+  $('.sensor-layer-toggler').click(function(e) {
+    var $icon = $(this).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      Lizard.Map.ddsc_layers.addToMap();
+    }
+    else {
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+      Lizard.Map.ddsc_layers.removeFromMap();
+    }
+  });
+
   // Then tell backbone to set the navigation to #map
   if(lonlatzoom && workspacekey){
     Backbone.history.navigate('map/' + lonlatzoom + '/' + workspacekey);
