@@ -292,18 +292,19 @@
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item oselect annotation-layer-toggler">
-                      <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">6 </span></h5>
+                      <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">0</span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li></ul></div>
                 </ul>
+                <br class="spacer">
+                <div class="nav sidenav" id="annotationsRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
         <div class="span9" id="">
             <div class="row-fluid">
                 <div class="span12" id="leafletRegion"></div>
-                <!--<div class="span2 sidenav" id="annotationsRegion"></div>-->
             </div>
         </div>
 
@@ -817,12 +818,15 @@
     <script type="text/template" id="annotations-template">
       <p>Annotaties</p>
       <%if(isLoading){%>
-          <span class="lazy loading" style="width: 100%; height: 100px;"></span>
+          <span class="lazy loading" style="width: 100%; height: 50px;"></span>
       <%}else{%>
-          <p>Er zijn <strong><%= annotationsCount %></strong> notities gevonden.</p>
-      <%}%>
-      <%if(annotationsCount > 0){%>
-          <button type="btn btn-info">Bekijk annotaties</button>
+          <%if(annotationsCount == 0){%>
+              <p>Er zijn geen notities gevonden.</p>
+          <%}else if (annotationsCount == 1) {%>
+              <p>Er is <strong><%= annotationsCount %></strong> notitie gevonden.</p>
+          <%}else{%>
+              <p>Er zijn <strong><%= annotationsCount %></strong> notities gevonden.</p>
+          <%}%>
       <%}%>
     </script>
 

@@ -438,7 +438,7 @@ input.input-medium.search-query {
 span.lazy.loading { background-image: url('../images/loading.gif'); }
 span.lazy.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
 span.lazy {
-    background-color: #333;
+    background-color: #fff;
     background-position: center center;
     background-repeat: no-repeat;
     display: block;
