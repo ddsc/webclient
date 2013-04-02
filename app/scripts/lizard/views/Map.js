@@ -88,26 +88,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.mapCanvas.addControl(drawControl);
 
     var that = this;
-    latlngs = [[52.106742,4.866035],
-    [52.105082,4.866464],
-    [52.103144,4.868742],
-    [52.102538,4.869257],
-    [52.098979,4.866768 ],
-    [52.097556,4.865695]];
-
-
-    var annotationLayer = new L.FeatureGroup();
-    for (var i=0; i<6; i++){
-      var point = new L.LatLng(latlngs[i][0], latlngs[i][1]);
-      var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
-        '<span class="author pull-right">21 November 2011</span></h4>'+
-        '<img src="images/kwel.jpg" style="width: 100%"/>'+
-        'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten. - Jan de Graaf</div>');
-      var marker = new L.Marker(point).bindPopup(popup);
-      marker.addTo(annotationLayer);
-    }
-    this.annotationLayer = annotationLayer;
-
 
     this.mapCanvas.on('draw:created', function (e) {
       var type = e.layerType,
@@ -183,19 +163,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
             mapCanvas.removeLayer(alarmLayer);
         }
     });
-
-    $('.annotation-layer-toggler').click(function(e) {
-      var $icon = $(this).find('i');
-      if ($icon.hasClass('icon-check-empty')) {
-        $icon.addClass('icon-check').removeClass('icon-check-empty');
-        mapCanvas.addLayer(annotationLayer);
-      }
-      else {
-        $icon.addClass('icon-check-empty').removeClass('icon-check');
-        mapCanvas.removeLayer(annotationLayer);
-      }
-    });
-
 
     // end mock alarm layer
 

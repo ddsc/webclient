@@ -7,8 +7,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
-    'extraLayerRegion' : '#extramaplayers',
-    //'annotationsRegion' : '#annotationsRegion'
+    'annotationsRegion' : '#annotationsRegion',
+    'extraLayerRegion' : '#extramaplayers'
   },
   onShow: Lizard.Visualsearch.init
 });
@@ -96,11 +96,29 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
 
+  var annotationsModelInstance = new Lizard.Models.Annotations();
+  var annotationsView = new Lizard.Views.AnnotationsView({
+    model: annotationsModelInstance,
+    mapView: leafletView
+  });
+  Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
     collection: locationCollection,
     map: leafletView
+  });
+
+  $('.sensor-layer-toggler').click(function(e) {
+    var $icon = $(this).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      Lizard.Map.ddsc_layers.addToMap();
+    }
+    else {
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+      Lizard.Map.ddsc_layers.removeFromMap();
+    }
   });
 
   // Then tell backbone to set the navigation to #map

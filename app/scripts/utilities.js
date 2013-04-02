@@ -5,16 +5,6 @@ if(typeof(console) === 'undefined') {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 $('input[type=checkbox]').live('click', function(e) {
   var el = $(this);
   if(el.is(':checked')) {
@@ -34,8 +24,8 @@ $('.VS-interface').live('focus', function(){
 // Click handlers for toggling the filter/location/parameter UI
 $('li.metrics-dropdown').live("click", function(e){
   e.preventDefault();
+  $(this).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
   var el = $(this).next();
-  // console.log(el.is(':visible'));
   if(el.is(':visible')) {
     el.addClass('hide');
   } else {
@@ -77,7 +67,6 @@ Lizard.Utils.DragDrop = {
     e.dataTransfer.setData("Text", sendThis);
     console.log(e.target);
   },
-
   allowDrop: function (e){
     e.preventDefault();
   },
@@ -313,7 +302,7 @@ function initializePlot($container) {
                 axisLabel: 'Tijd',
                 timezone: 'browser',
                 mode: 'time',
-                zoomRange: [1 * timeUnitSize['minute'], 400 * timeUnitSize['year']],
+                zoomRange: [1 * timeUnitSize.minute, 400 * timeUnitSize.year],
                 tickFormatter: timeTickFormatter,
                 labelHeight: 28 // always reserve enough vertical space for the time label
             }
