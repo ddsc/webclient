@@ -13,66 +13,17 @@ Proj4js.defs["EPSG:28992"]= "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.3876
 // Define Lizard namespace
 Lizard = {};
 
-// Lizard.geo = {};
-// Lizard.geo.Layers = {};
-// Lizard.geo.Map = {};
+Lizard.geo = {};
+Lizard.geo.Layers = {};
+Lizard.geo.Popups = {};
 
-// Lizard.ui.Popups = {};
-// Lizard.ui.Widgets = {};
+Lizard.ui = {};
+Lizard.ui.Widgets = {};
 
-Lizard.data = {}
+Lizard.data = {};
 Lizard.data.Dummy = {};
 
-Lizard.Layers = {};
-Lizard.Layers.Custom = {};
-Lizard.Popups = {};
-Lizard.Widgets = {};
 Lizard.Map = {};
-
-// Lizard.data.Dummy.livefeed = [[
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-bell',
-//       href: '#map/4.865505695343018,52.10075209542472,16/11',
-//       title: 'Alarm: hoge waterstand in dijk',
-//       text: 'hoge waterstand, alarm met urgentie hoog',
-//       time: 'vandaag 12:55'
-//     }),
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-bell',
-//       href: '#map/4.865505695343018,52.10075209542472,16/11',
-//       title: 'Alarm: hoge waterstand in dijk',
-//       text: 'hoge waterstand, alarm met urgentie middel',
-//       time: 'vandaag 12:00'
-//     }),
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-info-sign',
-//       href: '#',
-//       title: 'Storing',
-//       text: '5 warmte sensoren in de Grechtdijk zijn in storing',
-//       time: 'gisteren'
-//     }),
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-comment',
-//       href: '#',
-//       title: 'Gepland onderhoud sensoren',
-//       text: 'Komende 24 uur zijn 5 warmte sensoren in de Grechtdijk in onderhoud',
-//       time: 'gisteren'
-//     }),
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-comment',
-//       href: '#',
-//       title: 'Dijk inspectie',
-//       text: 'Grechtdijk geinspecteerd, geen bijzonderheden',
-//       time: 'maandag'
-//     }),
-//     new Lizard.Models.LiveFeed({
-//       icon:'icon-globe',
-//       href: '#',
-//       title: 'Nieuwe sensoren',
-//       text: 'Er zijn 8 nieuwe sensoren van Alert Solutions geinstalleerd',
-//       time: 'vrijdag'
-//     })
-//   ]]
 
 // Instantiate the Application()
 Lizard.App = new Backbone.Marionette.Application();
@@ -97,7 +48,52 @@ Lizard.App.on('initialize:before', function() {
   currentStatus = new Lizard.Models.CurrentState();
   liveFeedCollection = new Lizard.Collections.LiveFeed();
 
-  // liveFeedCollection.add(Lizard.data.Dummy.livefeed);
+  Lizard.data.Dummy.livefeed = [[
+      new Lizard.Models.LiveFeed({
+        icon:'icon-bell',
+        href: '#map/4.865505695343018,52.10075209542472,16/11',
+        title: 'Alarm: hoge waterstand in dijk',
+        text: 'hoge waterstand, alarm met urgentie hoog',
+        time: 'vandaag 12:55'
+      }),
+      new Lizard.Models.LiveFeed({
+        icon:'icon-bell',
+        href: '#map/4.865505695343018,52.10075209542472,16/11',
+        title: 'Alarm: hoge waterstand in dijk',
+        text: 'hoge waterstand, alarm met urgentie middel',
+        time: 'vandaag 12:00'
+      }),
+      new Lizard.Models.LiveFeed({
+        icon:'icon-info-sign',
+        href: '#',
+        title: 'Storing',
+        text: '5 warmte sensoren in de Grechtdijk zijn in storing',
+        time: 'gisteren'
+      }),
+      new Lizard.Models.LiveFeed({
+        icon:'icon-comment',
+        href: '#',
+        title: 'Gepland onderhoud sensoren',
+        text: 'Komende 24 uur zijn 5 warmte sensoren in de Grechtdijk in onderhoud',
+        time: 'gisteren'
+      }),
+      new Lizard.Models.LiveFeed({
+        icon:'icon-comment',
+        href: '#',
+        title: 'Dijk inspectie',
+        text: 'Grechtdijk geinspecteerd, geen bijzonderheden',
+        time: 'maandag'
+      }),
+      new Lizard.Models.LiveFeed({
+        icon:'icon-globe',
+        href: '#',
+        title: 'Nieuwe sensoren',
+        text: 'Er zijn 8 nieuwe sensoren van Alert Solutions geinstalleerd',
+        time: 'vrijdag'
+      })
+    ]];
+
+  liveFeedCollection.add(Lizard.data.Dummy.livefeed);
 });
 
 // Start Backbone's url router

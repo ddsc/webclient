@@ -3,7 +3,7 @@ Lizard.Views.WidgetCollection = Backbone.Marionette.CollectionView.extend({
   collection: new Lizard.Collections.Widget(),
   tagName: 'ul',
   className: 'gridster',
-  itemView: Lizard.Widgets.Widget,
+  itemView: Lizard.ui.Widgets.Widget,
 
   initialize: function(){
     this.listenTo(this.collection, 'reset', this.render, this);

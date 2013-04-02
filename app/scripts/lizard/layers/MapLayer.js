@@ -4,7 +4,7 @@ LAYER_CLASSES = {};
 //  Base class for layers
 //
 //
-Lizard.Layers.MapLayer = Backbone.Model.extend({
+Lizard.geo.Layers.MapLayer = Backbone.Model.extend({
   defaults: {
     display_name: '',
     visibility: false,

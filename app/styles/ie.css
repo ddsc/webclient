@@ -1,0 +1,6 @@
+[if lte IE 7] @import url("vendor/fontawesome/css/font-awesome-ie7.min.css");
+[if lte IE 8] @import url("vendor/leaflet.ie.css");
+[if (!IE)|(gte IE 8)] @import url("vendor/visualsearch-datauri.css");
+[if lte IE 7] @import url("vendor/visualsearch.css");
+[if lte IE 8] @import url("vendor/MarkerCluster.Default.ie.css");
+[if lte IE 7] @import url("vendor/visualsearch.css");

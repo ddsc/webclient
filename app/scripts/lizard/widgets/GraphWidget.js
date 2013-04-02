@@ -1,4 +1,4 @@
-Lizard.Widgets.GraphWidget = Marionette.ItemView.extend({
+Lizard.ui.Widgets.GraphWidget = Marionette.ItemView.extend({
   template: '#graph-widget',
   tagName: 'div',
   className: 'graph-widget',
@@ -14,4 +14,4 @@ Lizard.Widgets.GraphWidget = Marionette.ItemView.extend({
   }
 });
 
-WIDGET_CLASSES['graph'] = Lizard.Widgets.GraphWidget;
+WIDGET_CLASSES['graph'] = Lizard.ui.Widgets.GraphWidget;

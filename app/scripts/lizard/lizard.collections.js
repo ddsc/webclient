@@ -11,7 +11,7 @@ Backbone.Collection.prototype.parse = function(response){
 /* MAP COLLECTIONS */
 Lizard.Collections.Layer = Backbone.Collection.extend({
   url: settings.layers_url,
-  model: Lizard.Layers.WMSLayer,
+  model: Lizard.geo.Layers.WMSLayer,
   updateOrderFieldOfItems: function() {
     index=0;
     this.each(function(workspaceItem) {

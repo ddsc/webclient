@@ -2,7 +2,7 @@
 //  Class for WMS Tamplate Layers
 //
 //
-Lizard.Layers.WMSTemplateLayer = Lizard.Layers.WMSLayer.extend({
+Lizard.geo.Layers.WMSTemplateLayer = Lizard.geo.Layers.WMSLayer.extend({
   defaults: {
     display_name: '',
     visibility: false,
@@ -107,4 +107,4 @@ Lizard.Layers.WMSTemplateLayer = Lizard.Layers.WMSLayer.extend({
 });
 
 //add type to type index
-LAYER_CLASSES['wms_template'] = Lizard.Layers.WMSTemplateLayer;
+LAYER_CLASSES['wms_template'] = Lizard.geo.Layers.WMSTemplateLayer;

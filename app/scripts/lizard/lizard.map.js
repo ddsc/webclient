@@ -98,7 +98,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
 
   // Correct place for this?
-  Lizard.Map.ddsc_layers = new Lizard.Layers.DdscMarkerLayer({
+  Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
     collection: locationCollection,
     map: leafletView
   });

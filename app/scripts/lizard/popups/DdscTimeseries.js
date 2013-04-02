@@ -130,7 +130,7 @@ Lizard.Map.ModalTimeseriesView = Lizard.Map.TimeseriesView.extend({
 });
 
 
-Lizard.Popups.DdscTimeseries = {
+Lizard.geo.Popups.DdscTimeseries = {
   modalInfo: function (e){
     var marker = e.target;
     var model = marker.valueOf().options.bbModel;
