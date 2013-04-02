@@ -17,7 +17,8 @@ var settings = {
 	layers_url: test_domain + 'layers/?page_size=100',
 	account_url: test_domain + 'account/',
 	login_token_url: test_domain + 'account/login-url/',
-	logout_token_url: test_domain + 'account/logout-url/'
+	logout_token_url: test_domain + 'account/logout-url/',
+    alarms_url: domain + 'alarms/' + extra
 };
 
 /**

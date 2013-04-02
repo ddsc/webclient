@@ -209,7 +209,7 @@ module.exports = function (grunt) {
                     ],
                     '<%= yeoman.dist %>/styles/leaflet.css': [
                         '<%= yeoman.app %>/styles/vendor/leaflet.css',
-                        '<%= yeoman.app %>/styles/vendor/leaflet-draw.css',
+                        '<%= yeoman.app %>/styles/vendor/leaflet.draw.css',
                         '<%= yeoman.app %>/styles/vendor/MarkerCluster.Default.css',
                         '<%= yeoman.app %>/styles/vendor/MarkerCluster.css'
                     ],
