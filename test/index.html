@@ -301,144 +301,135 @@
 
 
     <!-- Load in files -->
-        <!-- jQuery -->
+        <!-- build:js ../app/scripts/jquery.js -->
         <script src="../app/scripts/vendor/jquery-1.8.3.js"></script>
         <script src="../app/scripts/vendor/jquerypp.js"></script>
-
-        <!-- jQuery UI and touch support -->../app/
-        <script src="../app/scripts/vendor/jquery-ui-1.9.2.custom.js"></script>
+        <script src="../app/scripts/vendor/jquery.xml2json.js"></script>
+        <script src="../app/scripts/settings.js"></script>
+        <script src="../app/scripts/vendor/jquery-ui-1.9.2.min.js"></script>
         <script src="../app/scripts/vendor/jquery.ui.touch-punch.js"></script>
-
-        <!-- jsTree -->
-        <script src="../app/scripts/vendor/jstree.js"></script>
-
-        <!-- jQuery-based i18n -->
         <script src="../app/scripts/vendor/globalize.js"></script>
-        <script src="../app/scripts/vendor/cultures/globalize.cultures.js"></script>
+        <script src="../app/scripts/vendor/cultures/globalize.culture.nl.js"></script>
+        <!-- endbuild -->
 
-        <!-- Slippy map rendering alternative to OpenLayers -->
+        <!-- build:js ../app/scripts/leaflet.js -->
+        <script src="../app/scripts/vendor/googlemap.js"></script>
         <script src="../app/scripts/vendor/leaflet.js"></script>
         <script src="../app/scripts/vendor/leaflet.markercluster-src.js"></script>
+        <script src="../app/scripts/vendor/leaflet.draw.js"></script>
+        <script src="../app/scripts/vendor/leaflet.google.js"></script>
+        <script src="../app/scripts/vendor/Control.FullScreen.js"></script>
         <script src="../app/scripts/vendor/proj4js-combined.js"></script>
         <script src="../app/scripts/vendor/tile.stamen.js"></script>
+        <!-- endbuild -->
 
-        <!-- The most versatile graph library around -->
-            <!--[if lte IE 8]><script src="scripts/vendor/r2d3.v2.js"></script><![endif]-->
-        <script src="../app/scripts/vendor/d3.v2.js"></script>
-
-        <!-- Powerful time-series filtering tool -->
-        <script src="../app/scripts/vendor/crossfilter.js"></script>
-
-        <!-- Higher level D3-based graphing library with Crossfilter support  -->
-        <script src="../app/scripts/vendor/dc.min.js"></script>
-
-        <!-- The most versatile graph library around -->
+        <!-- build:js ../app/scripts/extras.js -->
         <script src="../app/scripts/vendor/raphael.js"></script>
-
-        <!-- Gauges lib based on raphael -->
         <script src="../app/scripts/vendor/justgage.1.0.1.js"></script>
-
-        <!-- The most versatile graph library around, depends on Raphael.js -->
-        <script src="../app/scripts/vendor/morris.min.js"></script>
-
-        <!-- Timeserie visualization lib -->
-        <script src="../app/scripts/vendor/cubism.js"></script>
-
-        <!-- Gauges in JS by http://bernii.github.com/gauge.js/ -->
         <script src="../app/scripts/vendor/gauge.min.js"></script>
-
-        <!-- Client side image placeholders -->
         <script src="../app/scripts/vendor/holder.js"></script>
-
-        <!-- Regexp lib -->
         <script src="../app/scripts/vendor/matches.min.js"></script>
-
-        <!-- Keyboard shortcut defining and dispatching -->
         <script src="../app/scripts/vendor/keymaster.min.js"></script>
-
-        <!-- The go-to library for anything WebGL/Canvas related -->
-        <script src="../app/scripts/vendor/Three.js"></script>
-
-        <!-- Drop-in script for persisting form state -->
+        <script src="../app/scripts/vendor/augment.min.js"></script>
+        <script src="../app/scripts/vendor/heyoffline.js"></script>
         <script src="../app/scripts/vendor/garlic.min.js"></script>
-
-        <!-- Adds duration to datetime -->
         <script src="../app/scripts/vendor/xsduration.js"></script>
-
-        <!-- Async -->
         <script src="../app/scripts/vendor/async.min.js"></script>
-
-        <!-- Quick javascript controller Widget -->
         <script src="../app/scripts/vendor/dat.gui.min.js"></script>
-
-        <!-- JSON library by Douglas Crockford -->
         <script src="../app/scripts/vendor/json2.js"></script>
-
-        <!-- Javascript utilities. Consider lodash instead? -->
         <script src="../app/scripts/vendor/underscore.js"></script>
-        <!-- <script src="../app/scripts/vendor/lodash.min.js"></script> -->
-
-        <!-- Library for number formatting -->
         <script src="../app/scripts/vendor/numeral.js"></script>
-
-        <!-- CSS like selectors for JSON -->
         <script src="../app/scripts/vendor/jsonselect.js"></script>
-
-        <!-- XPATH-like library for JSON -->
         <script src="../app/scripts/vendor/jspath.min.js"></script>
-
-        <!-- Grid/dashboard library by Ducksboard.com -->
         <script src="../app/scripts/vendor/jquery.gridster.js"></script>
-
-        <!-- Viewport management, from https://github.com/pazguille/viewport -->
         <script src="../app/scripts/vendor/viewport.js"></script>
+        <script src="../app/scripts/vendor/lunr.js"></script>
+        <!-- endbuild -->
 
-
-        <!-- Backbone -->
+        <!-- build:js ../app/scripts/backbone.js -->
         <script src="../app/scripts/vendor/backbone-0.9.10.js"></script>
-        <script src="../app/scripts/vendor/backbone-localstorage.js"></script>
+        <script src="../app/scripts/vendor/backbone-associations-min.js"></script>
         <script src="../app/scripts/vendor/backbone.fetch-cache.js"></script>
-        <script src="../app/scripts/vendor/backbone.babysitter.js"></script>
-        <script src="../app/scripts/vendor/backbone.marionette.min.js"></script>
+        <script src="../app/scripts/vendor/backbone-localstorage.js"></script>
+        <script src="../app/scripts/vendor/backbone.marionette.1.0.2.js">
+        </script>
         <script src="../app/scripts/vendor/backbone.modelbinder.js"></script>
         <script src="../app/scripts/vendor/backbone.collectionbinder.js"></script>
-
-        <!-- Visualsearch.js by Documentcloud -->
         <script src="../app/scripts/vendor/visualsearch.js" type="text/javascript"></script>
+        <!-- endbuild -->
 
-
-        <!-- Twitter Bootstrap base javascript -->
-        <script src="../app/scripts/vendor/bootstrap.js"></script>
-        <!-- <script src="scripts/vendor/fuelux/loader.js"></script> -->
-
+        <!-- build:js ../app/scripts/bootstrap.js -->
+        <script src="../app/scripts/vendor/bootstrap.min.js"></script>
         <script src="../app/scripts/vendor/bootstrap-notify.js"></script>
+        <!-- endbuild -->
 
+        <!-- build:js ../app/scripts/flot.js -->
         <script src="../app/scripts/lizard/lizard.layerbubble.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-dev/jquery.flot.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-dev/jquery.flot.navigate.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-dev/jquery.flot.time.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-dev/jquery.flot.resize.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.legendoncanvas.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.touch.nens.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.axislabels.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.tooltip.nens.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload.js"></script>
+        <script type="text/javascript" src="../app/scripts/vendor/jquery-flot-plugins/jquery.flot.legendonmouseover.nens.js"></script>
+        <!-- endbuild -->
 
-
-        <!-- Lizard globals, order matters -->
-        <script src="../app/localsettings.js"></script>
-        <script src="../app/settings.js"></script>
-
+        <!-- build:js ../app/scripts/build.js -->
         <script src="../app/scripts/lizard/lizard.app.js"></script>
-
-
-        <script src="../app/scripts/utilities.js"></script>
-
         <script src="../app/scripts/lizard/lizard.models.js"></script>
+        <script src="../app/scripts/lizard/layers/MapLayer.js"></script>
+        <script src="../app/scripts/lizard/layers/WMSLayer.js"></script>
+        <script src="../app/scripts/lizard/layers/DdscMarkerLayer.js"></script>
+        <script src="../app/scripts/lizard/layers/WMSTemplateLayer.js"></script>
+        <script src="../app/scripts/lizard/layers/custom/DinoLayer.js"></script>
         <script src="../app/scripts/lizard/lizard.collections.js"></script>
         <script src="../app/scripts/lizard/lizard.views.js"></script>
+        <script src="../app/scripts/lizard/views/MapLegend.js"></script>
+        <script src="../app/scripts/lizard/views/Map.js"></script>
+        <script src="../app/scripts/lizard/popups/DdscTimeseries.js"></script>
+        <script src="../app/scripts/lizard/views/Timeseries.js"></script>
+        <script src="../app/scripts/lizard/views/WorkspaceList.js"></script>
+        <script src="../app/scripts/lizard/views/ActiveWorkspace.js"></script>
+        <script src="../app/scripts/lizard/views/ExtraLayerList.js"></script>
+        <script src="../app/scripts/lizard/widgets/Widget.js"></script>
+        <script src="../app/scripts/lizard/widgets/GageWidget.js"></script>
+        <script src="../app/scripts/lizard/widgets/TemplateWidget.js"></script>
+        <script src="../app/scripts/lizard/widgets/GraphWidget.js"></script>
+        <script src="../app/scripts/lizard/views/WidgetCollection.js"></script>
+
+        <script src="../app/scripts/lizard/views/CollageList.js"></script>
+        <script src="../app/scripts/lizard/views/FavoriteCollection.js"></script>
+        <script src="../app/scripts/lizard/views/Annotations.js"></script>
+        <script src="../app/scripts/lizard/views/HomePageList.js"></script>
+
+        <script src="../app/scripts/utilities.js"></script>
         <script src="../app/scripts/lizard/lizard.visualsearch.js"></script>
 
-        <!-- Application code, split into files -->
+
         <script src="../app/scripts/lizard/lizard.home.js"></script>
         <script src="../app/scripts/lizard/lizard.help.js"></script>
         <script src="../app/scripts/lizard/lizard.account.js"></script>
         <script src="../app/scripts/lizard/lizard.collage.js"></script>
         <script src="../app/scripts/lizard/lizard.map.js"></script>
         <script src="../app/scripts/lizard/lizard.graph.js"></script>
-        <script src="../app/scripts/lizard/lizard.overview.js"></script>
+        <script src="../app/scripts/lizard/lizard.tabular.js"></script>
+        <script src="../app/scripts/lizard/lizard.dashboard.js"></script>
         <script src="../app/scripts/lizard/lizard.eventlisteners.js"></script>
+
+        <script src="../app/scripts/lizard/models/Annotation.js"></script>
+        <script src="../app/scripts/lizard/models/Annotations.js"></script>
+        <script src="../app/scripts/lizard/collections/Annotation.js"></script>
+        <!-- endbuild -->
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+          Lizard.App.start();
+        });
+        </script>
 
 
     <!-- Load in spec files -->
