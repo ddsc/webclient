@@ -22,3 +22,4 @@ etc/*.nginx.conf
 node_modules/
 temp/
 dist/
+app/components/
