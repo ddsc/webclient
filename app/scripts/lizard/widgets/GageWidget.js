@@ -1,4 +1,4 @@
-Lizard.Widgets.GageWidget = Marionette.ItemView.extend({
+Lizard.ui.Widgets.GageWidget = Marionette.ItemView.extend({
   template: '#gagewidget-template',
   tagName: 'div',
   className: 'gauge-widget',
@@ -33,4 +33,4 @@ Lizard.Widgets.GageWidget = Marionette.ItemView.extend({
   }
 });
 
-WIDGET_CLASSES['gage'] = Lizard.Widgets.GageWidget;
+WIDGET_CLASSES['gage'] = Lizard.ui.Widgets.GageWidget;

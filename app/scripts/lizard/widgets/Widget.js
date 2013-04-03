@@ -1,6 +1,6 @@
 WIDGET_CLASSES = {};
 
-Lizard.Widgets.Widget = Backbone.Marionette.Layout.extend({
+Lizard.ui.Widgets.Widget = Backbone.Marionette.Layout.extend({
   initialize: function(){
     that = this;
     var widgetClass = WIDGET_CLASSES[this.model.get('type')];

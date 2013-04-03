@@ -1,6 +1,6 @@
-// popup for WMS get feature info
+s// popup for WMS get feature info
 // put all information in a table
 //
-Lizard.Popups.DdscTimeseriesPicture = Marionette.ItemView.extend({
+Lizard.geo.Popups.DdscTimeseriesPicture = Marionette.ItemView.extend({
   template: '#layeritem-template'
 });

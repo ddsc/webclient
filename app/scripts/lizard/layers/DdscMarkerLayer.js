@@ -1,7 +1,7 @@
 //  Class for locations of DDSC timeseries
 //
 //
-Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
+Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   markers: null,
   collection: null, //locationCollection,
   map: null,
@@ -66,7 +66,7 @@ Lizard.Layers.DdscMarkerLayer = Lizard.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
-    var innerStuff = Lizard.Popups.DdscTimeseries.getPopupContent(marker);
+    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker);
     marker.bindPopup(innerStuff, {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
   },

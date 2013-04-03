@@ -1,102 +1,318 @@
-module.exports = function( grunt ) {
-  'use strict';
-  //
-  // Grunt configuration:
-  //
-  // https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
-  //
-  grunt.initConfig({
+// Generated on 2013-03-28 using generator-webapp 0.1.5
+'use strict';
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
 
-    // Project configuration
-    // ---------------------
+// # Globbing
+// for performance reasons we're only matching one level down:
+// 'test/spec/{,*/}*.js'
+// use this if you want to match all subfolders:
+// 'test/spec/**/*.js'
 
-    // generate application cache manifest
-    manifest:{
-      dest: ''
-    },
+module.exports = function (grunt) {
+    // load all grunt tasks
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    // headless testing through PhantomJS
-    mocha: {
-      all: ['test/**/*.html']
-    },
+    // configurable paths
+    var yeomanConfig = {
+        app: 'app',
+        dist: 'dist'
+    };
 
-
-
-    // Build configuration
-    // -------------------
-
-    // the staging directory used during the process
-    staging: 'temp',
-    // final build output
-    output: 'dist',
-
-    concat: {
-      dist: {
-        src: ['app/scripts/vendor/**/*.js'],
-        dest: 'dist/vendor.js'
-      }
-    },
-    uglify: {
-      dist: {
-        files: {
-          'dist/vendor.min.js': [
-            'app/scripts/vendor/jquery-1.8.3.js',
-            'app/scripts/vendor/jquerypp.js',
-            'app/scripts/vendor/jquery-ui-1.9.2.custom.js',
-            'app/scripts/vendor/jquery.ui.touch-punch.js',
-            'app/scripts/vendor/jstree.js',
-            'app/scripts/vendor/globalize.js',
-            'app/scripts/vendor/cultures/globalize.cultures.js',
-            'app/scripts/vendor/leaflet.js',
-            'app/scripts/vendor/leaflet.markercluster-src.js',
-            'app/scripts/vendor/leaflet.draw.js',
-            'app/scripts/vendor/leaflet.google.js',
-            'app/scripts/vendor/Control.FullScreen.js',
-            'app/scripts/vendor/proj4js-combined.js',
-            'app/scripts/vendor/tile.stamen.js',
-            'app/scripts/vendor/r2d3.v2.js',
-            'app/scripts/vendor/d3.v2.js',
-            'app/scripts/vendor/rickshaw.min.js',
-            'app/scripts/vendor/crossfilter.js',
-            'app/scripts/vendor/dc.min.js',
-            'app/scripts/vendor/highcharts.js',
-            'app/scripts/vendor/raphael.js',
-            'app/scripts/vendor/justgage.1.0.1.js',
-            'app/scripts/vendor/gauge.min.js',
-            'app/scripts/vendor/keymaster.min.js',
-            'app/scripts/vendor/augment.min.js',
-            'app/scripts/vendor/lunr.js',
-            'app/scripts/vendor/Three.js',
-            'app/scripts/vendor/heyoffline.js',
-            'app/scripts/vendor/async.min.js',
-            'app/scripts/vendor/json2.js',
-            'app/scripts/vendor/underscore.js',
-            'app/scripts/vendor/jquery.gridster.js',
-            'app/scripts/vendor/viewport.js',
-            'app/scripts/vendor/backbone-0.9.10.js',
-            'app/scripts/vendor/backbone-associations-min.js',
-            'app/scripts/vendor/backbone.fetch-cache.js',
-            'app/scripts/vendor/backbone.babysitter.js',
-            'app/scripts/vendor/backbone-localstorage.js',
-            'app/scripts/vendor/backbone.marionette.min.js',
-            'app/scripts/vendor/backbone.modelbinder.js',
-            'app/scripts/vendor/backbone.collectionbinder.js',
-            'app/scripts/vendor/visualsearch.js',
-            'app/scripts/vendor/bootstrap.js',
-            'app/scripts/vendor/fuelux/loader.js',
-            'app/scripts/vendor/bootstrap-notify.js'
-          ]
+    grunt.initConfig({
+        yeoman: yeomanConfig,
+        watch: {
+            coffee: {
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+                tasks: ['coffee:dist']
+            },
+            coffeeTest: {
+                files: ['test/spec/{,*/}*.coffee'],
+                tasks: ['coffee:test']
+            },
+            compass: {
+                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+                tasks: ['compass']
+            },
+            livereload: {
+                files: [
+                    '<%= yeoman.app %>/*.html',
+                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
+                ],
+                tasks: ['livereload']
+            }
+        },
+        connect: {
+            options: {
+                port: 9000,
+                // change this to '0.0.0.0' to access the server from outside
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            lrSnippet,
+                            mountFolder(connect, '.tmp'),
+                            mountFolder(connect, 'app')
+                        ];
+                    }
+                }
+            },
+            test: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, '.tmp'),
+                            mountFolder(connect, 'test')
+                        ];
+                    }
+                }
+            },
+            dist: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, 'dist')
+                        ];
+                    }
+                }
+            }
+        },
+        open: {
+            server: {
+                path: 'http://localhost:<%= connect.options.port %>'
+            }
+        },
+        clean: {
+            dist: ['.tmp', '<%= yeoman.dist %>/*'],
+            server: '.tmp'
+        },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: [
+                'Gruntfile.js',
+                '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!<%= yeoman.app %>/scripts/vendor/*',
+                'test/spec/{,*/}*.js'
+            ]
+        },
+        mocha: {
+            all: {
+                options: {
+                    run: true,
+                    urls: ['http://localhost:<%= connect.options.port %>/index.html']
+                }
+            }
+        },
+        coffee: {
+            dist: {
+                files: [{
+                    // rather than compiling multiple files here you should
+                    // require them into your main .coffee file
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/scripts',
+                    src: '*.coffee',
+                    dest: '.tmp/scripts',
+                    ext: '.js'
+                }]
+            },
+            test: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/spec',
+                    src: '*.coffee',
+                    dest: 'test/spec'
+                }]
+            }
+        },
+        compass: {
+            options: {
+                sassDir: '<%= yeoman.app %>/styles',
+                cssDir: '.tmp/styles',
+                imagesDir: '<%= yeoman.app %>/images',
+                javascriptsDir: '<%= yeoman.app %>/scripts',
+                fontsDir: '<%= yeoman.app %>/styles/fonts',
+                importPath: 'app/components',
+                relativeAssets: true
+            },
+            dist: {},
+            server: {
+                options: {
+                    debugInfo: true
+                }
+            }
+        },
+        // not used since Uglify task does concat,
+        // but still available if needed
+        /*concat: {
+            dist: {}
+        },*/
+        
+        uglify: {
+            dist: {
+                // files: {
+                //     '<%= yeoman.dist %>/scripts/main.js': [
+                //         '<%= yeoman.app %>/scripts/{,*/}*.js'
+                //     ],
+                // }
+            }
+        },
+        useminPrepare: {
+            html: '<%= yeoman.app %>/index.html',
+            options: {
+                dest: '<%= yeoman.dist %>'
+            }
+        },
+        usemin: {
+            html: ['<%= yeoman.dist %>/{,*/}*.html'],
+            css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+            options: {
+                dirs: ['<%= yeoman.dist %>']
+            }
+        },
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/images',
+                    src: '{,*/}*.{png,jpg,jpeg}',
+                    dest: '<%= yeoman.dist %>/images'
+                }]
+            }
+        },
+        cssmin: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/styles/main.css': [
+                        '<%= yeoman.app %>/styles/main.css'
+                    ],
+                    '<%= yeoman.dist %>/styles/ie.css': [
+                        '<%= yeoman.app %>/styles/ie/{,*/}*.{css}'
+                    ],
+                    '<%= yeoman.dist %>/styles/jquery.css': [
+                        '<%= yeoman.app %>/styles/vendor/jquery-ui-1.9.2.custom.css',
+                        '<%= yeoman.app %>/styles/vendor/jquery.gridster.css'
+                    ],
+                    '<%= yeoman.dist %>/styles/bootstrap.css': [
+                        '<%= yeoman.app %>/styles/vendor/bootstrap.css',
+                        '<%= yeoman.app %>/styles/vendor/bootstrap-responsive.css',
+                        '<%= yeoman.app %>/styles/vendor/bootstrap-notify.css',
+                        '<%= yeoman.app %>/styles/vendor/alert-blackgloss.css',
+                        '<%= yeoman.app %>/styles/vendor/font-awesome.css'
+                    ],
+                    '<%= yeoman.dist %>/styles/leaflet.css': [
+                        '<%= yeoman.app %>/styles/vendor/leaflet.css',
+                        '<%= yeoman.app %>/styles/vendor/leaflet.draw.css',
+                        '<%= yeoman.app %>/styles/vendor/MarkerCluster.Default.css',
+                        '<%= yeoman.app %>/styles/vendor/MarkerCluster.css'
+                    ],
+                    '<%= yeoman.dist %>/styles/visualsearch.css': [
+                        '<%= yeoman.app %>/styles/vendor/visualsearch.css'
+                    ]
+                }
+            }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    /*removeCommentsFromCDATA: true,
+                    // https://github.com/yeoman/grunt-usemin/issues/44
+                    //collapseWhitespace: true,
+                    collapseBooleanAttributes: true,
+                    removeAttributeQuotes: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: true*/
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    src: '*.html',
+                    dest: '<%= yeoman.dist %>'
+                }]
+            }
+        },
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        '*.{ico,txt}',
+                        '.htaccess'
+                    ]
+                },
+                {
+                    expand: true,
+                    cwd: '<%= yeoman.app%>/font',
+                    dest: '<%= yeoman.dist %>/font',
+                    src: [
+                        '*.{woff,ttf,otf,svg,eot}',
+                        '.htaccess'
+                    ]
+                }]
+            }
+        },
+        bower: {
+            all: {
+                rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+            }
         }
-      }
-    }
-  });
+    });
 
+    grunt.renameTask('regarde', 'watch');
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.registerTask('server', function (target) {
+        if (target === 'dist') {
+            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+        }
 
-  // Alias the `test` task to run the `mocha` task instead
-  grunt.registerTask('test', 'server:phantom mocha');
-  grunt.registerTask('default', ['uglify']);
+        grunt.task.run([
+            'clean:server',
+            'coffee:dist',
+            'compass:server',
+            'livereload-start',
+            'connect:livereload',
+            'open',
+            'watch'
+        ]);
+    });
 
+    grunt.registerTask('test', [
+        'clean:server',
+        'coffee',
+        'compass',
+        'connect:test',
+        'mocha'
+    ]);
+
+    grunt.registerTask('build', [
+        'clean:dist',
+        'coffee',
+        'compass:dist',
+        'useminPrepare',
+        'imagemin',
+        'htmlmin',
+        'concat',
+        'cssmin',
+        // 'uglify',
+        'copy',
+        'usemin'
+    ]);
+
+    grunt.registerTask('default', [
+        'jshint',
+        'test',
+        'build'
+    ]);
 };

@@ -1,7 +1,8 @@
 //  Class for layers for Dinoloket (www.dinoloket.nl)
 //
 //
-Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
+Lizard.geo.Layers.Custom = {};
+Lizard.geo.Layers.Custom.DinoLayer = Lizard.geo.Layers.WMSLayer.extend({
   defaults: {
     display_name: '',
     visibility: false,
@@ -115,4 +116,4 @@ Lizard.Layers.Custom.DinoLayer = Lizard.Layers.WMSLayer.extend({
 });
 
 //add type to type index
-LAYER_CLASSES['dino'] = Lizard.Layers.Custom.DinoLayer;
+LAYER_CLASSES['dino'] = Lizard.geo.Layers.Custom.DinoLayer;

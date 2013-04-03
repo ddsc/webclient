@@ -2,7 +2,7 @@
 //  Class for WMS Layers
 //
 //
-Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
+Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
   defaults: {
     display_name: '',
     visibility: false,
@@ -99,4 +99,4 @@ Lizard.Layers.WMSLayer = Lizard.Layers.MapLayer.extend({
 });
 
 //add type to type index
-LAYER_CLASSES['wms'] = Lizard.Layers.WMSLayer;
+LAYER_CLASSES['wms'] = Lizard.geo.Layers.WMSLayer;
