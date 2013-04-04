@@ -43,7 +43,7 @@ div#brand:hover {
 }
 
 #map {
-    height: 90%;
+    height: 960px;
     box-shadow: 0 8px 16px -8px #222;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -52,6 +52,7 @@ div#brand:hover {
     border-radius: 6px;
     margin-top: 1em;
 }
+
 /* on selector per rule as explained here : http://www.sitepoint.com/html5-full-screen-api/ */
 #map:-webkit-full-screen { width: 100% !important; height: 100% !important; }
 #map:-moz-full-screen { width: 100% !important; height: 100% !important; }
@@ -149,7 +150,7 @@ leaflet-control-legend-icon {
     color: #555;
     text-decoration: none;
     filter: gray; /* IE6-9 */
-    filter: url(filters.svg#grayscale);
+    filter: url(../images/filters.svg#grayscale);
     -webkit-filter: grayscale(1);
     filter: grayscale(1);
     -o-transition: filter 1s ease-out opacity 1s ease-out;

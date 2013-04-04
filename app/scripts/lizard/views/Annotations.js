@@ -32,16 +32,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     createAnnotationsLayer: function(){
         var self = this;
         this.annotationLayer = new L.LayerGroup();
-        // for (var i=0; i<6; i++){
-          // var point = new L.LatLng(latlngs[i][0], latlngs[i][1]);
-          // var popup =  new L.popup().setContent('<div><h4>Kwel bij hoogwater '+
-            // '<span class="author pull-right">21 November 2011</span></h4>'+
-            // '<img src="images/kwel.jpg" style="width: 100%"/>'+
-            // 'Kwel bij hoogwater. Zandzakken geplaatst om te verlichten. - Jan de Graaf</div>');
-          // var marker = new L.Marker(point).bindPopup(popup);
-          // marker.addTo(annotationLayer);
-        // }
-
         $('.annotation-layer-toggler').click(function(e) {
             var $icon = $(this).find('i');
             if ($icon.hasClass('icon-check-empty')) {

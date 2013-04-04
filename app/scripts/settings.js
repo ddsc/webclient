@@ -15,10 +15,10 @@ var settings = {
     alarms_url: domain + 'alarms/' + extra,
     collages_url: domain + 'collages/',
     workspace_url: domain + 'workspaces/',
-    layers_url: domain + 'layers/?page_size=100',
-    account_url: domain + 'account/',
-    login_token_url: domain + 'account/login-url/',
-    logout_token_url: domain + 'account/logout-url/',
+	layers_url: domain + 'layers/?page_size=100',
+	account_url: domain + 'account/',
+	login_token_url: domain + 'account/login-url/',
+	logout_token_url: domain + 'account/logout-url/',
     events_url: domain + 'events/'
 };
 

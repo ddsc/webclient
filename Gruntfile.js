@@ -258,7 +258,6 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>/font',
                     src: [
                         '*.{woff,ttf,otf,svg,eot}',
-                        '.htaccess'
                     ]
                 }]
             }
