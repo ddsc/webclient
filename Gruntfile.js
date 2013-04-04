@@ -50,7 +50,7 @@ module.exports = function (grunt) {
             options: {
                 port: 9000,
                 // change this to '0.0.0.0' to access the server from outside
-                hostname: 'localhost'
+                hostname: '127.0.0.1'
             },
             livereload: {
                 options: {
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
         },
         open: {
             server: {
-                path: 'http://localhost:<%= connect.options.port %>'
+                path: 'http://127.0.0.1:<%= connect.options.port %>'
             }
         },
         clean: {
@@ -205,7 +205,8 @@ module.exports = function (grunt) {
                         '<%= yeoman.app %>/styles/vendor/bootstrap-responsive.css',
                         '<%= yeoman.app %>/styles/vendor/bootstrap-notify.css',
                         '<%= yeoman.app %>/styles/vendor/alert-blackgloss.css',
-                        '<%= yeoman.app %>/styles/vendor/font-awesome.css'
+                        '<%= yeoman.app %>/styles/vendor/font-awesome.css',
+                        '<%= yeoman.app %>/styles/vendor/daterangepicker.css'
                     ],
                     '<%= yeoman.dist %>/styles/leaflet.css': [
                         '<%= yeoman.app %>/styles/vendor/leaflet.css',
@@ -304,7 +305,7 @@ module.exports = function (grunt) {
         'htmlmin',
         'concat',
         'cssmin',
-        // 'uglify',
+        'uglify',
         'copy',
         'usemin'
     ]);

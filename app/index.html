@@ -406,21 +406,30 @@
 
     <script type="text/template" id="leaflet-annotation-template">
         <div class="span11">
+            <form class="annotation" action="http://test.api.dijkdata.nl/annotation.add/">
               <fieldset>
+                <label class="control-label" for="reservation">Date range:</label>
+                  <div class="controls">
+                   <div class="input-prepend">
+                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reservation" id="daterange" />
+                   </div>
+                  </div>
+                <label class="radio inline">
+                  <input type="radio" name="annotatie" value="public"> Openbaar
+                </label>
+                <label class="radio inline controls-row">
+                  <input type="radio" name="annotatie" value="private" checked> Privé
+                </label>
                 <textarea namerows="4" id="annotation-textarea" placeholder="Uw annotatie" style="resize:none;"></textarea>
                 <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
-                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;">
+                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;" droppable="true">
                   <span>Sleep hier uw bestand</span>
                 </div>
 
-                <label class="radio inline">
-                  <input type="radio" id="scope" value="public"> Openbaar
-                </label>
-                <label class="radio inline controls-row">
-                  <input type="radio" id="scope" value="private" checked> Privé
-                </label>
+                
                 <button type="submit" class="btn spacer btn-small pull-right btn-primary">Opslaan</button>
               </fieldset>
+            </form>
         </div>
     </script>
 
@@ -919,6 +928,7 @@
         <script src="scripts/vendor/async.min.js"></script>
         <script src="scripts/vendor/dat.gui.min.js"></script>
         <script src="scripts/vendor/json2.js"></script>
+        <script src="scripts/vendor/date.js"></script>
         <script src="scripts/vendor/underscore.js"></script>
         <script src="scripts/vendor/numeral.js"></script>
         <script src="scripts/vendor/jsonselect.js"></script>
@@ -943,6 +953,7 @@
         <!-- build:js scripts/bootstrap.js -->
         <script src="scripts/vendor/bootstrap.min.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
+        <script src="scripts/vendor/daterangepicker.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/flot.js -->
