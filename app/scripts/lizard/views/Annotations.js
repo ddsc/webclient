@@ -57,7 +57,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                     autoPan: false,
                     zoomAnimation: false
                 })
-                    .setContent(html);
+                .setContent(html);
                 marker.bindPopup(popup);
                 this.annotationLayer.addLayer(marker);
             }
@@ -166,17 +166,28 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             datetime_until = datetime_until.toLocaleString();
         }
 
+        var title = '';
+        if (a.related_model_str) {
+            title = 'Annotatie bij ' + a.related_model_str;
+        }
+        else {
+            title = 'Annotatie ' + a.id;
+        }
+
         var html = '';
+        html += '<h4>' + title + '</h4>';
         html += '<p>' + a.text + '</p>';
         if (a.picture_url) {
             html += '<hr/>';
             // extra style="" is needed to override a leaflet CSS !important statement
             html += '<div><img src="'+ a.picture_url +'" alt="'+ a.picture_url +'" style="max-width: 100% !important" /></div>';
         }
-        //html += '<small>Aangemaakt door ' + a.username + ' op ' + created_at + '</small>';
-        html += '<table class="table table-condensed" style="font-size: 80%;">';
-        html += '<tr><td>Aangemaakt door</td><td>' + a.username + '</td></tr>';
-        html += '<tr><td>Aangemaakt op</td><td>' + created_at + '</td></tr>';
+        html += '<hr/>';
+        html += '<div class="author">Aangemaakt door ' + a.username + ' op ' + created_at + '</div>';
+        html += '<p></p>';
+        html += '<table class="table table-condensed table-bordered" style="font-size: 80%;">';
+        //html += '<tr><td>Aangemaakt door</td><td>' + a.username + '</td></tr>';
+        //html += '<tr><td>Aangemaakt op</td><td>' + created_at + '</td></tr>';
         html += '<tr><td>Geldig van</td><td>' + datetime_from + '</td></tr>';
         html += '<tr><td>Geldig tot</td><td>' + datetime_until + '</td></tr>';
         html += '<tr><td>Tags</td><td>' + a.tags + '</td></tr>';
