@@ -10,7 +10,9 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'favoriteRegion': '#favoriteRegion',
     'selectionSearch': '#selectionSearch',
     'selectionRegion': '#selectionRegion',
-    'infomodal': '#info-modal'
+    'infomodal': '#info-modal',
+    'legend1': '#legend-one',
+    'legend2': '#legend-two'
   },
   triggers: {
     'click #mainRegion': 'ui:expand:mainregion'
@@ -45,6 +47,11 @@ Lizard.Graphs.graphs = function(collageid){
   var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
+  var graphlegendView1 = new GraphLegendItemView();
+  var graphlegendView2 = new GraphLegendItemView();
+  graphsView.legend1.show(graphlegendView1);
+  graphsView.legend2.show(graphlegendView2);
+
   var collageListView = new Lizard.Views.CollageList({
     collection: collageCollection
   });
@@ -68,7 +75,7 @@ Lizard.Graphs.graphs = function(collageid){
       col.trigger('select_collage', selectedCollage);
     });
   } else {
-  Backbone.history.navigate('graphs');
+    Backbone.history.navigate('graphs');
   }
 };
 
