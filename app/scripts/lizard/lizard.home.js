@@ -91,11 +91,11 @@ Lizard.Home.home = function(){
       Lizard.homeView.measureStatus);
 
 
-  var workspaceSelectionView = new Lizard.Views.HomePageList({
+  var workspaceSelectionView = new Lizard.Views.HomePageMapList({
     collection: workspaceCollection
   });
 
-  var collageSelectionView = new Lizard.Views.HomePageList({
+  var collageSelectionView = new Lizard.Views.HomePageGraphList({
     collection: collageCollection
   });
 
