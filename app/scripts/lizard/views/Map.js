@@ -94,12 +94,26 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         layer = e.layer;
 
       if (type === 'marker') {
-        var popup = L.popup({Width:600})
-          .setContent('<div style="height:175px;">'+$('#leaflet-annotation-template').html()+'</div>');
+        var popup = L.popup({maxWidth:525})
+          .setContent('<div style="height:175px; width:500px;">'+$('#leaflet-annotation-template').html()+'</div>');
         // Keep things below in this order.
         layer.bindPopup(popup);
         drawnItems.addLayer(layer);
         layer.openPopup();
+        //datepicker
+        $('#daterange').daterangepicker(
+           {
+              minDate: '01/01/2010',
+              maxDate: '12/31/2015',
+              showDropdowns: true
+           }
+        );
+        $('form.annotation').submit(function(allthese) {
+          window.originalsdsadf = allthese;
+          
+          // console.log(o.serialize());
+          console.log(allthese);
+        });
         // Close the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
         $(popup._contentNode).find('button[type="submit"]').click(

@@ -37,8 +37,8 @@
       WkxxxxxxkOOKN........OxxxxxxkkOKXW.......WXK0OkkkkkkO0KN........WX0OkkkkkO0XW...
       ................................................WWW..................WWW........
       --------------------------------------------------------------------------------
-      DDSC webclient (http://github.com/ddsc is powered by Lizard 
-      (http://github.com/lizardsystem) and developed by 
+      DDSC webclient (http://github.com/ddsc is powered by Lizard
+      (http://github.com/lizardsystem) and developed by
       Nelen & Schuurmans (http://github.com/nens).
     -->
     <link href="styles/jquery.css" rel="stylesheet">
@@ -112,7 +112,7 @@
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Weer</a></li>
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Grechtdijk</a></li>
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Buitenwater</a></li>
-              </ul>  
+              </ul>
             </div>
             <div class="measure-info-header">
                 <h4><em class="icon-th icon-white"></em>&nbsp;Dashboard</h4>
@@ -122,9 +122,9 @@
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">DAM</a></li>
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">DMC systeem</a></li>
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">Grechtdijk</a></li>
-              </ul>  
-            </div>            
-        </div>     
+              </ul>
+            </div>
+        </div>
         <div class="span9 measure-details">
           <div class="measure-info-header">
               <h4><em class="icon-rss"></em>&nbsp;Livestream</h4>
@@ -198,7 +198,7 @@
 
     <script type="text/template" id="homepage-searchresult-template">
       <div class="span12 measure-details" id="homepage-searchresults">
-        <div class="measure-info-header"> 
+        <div class="measure-info-header">
            <h4><em class="icon-search icon-white"></em>&nbsp;Zoekresultaten voor "<%=term%>"</h4>
         </div>
         <div id="graphs">
@@ -410,21 +410,30 @@
 
     <script type="text/template" id="leaflet-annotation-template">
         <div class="span11">
+            <form class="annotation" action="http://test.api.dijkdata.nl/annotation.add/">
               <fieldset>
+                <label class="control-label" for="reservation">Date range:</label>
+                  <div class="controls">
+                   <div class="input-prepend">
+                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reservation" id="daterange" />
+                   </div>
+                  </div>
+                <label class="radio inline">
+                  <input type="radio" name="annotatie" value="public"> Openbaar
+                </label>
+                <label class="radio inline controls-row">
+                  <input type="radio" name="annotatie" value="private" checked> Privé
+                </label>
                 <textarea namerows="4" id="annotation-textarea" placeholder="Uw annotatie" style="resize:none;"></textarea>
                 <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
-                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;">
+                <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;" droppable="true">
                   <span>Sleep hier uw bestand</span>
                 </div>
 
-                <label class="radio inline">
-                  <input type="radio" id="scope" value="public"> Openbaar
-                </label>
-                <label class="radio inline controls-row">
-                  <input type="radio" id="scope" value="private" checked> Privé
-                </label>
+                
                 <button type="submit" class="btn spacer btn-small pull-right btn-primary">Opslaan</button>
               </fieldset>
+            </form>
         </div>
     </script>
 
@@ -433,7 +442,7 @@
 	  <div class="layer-item">
         <span class="indicato">
             <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
-        </span>    
+        </span>
         <span class="action handle">
             <i class="icon-globe"></i>
         </span>
@@ -456,7 +465,7 @@
           </div>
           <div class="spacer">
             <button type="button" class="btn btn-mini btn-danger btn-delete-layer">Verwijderen</button>
-          </div>          
+          </div>
         </div>
       </div>
     </script>
@@ -898,6 +907,7 @@
         <script src="scripts/vendor/jquerypp.js"></script>
         <script src="scripts/vendor/jquery.xml2json.js"></script>
         <script src="scripts/settings.js"></script>
+        <script src="scripts/localsettings.js"></script>
         <script src="scripts/vendor/jquery-ui-1.9.2.min.js"></script>
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
         <script src="scripts/vendor/globalize.js"></script>
@@ -929,6 +939,7 @@
         <script src="scripts/vendor/async.min.js"></script>
         <script src="scripts/vendor/dat.gui.min.js"></script>
         <script src="scripts/vendor/json2.js"></script>
+        <script src="scripts/vendor/date.js"></script>
         <script src="scripts/vendor/underscore.js"></script>
         <script src="scripts/vendor/numeral.js"></script>
         <script src="scripts/vendor/jsonselect.js"></script>
@@ -953,6 +964,7 @@
         <!-- build:js scripts/bootstrap.js -->
         <script src="scripts/vendor/bootstrap.min.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
+        <script src="scripts/vendor/daterangepicker.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/flot.js -->
@@ -972,17 +984,50 @@
 
         <!-- build:js scripts/build.js -->
         <script src="scripts/lizard/lizard.app.js"></script>
-        <script src="scripts/lizard/lizard.models.js"></script>
+        
+        <script src="scripts/lizard/models/Account.js"></script>
+        <script src="scripts/lizard/models/CurrentState.js"></script>
+        <script src="scripts/lizard/models/CollageItem.js"></script>
+        <script src="scripts/lizard/models/Collage.js"></script>
+        <script src="scripts/lizard/models/Favorite.js"></script>
+        <script src="scripts/lizard/models/Filter.js"></script>
+        <script src="scripts/lizard/models/LiveFeed.js"></script>
+        <script src="scripts/lizard/models/Location.js"></script>
+        <script src="scripts/lizard/models/Parameter.js"></script>
+        <script src="scripts/lizard/models/Timeserie.js"></script>
+        <script src="scripts/lizard/models/WorkspaceItem.js"></script>
+        <script src="scripts/lizard/models/Workspace.js"></script>
+        <script src="scripts/lizard/models/Widget.js"></script>
+
+
         <script src="scripts/lizard/layers/MapLayer.js"></script>
         <script src="scripts/lizard/layers/WMSLayer.js"></script>
         <script src="scripts/lizard/layers/DdscMarkerLayer.js"></script>
         <script src="scripts/lizard/layers/WMSTemplateLayer.js"></script>
         <script src="scripts/lizard/layers/custom/DinoLayer.js"></script>
-        <script src="scripts/lizard/lizard.collections.js"></script>
+
+        <script src="scripts/lizard/collections/Layer.js"></script>
+        <script src="scripts/lizard/collections/Collage.js"></script>
+        <script src="scripts/lizard/collections/Favorite.js"></script>
+        <script src="scripts/lizard/collections/Filter.js"></script>
+        <script src="scripts/lizard/collections/LiveFeed.js"></script>
+        <script src="scripts/lizard/collections/Location.js"></script>
+        <script src="scripts/lizard/collections/Parameter.js"></script>
+        <script src="scripts/lizard/collections/Timeseries.js"></script>
+        <script src="scripts/lizard/collections/Workspace.js"></script>
+        <script src="scripts/lizard/collections/Widget.js"></script>
+        <script src="scripts/lizard/collections/lizard.collections.js"></script>
+
         <script src="scripts/lizard/lizard.views.js"></script>
+        <script src="scripts/lizard/views/InfoModal.js"></script>
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
+<<<<<<< HEAD
         <script src="scripts/lizard/views/GraphLegend.js"></script>
+=======
+        <script src="scripts/lizard/views/Menu.js"></script>
+        <script src="scripts/lizard/views/Layer.js"></script>
+>>>>>>> 28e98e83776e224dde30233f6dc70926717ffd17
         <script src="scripts/lizard/popups/DdscTimeseries.js"></script>
         <script src="scripts/lizard/views/Timeseries.js"></script>
         <script src="scripts/lizard/views/WorkspaceList.js"></script>
@@ -1000,21 +1045,17 @@
         <script src="scripts/lizard/views/HomePageList.js"></script>
 
         <script src="scripts/utilities.js"></script>
-        <script src="scripts/lizard/lizard.visualsearch.js"></script>
+        <script src="scripts/lizard/widgets/VisualSearch.js"></script>
 
         <script src="scripts/lizard/lizard.home.js"></script>
         <script src="scripts/lizard/lizard.help.js"></script>
         <script src="scripts/lizard/lizard.account.js"></script>
-        <script src="scripts/lizard/lizard.collage.js"></script>
         <script src="scripts/lizard/lizard.map.js"></script>
         <script src="scripts/lizard/lizard.graph.js"></script>
         <script src="scripts/lizard/lizard.tabular.js"></script>
         <script src="scripts/lizard/lizard.dashboard.js"></script>
-        <script src="scripts/lizard/lizard.eventlisteners.js"></script>
 
-        <script src="scripts/lizard/models/Annotation.js"></script>
         <script src="scripts/lizard/models/Annotations.js"></script>
-        <script src="scripts/lizard/collections/Annotation.js"></script>
         <!-- endbuild -->
 
         <script type="text/javascript">
