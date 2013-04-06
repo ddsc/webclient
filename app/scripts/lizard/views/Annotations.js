@@ -6,7 +6,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     annotationLayer: null,
     currentXhr: null,
     initialize: function (options) {
-        console.debug('AnnotationsView.init');
         this.mapCanvas = options.mapView.mapCanvas;
         this.createAnnotationsLayer();
         this.listenTo(this.model, "change", this.render, this);
@@ -27,7 +26,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         // manipulate the `el` here. it's already
         // been rendered, and is full of the view's
         // HTML, ready to go.
-        console.debug('AnnotationsView.onDomRefresh');
     },
     createAnnotationsLayer: function () {
         var self = this;
@@ -69,7 +67,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
     },
     buildQueryUrlParams: function () {
-        console.debug('AnnotationsView.buildQueryUrl');
         var bbox = this.mapCanvas ? this.mapCanvas.getBounds().toBBoxString() : null;
         return {
             category: 'ddsc',
@@ -126,11 +123,9 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         });
     },
     modelChanged: function (model, value) {
-        console.debug('AnnotationsView.modelChanged');
     },
     modelEvents: {
         "change:isLoading": function (){
-            console.debug('AnnotationsView.modelEvents.change:isLoading');
         }
     },
     onBeforeClose: function () {
@@ -139,7 +134,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     onClose: function () {
         // custom cleanup or closing code, here
-        console.debug('AnnotationsView.onClose');
         if (this.mapCanvasEvent) {
             this.mapCanvas.off("moveend", this.mapCanvasEvent);
         }

@@ -10,7 +10,6 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 
 	initialize: function(){
         this.model.on('change', this.render);
-        console.log('initialize LoginView');
 	},
 
 	doLogin: function(e){
