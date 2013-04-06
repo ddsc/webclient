@@ -50,19 +50,21 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.annotationLayer.clearLayers();
         for (var i=0; i<annotations.length; i++) {
             var a = annotations[i];
-            try {
-                var marker = L.marker(a.location);
-                var html = this.annotation2html(a);
-                var popup = L.popup({
-                    autoPan: false,
-                    zoomAnimation: false
-                })
-                .setContent(html);
-                marker.bindPopup(popup);
-                this.annotationLayer.addLayer(marker);
-            }
-            catch (ex) {
-                console.error('Failed to add an annotation marker.');
+            if (a.location) {
+                try {
+                    var marker = L.marker(a.location);
+                    var html = this.annotation2html(a);
+                    var popup = L.popup({
+                        autoPan: false,
+                        zoomAnimation: false
+                    })
+                    .setContent(html);
+                    marker.bindPopup(popup);
+                    this.annotationLayer.addLayer(marker);
+                }
+                catch (ex) {
+                    console.error('Failed to add an annotation marker: ' + ex);
+                }
             }
         }
     },

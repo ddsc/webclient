@@ -109,6 +109,4 @@ Lizard.App.addInitializer(function(){
   Lizard.Home.router = new Lizard.Home.Router({
     controller: Lizard.Home
   });
-  
-  Lizard.App.vent.trigger('routing:started');
 });

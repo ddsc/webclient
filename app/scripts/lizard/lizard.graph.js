@@ -61,7 +61,7 @@ Lizard.Graphs.graphs = function(collageid){
   }});
 
   graphsView.presetsRegion.show(collageListView.render());
-  
+
   graphsView.favoriteRegion.show(favoritecollectionview);
 
   graphsView.selectionSearch.show(timeserieSearch.render());
@@ -83,6 +83,4 @@ Lizard.App.addInitializer(function(){
   Lizard.Graphs.router = new Lizard.Graphs.Router({
     controller: Lizard.Graphs
   });
-  
-  Lizard.App.vent.trigger('routing:started');
 });
