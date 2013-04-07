@@ -53,6 +53,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     var graph = new Lizard.Models.Graph();
     graphCollection.add(graph);
   }
+
   var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
     collection: graphCollection
   });
