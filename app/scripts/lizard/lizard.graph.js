@@ -49,7 +49,9 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 
-  var timeseriesSearch = new Lizard.Views.TimeseriesSearch();
+  var timeseriesSearch = new Lizard.Views.TimeseriesSearch({
+    timeseriesCollection: timeseriesCollection
+  });
 
   var graphCollection = new Lizard.Collections.Graph();
   for (var i=0; i<5; i++) {

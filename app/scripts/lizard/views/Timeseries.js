@@ -56,6 +56,9 @@ Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
+  initialize: function (options) {
+    this.timeseriesCollection = options.timeseriesCollection;
+  },
   render: function() {
     tpl = '<div class="row-fluid"><input type="text" class="span12 search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries"></div>';
     this.$el.html(tpl);
@@ -67,6 +70,6 @@ Lizard.Views.TimeseriesSearch = Backbone.View.extend({
       // This does not work yet. Work in progress...
       Lizard.App.fetchXhr.reject();
     }
-    Lizard.App.fetchXhr = timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
+    Lizard.App.fetchXhr = this.timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
   }
 });
