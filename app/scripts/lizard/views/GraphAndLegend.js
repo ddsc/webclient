@@ -8,19 +8,25 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     regions: {
         legend: ".legend"
     },
+    onDragover: function(e) {
+    },
+    onDragenter: function(e) {
+    },
     onDrop: function(e) {
         e.preventDefault();
-        // add the timeseries
+        // fetch and add the timeseries
         var self = this;
         var uuid = e.originalEvent.dataTransfer.getData('Text');
         if (uuid) {
-            var timeseries = timeseriesCollection.get(uuid);
-            if (timeseries) {
-                var item = new Lizard.Models.GraphItem({
-                    timeseries: timeseries
-                });
-                this.model.get('graphItems').add(item);
-            }
+            var timeseries = new Lizard.Models.TimeseriesActual({uuid: uuid});
+            timeseries.fetch({
+                success: function (model, response) {
+                    var item = new Lizard.Models.GraphItem({
+                        timeseries: model
+                    });
+                    self.model.get('graphItems').add(item);
+                }
+            });
         }
     },
     onShow: function(e) {

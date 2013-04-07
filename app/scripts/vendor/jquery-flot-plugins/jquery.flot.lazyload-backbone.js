@@ -225,6 +225,11 @@
             }
             self.redraw();
         });
+
+        backboneCollection.on('reset', function (model, collection) {
+            self.datasets.length = 0;
+            self.redraw();
+        });
     };
 
     LazyLoadBackbone.prototype.removeAllDataUrls = function () {

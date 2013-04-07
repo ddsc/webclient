@@ -600,7 +600,7 @@
 
 
     <script id="timeserie-item-template" type="text/template">
-        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyUuid(event)" data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
           <i class="icon-star-empty fav"></i>&nbsp;
           <span class="add" data-url="<%= timeserie.events%>"><%= timeserie.name %></span>
@@ -619,7 +619,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <p class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-uuid="<%=timeseries.get('uuid')%>">
+      <p class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyUuid(event)" data-uuid="<%=timeseries.get('uuid')%>">
         <i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%><br/>
         <a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>
       </p>
