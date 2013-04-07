@@ -33,8 +33,6 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   className: 'wms_sources drawer-group',
 
   selectCollage: function(selectedModel) {
-    console.log(this.graphCollection);
-
     var self = this;
     this.graphCollection.each(function (graph) {
         graph.get('graphItems').reset();
@@ -47,10 +45,13 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
         var timeseriesList = collageItem.get('timeseries');
         for (var i in timeseriesList) {
             var timeseriesUrl = timeseriesList[i];
-            var timeseries = new Lizard.Models.Timeserie({url: timeseriesUrl});
-            timeseries.fetch();
-            var graphItem = new Lizard.Models.GraphItem({timeseries: timeseries});
-            graph.get('graphItems').add(graphItem);
+            var timeseries = new Lizard.Models.TimeseriesActual({url: timeseriesUrl});
+            timeseries.fetch({
+                success: function (model, response) {
+                    var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+                    graph.get('graphItems').add(graphItem);
+                }
+            });
         }
     });
     Backbone.history.navigate('graphs/' + selectedModel.id);
