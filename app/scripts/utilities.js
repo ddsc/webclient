@@ -80,9 +80,8 @@ Lizard.Utils.Favorites = {
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
-    sendThis = e.target.dataset.uuid;
+    var sendThis = $(e.target).data('uuid');
     e.dataTransfer.setData("Text", sendThis);
-    console.log(e.target);
   },
   allowDrop: function (e){
     e.preventDefault();
@@ -367,10 +366,6 @@ function initializePlot($container) {
             // enable buttons for zoom / pan
             zoombuttons: {
                 enabled: true
-            },
-            // draw the legend only when hovering above plot
-            legendonmouseover: {
-                enabled: true
             }
         });
     }
@@ -384,6 +379,10 @@ function initializePlot($container) {
 
     return plot;
 }
+
+$.fn.initializePlot = function () {
+    return initializePlot(this);
+};
 
 /**
 * Bind several flot graphs together. When navigating through one graph, the other graphs

@@ -1,7 +1,8 @@
-Lizard.Graphs = {};
+Lizard.Windows = {};
 
+Lizard.Windows.Graphs = {};
 
-Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
+Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#graphs-template',
   regions: {
     'sidebarRegion': '#sidebarRegion',
@@ -11,35 +12,35 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'selectionSearch': '#selectionSearch',
     'selectionRegion': '#selectionRegion',
     'infomodal': '#info-modal',
-    'legend1': '#legend-one',
-    'legend2': '#legend-two'
+    'graphsRegion': '#graphsRegion'
   },
   triggers: {
-    'click #mainRegion': 'ui:expand:mainregion'
+    // Disabled this, because the graphs aren't really meant to be dynamicly resized.
+    // It causes an invalidation of the view, and all data has to be retrieved again.
+    //'click #mainRegion': 'ui:expand:mainregion'
   }
 });
 
-Lizard.Graphs.Router = Backbone.Marionette.AppRouter.extend({
+Lizard.Windows.Graphs.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
-      'graphs': 'graphs',
-      'graphs/:collageid': 'graphs' // if collage is present with id then show
+      'graphs': 'graphsRoute',
+      'graphs/:collageid': 'graphsRoute' // if collage is present with id then show
     }
 });
 
-Lizard.Graphs.graphs = function(collageid){
- console.log('Lizard.Graphs.graphs()');
-
+Lizard.Windows.Graphs.graphsRoute = function(collageid){
   // Instantiate Graphs's default layout
-  var graphsView = new Lizard.Graphs.DefaultLayout();
+  var graphsView = new Lizard.Windows.Graphs.DefaultLayout();
 
-  graphsView.on('ui:expand:sidebar', function(args) {
-    $('#sidebar').removeClass('span3').addClass('span5');
-    $('#mainRegion').removeClass('span9').addClass('span7');
-  });
-  graphsView.on('ui:expand:mainregion', function(args) {
-    $('#sidebar').removeClass('span5').addClass('span3');
-    $('#mainRegion').removeClass('span7').addClass('span9');
-  });
+  // Disabled this, because the graphs aren't really meant to be dynamicly resized (canvas).
+  // graphsView.on('ui:expand:sidebar', function(args) {
+    // $('#sidebar').removeClass('span3').addClass('span5');
+    // $('#mainRegion').removeClass('span9').addClass('span7');
+  // });
+  // graphsView.on('ui:expand:mainregion', function(args) {
+    // $('#sidebar').removeClass('span5').addClass('span3');
+    // $('#mainRegion').removeClass('span7').addClass('span9');
+  // });
 
   Lizard.App.content.show(graphsView);
 
@@ -47,18 +48,15 @@ Lizard.Graphs.graphs = function(collageid){
   var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
-  window.legendOneCollectionView = new GraphLegendCollectionView({
-    collection: new Lizard.Collections.Graph()
+  var graphCollection = new Lizard.Collections.Graph();
+  for (var i=0; i<5; i++) {
+    var graph = new Lizard.Models.Graph();
+    graphCollection.add(graph);
+  }
+  var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
+    collection: graphCollection
   });
-  window.legendTwoCollectionView = new GraphLegendCollectionView({
-    collection: new Lizard.Collections.Graph()
-  });
-  graphsView.legend1.show(
-    window.legendOneCollectionView
-  );
-  graphsView.legend2.show(
-    window.legendTwoCollectionView
-  );
+  graphsView.graphsRegion.show(graphAndLegendCollectionView);
 
   var collageListView = new Lizard.Views.CollageList({
     collection: collageCollection
@@ -88,7 +86,7 @@ Lizard.Graphs.graphs = function(collageid){
 };
 
 Lizard.App.addInitializer(function(){
-  Lizard.Graphs.router = new Lizard.Graphs.Router({
-    controller: Lizard.Graphs
+  Lizard.Windows.Graphs.router = new Lizard.Windows.Graphs.Router({
+    controller: Lizard.Windows.Graphs
   });
 });

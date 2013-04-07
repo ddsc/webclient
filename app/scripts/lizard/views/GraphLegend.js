@@ -1,67 +1,38 @@
-NoItemsView = Backbone.Marionette.ItemView.extend({
-  template: "#show-no-items-message-template"
+Lizard.Views.GraphLegendNoItems = Backbone.Marionette.ItemView.extend({
+    template: "#show-no-items-message-template"
 });
 
-GraphLegendItemView = Backbone.Marionette.ItemView.extend({
-  template: '#graphs-legend-template'
+Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
+    template: '#graphs-legend-template',
+    events: {
+        // disabled for now, as it also removes the item when dropping
+        // on its own div
+        // 'dragend': 'onDragEnd'
+    },
+    onDragEnd: function(e) {
+        // remove the timeseries when dragged to another graph
+        var self = this;
+        var uuid = e.originalEvent.dataTransfer.getData('Text');
+        if (uuid) {
+            var timeseries = timeseriesCollection.get(uuid);
+            if (timeseries) {
+                var item = new Lizard.Models.GraphItem({
+                    timeseries: timeseries
+                });
+                this.model.collection.find(function (oldItem) {
+                    if (oldItem.get('timeseries').get('uuid')) {
+                        // remove the item from the current collection
+                        self.model.collection.remove(oldItem);
+                    }
+                });
+            }
+        }
+    }
 });
 
-GraphLegendCollectionView = Backbone.Marionette.CollectionView.extend({
-  itemView: GraphLegendItemView,
-  emptyView: NoItemsView,
-  onShow: function(e) {
-    var that = this;
-    var uuid, graph, timeserie;
-
-    // Drop handling on legend divs!
-    this.$el.on('dragover dragenter', false);
-    this.$el.on('drop', function(e) {
-      e.preventDefault();
-      var $target = $(e.target);
-      var graphDiv = $(that.$el).parent().parent();
-      var graph = new Lizard.Models.Graph();
-      var uuid = e.originalEvent.dataTransfer.getData('Text');
- 
-      var timeserie = timeseriesCollection.get(uuid);
-      if(that.collection.find(function(timeserie) {
-      })) {
-      } else {
-        that.collection.add(timeserie);
-      }
-      // graphDiv.find('.graph-drop').first().loadPlotData(settings.timeseries_url + 'events/' + uuid);
-    });
-
-
-    // Drop handling on main graph divs!
-    $('.drop').on('dragover dragenter', false);
-    $('.drop').on('drop', function(e) {
-      e.preventDefault();
-
-      if($(this).attr('id') === 'drop-one') {
-        // console.log('dropping one', $(this));
-
-        graph = new Lizard.Models.Graph();
-        uuid = e.originalEvent.dataTransfer.getData('Text');
-        timeserie = timeseriesCollection.get(uuid);
-        if(that.collection.find(function(timeserie) {
-          // console.log('timeserie', timeserie);
-        })) {
-          // console.log('.....');
-        } else {
-          window.legendOneCollectionView.collection.add(timeserie);
-        }
-      }
-      if($(this).attr('id') === 'drop-two') {
-        // console.log('dropping two');
-        graph = new Lizard.Models.Graph();
-        uuid = e.originalEvent.dataTransfer.getData('Text');
-        timeserie = timeseriesCollection.get(uuid);
-        if(that.collection.find(function(timeserie) {
-        })) {
-        } else {
-          window.legendTwoCollectionView.collection.add(timeserie);
-        }
-      }
-    });
-  }
+Lizard.Views.GraphLegendCollectionView = Backbone.Marionette.CollectionView.extend({
+    itemView: Lizard.Views.GraphLegendItem,
+    emptyView: Lizard.Views.GraphLegendNoItems,
+    onShow: function(e) {
+    }
 });

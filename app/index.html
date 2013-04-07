@@ -575,7 +575,7 @@
 
 
     <script id="timeserie-item-template" type="text/template">
-        <div class="timeserie-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
           <i class="icon-star-empty fav"></i>&nbsp;
           <span class="add" data-url="<%= timeserie.events%>"><%= timeserie.name %></span>
@@ -594,10 +594,17 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <p class="graph-legend" draggable="true" data-uuid="<%=uuid%>" ondragstart="Lizard.Utils.DragDrop.drag(event);">
-        <i class="icon-bar-chart"></i>&nbsp;<%=name%><br/>
-        <a onclick="window.location.href='http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv';" href="http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>       
+      <p class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-uuid="<%=timeseries.get('uuid')%>">
+        <i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%><br/>
+        <a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>
       </p>
+    </script>
+
+    <script type="text/template" id="graph-and-legend-template">
+      <div class="row-fluid graph-and-legend">
+        <div class="graph span10"></div>
+        <div class="legend span2"></div>
+      </div>
     </script>
 
     <script type="text/template" id="graphs-template">
@@ -626,22 +633,7 @@
         </div>
 
         <div class="span7" id="mainRegion">
-            <div class="row-fluid">
-                <div id="drop-one" class="span10 drop empty">
-                    <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2>Sleep je metingen hier naartoe</h2>
-                    </div>
-                </div>
-                <div id="legend-one" class="span2 drop empty"></div>
-            </div>
-            <div class="row-fluid">
-                <div id="drop-two" class="span10 drop empty">
-                    <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2>Sleep je metingen hier naartoe</h2>
-                    </div>
-                </div>
-                <div id="legend-two" class="span2 drop empty"></div>
-            </div>
+            <div id="graphsRegion"></div>
         </div>
         <div class="btn-toolbar pull-right">
           <button type="button" id="reset-collage" class="btn btn-danger">Wis collage</button>
@@ -1023,8 +1015,7 @@
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.axislabels.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.tooltip.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"></script>
-        <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload.js"></script>
-        <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.legendonmouseover.nens.js"></script>
+        <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload-backbone.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/build.js -->
@@ -1036,7 +1027,13 @@
         <script src="scripts/lizard/models/Collage.js"></script>
         <script src="scripts/lizard/models/Favorite.js"></script>
         <script src="scripts/lizard/models/Filter.js"></script>
+
+        <!-- keep these in the following order, due to them being dependent on each other -->
+        <script src="scripts/lizard/models/GraphItem.js"></script>
+        <script src="scripts/lizard/collections/GraphItem.js"></script>
         <script src="scripts/lizard/models/Graph.js"></script>
+        <script src="scripts/lizard/collections/Graph.js"></script>
+
         <script src="scripts/lizard/models/LiveFeed.js"></script>
         <script src="scripts/lizard/models/Location.js"></script>
         <script src="scripts/lizard/models/Parameter.js"></script>
@@ -1044,7 +1041,6 @@
         <script src="scripts/lizard/models/WorkspaceItem.js"></script>
         <script src="scripts/lizard/models/Workspace.js"></script>
         <script src="scripts/lizard/models/Widget.js"></script>
-
 
         <script src="scripts/lizard/layers/MapLayer.js"></script>
         <script src="scripts/lizard/layers/WMSLayer.js"></script>
@@ -1056,7 +1052,6 @@
         <script src="scripts/lizard/collections/Collage.js"></script>
         <script src="scripts/lizard/collections/Favorite.js"></script>
         <script src="scripts/lizard/collections/Filter.js"></script>
-        <script src="scripts/lizard/collections/Graph.js"></script>
         <script src="scripts/lizard/collections/LiveFeed.js"></script>
         <script src="scripts/lizard/collections/Location.js"></script>
         <script src="scripts/lizard/collections/Parameter.js"></script>
@@ -1070,6 +1065,8 @@
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/GraphLegend.js"></script>
+        <script src="scripts/lizard/views/GraphAndLegend.js"></script>
+        <script src="scripts/lizard/views/GraphAndLegendCollection.js"></script>
         <script src="scripts/lizard/views/Menu.js"></script>
         <script src="scripts/lizard/views/Layer.js"></script>
         <script src="scripts/lizard/popups/DdscTimeseries.js"></script>
