@@ -79,8 +79,9 @@ Lizard.Utils.Favorites = {
 };
 
 Lizard.Utils.DragDrop = {
-  copyUuid: function (e){
-    var sendThis = $(e.target).data('uuid');
+  copyData: function (e){
+    var data = $(e.target).data();
+    var sendThis = JSON.stringify(data);
     e.dataTransfer.setData("Text", sendThis);
     console.log('setting dataTransfer = ' + sendThis);
   },

@@ -16,9 +16,10 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
         e.preventDefault();
         // fetch and add the timeseries
         var self = this;
-        var uuid = e.originalEvent.dataTransfer.getData('Text');
-        if (uuid) {
-            var timeseries = new Lizard.Models.TimeseriesActual({uuid: uuid});
+        var dataJson = e.originalEvent.dataTransfer.getData('Text');
+        if (dataJson) {
+            var data = JSON.parse(dataJson);
+            var timeseries = new Lizard.Models.TimeseriesActual({url: data.url});
             timeseries.fetch({
                 success: function (model, response) {
                     var item = new Lizard.Models.GraphItem({
