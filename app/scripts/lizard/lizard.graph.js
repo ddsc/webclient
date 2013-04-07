@@ -59,12 +59,15 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   graphsView.graphsRegion.show(graphAndLegendCollectionView);
 
   var collageListView = new Lizard.Views.CollageList({
-    collection: collageCollection
+    collection: collageCollection,
+    graphCollection: graphCollection
   });
 
-  collageCollection.fetch({success: function(col){
-    col.trigger('gotAll', col);
-  }});
+  collageCollection.fetch({
+    success: function (col) {
+      col.trigger('gotAll', col);
+    }
+  });
 
   graphsView.presetsRegion.show(collageListView.render());
 

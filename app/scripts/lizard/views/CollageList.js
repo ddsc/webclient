@@ -22,6 +22,7 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
 Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   itemView: Lizard.Views.Collage,
   initialize: function(options) {
+    this.graphCollection = options.graphCollection;
     this.listenTo(this.collection,
       "select_collage",
       this.selectCollage
@@ -30,27 +31,27 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   collection: null, //workspaceCollection,
   tagName: 'ul',
   className: 'wms_sources drawer-group',
-  selectCollage: function(selectedModel) {
-    var graph_elements = $('.graph-drop');
 
-    _.each(graph_elements, function(graph_element) {
-      var plot = $(graph_elements).data('plot');
-      if (plot) {
-          plot.removeAllDataUrls();
-      }
-    });
+  selectCollage: function(selectedModel) {
+    console.log(this.graphCollection);
+
+    var self = this;
+    this.graphCollection.each(function (graph) {
+        graph.get('graphItems').reset();
+    })
 
     var collageItems = selectedModel.get('collageitems');
 
-    collageItems.each(function(collageItem) {
-      var graph_el = $(graph_elements[collageItem.get('graph_index')]);
-      graph_el.parent().removeClass('empty');
-      var timeseries = collageItem.get('timeseries');
-      for (var i in timeseries) {
-        var timeserie = timeseries[i];
-        graph_el.loadPlotData(timeserie);
-
-      }
+    collageItems.each(function (collageItem) {
+        var graph = self.graphCollection.models[collageItem.get('graph_index')];
+        var timeseriesList = collageItem.get('timeseries');
+        for (var i in timeseriesList) {
+            var timeseriesUrl = timeseriesList[i];
+            var timeseries = new Lizard.Models.Timeserie({url: timeseriesUrl});
+            timeseries.fetch();
+            var graphItem = new Lizard.Models.GraphItem({timeseries: timeseries});
+            graph.get('graphItems').add(graphItem);
+        }
     });
     Backbone.history.navigate('graphs/' + selectedModel.id);
   },
