@@ -1,5 +1,6 @@
-Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
-  initialize: function() {
+Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
+  initialize: function (options) {
+    this.graphCollection = options.graphCollection;
     this.model.on('change', this.render, this);
   },
   tagName: 'li',
@@ -25,10 +26,9 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
     $('#info-modal').modal();
   },
   drawGraph: function (e){
-    var data_url = e.target.dataset.url;
-    var graph_el = $('.graph-drop').first();
-    graph_el.parent().removeClass('empty');
-    graph_el.loadPlotData(data_url);
+    // add to first graph in the graphs view
+    var url = e.target.dataset.url;
+    this.graphCollection.models[0].get('graphItems').addTimeseriesByUrl(url);
   },
   template: function(model){
       return _.template($('#timeserie-item-template').html(), {
@@ -41,14 +41,18 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
     }
 });
 
-Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
-  collection: timeseriesCollection,
-  tagName: 'ul',
-  itemView: Lizard.Views.Timeserie,
-  initialize: function(){
-    console.log('-------->', this.collection);
-    // this.collection.fetch();
-  }
+Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
+    initialize: function (options) {
+        this.collection = options.collection;
+        this.graphCollection = options.graphCollection;
+    },
+    tagName: 'ul',
+    itemView: Lizard.Views.Timeseries,
+    itemViewOptions: function (model) {
+        return {
+            graphCollection: this.graphCollection
+        };
+    }
 });
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({

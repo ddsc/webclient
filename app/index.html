@@ -554,7 +554,7 @@
         <div class="timeserie-item oselect">
             <h5 class="modaltimeserie">
             <i class="icon-star-empty fav"></i> &nbsp;
-              <span class="graph-this" data-url="<%= timeserie.events%>">
+              <span class="graph-this" data-url="<%= timeserie.url%>">
                 <i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %>
               </span>
               <span class="pull-right">
@@ -604,7 +604,7 @@
         <h5>
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
           <i class="icon-bar-chart fav"></i>&nbsp;
-          <span class="add" data-url="<%= timeserie.events%>"><%= timeserie.name %></span>
+          <span class="add" data-url="<%= timeserie.url%>"><%= timeserie.name %></span>
           <!-- <i class="icon-question-sign info pull-right"></i>-->
         </h5>
         </div>
@@ -623,7 +623,7 @@
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <h5><i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%></h5>
         <ul class="hide">
-          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>        
+          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>
           <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
         </ul>
       </div>

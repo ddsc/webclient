@@ -44,15 +44,23 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
 
   Lizard.App.content.show(graphsView);
 
+  // for some reason, timeseriesCollection is also a superglobal
+  var timeseriesCollection = new Lizard.Collections.Timeseries();
+
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
-  var timeserieSearch = new Lizard.Views.TimeseriesSearch();
-  var timeserieView = new Lizard.Views.Timeseries();
+
+  var timeseriesSearch = new Lizard.Views.TimeseriesSearch();
 
   var graphCollection = new Lizard.Collections.Graph();
   for (var i=0; i<5; i++) {
     var graph = new Lizard.Models.Graph();
     graphCollection.add(graph);
   }
+
+  var timeseriesView = new Lizard.Views.TimeseriesCollection({
+    collection: timeseriesCollection,
+    graphCollection: graphCollection
+  });
 
   var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
     collection: graphCollection
@@ -64,6 +72,8 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection: graphCollection
   });
 
+  timeseriesCollection.fetch();
+
   collageCollection.fetch({
     success: function (col) {
       col.trigger('gotAll', col);
@@ -74,8 +84,8 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
 
   graphsView.favoriteRegion.show(favoritecollectionview);
 
-  graphsView.selectionSearch.show(timeserieSearch.render());
-  graphsView.selectionRegion.show(timeserieView.render());
+  graphsView.selectionSearch.show(timeseriesSearch.render());
+  graphsView.selectionRegion.show(timeseriesView.render());
 
   // And set URL to #graphs
   if (collageid) {
