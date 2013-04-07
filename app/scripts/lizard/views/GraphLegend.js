@@ -9,22 +9,19 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         // on its own div
         'dragend': 'onDragEnd'
     },
-    onDragEnd: function(e) {
+    onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph
         var self = this;
         var dataJson = e.originalEvent.dataTransfer.getData('Text');
         if (dataJson) {
             var data = JSON.parse(dataJson);
-            var timeseries = new Lizard.Models.TimeseriesActual({url: data.url});
-            var item = new Lizard.Models.GraphItem({
-                timeseries: timeseries
-            });
-            this.model.collection.find(function (oldItem) {
-                if (oldItem.get('timeseries').get('uuid')) {
-                    // remove the item from the current collection
-                    self.model.collection.remove(oldItem);
-                }
-            });
+            if (data.uuid) {
+                this.model.collection.each(function (otherItem) {
+                    if (otherItem.get('timeseries').get('uuid') == data.uuid) {
+                        self.model.collection.remove(otherItem);
+                    }
+                });
+            }
         }
     }
 });
