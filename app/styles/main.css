@@ -1192,6 +1192,7 @@ div.graph-legend {
     color: #0084B4;
     font-size: .9em;
     border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1201,14 +1202,24 @@ div.graph-legend {
 div.graph-legend h5{
     color: #0084B4;
     font-size: .9em;    
+    cursor: pointer;
 }
 
+
 div.graph-legend ul {
-    opacity: .9;
-   transition: opacity .25s ease-in-out;
-   -moz-transition: opacity .25s ease-in-out;
-   -webkit-transition: opacity .25s ease-in-out;
+   opacity: .7;
+   transition: opacity .75s ease-in-out;
+   -moz-transition: opacity .75s ease-in-out;
+   -webkit-transition: opacity .75s ease-in-out;
 }
+div.graph-legend ul:hover {
+   opacity: 1;
+   transition: opacity .75s ease-in-out;
+   -moz-transition: opacity .75s ease-in-out;
+   -webkit-transition: opacity .75s ease-in-out;
+}
+
+
 div.graph-legend ul, div.graph-legend ul li {
     list-style: none;
     margin: 0px;
