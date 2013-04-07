@@ -620,7 +620,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
+      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <h5><i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%></h5>
         <ul class="hide">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>
