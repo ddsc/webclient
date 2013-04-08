@@ -122,7 +122,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
           data.location = layer._latlng.lat.toString() + ',' + layer._latlng.lng.toString()
           data.category = 'ddsc';
           $.post(settings.annotations_create_url, $.param(data), function(data){
-            $('.top-right').notify({message:{text: 'FUCK YEAH'}})
+            $('.top-right').notify({message:{text: 'Annotatie geplaatst'}})
           });
         });
         // Close and unbind the popup when clicking the "Save" button.
@@ -130,14 +130,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         $(popup._contentNode).find('button[type="submit"]').click(
             function() {
                 popup._close();
-                $('.top-right')
-                .notify({
-                    message: {
-                        text: 'De annotatie is geplaatst.'
-                    }
-                })
-                .show();
-            }
         );
         $(popup._contentNode).find('textarea').focus();
       }
