@@ -1115,3 +1115,12 @@ ul#homepage-livestream li {
 .featureInfo {
     width: 200px !important;
 }
+
+
+
+#legend-one{
+    overflow: hidden;
+}
+#legend-two{
+    overflow:hidden;
+}
