@@ -47,10 +47,8 @@ Lizard.Graphs.graphs = function(collageid){
   var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
-  var graphlegendView1 = new GraphLegendItemView();
-  var graphlegendView2 = new GraphLegendItemView();
-  graphsView.legend1.show(graphlegendView1);
-  graphsView.legend2.show(graphlegendView2);
+  graphsView.legend1.show(new GraphLegendCollectionView({collection:new Lizard.Collections.Graph()}));
+  graphsView.legend2.show(new GraphLegendCollectionView({collection:new Lizard.Collections.Graph()}));
 
   var collageListView = new Lizard.Views.CollageList({
     collection: collageCollection

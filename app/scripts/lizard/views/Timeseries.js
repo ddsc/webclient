@@ -33,6 +33,7 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   template: function(model){
       return _.template($('#timeserie-item-template').html(), {
         name: model.name,
+        uuid: model.uuid,
         events: model.events,
         favorite: model.favorite
       }, {variable: 'timeserie'});

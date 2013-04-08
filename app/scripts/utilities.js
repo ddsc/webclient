@@ -80,7 +80,7 @@ Lizard.Utils.Favorites = {
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
-    sendThis = e.target.dataset.url;
+    sendThis = e.target.dataset.uuid;
     e.dataTransfer.setData("Text", sendThis);
     console.log(e.target);
   },
@@ -103,7 +103,7 @@ Lizard.Utils.DragDrop = {
         $graph = $target.parent('.graph-drop');
     }
     $graph.loadPlotData(data_url);
-  },
+  }
 };
 
 /**
