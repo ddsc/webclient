@@ -91,7 +91,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     this.mapCanvas.on('draw:created', function (e) {
       var type = e.layerType,
-        layer = e.layer;  
+        layer = e.layer; 
 
       if (type === 'marker') {
         var popup = L.popup({maxWidth:525})
@@ -119,11 +119,13 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
           if (data.datetime_until){
             data.datetime_until = new Date(data.datetime_until).toISOString();          
           }
+          data.location = layer._latlng.lat.toString() + ',' + layer._latlng.lng.toString()
+          data.category = 'ddsc';
           $.post(settings.annotations_create_url, $.param(data), function(data){
             $('.top-right').notify({message:{text: 'FUCK YEAH'}})
           });
         });
-        // Close the popup when clicking the "Save" button.
+        // Close and unbind the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
         $(popup._contentNode).find('button[type="submit"]').click(
             function() {
