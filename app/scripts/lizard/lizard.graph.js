@@ -8,12 +8,12 @@ Lizard.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'mainRegion': '#mainRegion',
     'presetsRegion': '#presetsRegion',
     'favoriteRegion': '#favoriteRegion',
+    'selectionSearch': '#selectionSearch',
     'selectionRegion': '#selectionRegion',
     'infomodal': '#info-modal',
     'legend1': '#legend-one',
     'legend2': '#legend-two'
   },
-  onShow: Lizard.Visualsearch.init,
   triggers: {
     'click #mainRegion': 'ui:expand:mainregion'
   }
@@ -44,6 +44,7 @@ Lizard.Graphs.graphs = function(collageid){
   Lizard.App.content.show(graphsView);
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
+  var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
   graphsView.legend1.show(new GraphLegendCollectionView({collection:new Lizard.Collections.Graph()}));
@@ -60,6 +61,8 @@ Lizard.Graphs.graphs = function(collageid){
   graphsView.presetsRegion.show(collageListView.render());
   
   graphsView.favoriteRegion.show(favoritecollectionview);
+
+  graphsView.selectionSearch.show(timeserieSearch.render());
   graphsView.selectionRegion.show(timeserieView.render());
 
   // And set URL to #graphs
@@ -81,10 +84,3 @@ Lizard.App.addInitializer(function(){
   
   Lizard.App.vent.trigger('routing:started');
 });
-
-
-
-
-
-
-

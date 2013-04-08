@@ -49,3 +49,19 @@ Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
     // this.collection.fetch();
   }
 });
+
+Lizard.Views.TimeseriesSearch = Backbone.View.extend({
+  render: function() {
+    tpl = '<input type="text" class="search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries">';
+    this.$el.html(tpl);
+    return this;
+  },
+  events: {'keyup #searchTimeseries': 'search'},
+  search: function(e) {
+    if (Lizard.App.fetchXhr && Lizard.App.fetchXhr.state() == 'pending'){
+      // This does not work yet. Work in progress...
+      Lizard.App.fetchXhr.reject();
+    }
+    Lizard.App.fetchXhr = timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
+  }
+});
