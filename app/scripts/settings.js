@@ -11,7 +11,7 @@ var settings = {
     locations_url: domain + 'locations/?logicalgroup=6&has_geometry=true&page_size=300',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
-    timeseries_url: domain + 'timeseries/?logicalgroup=6&page_size=300',
+    timeseries_url: domain + 'timeseries/',
     alarms_url: domain + 'alarms/' + extra,
     collages_url: domain + 'collages/',
     workspace_url: domain + 'workspaces/',
