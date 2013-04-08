@@ -21,7 +21,8 @@ var settings = {
     logout_token_url: domain + 'account/logout-url/',
     events_url: domain + 'events/',
     annotations_count_url: domain + 'annotations/count/',
-    annotations_search_url: domain + 'annotations/search/'
+    annotations_search_url: domain + 'annotations/search/',
+    annotations_create_url: domain + 'annotations/create/'
 };
 
 /**

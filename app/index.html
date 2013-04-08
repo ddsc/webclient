@@ -409,22 +409,27 @@
     </script>
 
     <script type="text/template" id="leaflet-annotation-template">
+      <div class="annotation-popup">
         <div class="span11">
-            <form class="annotation" action="http://test.api.dijkdata.nl/annotation.add/">
+            <form class="annotation">
               <fieldset>
-                <label class="control-label" for="reservation">Date range:</label>
                   <div class="controls">
                    <div class="input-prepend">
-                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reservation" id="daterange" />
+                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (niet verplicht)" />
                    </div>
                   </div>
+                  <div class="controls">
+                   <div class="input-prepend">
+                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (niet verplicht)"/>
+                   </div>
+                  </div>
+                <textarea namerows="4" class="annotation-textarea" name="text" placeholder="Uw annotatie" style="resize:none;"></textarea>
                 <label class="radio inline">
-                  <input type="radio" name="annotatie" value="public"> Openbaar
+                  <input type="radio" name="visibility" value="public"> Openbaar
                 </label>
                 <label class="radio inline controls-row">
-                  <input type="radio" name="annotatie" value="private" checked> Privé
+                  <input type="radio" name="visibility" value="private" checked> Privé
                 </label>
-                <textarea namerows="4" id="annotation-textarea" placeholder="Uw annotatie" style="resize:none;"></textarea>
                 <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>
                 <div class="file-dropzone" style="background-color:#f8f8f8;border:1px dashed #ccc;width:205px;height:20px;" droppable="true">
                   <span>Sleep hier uw bestand</span>
@@ -435,6 +440,7 @@
               </fieldset>
             </form>
         </div>
+      </div>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -967,7 +973,7 @@
         <!-- build:js scripts/bootstrap.js -->
         <script src="scripts/vendor/bootstrap.min.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
-        <script src="scripts/vendor/daterangepicker.js"></script>
+        <script src="scripts/vendor/bootstrap-datepicker.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/flot.js -->

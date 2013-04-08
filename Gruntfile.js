@@ -206,7 +206,7 @@ module.exports = function (grunt) {
                         '<%= yeoman.app %>/styles/vendor/bootstrap-notify.css',
                         '<%= yeoman.app %>/styles/vendor/alert-blackgloss.css',
                         '<%= yeoman.app %>/styles/vendor/font-awesome.css',
-                        '<%= yeoman.app %>/styles/vendor/daterangepicker.css'
+                        '<%= yeoman.app %>/styles/vendor/datepicker.css'
                     ],
                     '<%= yeoman.dist %>/styles/leaflet.css': [
                         '<%= yeoman.app %>/styles/vendor/leaflet.css',

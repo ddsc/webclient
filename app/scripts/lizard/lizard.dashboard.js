@@ -28,16 +28,16 @@ Lizard.Dashboard.dashboard = function(){
 
 
   var timeseries = [
-    "http://api.dijkdata.nl/api/v0/events/9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",
-    "http://api.dijkdata.nl/api/v0/events/49108710-6C58-4E31-AC2D-3C4933040439",
-    "http://api.dijkdata.nl/api/v0/events/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",
-    "http://api.dijkdata.nl/api/v0/events/D856946F-FEB6-4536-A878-AF55C32CD96C",
-    "http://api.dijkdata.nl/api/v0/events/03073703-3509-40F2-BA89-D85361C4021B",
-    "http://api.dijkdata.nl/api/v0/events/29119285-2428-4863-B630-9B5AA095DE13"
+    "http://api.dijkdata.nl/api/v1/events/9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",
+    "http://api.dijkdata.nl/api/v1/events/49108710-6C58-4E31-AC2D-3C4933040439",
+    "http://api.dijkdata.nl/api/v1/events/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",
+    "http://api.dijkdata.nl/api/v1/events/D856946F-FEB6-4536-A878-AF55C32CD96C",
+    "http://api.dijkdata.nl/api/v1/events/03073703-3509-40F2-BA89-D85361C4021B",
+    "http://api.dijkdata.nl/api/v1/events/29119285-2428-4863-B630-9B5AA095DE13"
   ];
 
   var dmcCollection = Backbone.Collection.extend({
-    url: "http://api.dijkdata.nl/api/v0/timeseries/?logicalgroup=7",
+    url: "http://api.dijkdata.nl/api/v1/timeseries/?logicalgroup=7",
     model: Lizard.Models.Timeserie
   });
 

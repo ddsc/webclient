@@ -118,7 +118,10 @@ leaflet-control-legend-icon {
     margin: 5px -10px 5px -6px;
 }
 
-
+.annotation-popup{
+    height: 250px;
+    width: 250px;
+}
 
 #liveFeed {
     overflow-y: auto;
