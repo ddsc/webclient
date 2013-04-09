@@ -48,7 +48,7 @@
     <link href="styles/main.css" rel="stylesheet" >
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="styles/ie.css" />
-    <!--[endif]-->
+    <![endif]-->
 
 
         <!-- build:js scripts/vendor/modernizr.js -->
@@ -640,7 +640,7 @@
                         <h2>Sleep je metingen hier naartoe</h2>
                     </div>
                 </div>
-                <div id="legend-two" class="span2 drop empty"></div>                
+                <div id="legend-two" class="span2 drop empty"></div>
             </div>
         </div>
         <div class="btn-toolbar pull-right">
@@ -774,27 +774,68 @@
     </script>
 
     <script type="text/template" id="account-template">
-      <h4>Uw gegevens</h4>
+        <h4>Uw gegevens</h4>
+        <div class="row">
+            <table class="table span5">
+                <tr><td>Gebruikersnaam</td><td><%= user.username %></td></tr>
+                <tr><td>Volledige naam</td><td><%= user.first_name %> <%= user.last_name %></td></tr>
+            </table>
+        </div>
+        <h4>Voorkeuren</h4>
+        <form id="preferences-form" class="form-horizontal" method="post">
+            <div class="control-group">
+                <label class="control-label" for="timeperiod-controls">Initi&euml;le tijdsperiode</label>
+                <div id="timeperiod-controls" class="controls">
+                    <label class="radio">
+                        <input type="radio" name="timeperiod" value="24h">
+                        24 uur
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="timeperiod" value="48h">
+                        48 uur
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="timeperiod" value="1w">
+                        1 week
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="timeperiod" value="1m" checked>
+                        1 maand
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="timeperiod" value="1y">
+                        1 jaar
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" type="submit">Opslaan</button>
+                </div>
+            </div>
+        </form>
     </script>
 
+  <!-- unused??? -->
+  <!--
   <script type="text/template" id="menu-template">
       <ul class="nav">
         <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
         <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
         <li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
-
       </ul>
       <ul class="nav pull-right">
         <li class="dropdown" id="loginRegion">
         </li>
       </ul>
   </script>
+  -->
 
   <script type="text/template" id="loggedin-template">
       <% if (authenticated === true) { %>
       <a id="account-dropdown" class="dropdown-toggle" data-toggle="dropdown"
      href="#">
-    <span id="logout"><%= user.first_name %> <%= user.last_name %>
+    <span><%= user.first_name %> <%= user.last_name %>
       <i class="icon-user icon-white"></i>
       <b class="icon-caret-down icon-white"></b>
     </span>
@@ -989,7 +1030,7 @@
 
         <!-- build:js scripts/build.js -->
         <script src="scripts/lizard/lizard.app.js"></script>
-        
+
         <script src="scripts/lizard/models/Account.js"></script>
         <script src="scripts/lizard/models/CurrentState.js"></script>
         <script src="scripts/lizard/models/CollageItem.js"></script>

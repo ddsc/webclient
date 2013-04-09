@@ -87,8 +87,6 @@ Lizard.App.addInitializer(function(){
   Lizard.Dashboard.router = new Lizard.Dashboard.Router({
     controller: Lizard.Dashboard
   });
-  
-  Lizard.App.vent.trigger('routing:started');
 });
 
 

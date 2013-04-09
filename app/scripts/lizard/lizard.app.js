@@ -42,7 +42,6 @@ Lizard.App.addRegions({
 
 
 Lizard.App.on('initialize:before', function() {
-
   account = new Lizard.Models.Account();
   account.fetch();
 
@@ -108,7 +107,6 @@ Lizard.App.on('initialize:after', function() {
   var loginView = new Lizard.Views.Menu({
     model: account
   });
-  loginView.render();
 
   Backbone.history.start();
 });
