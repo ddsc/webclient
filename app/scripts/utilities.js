@@ -265,10 +265,79 @@ $.fn.loadPlotData = function (dataUrl, callback, force) {
 };
 
 /**
+ * Initializes a Flot plot on element $graph, and load point data from
+ * dataUrl. If $graph already contains a plot, simple adds the data
+ * from dataUrl as a second line in the plot.
+ */
+function loadScatterPlotData ($graph, dataUrl, callback, force) {
+    // no dataUrl or element, nothing to do
+    if (!$graph || !dataUrl) {
+        return;
+    }
+
+    // check if element is visible
+    // flot can't draw on an invisible surface
+    if ($graph.is(':hidden')) {
+        return;
+    }
+
+    // ensure relative positioning, add a class name, force explicit height/width
+    $graph.css({
+        'position': 'relative',
+        'width': '100%',
+        'height': '100%'
+    });
+    $graph.addClass('flot-graph');
+    if ($graph.height() === 0) {
+        console.error('Height of the graph element seems to be 0');
+    }
+
+    // initialize the graph, if it doesn't exist already
+    var plot = $graph.data('plot');
+    if (!plot) {
+        plot = initializePlot($graph, true);
+        $graph.data('plot', plot);
+    }
+
+    plot.addDataUrl(dataUrl);
+}
+
+/**
+ * Allow graphs to be loaded on any HTML element. This essentially
+ * describes the "API" for all your plotting needs.
+ */
+$.fn.loadScatterPlotData = function (dataUrl, callback, force) {
+    if (typeof dataUrl === 'undefined') {
+        // get the data url from the element instead
+        var dataUrl = $(this).data('data-url');
+    }
+    loadScatterPlotData($(this), dataUrl, callback, force);
+};
+
+/**
  * Initialize an empty jQuery Flot plot on passed element.
  */
-function initializePlot($container) {
+function initializePlot($container, isScatter) {
     // define a set of sane options used for all graphs
+    if (isScatter){
+        var defaultOpts = {
+            series: {
+                points: { show: true, hoverable: true, radius: 1 },
+                shadowSize: 0,
+                lines: { show: false }
+            },
+            grid: {
+                hoverable: true,
+                labelMargin: 4,
+                margin: 30 /* for the axis labels */,
+                borderWidth: 1,
+                autoHighlight: false
+            },
+            legend: {
+                show: false
+            }
+        }
+    } else {
     var defaultOpts = {
         series: {
             points: { show: true, hoverable: true, radius: 1 },
@@ -334,6 +403,7 @@ function initializePlot($container) {
         legend: {
             show: false
         }
+      }
     };
 
     // update the default options based on the users platform
@@ -350,7 +420,7 @@ function initializePlot($container) {
             }
         });
     }
-    else {
+    else if(!isScatter){
         $.extend(defaultOpts, {
             // disable touch, so the flot.touch plugin won't mess up the desktop browser
             touch: false,

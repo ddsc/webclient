@@ -123,14 +123,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
           data.category = 'ddsc';
           $.post(settings.annotations_create_url, $.param(data), function(data){
             $('.top-right').notify({message:{text: 'Annotatie geplaatst'}})
+            document.location.reload();
           });
         });
         // Close and unbind the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
-        $(popup._contentNode).find('button[type="submit"]').click(
-            function() {
-                popup._close();
-        );
         $(popup._contentNode).find('textarea').focus();
       }
     });
