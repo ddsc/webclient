@@ -47,15 +47,17 @@ Lizard.Graphs.graphs = function(collageid){
   var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
+  window.legendOneCollectionView = new GraphLegendCollectionView({
+    collection: new Lizard.Collections.Graph()
+  });
+  window.legendTwoCollectionView = new GraphLegendCollectionView({
+    collection: new Lizard.Collections.Graph()
+  });
   graphsView.legend1.show(
-    new GraphLegendCollectionView({
-      collection: new Lizard.Collections.Graph()
-    })
+    window.legendOneCollectionView
   );
   graphsView.legend2.show(
-    new GraphLegendCollectionView({
-      collection: new Lizard.Collections.Graph()
-    })
+    window.legendTwoCollectionView
   );
 
   var collageListView = new Lizard.Views.CollageList({
