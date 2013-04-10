@@ -596,7 +596,7 @@
     <script type="text/template" id="graphs-legend-template">
       <p class="graph-legend" draggable="true" data-uuid="<%=uuid%>" ondragstart="Lizard.Utils.DragDrop.drag(event);">
         <i class="icon-bar-chart"></i>&nbsp;<%=name%><br/>
-        <a href="http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>       
+        <a onclick="window.location.href='http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv';" href="http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>       
       </p>
     </script>
 
