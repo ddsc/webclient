@@ -37,7 +37,7 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
         events: model.events,
         favorite: model.favorite
       }, {variable: 'timeserie'});
-    },
+    }
 });
 
 Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
