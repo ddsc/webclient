@@ -52,7 +52,7 @@ Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   render: function() {
-    tpl = '<input type="text" class="search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries">';
+    tpl = '<div class="row-fluid"><input type="text" class="span12 search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries"></div>';
     this.$el.html(tpl);
     return this;
   },
