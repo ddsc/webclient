@@ -20,24 +20,23 @@ GraphLegendCollectionView = Backbone.Marionette.CollectionView.extend({
     this.$el.on('dragover dragenter', false);
     this.$el.on('drop', function(e) {
       e.preventDefault();
+      $('.top-right').notify({message: {text: 'Grafiek toegevoegd...'}}).show();
       console.log('e', e.originalEvent.target);
       var $target = $(e.target);
+      var graphDiv = $(that.$el).parent().parent();
       var graph = new Lizard.Models.Graph();
       var uuid = e.originalEvent.dataTransfer.getData('Text');
+ 
       var timeserie = timeseriesCollection.get(uuid);
-      that.collection.add(timeserie);
-
-
-      $target.parent().removeClass("empty");
-      // only fire for nearest .graph-drop parent (in case there is already a graph in the element)
-      var $graph = $target;
-      if (!$graph.hasClass('graph-drop')) {
-          $graph = $target.parent('.graph-drop');
+      if(that.collection.find(function(timeserie) {
+        console.log('timeserie', timeserie);
+      })) {
+        $('.top-right').notify({message: {text: 'Grafiek reeds toegevoegd...'}}).show();
+      } else {
+        that.collection.add(timeserie);
       }
-      $graph.loadPlotData(settings.timeseries_url + 'events/' + uuid);
-
-      // var $graph = $('#drop-one .graph-drop');
-      // $graph.loadPlotData(settings.timeseries_url + 'events/' + uuid);
+      
+      // graphDiv.find('.graph-drop').first().loadPlotData(settings.timeseries_url + 'events/' + uuid);
     });
   }
 });
