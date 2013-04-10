@@ -1,7 +1,6 @@
 /* MENU VIEWS */
 
 Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
-	model: null,
 	el: '#loginRegion',
 	template: '#loggedin-template',
 	events: {
@@ -10,8 +9,7 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	},
 
 	initialize: function(){
-    this.model.on('change', this.render);
-    console.log('initialize LoginView');
+        this.model.on('change', this.render);
 	},
 
 	doLogin: function(e){
@@ -31,5 +29,4 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 			window.location=json.logout_url;
 		});
 	}
-
 });

@@ -146,5 +146,4 @@ Lizard.App.addInitializer(function(){
   Lizard.Map.router = new Lizard.Map.Router({
     controller: Lizard.Map
   });
-  Lizard.App.vent.trigger('routing:started');
 });

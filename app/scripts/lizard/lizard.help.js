@@ -22,6 +22,4 @@ Lizard.App.addInitializer(function(){
   Lizard.Help.router = new Lizard.Help.Router({
     controller: Lizard.Help
   });
-
-  Lizard.App.vent.trigger('routing:started');
 });

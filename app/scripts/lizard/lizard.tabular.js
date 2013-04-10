@@ -31,8 +31,6 @@ Lizard.App.addInitializer(function(){
   Lizard.Tabular.router = new Lizard.Tabular.Router({
     controller: Lizard.Tabular
   });
-  
-  Lizard.App.vent.trigger('routing:started');
 });
 
 
