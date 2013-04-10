@@ -595,8 +595,8 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <p draggable="true">
-        <%=name%>
+      <p class="graph-legend" draggable="true" data-uuid="<%=uuid%>" ondragstart="Lizard.Utils.DragDrop.drag(event);">
+        <i class="icon-bar-chart"></i>&nbsp;<%=name%>
       </p>
     </script>
 
