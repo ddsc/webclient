@@ -595,7 +595,9 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-    #graphs-legend-template
+      <p draggable="true">
+        <%=name%>
+      </p>
     </script>
 
     <script type="text/template" id="graphs-template">
@@ -627,7 +629,7 @@
             <div class="row-fluid">
                 <div id="drop-one" class="span10 drop empty">
                     <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe</h2>
+                        <h2>Sleep je metingen hier naartoe</h2>
                     </div>
                 </div>
                 <div id="legend-one" class="span2 drop empty"></div>
@@ -948,7 +950,6 @@
 
         <!-- build:js scripts/jquery.js -->
         <script src="scripts/vendor/jquery-1.8.3.js"></script>
-        <script src="scripts/vendor/jquerypp.js"></script>
         <script src="scripts/vendor/jquery.xml2json.js"></script>
         <script src="scripts/settings.js"></script>
         <script src="scripts/localsettings.js"></script>
@@ -1035,6 +1036,7 @@
         <script src="scripts/lizard/models/Collage.js"></script>
         <script src="scripts/lizard/models/Favorite.js"></script>
         <script src="scripts/lizard/models/Filter.js"></script>
+        <script src="scripts/lizard/models/Graph.js"></script>
         <script src="scripts/lizard/models/LiveFeed.js"></script>
         <script src="scripts/lizard/models/Location.js"></script>
         <script src="scripts/lizard/models/Parameter.js"></script>
@@ -1054,6 +1056,7 @@
         <script src="scripts/lizard/collections/Collage.js"></script>
         <script src="scripts/lizard/collections/Favorite.js"></script>
         <script src="scripts/lizard/collections/Filter.js"></script>
+        <script src="scripts/lizard/collections/Graph.js"></script>
         <script src="scripts/lizard/collections/LiveFeed.js"></script>
         <script src="scripts/lizard/collections/Location.js"></script>
         <script src="scripts/lizard/collections/Parameter.js"></script>
