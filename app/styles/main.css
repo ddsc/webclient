@@ -118,9 +118,11 @@ leaflet-control-legend-icon {
     margin: 5px -10px 5px -6px;
 }
 
-.annotation-popup{
-    height: 250px;
-    width: 250px;
+#annotation-modal.modal{
+    width: 350px;
+}
+#annotation-modal > .spacing{
+    margin-left: 1em;
 }
 
 #liveFeed {
@@ -478,7 +480,7 @@ input.input-medium.search-query {
     opacity: 0.5;
 }
 
-.popup-toggle > .pull-right{
+.timeserie-item > .pull-right{
     margin-right:5px;
 }
 
@@ -875,10 +877,10 @@ div#selectionRegion{
     margin: 0;
     display: block;
     cursor: pointer;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    height: 23px;
+    overflow: hidden; 
+    /*white-space: nowrap;*/
+    width: 100%; 
+    height: 23px;    
     color: #0084B4;
 }
 .ddsc-item h5 {
