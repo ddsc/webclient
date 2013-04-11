@@ -1120,3 +1120,28 @@ ul#homepage-livestream li {
 .featureInfo {
     width: 200px !important;
 }
+
+
+
+#legend-one{
+    padding: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+
+}
+#legend-two{
+    padding: 2px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+
+}
+p.graph-legend {
+    font-size: .9em;
+    border-bottom: 1px solid grey;
+}

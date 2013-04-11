@@ -395,8 +395,7 @@
     </script>
 
     <script type="text/template" id="show-no-items-message-template">
-        <h4>&nbsp;</h4>
-        <p>...</p>
+        <span class="label">geen items</span>
     </script>
 
     <script type="text/template" id="iconsview-template">
@@ -463,7 +462,6 @@
             </fieldset>
           </form>
         </div>
-      </div>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -605,7 +603,7 @@
 
 
     <script id="timeserie-item-template" type="text/template">
-        <div class="timeserie-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= timeserie.events%>">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart=Lizard.Utils.DragDrop.drag(event) data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
           <i class="icon-star-empty fav"></i>&nbsp;
           <span class="add" data-url="<%= timeserie.events%>"><%= timeserie.name %></span>
@@ -624,7 +622,10 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-    #graphs-legend-template
+      <p class="graph-legend" draggable="true" data-uuid="<%=uuid%>" ondragstart="Lizard.Utils.DragDrop.drag(event);">
+        <i class="icon-bar-chart"></i>&nbsp;<%=name%><br/>
+        <a onclick="window.location.href='http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv';" href="http://api.dijkdata.nl/api/v1/events/<%=uuid%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>       
+      </p>
     </script>
 
     <script type="text/template" id="graphs-template">
@@ -656,7 +657,7 @@
             <div class="row-fluid">
                 <div id="drop-one" class="span10 drop empty">
                     <div class="flot-graph graph-drop" ondrop="Lizard.Utils.DragDrop.drop(event)" ondragover="Lizard.Utils.DragDrop.allowDrop(event)">
-                        <h2 ondragover="return false;" ondragenter="return false;">Sleep je metingen hier naartoe</h2>
+                        <h2>Sleep je metingen hier naartoe</h2>
                     </div>
                 </div>
                 <div id="legend-one" class="span2 drop empty"></div>
@@ -977,7 +978,6 @@
 
         <!-- build:js scripts/jquery.js -->
         <script src="scripts/vendor/jquery-1.8.3.js"></script>
-        <script src="scripts/vendor/jquerypp.js"></script>
         <script src="scripts/vendor/jquery.xml2json.js"></script>
         <script src="scripts/settings.js"></script>
         <script src="scripts/localsettings.js"></script>
@@ -1037,7 +1037,7 @@
         <!-- build:js scripts/bootstrap.js -->
         <script src="scripts/vendor/bootstrap.min.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
-        <script src="scripts/vendor/bootstrap-datepicker.js"></script>
+        <script src="scripts/vendor/daterangepicker.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/flot.js -->
@@ -1064,6 +1064,7 @@
         <script src="scripts/lizard/models/Collage.js"></script>
         <script src="scripts/lizard/models/Favorite.js"></script>
         <script src="scripts/lizard/models/Filter.js"></script>
+        <script src="scripts/lizard/models/Graph.js"></script>
         <script src="scripts/lizard/models/LiveFeed.js"></script>
         <script src="scripts/lizard/models/Location.js"></script>
         <script src="scripts/lizard/models/Parameter.js"></script>
@@ -1083,6 +1084,7 @@
         <script src="scripts/lizard/collections/Collage.js"></script>
         <script src="scripts/lizard/collections/Favorite.js"></script>
         <script src="scripts/lizard/collections/Filter.js"></script>
+        <script src="scripts/lizard/collections/Graph.js"></script>
         <script src="scripts/lizard/collections/LiveFeed.js"></script>
         <script src="scripts/lizard/collections/Location.js"></script>
         <script src="scripts/lizard/collections/Parameter.js"></script>

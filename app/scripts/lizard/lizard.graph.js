@@ -47,10 +47,18 @@ Lizard.Graphs.graphs = function(collageid){
   var timeserieSearch = new Lizard.Views.TimeseriesSearch();
   var timeserieView = new Lizard.Views.Timeseries();
 
-  var graphlegendView1 = new GraphLegendItemView();
-  var graphlegendView2 = new GraphLegendItemView();
-  graphsView.legend1.show(graphlegendView1);
-  graphsView.legend2.show(graphlegendView2);
+  window.legendOneCollectionView = new GraphLegendCollectionView({
+    collection: new Lizard.Collections.Graph()
+  });
+  window.legendTwoCollectionView = new GraphLegendCollectionView({
+    collection: new Lizard.Collections.Graph()
+  });
+  graphsView.legend1.show(
+    window.legendOneCollectionView
+  );
+  graphsView.legend2.show(
+    window.legendTwoCollectionView
+  );
 
   var collageListView = new Lizard.Views.CollageList({
     collection: collageCollection

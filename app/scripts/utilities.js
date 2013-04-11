@@ -80,7 +80,7 @@ Lizard.Utils.Favorites = {
 
 Lizard.Utils.DragDrop = {
   drag: function (e){
-    sendThis = e.target.dataset.url;
+    sendThis = e.target.dataset.uuid;
     e.dataTransfer.setData("Text", sendThis);
     console.log(e.target);
   },
@@ -93,17 +93,18 @@ Lizard.Utils.DragDrop = {
     var $target = $(e.target);
   },
   drop: function (e){
-    e.preventDefault();
-    var data_url = e.dataTransfer.getData("Text");
-    var $target = $(e.target);
-    $target.parent().removeClass("empty");
-    // only fire for nearest .graph-drop parent (in case there is already a graph in the element)
-    var $graph = $target;
-    if (!$graph.hasClass('graph-drop')) {
-        $graph = $target.parent('.graph-drop');
-    }
-    $graph.loadPlotData(data_url);
-  },
+    return true;
+    // e.preventDefault();
+    // var data_url = e.dataTransfer.getData("Text");
+    // var $target = $(e.target);
+    // $target.parent().removeClass("empty");
+    // // only fire for nearest .graph-drop parent (in case there is already a graph in the element)
+    // var $graph = $target;
+    // if (!$graph.hasClass('graph-drop')) {
+    //     $graph = $target.parent('.graph-drop');
+    // }
+    // $graph.loadPlotData(data_url);
+  }
 };
 
 /**

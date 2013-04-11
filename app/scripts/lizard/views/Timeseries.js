@@ -33,10 +33,11 @@ Lizard.Views.Timeserie = Backbone.Marionette.ItemView.extend({
   template: function(model){
       return _.template($('#timeserie-item-template').html(), {
         name: model.name,
+        uuid: model.uuid,
         events: model.events,
         favorite: model.favorite
       }, {variable: 'timeserie'});
-    },
+    }
 });
 
 Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
@@ -51,7 +52,7 @@ Lizard.Views.Timeseries = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   render: function() {
-    tpl = '<input type="text" class="search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries">';
+    tpl = '<div class="row-fluid"><input type="text" class="span12 search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries"></div>';
     this.$el.html(tpl);
     return this;
   },
