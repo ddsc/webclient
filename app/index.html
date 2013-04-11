@@ -409,32 +409,59 @@
     </script>
 
     <script type="text/template" id="leaflet-annotation-template">
-      <div class="annotation-popup">
-        <div class="span11">
-            <form class="annotation">
-              <fieldset>
-                  <div class="controls">
-                   <div class="input-prepend">
-                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (" />
-                   </div>
-                  </div>
-                  <div class="controls">
-                   <div class="input-prepend">
-                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met"/>
-                   </div>
-                  </div>
+      <div id="annotation-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3>Annotatie</h3>
+       </div>
+          <form class="annotation">
+            <fieldset>
+            <div class="modal-body">
+            <div class="controls">
+               <div class="input-prepend">
+               <span class="add-on"><i class="icon-edit"></i></span>
                 <textarea namerows="4" class="annotation-textarea" name="text" placeholder="Uw annotatie" style="resize:none;" required></textarea>
-                <label class="radio inline">
-                  <input type="radio" name="visibility" value="public" required> Openbaar
-                </label>
-                <label class="radio inline controls-row">
-                  <input type="radio" name="visibility" value="private" checked required> Privé
-                </label>
-                <input type="text" name="picture_url" placeholder="Url naar foto" />
-                <span class="help-block"><small>Gebruik <em>#tag</em> om te taggen</small></span>                
-                <button type="submit" class="btn spacer btn-small pull-right btn-primary">Opslaan</button>
-              </fieldset>
-            </form>
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " />
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)"/>
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-eye-open"></i></span>
+                  <label class="radio inline spacing">
+                    <input type="radio" name="visibility" value="public" required> Openbaar
+                  </label>
+                  <label class="radio inline controls-row">
+                    <input type="radio" name="visibility" value="private" checked required> Privé
+                  </label>
+              </div>
+            </div>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-picture"></i></span>
+                  <input type="text" name="picture_url" placeholder="Url naar foto" />
+                </div>
+            </div>
+            <span class="help-block"><small>Hang een label of <em>tag</em> aan de annotatie.</small></span>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-tag"></i></span>
+                <input type="text" name="tags" placeholder="Tags scheiden met spaties" />
+              </div>
+            </div>
+        </div>
+        <div id="info-modal-footer" class="modal-footer">
+          <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
+            </fieldset>
+          </form>
         </div>
       </div>
     </script>
@@ -544,8 +571,8 @@
 
     <script type="text/template" id="location-popup-timeserie">
         <div class="timeserie-item oselect">
-            <h5 class="popup-toggle" data-url="<%= timeserie.events %>"><i class="icon-bar-chart">
-            </i>&nbsp;<%= timeserie.name %>
+            <h5 data-url="<%= timeserie.events %>"><i class="icon-bar-chart">
+            </i><span class="popup-toggle"> &nbsp;<%= timeserie.name %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
                 <i class="icon-comment"></i>
@@ -1071,7 +1098,7 @@
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/Menu.js"></script>
         <script src="scripts/lizard/views/Layer.js"></script>
-        <script src="scripts/lizard/popups/DdscTimeseries.js"></script>
+        <script src="scripts/lizard/views/DdscTimeseries.js"></script>
         <script src="scripts/lizard/views/Timeseries.js"></script>
         <script src="scripts/lizard/views/WorkspaceList.js"></script>
         <script src="scripts/lizard/views/ActiveWorkspace.js"></script>

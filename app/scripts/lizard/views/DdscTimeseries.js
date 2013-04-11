@@ -20,7 +20,7 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   template:function(model){
     return _.template($('#location-popup-timeserie').html(), {
       name: model.name,
-      uuid: model.url.split("eries/")[1].split("/")[0],
+      uuid: model.uuid,
       events: model.events,
       latest_value: model.latest_value,
     }, {variable: 'timeserie'});
@@ -28,7 +28,11 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
   uuid: null,
   tagName: 'li',
   events: {
-    'click' : "openModal"
+    'click .popup-toggle' : "openModal",
+    'click .icon-comment' : 'openAnnotation'
+  },
+  openAnnotation: function(){
+    Lizard.App.vent.trigger('makeAnnotation', this.model);
   },
   openModal: function(e) {
     var model = this.model;
@@ -39,9 +43,9 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     };
     modalView = new Lizard.Map.ModalTimeseriesView(options);
     Lizard.mapView.modalitems.show(modalView.render());
-    this.uuid = this.model.url.split("eries/")[1].split("/")[0];
+    this.uuid = this.model.attributes.uuid;
     $('#location-modal').modal();
-    $('#location-modal').on('shown', this.showGraph, that);
+    $('#location-modal').on('show', this.showGraph, that);
   },
   showGraph: function(that){
       var data_url = that.target.dataset.url;
@@ -50,9 +54,6 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
       var flot_div = $('#modal-graph-wrapper').find('.flot-graph');
       $(flot_div).loadPlotData(data_url + '?eventsformat=flot');
   },
-  onClose: function(){
-    $('#location-modal').off('shown');
-  }
 });
 
 // Modal view that opens when clicking on a location
@@ -81,11 +82,7 @@ Lizard.Map.ModalTimeserieView = Lizard.Map.TimeserieView.extend({
   },
   events: {
     'click .graph-this': "drawGraph",
-    'click .fav': 'toggleFavorite',
-    'click .modal-collapse-toggle': 'collapseToggle',
-  },
-  collapseToggle: function(){
-    $('#' + this.uuid).collapse('toggle');
+    'click .fav': 'toggleFavorite'
   },
   toggleFavorite: function() {
     var favorite = this.model.get('favorite');
