@@ -24,7 +24,7 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
   initialize: function(options) {
     this.graphCollection = options.graphCollection;
     this.listenTo(this.collection,
-      "select_collage",
+      "select_collage", 
       this.selectCollage
     );
   },
@@ -55,6 +55,24 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
         }
     });
     Backbone.history.navigate('graphs/' + selectedModel.id);
+  },
+  saveCollage: function(){
+    var graph_index = 0;
+
+    // mij onduidelijk of ik collage eerst moet maken en dan een 
+    // collage item.. Of andersom?
+    var newCollage = new Lizard.Models.Collage({});
+    this.collection.add(newCollage);
+    this.collection.create(newCollage);
+    this.graphCollection.each(function (graph) {
+      var graphItem = graph.get('graphItem')
+      var collageItem = new Lizard.Models.CollageItem({
+        'timeseries' : graphItem.get('timeseries'),
+        'graph_index' : graph_index,
+
+      });
+      graph_index += 1;
+    });
   },
   onDomRefresh: function () {
     $('.drawer-group').disableSelection();
