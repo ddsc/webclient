@@ -79,9 +79,11 @@ Lizard.Utils.Favorites = {
 };
 
 Lizard.Utils.DragDrop = {
-  drag: function (e){
-    var sendThis = $(e.target).data('uuid');
+  copyData: function (e){
+    var data = $(e.target).data();
+    var sendThis = JSON.stringify(data);
     e.dataTransfer.setData("Text", sendThis);
+    console.log('setting dataTransfer = ' + sendThis);
   },
   allowDrop: function (e){
     e.preventDefault();
@@ -90,19 +92,6 @@ Lizard.Utils.DragDrop = {
     e.preventDefault();
     var wms_layer= e.dataTransfer.getData("Text");
     var $target = $(e.target);
-  },
-  drop: function (e){
-    return true;
-    // e.preventDefault();
-    // var data_url = e.dataTransfer.getData("Text");
-    // var $target = $(e.target);
-    // $target.parent().removeClass("empty");
-    // // only fire for nearest .graph-drop parent (in case there is already a graph in the element)
-    // var $graph = $target;
-    // if (!$graph.hasClass('graph-drop')) {
-    //     $graph = $target.parent('.graph-drop');
-    // }
-    // $graph.loadPlotData(data_url);
   }
 };
 
@@ -319,7 +308,7 @@ $.fn.loadScatterPlotData = function (dataUrl, callback, force) {
  */
 function initializePlot($container, isScatter) {
     // define a set of sane options used for all graphs
-    if (isScatter){
+    if (isScatter) {
         var defaultOpts = {
             series: {
                 points: { show: true, hoverable: true, radius: 1 },
@@ -336,75 +325,76 @@ function initializePlot($container, isScatter) {
             legend: {
                 show: false
             }
-        }
-    } else {
-    var defaultOpts = {
-        series: {
-            points: { show: true, hoverable: true, radius: 1 },
-            shadowSize: 0,
-            lines: { show: true }
-        },
-        yaxes: [
-            // allocate at least five axes, but don't reserve space
-            // for the last three
-            {
-                axisLabel: '',
-                zoomRange: [false, false],
-                panRange: false,
-                position: 'left',
-                reserveSpace: true
+        };
+    }
+    else {
+        var defaultOpts = {
+            series: {
+                points: { show: true, hoverable: true, radius: 1 },
+                shadowSize: 0,
+                lines: { show: true }
             },
-            {
-                axisLabel: '',
-                zoomRange: [false, false],
-                panRange: false,
-                position: 'right',
-                reserveSpace: true
+            yaxes: [
+                // allocate at least five axes, but don't reserve space
+                // for the last three
+                {
+                    axisLabel: '',
+                    zoomRange: [false, false],
+                    panRange: false,
+                    position: 'left',
+                    reserveSpace: true
+                },
+                {
+                    axisLabel: '',
+                    zoomRange: [false, false],
+                    panRange: false,
+                    position: 'right',
+                    reserveSpace: true
+                },
+                {
+                    axisLabel: '',
+                    zoomRange: [false, false],
+                    panRange: false,
+                    position: 'right',
+                    reserveSpace: false
+                },
+                {
+                    axisLabel: '',
+                    zoomRange: [false, false],
+                    panRange: false,
+                    position: 'right',
+                    reserveSpace: false
+                },
+                {
+                    axisLabel: '',
+                    zoomRange: [false, false],
+                    panRange: false,
+                    position: 'right',
+                    reserveSpace: false
+                }
+            ],
+            xaxes: [
+                {
+                    axisLabel: 'Tijd',
+                    timezone: 'browser',
+                    mode: 'time',
+                    zoomRange: [1 * timeUnitSize.minute, 400 * timeUnitSize.year],
+                    tickFormatter: timeTickFormatter,
+                    labelHeight: 28 // always reserve enough vertical space for the time label
+                }
+            ],
+            grid: {
+                hoverable: true,
+                labelMargin: 4,
+                margin: 30 /* for the axis labels */,
+                borderWidth: 1,
+                autoHighlight: false
             },
-            {
-                axisLabel: '',
-                zoomRange: [false, false],
-                panRange: false,
-                position: 'right',
-                reserveSpace: false
-            },
-            {
-                axisLabel: '',
-                zoomRange: [false, false],
-                panRange: false,
-                position: 'right',
-                reserveSpace: false
-            },
-            {
-                axisLabel: '',
-                zoomRange: [false, false],
-                panRange: false,
-                position: 'right',
-                reserveSpace: false
+            legend: {
+                show: false
             }
-        ],
-        xaxes: [
-            {
-                axisLabel: 'Tijd',
-                timezone: 'browser',
-                mode: 'time',
-                zoomRange: [1 * timeUnitSize.minute, 400 * timeUnitSize.year],
-                tickFormatter: timeTickFormatter,
-                labelHeight: 28 // always reserve enough vertical space for the time label
-            }
-        ],
-        grid: {
-            hoverable: true,
-            labelMargin: 4,
-            margin: 30 /* for the axis labels */,
-            borderWidth: 1,
-            autoHighlight: false
-        },
-        legend: {
-            show: false
-        }
-      }
-    };
+        };
+    }
 
     // update the default options based on the users platform
     if (isAppleMobile) {
@@ -420,12 +410,12 @@ function initializePlot($container, isScatter) {
             }
         });
     }
-    else if(!isScatter){
+    else {
         $.extend(defaultOpts, {
             // disable touch, so the flot.touch plugin won't mess up the desktop browser
             touch: false,
             // enable pan & zoom
-            pan: { interactive: false },
+            pan: { interactive: true },
             zoom: { interactive: true },
             // enable a mouse tooltip
             tooltip: {

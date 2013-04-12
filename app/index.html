@@ -600,7 +600,7 @@
 
 
     <script id="timeserie-item-template" type="text/template">
-        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
+        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
           <i class="icon-bar-chart fav"></i>&nbsp;
@@ -620,7 +620,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-uuid="<%=timeseries.get('uuid')%>">
+      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <h5><i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%></h5>
         <ul class="hide">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>        
@@ -645,10 +645,6 @@
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-signal"></i> Grafieken</a>
                     </li>
                     <div data-group="presets" class="measurement-items" id="presetsRegion"></div>
-                    <li class="metrics-dropdown" id="favorites">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-star"></i> Favorieten</a>
-                    </li>
-                    <div data-group="favorites" class="hide measurement-items" id="favoriteRegion"></div>
                     <li class="metrics-dropdown" id="selection">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
                     </li>

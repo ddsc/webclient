@@ -7,7 +7,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     events: {
         // disabled for now, as it also removes the item when dropping
         // on its own div
-        // 'dragend': 'onDragEnd'
+        'dragend': 'onDragEnd',
         'mouseenter': 'onMouseEnter',
         'mouseleave': 'onMouseLeave',
         'click .delete': 'removeFromCollection'
@@ -25,20 +25,16 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         self.model.collection.remove(self.model);
         return true;
     },
-    onDragEnd: function(e) {
+    onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph
         var self = this;
-        var uuid = e.originalEvent.dataTransfer.getData('Text');
-        if (uuid) {
-            var timeseries = timeseriesCollection.get(uuid);
-            if (timeseries) {
-                var item = new Lizard.Models.GraphItem({
-                    timeseries: timeseries
-                });
-                this.model.collection.find(function (oldItem) {
-                    if (oldItem.get('timeseries').get('uuid')) {
-                        // remove the item from the current collection
-                        self.model.collection.remove(oldItem);
+        var dataJson = e.originalEvent.dataTransfer.getData('Text');
+        if (dataJson) {
+            var data = JSON.parse(dataJson);
+            if (data.uuid) {
+                this.model.collection.each(function (otherItem) {
+                    if (otherItem.get('timeseries').get('uuid') == data.uuid) {
+                        self.model.collection.remove(otherItem);
                     }
                 });
             }
