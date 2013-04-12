@@ -8,15 +8,11 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         // disabled for now, as it also removes the item when dropping
         // on its own div
         'dragend': 'onDragEnd',
-        'click': 'onMouseEnter',
+        'click': 'onClick',
         // 'mouseleave': 'onMouseLeave',
         'click .delete': 'removeFromCollection'
     },
-    onMouseEnter: function(e) {
-        var that = this;
-        that.$el.find('ul').first().toggleClass('hide', 'show');
-    },
-    onMouseLeave: function(e) {
+    onClick: function(e) {
         var that = this;
         that.$el.find('ul').first().toggleClass('hide', 'show');
     },
@@ -44,7 +40,5 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
 
 Lizard.Views.GraphLegendCollectionView = Backbone.Marionette.CollectionView.extend({
     itemView: Lizard.Views.GraphLegendItem,
-    emptyView: Lizard.Views.GraphLegendNoItems,
-    onShow: function(e) {
-    }
+    emptyView: Lizard.Views.GraphLegendNoItems
 });
