@@ -8,8 +8,8 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         // disabled for now, as it also removes the item when dropping
         // on its own div
         'dragend': 'onDragEnd',
-        'mouseenter': 'onMouseEnter',
-        'mouseleave': 'onMouseLeave',
+        'click': 'onMouseEnter',
+        // 'mouseleave': 'onMouseLeave',
         'click .delete': 'removeFromCollection'
     },
     onMouseEnter: function(e) {
