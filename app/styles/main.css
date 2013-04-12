@@ -871,6 +871,7 @@ div#selectionRegion{
 .favorite-item h5,
 .timeserie-item h5,
 .ddsc-item h5 {
+    font-size: .98em;
     text-decoration: none;
     text-overflow: ellipsis;
     padding: 0;
@@ -1184,7 +1185,35 @@ ul#homepage-livestream li {
     -ms-text-overflow: ellipsis;
 
 }
-p.graph-legend {
+.legend {
+    padding: 5px;
+}
+div.graph-legend {
+    color: #0084B4;
     font-size: .9em;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #ccc;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+div.graph-legend h5{
+    color: #0084B4;
+    font-size: .9em;    
+}
+
+div.graph-legend ul {
+    opacity: .9;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+}
+div.graph-legend ul, div.graph-legend ul li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+div.graph-legend ul li{
+    margin: 2px 0px 0px 0px;
 }

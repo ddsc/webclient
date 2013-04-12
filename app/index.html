@@ -602,9 +602,10 @@
     <script id="timeserie-item-template" type="text/template">
         <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-url="<%= timeserie.events%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
-          <i class="icon-star-empty fav"></i>&nbsp;
+          <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
+          <i class="icon-bar-chart fav"></i>&nbsp;
           <span class="add" data-url="<%= timeserie.events%>"><%= timeserie.name %></span>
-          <i class="icon-question-sign info pull-right"></i>
+          <!-- <i class="icon-question-sign info pull-right"></i>-->
         </h5>
         </div>
         <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
@@ -619,22 +620,25 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <p class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-uuid="<%=timeseries.get('uuid')%>">
-        <i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%><br/>
-        <a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a>
-      </p>
+      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.drag(event)" data-uuid="<%=timeseries.get('uuid')%>">
+        <h5><i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%></h5>
+        <ul class="hide">
+          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>        
+          <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
+        </ul>
+      </div>
     </script>
 
     <script type="text/template" id="graph-and-legend-template">
       <div class="row-fluid graph-and-legend">
-        <div class="graph span10"></div>
-        <div class="legend span2"></div>
+        <div class="graph span9"></div>
+        <div class="legend span3"></div>
       </div>
     </script>
 
     <script type="text/template" id="graphs-template">
       <div class="row-fluid">
-        <div class="span5" id="sidebar">
+        <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown" id="presets">
@@ -657,7 +661,7 @@
                 <div class="" id="collageRegion"></div>
         </div>
 
-        <div class="span7" id="mainRegion">
+        <div class="span9" id="mainRegion">
             <div id="graphsRegion"></div>
         </div>
         <div class="btn-toolbar pull-right">
