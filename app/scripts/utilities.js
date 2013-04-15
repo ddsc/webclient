@@ -80,6 +80,7 @@ Lizard.Utils.Favorites = {
 
 Lizard.Utils.DragDrop = {
   copyData: function (e){
+    $('#graphsRegion').css('-webkit-filter', 'blur(1px)');
     var data = $(e.target).data();
     var sendThis = JSON.stringify(data);
     if (e.originalEvent) {
