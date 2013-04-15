@@ -45,6 +45,7 @@
     <link href="styles/bootstrap.css" rel="stylesheet">
     <link href="styles/visualsearch.css" rel="stylesheet">
     <link href="styles/leaflet.css" rel="stylesheet">
+    <link href="styles/colorbrewer.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet" >
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="styles/ie.css" />
@@ -282,6 +283,7 @@
                 </ul>
                 <br class="spacer">
                 <div class="nav sidenav" id="annotationsRegion"></div>
+                <div class="nav sidenav" id="geocoderRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
@@ -621,7 +623,7 @@
 
     <script type="text/template" id="graphs-legend-template">
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
-        <h5><i class="icon-bar-chart"></i>&nbsp;<%=timeseries.get('name')%></h5>
+        <h5>&nbsp;<%=timeseries.get('name')%> <div class="legendcolor" style="float:left;clear:both;width:15px;height:15px;background-color:<%=color%>;"></div></h5><%=timeseries.get('timeseries')%>
         <ul class="hide">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>
           <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
@@ -877,6 +879,12 @@
       <h4>Help</h4>
     </script>
 
+    <script type="text/template" id="geocoder-template">
+    <div class="row-fluid">
+      <input type="text" class="span12 input-small search-query" name="geocodeQuery" placeholder="Spring naar locatie">
+    </div>
+    </script>    
+
     <script type="text/template" id="annotations-template">
       <p>Annotaties</p>
       <%if(isLoading){%>
@@ -989,6 +997,7 @@
 
         <!-- build:js scripts/extras.js -->
         <script src="scripts/vendor/raphael.js"></script>
+        <script src="scripts/vendor/colorbrewer.js"></script>
         <script src="scripts/vendor/justgage.1.0.1.js"></script>
         <script src="scripts/vendor/gauge.min.js"></script>
         <script src="scripts/vendor/holder.js"></script>
@@ -1089,6 +1098,7 @@
         <script src="scripts/lizard/views/InfoModal.js"></script>
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
+        <script src="scripts/lizard/views/Geocoder.js"></script>        
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegendCollection.js"></script>
