@@ -98,38 +98,31 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       }
     });
 
-    // mock alarm layer
-    var alarms = [
-        {
-            location: [52.10311000218847, 4.8689634923324585],
-            href: '#graphs/60'
-        },
-        {
-            location: [52.10360005122914, 4.8680634923324585],
-            href: '#graphs/61'
-        }
-    ];
-    var alarmIcon = L.icon({
-        iconUrl: 'scripts/vendor/images/marker-caution.png',
-        iconAnchor: [16, 35],
-        popupAnchor: [0, -30]
+    var alarms = new Lizard.geo.Layers.WMSLayer({
+      "layer_name": "dijkdata:alarm_view", 
+      "display_name": "Alarmen", 
+      "description": "", 
+      "metadata": null, 
+      "legend_url": "", 
+      "enable_search": true, 
+      "styles": "", 
+      "format": "image/png", 
+      "height": "256", 
+      "width": "256", 
+      "tiled": "true", 
+      "transparent": "true", 
+      "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
+      "opacity": null, 
+      "type": "wms", 
+      "options": {
+          "buffer": 0, 
+          "isBaseLayer": false, 
+          "opacity": 1.0
+      }
     });
-    var alarmLayer = new L.FeatureGroup();
-    $.each(alarms, function() {
-        var alarm = this;
-        var marker = L.marker(
-            alarm.location,
-            {
-                icon: alarmIcon
-            }
-        );
-        marker.addTo(alarmLayer);
-        var popup =  new L.popup().setContent('<div><h4>Alarm: Hoge waterstand dijk</h4> '+
-          '<span class="author">Vandaag</span><br>'+
-          'Waterstand in de dijk is hoog. Alarm met urgentie hoog.<br>Bekijk waterdruk in dijk <a href="#graphs/60">hier<a>.</div>');
-        marker.bindPopup(popup);
-    });
-    this.alarmLayer = alarmLayer;
+
+    var alarmLayer = alarms.getLeafletLayer();
+    debugger
     mapCanvas.addLayer(alarmLayer);
 
     $('.alarm-layer-toggler').click(function(e) {

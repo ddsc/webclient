@@ -19,6 +19,7 @@ parts
 src
 etc/*.nginx.conf
 
+.project
 node_modules/
 temp/
 dist/

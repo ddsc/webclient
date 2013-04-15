@@ -83,7 +83,12 @@ Lizard.Utils.DragDrop = {
     $('#graphsRegion').css('-webkit-filter', 'blur(1px)');
     var data = $(e.target).data();
     var sendThis = JSON.stringify(data);
-    e.dataTransfer.setData("Text", sendThis);
+    if (e.originalEvent) {
+        e.originalEvent.dataTransfer.setData("Text", sendThis);
+    }
+    else {
+        e.dataTransfer.setData("Text", sendThis);
+    }
     console.log('setting dataTransfer = ' + sendThis);
   },
   allowDrop: function (e){
