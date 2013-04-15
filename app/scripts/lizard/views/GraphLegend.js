@@ -5,8 +5,6 @@ Lizard.Views.GraphLegendNoItems = Backbone.Marionette.ItemView.extend({
 Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     template: '#graphs-legend-template',
     events: {
-        // disabled for now, as it also removes the item when dropping
-        // on its own div
         'dragend': 'onDragEnd',
         'click': 'onClick',
         // 'mouseleave': 'onMouseLeave',

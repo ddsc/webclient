@@ -83,12 +83,6 @@ can set the default in the options.
 // jquery.mousewheel.js, we put them inline here to save people the
 // effort of downloading them.
 
-/*
-jquery.event.drag.js ~ v1.5 ~ Copyright (c) 2008, Three Dub Media (http://threedubmedia.com)
-Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-LICENSE.txt
-*/
-
-
 /* jquery.mousewheel.min.js
  * Copyright (c) 2011 Brandon Aaron (http://brandonaaron.net)
  * Licensed under the MIT License (LICENSE.txt).
@@ -101,8 +95,6 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
  * Requires: 1.2.2+
  */
 (function(d){function e(a){var b=a||window.event,c=[].slice.call(arguments,1),f=0,e=0,g=0,a=d.event.fix(b);a.type="mousewheel";b.wheelDelta&&(f=b.wheelDelta/120);b.detail&&(f=-b.detail/3);g=f;void 0!==b.axis&&b.axis===b.HORIZONTAL_AXIS&&(g=0,e=-1*f);void 0!==b.wheelDeltaY&&(g=b.wheelDeltaY/120);void 0!==b.wheelDeltaX&&(e=-1*b.wheelDeltaX/120);c.unshift(a,f,e,g);return(d.event.dispatch||d.event.handle).apply(this,c)}var c=["DOMMouseScroll","mousewheel"];if(d.event.fixHooks)for(var h=c.length;h;)d.event.fixHooks[c[--h]]=d.event.mouseHooks;d.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a=c.length;a;)this.addEventListener(c[--a],e,!1);else this.onmousewheel=e},teardown:function(){if(this.removeEventListener)for(var a=c.length;a;)this.removeEventListener(c[--a],e,!1);else this.onmousewheel=null}};d.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})})(jQuery);
-
-(function(E){E.fn.drag=function(L,K,J){if(K){this.bind("dragstart",L)}if(J){this.bind("dragend",J)}return !L?this.trigger("drag"):this.bind("drag",K?K:L)};var A=E.event,B=A.special,F=B.drag={not:":input",distance:0,which:1,dragging:false,setup:function(J){J=E.extend({distance:F.distance,which:F.which,not:F.not},J||{});J.distance=I(J.distance);A.add(this,"mousedown",H,J);if(this.attachEvent){this.attachEvent("ondragstart",D)}},teardown:function(){A.remove(this,"mousedown",H);if(this===F.dragging){F.dragging=F.proxy=false}G(this,true);if(this.detachEvent){this.detachEvent("ondragstart",D)}}};B.dragstart=B.dragend={setup:function(){},teardown:function(){}};function H(L){var K=this,J,M=L.data||{};if(M.elem){K=L.dragTarget=M.elem;L.dragProxy=F.proxy||K;L.cursorOffsetX=M.pageX-M.left;L.cursorOffsetY=M.pageY-M.top;L.offsetX=L.pageX-L.cursorOffsetX;L.offsetY=L.pageY-L.cursorOffsetY}else{if(F.dragging||(M.which>0&&L.which!=M.which)||E(L.target).is(M.not)){return }}switch(L.type){case"mousedown":E.extend(M,E(K).offset(),{elem:K,target:L.target,pageX:L.pageX,pageY:L.pageY});A.add(document,"mousemove mouseup",H,M);G(K,false);F.dragging=null;return false;case !F.dragging&&"mousemove":if(I(L.pageX-M.pageX)+I(L.pageY-M.pageY)<M.distance){break}L.target=M.target;J=C(L,"dragstart",K);if(J!==false){F.dragging=K;F.proxy=L.dragProxy=E(J||K)[0]}case"mousemove":if(F.dragging){J=C(L,"drag",K);if(B.drop){B.drop.allowed=(J!==false);B.drop.handler(L)}if(J!==false){break}L.type="mouseup"}case"mouseup":A.remove(document,"mousemove mouseup",H);if(F.dragging){if(B.drop){B.drop.handler(L)}C(L,"dragend",K)}G(K,true);F.dragging=F.proxy=M.elem=false;break}return true}function C(M,K,L){M.type=K;var J=E.event.handle.call(L,M);return J===false?false:J||M.result}function I(J){return Math.pow(J,2)}function D(){return(F.dragging===false)}function G(K,J){if(!K){return }K.unselectable=J?"off":"on";K.onselectstart=function(){return J};if(K.style){K.style.MozUserSelect=J?"":"none"}}})(jQuery);
 
 (function ($) {
     var options = {
@@ -140,16 +132,28 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
 
         var prevCursor = 'default', prevPageX = 0, prevPageY = 0,
             panTimeout = null;
+        var pageX = 0, pageY = 0;
+
+        function onMouseMove(e) {
+            pageX = e.pageX;
+            pageY = e.pageY;
+        }
+
+        function onDragOver(e) {
+            pageX = e.originalEvent.pageX;
+            pageY = e.originalEvent.pageY;
+        }
 
         function onDragStart(e) {
+            e.originalEvent.dataTransfer.setData("Text", '');
             if (e.which != 1)  // only accept left-click
                 return false;
             var c = plot.getPlaceholder().css('cursor');
             if (c)
                 prevCursor = c;
             plot.getPlaceholder().css('cursor', plot.getOptions().pan.cursor);
-            prevPageX = e.pageX;
-            prevPageY = e.pageY;
+            prevPageX = pageX;
+            prevPageY = pageY;
         }
 
         function onDrag(e) {
@@ -157,11 +161,14 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             if (panTimeout || !frameRate)
                 return;
 
+            var curPageX = pageX,
+                curPageY = pageY;
+
             panTimeout = setTimeout(function () {
-                plot.pan({ left: prevPageX - e.pageX,
-                           top: prevPageY - e.pageY });
-                prevPageX = e.pageX;
-                prevPageY = e.pageY;
+                plot.pan({ left: prevPageX - curPageX,
+                           top: prevPageY - curPageY });
+                prevPageX = curPageX;
+                prevPageY = curPageY;
 
                 panTimeout = null;
             }, 1 / frameRate * 1000);
@@ -174,8 +181,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             }
 
             plot.getPlaceholder().css('cursor', prevCursor);
-            plot.pan({ left: prevPageX - e.pageX,
-                       top: prevPageY - e.pageY });
+            plot.pan({ left: prevPageX - pageX,
+                       top: prevPageY - pageY });
         }
 
         function bindEvents(plot, eventHolder) {
@@ -186,7 +193,10 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             }
 
             if (o.pan.interactive) {
-                eventHolder.bind("dragstart", { distance: 10 }, onDragStart);
+                eventHolder.attr('draggable', 'true');
+                eventHolder.bind("mousemove", onMouseMove);
+                eventHolder.bind("dragover", onDragOver);
+                eventHolder.bind("dragstart", onDragStart);
                 eventHolder.bind("drag", onDrag);
                 eventHolder.bind("dragend", onDragEnd);
             }
@@ -324,6 +334,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
         function shutdown(plot, eventHolder) {
             eventHolder.unbind(plot.getOptions().zoom.trigger, onZoomClick);
             eventHolder.unbind("mousewheel", onMouseWheel);
+            eventHolder.unbind("mousemove", onMouseMove);
+            eventHolder.unbind("dragover", onDragOver);
             eventHolder.unbind("dragstart", onDragStart);
             eventHolder.unbind("drag", onDrag);
             eventHolder.unbind("dragend", onDragEnd);
