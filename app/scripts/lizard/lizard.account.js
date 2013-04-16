@@ -22,17 +22,16 @@ Lizard.Account.View = Backbone.Marionette.ItemView.extend({
             $btn.attr('disabled', 'disabled');
 
             this.model.set('initialPeriod', $form.find('[name="timeperiod"]:checked').val());
-            this.model.save(null, {
-                success: function (model, response) {
+            this.model.save(null)
+                .done(function (model, response) {
                     $('.top-right').notify({message: {text: 'Voorkeuren opgeslagen.'}}).show();
-                },
-                error: function (model, response) {
+                })
+                .fail(function (model, response) {
                     $('.top-right').notify({message: {text: 'Actie mislukt. (' + response.responseText + ')'}}).show();
-                },
-                complete: function (model, response) {
+                })
+                .always(function (model, response) {
                     $btn.removeAttr('disabled');
-                }
-            });
+                });
         }
     },
     onRender: function(e) {

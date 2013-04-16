@@ -22,7 +22,9 @@ var settings = {
     events_url: domain + 'events/',
     annotations_count_url: domain + 'annotations/count/',
     annotations_search_url: domain + 'annotations/search/',
-    annotations_create_url: domain + 'annotations/create/'
+    annotations_create_url: domain + 'annotations/create/',
+    collages_create_url: domain + 'collages/create/',
+    collageitems_create_url: domain + 'collageitems/create/'
 };
 
 /**

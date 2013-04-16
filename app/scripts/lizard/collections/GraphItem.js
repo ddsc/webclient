@@ -14,11 +14,10 @@ Lizard.Collections.GraphItem = Backbone.Collection.extend({
     addTimeseriesByUrl: function (url) {
         var self = this;
         var timeseries = new Lizard.Models.TimeseriesActual({url: url});
-        timeseries.fetch({
-            success: function (model, response) {
+        timeseries.fetch()
+            .done(function (model, response) {
                 var graphItem = new Lizard.Models.GraphItem({timeseries: model});
                 self.add(graphItem);
-            }
-        });
+            });
     }
 });
