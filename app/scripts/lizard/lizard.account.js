@@ -22,12 +22,13 @@ Lizard.Account.View = Backbone.Marionette.ItemView.extend({
             $btn.attr('disabled', 'disabled');
 
             this.model.set('initialPeriod', $form.find('[name="timeperiod"]:checked').val());
+            this.model.set('initialZoom', $form.find('[name="initialzoom"]').val());
             this.model.save(null)
                 .done(function (model, response) {
                     $('.top-right').notify({message: {text: 'Voorkeuren opgeslagen.'}}).show();
                 })
                 .fail(function (model, response) {
-                    $('.top-right').notify({message: {text: 'Actie mislukt. (' + response.responseText + ')'}}).show();
+                    $('.top-right').notify({type: 'warning', message: {text: 'Actie mislukt. (' + response.responseText + ')'}}).show();
                 })
                 .always(function (model, response) {
                     $btn.removeAttr('disabled');
