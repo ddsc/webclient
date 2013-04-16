@@ -142,6 +142,24 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
             activeWorkspace.remove(alarms);
         }
     });
+    
+  var alarmWMS = leafletView.getAlarms();
+  var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
+  alarms.set({visibility: true, display_name: "Status"});
+  var activeWorkspace = Lizard.workspaceView.getCollection();
+  
+  $('.status-layer-toggler').click(function(e) {
+        var $icon = $(this).find('i');
+        if ($icon.hasClass('icon-check-empty')) {
+            $icon.addClass('icon-check').removeClass('icon-check-empty');
+            Lizard.Models.WorkspaceItem
+            activeWorkspace.add(alarms);
+        }
+        else {
+            $icon.addClass('icon-check-empty').removeClass('icon-check');
+            activeWorkspace.remove(alarms);
+        }
+    });
 
   // Then tell backbone to set the navigation to #map
   if(lonlatzoom && workspacekey){

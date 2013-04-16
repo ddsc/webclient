@@ -4,9 +4,10 @@
 
     /* *************************************************** */
 
-    function DataSet (lazyLoad, model) {
+    function DataSet (lazyLoad, events_url, color) {
         this.lazyLoad = lazyLoad;
-        this.url = model.get('events');
+        this.url = events_url;
+        this.color = color;
         this.needsUpdate = true;
         this.data = [];
         this.label = '';
@@ -122,6 +123,7 @@
             line.data = dataset.data;
             line.yaxis = yaxis;
             line.label = dataset.label;
+            line.color = dataset.color;
             newData.push(line);
         }
 
@@ -200,16 +202,18 @@
         var self = this;
         backboneCollection.on('add', function (model, collection) {
             var timeseries = model.get('timeseries');
+            var events_url = timeseries.get('events');
+            var color = model.get('color');
 
             for (var i in self.datasets) {
                 var dataset = self.datasets[i];
-                if (dataset.url == timeseries.get('events')) {
+                if (dataset.url == events_url) {
                     // already loaded, do nothing
                     return;
                 }
             }
 
-            var dataset = new DataSet(self, timeseries);
+            var dataset = new DataSet(self, events_url, color);
             self.datasets.push(dataset);
             self.refreshData();
         });
