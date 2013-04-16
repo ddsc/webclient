@@ -31,7 +31,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             var timeseries = {
                 'primary': relation.attributes.pk.toString(),
                 'model' : 'timeseries'
-            }
+            };
         }
         // add leaflet annotation to body. This is a modal
         // so body is fine
@@ -43,24 +43,26 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         $('#annotation-modal').modal();
 
         // // initiate datepickers on the div's
-        // $('#annotation-modal .datepick-annotate').datepicker({
-        //   format: "yyyy-mm-dd",
-        //   onRender: function ()
-        //    {
-        //       var date = new Date();
-        //       return date
-        //    }
-        // }).on('changeDate', function(ev){
-        //   $('#annotation-modal .datepick-annotate').datepicker('hide');
-        // });
 
-        // If annotation is not filled out but closed. 
+        $('#ui-datepicker-div').css('z-index', 10000);
+        $('#annotation-modal .datepick-annotate').datepicker({
+          format: "yyyy-mm-dd",
+          onRender: function ()
+           {
+              var date = new Date();
+              return date;
+           }
+        }).on('changeDate', function(ev){
+          $('#annotation-modal .datepick-annotate').datepicker('hide');
+        });
+
+        // If annotation is not filled out but closed.
         // View should be removed and marker removed from layer
         $('#annotation-modal').on('hide', function(){
             $(this).remove();
             if (layer){
                 window.drawnItems.removeLayer(layer);
-            };
+            }
         });
 
         // override of the submit function
@@ -71,7 +73,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             data.datetime_from = new Date(data.datetime_from).toISOString();
           }
           if (data.datetime_until){
-            data.datetime_until = new Date(data.datetime_until).toISOString();          
+            data.datetime_until = new Date(data.datetime_until).toISOString();
           }
           if (layer){
               data.location = layer._latlng.lat.toString() + ',' + layer._latlng.lng.toString();
@@ -83,24 +85,24 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
           data.category = 'ddsc';
           $.ajax({
             type: "POST",
-            url: settings.annotations_create_url, 
+            url: settings.annotations_create_url,
             data: $.param(data),
             success: function(data){
               $('.top-right').notify({
-                message:{text: 'Annotatie geplaatst'}, 
+                message:{text: 'Annotatie geplaatst'},
                 type: 'success'}).show();
             // Close and unbind the popup when clicking the "Save" button.
             // Need to use Leaflet internals because the public API doesn't offer this.
               if (layer){
-                  window.drawnItems.removeLayer(layer);                
+                  window.drawnItems.removeLayer(layer);
               }
               $('#annotation-modal').modal('toggle');
-              $('#annotation-modal').remove()
+              $('#annotation-modal').remove();
               Lizard.App.vent.trigger('savedpopup');
             },
             error: function(){
               if (layer){
-                  window.drawnItems.removeLayer(layer);                
+                  window.drawnItems.removeLayer(layer);
               }
               $('#annotation-modal').modal('toggle');
               $('#annotation-modal').remove();
@@ -281,3 +283,10 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         return html;
     }
 });
+
+
+// Fixes the z-index of the datepicker which appeared behind the modal
+$('.datepick-annotate').live('focus', function(e) {
+    $('#ui-datepicker-div').css('z-index', 10000);
+});
+
