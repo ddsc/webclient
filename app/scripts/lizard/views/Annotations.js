@@ -25,8 +25,8 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         //"click .do-something": "something:do:it"
     },
     newAnnotation: function(relation){
-    	var annotationCollectionView = new Lizard.Views.AnnotationsCollectionView();
-        annotationCollectionView.render();
+    	var annotationCollectionView = new Lizard.Views.AnnotationsCollectionView(relation);
+        $('body').append(annotationCollectionView.render());
     },
     onDomRefresh: function () {
         // manipulate the `el` here. it's already
@@ -204,3 +204,139 @@ $('.datepick-annotate').live('focus', function(e) {
     $('#ui-datepicker-div').css('z-index', 10000);
 });
 
+Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.extend({
+	itemView: Lizard.Views.Annotations,
+	itemViewOptions: {
+		relation: null
+	}
+	tagName: ul,
+	initialize: function (relation) {
+		this.itemViewOptions.relation = relation;
+		
+	}
+});
+
+Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
+	template: _.template(
+            $('#leaflet-annotation-template').html(), {
+			      text: "Kaboo-yah",
+			      visibility: "public"
+			    }, {variable: 'annotation'}),
+	initialize: function(options){
+		var relation = options.relation;
+		// Check what kind of object is making this annotation
+        // In the case of a non related location, very simple
+        // if either timeseries or location check if there are 
+        // notations on this already
+        
+        if (relation._leaflet_id){
+            var layer = relation;
+        } else if (relation.get('events')){
+            var related_object = {
+                'primary': relation.get('pk').toString(),
+                'model' : 'timeseries'
+            };
+        } else if (relation.get('point_geometry')){
+            var related_object = {
+                'primary': relation.get('pk').toString(),
+                'model' : 'location'
+            };
+        };
+        
+        if (related_object){
+        	var annotation = $.ajax({
+	            url: settings.annotations_search_url,
+	            data: 'model_name=' + related_object.model + '&model_pk=' + related_object.primary,
+	            dataType: 'json'
+        	}).done(function (data, textStatus, jqXHR) {
+	            if (data.results) {
+	                console.log(data.results);
+	            }
+        	});
+        }
+        // add leaflet annotation to body. This is a modal
+        // so body is fine
+        (_.template(
+            $('#leaflet-annotation-template').html(), {
+			      text: "Kaboo-yah",
+			      visibility: "public"
+			    }, {variable: 'annotation'})
+            );
+
+       // open modal view
+        $('#annotation-modal').modal();
+
+        // // initiate datepickers on the div's
+
+        $('#ui-datepicker-div').css('z-index', 10000);
+        $('#annotation-modal .datepick-annotate').datepicker({
+          format: "yyyy-mm-dd",
+          onRender: function ()
+           {
+              var date = new Date();
+              return date;
+           }
+        }).on('changeDate', function(ev){
+          $('#annotation-modal .datepick-annotate').datepicker('hide');
+        });
+
+        // If annotation is not filled out but closed.
+        // View should be removed and marker removed from layer
+        $('#annotation-modal').on('hide', function(){
+            $(this).remove();
+            if (layer){
+                window.drawnItems.removeLayer(layer);
+            }
+        });
+
+        // override of the submit function
+        $('form.annotation').submit(function(e) {
+          e.preventDefault();
+          var data = $(this).serializeObject();
+          if (data.datetime_from){
+            data.datetime_from = new Date(data.datetime_from).toISOString();
+          }
+          if (data.datetime_until){
+            data.datetime_until = new Date(data.datetime_until).toISOString();
+          }
+          if (layer){
+              data.location = layer._latlng.lat.toString() + ',' + layer._latlng.lng.toString();
+          }
+          if (related_object){
+            data.the_model_name = related_object.model;
+            data.the_model_pk = related_object.primary;
+          }
+          data.category = 'ddsc';
+          $.ajax({
+            type: "POST",
+            url: settings.annotations_create_url,
+            data: $.param(data),
+            success: function(data){
+              $('.top-right').notify({
+                message:{text: 'Annotatie geplaatst'},
+                type: 'success'}).show();
+            // Close and unbind the popup when clicking the "Save" button.
+            // Need to use Leaflet internals because the public API doesn't offer this.
+              if (layer){
+                  window.drawnItems.removeLayer(layer);
+              }
+              $('#annotation-modal').modal('toggle');
+              $('#annotation-modal').remove();
+              Lizard.App.vent.trigger('savedpopup');
+            },
+            error: function(){
+              if (layer){
+                  window.drawnItems.removeLayer(layer);
+              }
+              $('#annotation-modal').modal('toggle');
+              $('#annotation-modal').remove();
+              $('.top-right').notify({message:{
+                text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
+                    }, type: 'danger'
+                }).show();
+            }
+          });
+        });
+
+	}
+});
