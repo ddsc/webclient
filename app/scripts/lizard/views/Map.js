@@ -43,6 +43,54 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   extraLayers: {
   },
+  getAlarms: function(){
+  	  var alarms = new Lizard.geo.Layers.WMSLayer({
+		  "layer_name": "dijkdata:alarm_view", 
+		  "wms_source": {
+		  	  "layer_name": "dijkdata:alarm_view",
+			  "display_name": "Alarmen", 
+			  "description": "", 
+			  "metadata": null, 
+			  "legend_url": "", 
+			  "enable_search": true, 
+			  "styles": "", 
+			  "format": "image/png", 
+			  "height": "256", 
+			  "width": "256", 
+			  "tiled": "true", 
+			  "transparent": "true", 
+			  "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
+			  "opacity": null, 
+			  "type": "wms", 
+			  "options": {
+				  "buffer": 0, 
+				  "isBaseLayer": false, 
+				  "opacity": 1.0
+			  }
+		  },
+		  "display_name": "Alarmen", 
+		  "description": "", 
+		  "metadata": null, 
+		  "legend_url": "", 
+		  "enable_search": true, 
+		  "styles": "", 
+		  "format": "image/png", 
+		  "height": "256", 
+		  "width": "256", 
+		  "tiled": "true", 
+		  "transparent": "true",
+		  "selected": true,
+		  "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
+		  "opacity": null, 
+		  "type": "wms", 
+		  "options": {
+			  "buffer": 0, 
+			  "isBaseLayer": false, 
+			  "opacity": 1.0
+		  }
+    });
+    return alarms
+  },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
@@ -94,45 +142,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         window.drawnItems.addLayer(layer);
         Lizard.App.vent.trigger('makeAnnotation', layer);
       }
-    });
-
-    var alarms = new Lizard.geo.Layers.WMSLayer({
-      "layer_name": "dijkdata:alarm_view", 
-      "display_name": "Alarmen", 
-      "description": "", 
-      "metadata": null, 
-      "legend_url": "", 
-      "enable_search": true, 
-      "styles": "", 
-      "format": "image/png", 
-      "height": "256", 
-      "width": "256", 
-      "tiled": "true", 
-      "transparent": "true", 
-      "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
-      "opacity": null, 
-      "type": "wms", 
-      "options": {
-          "buffer": 0, 
-          "isBaseLayer": false, 
-          "opacity": 1.0
-      }
-    });
-
-    var alarmLayer = alarms.getLeafletLayer();
-    debugger
-    mapCanvas.addLayer(alarmLayer);
-
-    $('.alarm-layer-toggler').click(function(e) {
-        var $icon = $(this).find('i');
-        if ($icon.hasClass('icon-check-empty')) {
-            $icon.addClass('icon-check').removeClass('icon-check-empty');
-            mapCanvas.addLayer(alarmLayer);
-        }
-        else {
-            $icon.addClass('icon-check-empty').removeClass('icon-check');
-            mapCanvas.removeLayer(alarmLayer);
-        }
     });
 
     // end mock alarm layer
