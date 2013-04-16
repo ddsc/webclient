@@ -66,12 +66,16 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
     });
   },
   workspaceItemAdded: function(workspaceItem) {
-    var models = this.collection.where({display_name: workspaceItem.get('display_name')});
-    models[0].set({'addedToMap': true});
+  	if (workspaceItem.get('display_name')!= 'Alarmen'){
+	    var models = this.collection.where({display_name: workspaceItem.get('display_name')});
+	    models[0].set({'addedToMap': true});  		
+  	}
   },
   workspaceItemRemoved: function(workspaceItem) {
-    var models = this.collection.where({display_name: workspaceItem.get('display_name')});
-    models[0].set({'addedToMap': false});
+  	if (workspaceItem.get('display_name')!= 'Alarmen'){
+	    var models = this.collection.where({display_name: workspaceItem.get('display_name')});
+	    models[0].set({'addedToMap': false});
+   }
   },
   collection: null, //layerCollection,
   workspace: null,
