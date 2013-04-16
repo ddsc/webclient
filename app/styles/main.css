@@ -118,9 +118,9 @@ leaflet-control-legend-icon {
 }
 
 #annotation-modal.modal{
-    width: 350px;
+    width: 500px;
 }
-#annotation-modal > .spacing{
+#annotation-modal .spacing{
     margin-left: 1em;
 }
 
