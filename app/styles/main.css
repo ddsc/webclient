@@ -958,8 +958,12 @@ border-top-color: #167884 !important;
 border-bottom-color: #167884 !important;
 }
 
-.modal {
+/*.modal {
   width: 60%;
+}*/
+
+ul.dropdown-menu{
+	z-index: 2000;
 }
 
 .modal-backdrop, .modal-backdrop.fade.in {
