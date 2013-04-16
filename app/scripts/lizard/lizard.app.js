@@ -50,6 +50,7 @@ Lizard.App.on('initialize:before', function() {
 
   collageCollection = new Lizard.Collections.Collage();
   collageCollection.fetch();
+  window.collageCollection = collageCollection; // hack to expose this collection due to bad architecture :)
 
   currentStatus = new Lizard.Models.CurrentState();
   liveFeedCollection = new Lizard.Collections.LiveFeed();

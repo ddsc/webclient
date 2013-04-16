@@ -458,7 +458,7 @@ function panAndZoomOtherGraphs(plot) {
     var axes = plot.getAxes();
     var xmin = axes.xaxis.min;
     var xmax = axes.xaxis.max;
-    $('.flot-graph').each(function () {
+    $('.graph').each(function () {
         if ($(this).is(':visible')) {
             var otherPlot = $(this).data('plot');
             if (otherPlot && plot !== otherPlot) {

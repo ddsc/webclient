@@ -21,15 +21,14 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
         if (dataJson) {
             var data = JSON.parse(dataJson);
             var timeseries = new Lizard.Models.TimeseriesActual({url: data.url});
-            timeseries.fetch({
-                success: function (model, response) {
+            timeseries.fetch()
+                .done(function (model, response) {
                     var item = new Lizard.Models.GraphItem({
                         timeseries: model
                         // , color: colorbrewer.Set3[9][Math.floor((Math.random()*8)+1)]
                     });
                     self.model.get('graphItems').add(item);
-                }
-            });
+                });
         }
     },
     onShow: function(e) {
