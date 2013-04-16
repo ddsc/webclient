@@ -1231,9 +1231,5 @@ div.graph-legend ul li{
 
 
 .stitched {
-   padding: 10px;
-   margin: 10px;
-   border: 2px dashed #000;
-   border-radius: 10px;
-   /* box-shadow: 0 0 0 4px #ccc, 2px 1px 6px 4px rgba(10, 10, 0, 0.5); */
+    border: 2px dashed #0084b4 !important;
 }
