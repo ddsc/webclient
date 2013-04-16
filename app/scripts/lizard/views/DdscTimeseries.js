@@ -48,7 +48,7 @@ Lizard.Map.TimeserieView = Backbone.Marionette.ItemView.extend({
     $('#location-modal').on('show', this.showGraph, that);
   },
   showGraph: function(that){
-      var data_url = that.target.dataset.url;
+      var data_url = $(that.target).data('url');
       console.log(data_url, $('#modal-graph-wrapper'));
       $('#modal-graph-wrapper').removeClass('hidden');
       var flot_div = $('#modal-graph-wrapper').find('.flot-graph');
