@@ -6,7 +6,7 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
         'drop': 'onDrop'
     },
     regions: {
-        legend: ".legend"
+        legend: '.legend'
     },
     onDragover: function(e) {
     },
