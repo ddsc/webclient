@@ -80,7 +80,8 @@ Lizard.Utils.Favorites = {
 
 Lizard.Utils.DragDrop = {
   copyData: function (e){
-    $('#graphsRegion').css('-webkit-filter', 'blur(1px)');
+    $('#sidebar').css('-webkit-filter', 'blur(1px)'); // blur source div
+    $('#graphsRegion').addClass('stitched'); // add stitch border
     var data = $(e.target).data();
     var sendThis = JSON.stringify(data);
     if (e.originalEvent) {
