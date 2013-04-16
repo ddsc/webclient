@@ -413,6 +413,7 @@ input.input-medium.search-query {
     -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
+    overflow: auto;
 }
 
 .drop{

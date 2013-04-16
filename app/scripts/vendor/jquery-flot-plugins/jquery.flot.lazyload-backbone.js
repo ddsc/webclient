@@ -198,24 +198,35 @@
         return params;
     };
 
+    LazyLoadBackbone.prototype.addGraphItem = function (model) {
+        var timeseries = model.get('timeseries');
+        var events_url = timeseries.get('events');
+        var color = model.get('color');
+
+        for (var i in this.datasets) {
+            var dataset = this.datasets[i];
+            if (dataset.url == events_url) {
+                // already loaded, do nothing
+                return;
+            }
+        }
+
+        var dataset = new DataSet(this, events_url, color);
+        this.datasets.push(dataset);
+        this.refreshData();
+    };
+
     LazyLoadBackbone.prototype.observeCollection = function (backboneCollection) {
         var self = this;
+
+        // load the initial set
+        backboneCollection.each(function (model) {
+            self.addGraphItem(model);
+        });
+
+        // listen for changes
         backboneCollection.on('add', function (model, collection) {
-            var timeseries = model.get('timeseries');
-            var events_url = timeseries.get('events');
-            var color = model.get('color');
-
-            for (var i in self.datasets) {
-                var dataset = self.datasets[i];
-                if (dataset.url == events_url) {
-                    // already loaded, do nothing
-                    return;
-                }
-            }
-
-            var dataset = new DataSet(self, events_url, color);
-            self.datasets.push(dataset);
-            self.refreshData();
+            self.addGraphItem(model);
         });
 
         backboneCollection.on('remove', function (model, collection) {

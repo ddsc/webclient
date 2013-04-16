@@ -634,7 +634,15 @@
     <script type="text/template" id="graph-and-legend-template">
       <div class="row-fluid graph-and-legend">
         <div class="graph span9"></div>
-        <div class="legend span3"></div>
+        <div class="legend span3">
+            <form>
+                <label class="checkbox">
+                <input type="checkbox" name="do-scatter-plot" <%if(!hasTwoItems){%>disabled<%}%>>
+                Scatterplot
+                </label>
+            </form>
+            <div class="legend-items"></div>
+        </div>
       </div>
     </script>
 
@@ -831,6 +839,10 @@
                 <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode</label>
                 <div id="timeperiod-controls" class="controls">
                     <label class="radio">
+                        <input type="radio" name="timeperiod" value="" checked>
+                        Geen
+                    </label>
+                    <label class="radio">
                         <input type="radio" name="timeperiod" value="24h">
                         24 uur
                     </label>
@@ -843,7 +855,7 @@
                         1 week
                     </label>
                     <label class="radio">
-                        <input type="radio" name="timeperiod" value="1m" checked>
+                        <input type="radio" name="timeperiod" value="1m">
                         1 maand
                     </label>
                     <label class="radio">
