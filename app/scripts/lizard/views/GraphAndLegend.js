@@ -1,12 +1,15 @@
 Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     template: '#graph-and-legend-template',
+    initialize: function (options) {
+        this.listenTo(this.model, 'change', this.render, this);
+    },
     events: {
         'dragover': function () {return false;},
         'dragenter': function () {return false;},
         'drop': 'onDrop'
     },
     regions: {
-        legend: '.legend'
+        legendItems: ".legend-items"
     },
     onDragover: function(e) {
     },
@@ -32,13 +35,13 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
                 });
         }
     },
-    onShow: function(e) {
+    onRender: function(e) {
         var plot = this.$el.find('.graph').initializePlot();
         plot.observeCollection(this.model.get('graphItems'));
 
         var legendView = new Lizard.Views.GraphLegendCollectionView({
             collection: this.model.get('graphItems')
         });
-        this.legend.show(legendView);
+        this.legendItems.show(legendView);
     }
 });
