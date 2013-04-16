@@ -8,6 +8,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
     'annotationsRegion' : '#annotationsRegion',
+    'geocoderRegion' : '#geocoderRegion',    
     'extraLayerRegion' : '#extramaplayers'
   },
   onShow: Lizard.Visualsearch.init
@@ -102,6 +103,9 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     mapView: leafletView
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
+
+
+  // Lizard.mapView.geocoderRegion.show(new Lizard.Views.GeocoderView());
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({

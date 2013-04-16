@@ -80,9 +80,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
           title: 'Annotatie plaatsen'
         }
       },
-      edit: {
-        featureGroup: drawnItems
-      }
+      edit: false // This disables the edit toolbar which we don't use at the moment
     });
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;

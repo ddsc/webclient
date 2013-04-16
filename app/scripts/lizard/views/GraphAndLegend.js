@@ -24,7 +24,8 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
             timeseries.fetch({
                 success: function (model, response) {
                     var item = new Lizard.Models.GraphItem({
-                        timeseries: model
+                        timeseries: model,
+                        color: colorbrewer.Set3[9][Math.floor((Math.random()*8)+1)]
                     });
                     self.model.get('graphItems').add(item);
                 }
