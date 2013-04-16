@@ -161,15 +161,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         }
     });
 
-    // this.mapCanvas.on('locationfound', function(e) {
-    //   var radius = e.accuracy / 2;
-
-    //   L.marker(e.latlng).addTo(map)
-    //       .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-    //   L.circle(e.latlng, radius).addTo(map);
-    // });
-
     var drawControl = new L.Control.Draw({
       draw: {
         position: 'topleft',

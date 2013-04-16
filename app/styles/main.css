@@ -1229,3 +1229,12 @@ div.graph-legend ul, div.graph-legend ul li {
 div.graph-legend ul li{
     margin: 2px 0px 0px 0px;
 }
+
+
+.stitched {
+   padding: 10px;
+   margin: 10px;
+   border: 2px dashed #000;
+   border-radius: 10px;
+   /* box-shadow: 0 0 0 4px #ccc, 2px 1px 6px 4px rgba(10, 10, 0, 0.5); */
+}

@@ -624,8 +624,8 @@
     <script type="text/template" id="graphs-legend-template">
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <h5>&nbsp;<%=timeseries.get('name')%> <div class="legendcolor" style="float:left;clear:both;margin:2px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div></h5><%=timeseries.get('timeseries')%>
-        <ul class="hide">
-          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>
+        <ul class="hide inline">
+          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
           <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
         </ul>
       </div>
