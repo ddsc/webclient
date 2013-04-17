@@ -64,12 +64,8 @@ Lizard.Views.TimeseriesSearch = Backbone.View.extend({
     this.$el.html(tpl);
     return this;
   },
-  events: {'keyup #searchTimeseries': 'search'},
+  events: {'change #searchTimeseries': 'search'},
   search: function(e) {
-    if (Lizard.App.fetchXhr && Lizard.App.fetchXhr.state() == 'pending'){
-      // This does not work yet. Work in progress...
-      Lizard.App.fetchXhr.reject();
-    }
-    Lizard.App.fetchXhr = this.timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
+    this.timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
   }
 });
