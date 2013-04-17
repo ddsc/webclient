@@ -1,20 +1,19 @@
 Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     template: '#graph-and-legend-template',
     initialize: function (options) {
-        this.listenTo(this.model, 'change', this.updateScatterPlotCheckbox, this);
+    },
+    modelEvents: {
+        "change:hasTwoItems": "updateScatterPlotCheckbox"
     },
     events: {
         'dragover': function () {return false;},
         'dragenter': function () {return false;},
-        'drop': 'onDrop'
+        'drop': 'onDrop',
+        'change [name="do-scatter-plot"]': 'changeScatterPlotCheckbox'
     },
     regions: {
         legendItems: ".legend-items",
         graph: ".graph-region"
-    },
-    onDragover: function(e) {
-    },
-    onDragenter: function(e) {
     },
     onDrop: function(e) {
         e.preventDefault();
@@ -35,30 +34,49 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
                 });
         }
     },
-    updateScatterPlotCheckbox: function(e) {
-        var $drawWhenToItems = this.$el.find('.draw-when-to-items');
-        if (this.model.get('hasTwoItems') === true) {
-            $drawWhenToItems.removeClass('hide');
+    changeScatterPlotCheckbox: function(e) {
+        if ($(e.target).is(':checked')) {
+            this.showScatterPlot();
         }
         else {
-            $drawWhenToItems.addClass('hide');
+            this.showNormalGraph();
         }
     },
-    onShow: function(e) {
-        // var plot = this.$el.find('.graph').initializePlot();
-        // plot.observeCollection(this.model.get('graphItems'));
-        // plot.observeInitialPeriod(account);
-
+    updateScatterPlotCheckbox: function(e) {
+        var $scatterPlotForm = this.$el.find('.scatter-plot-form');
+        if (this.model.get('hasTwoItems') === true) {
+            $scatterPlotForm.removeClass('hide');
+        }
+        else {
+            $scatterPlotForm.addClass('hide');
+            this.model.set('drawScatterPlot', false);
+        }
+    },
+    showNormalGraph: function() {
+        this.graph.close();
         var graphView = new Lizard.Views.Graph({
             model: this.model,
-            account: account
+            account: account // pass global account instance for now
         });
+
+        this.graph.show(graphView);
+    },
+    showScatterPlot: function() {
+        this.graph.close();
+        var graphView = new Lizard.Views.ScatterPlot({
+            model: this.model,
+            account: account // pass global account instance for now
+        });
+
+        this.graph.show(graphView);
+    },
+    onShow: function(e) {
+        this.showNormalGraph();
 
         var legendView = new Lizard.Views.GraphLegendCollection({
             collection: this.model.get('graphItems')
         });
 
-        this.graph.show(graphView);
         this.legendItems.show(legendView);
     }
 });
