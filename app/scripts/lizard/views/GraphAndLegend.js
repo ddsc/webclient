@@ -1,7 +1,7 @@
 Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     template: '#graph-and-legend-template',
     initialize: function (options) {
-        this.listenTo(this.model, 'change', this.render, this);
+        this.listenTo(this.model, 'change', this.updateScatterPlotCheckbox, this);
     },
     events: {
         'dragover': function () {return false;},
@@ -9,7 +9,8 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
         'drop': 'onDrop'
     },
     regions: {
-        legendItems: ".legend-items"
+        legendItems: ".legend-items",
+        graph: ".graph-region"
     },
     onDragover: function(e) {
     },
@@ -35,13 +36,30 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
                 });
         }
     },
-    onRender: function(e) {
-        var plot = this.$el.find('.graph').initializePlot();
-        plot.observeCollection(this.model.get('graphItems'));
+    updateScatterPlotCheckbox: function(e) {
+        var $drawWhenToItems = this.$el.find('.draw-when-to-items');
+        if (this.model.get('hasTwoItems') === true) {
+            $drawWhenToItems.removeClass('hide');
+        }
+        else {
+            $drawWhenToItems.addClass('hide');
+        }
+    },
+    onShow: function(e) {
+        // var plot = this.$el.find('.graph').initializePlot();
+        // plot.observeCollection(this.model.get('graphItems'));
+        // plot.observeInitialPeriod(account);
 
-        var legendView = new Lizard.Views.GraphLegendCollectionView({
+        var graphView = new Lizard.Views.Graph({
+            model: this.model,
+            account: account
+        });
+
+        var legendView = new Lizard.Views.GraphLegendCollection({
             collection: this.model.get('graphItems')
         });
+
+        this.graph.show(graphView);
         this.legendItems.show(legendView);
     }
 });

@@ -633,15 +633,15 @@
 
     <script type="text/template" id="graph-and-legend-template">
       <div class="row-fluid graph-and-legend">
-        <div class="graph span9"></div>
+        <div class="graph-region span9"></div>
         <div class="legend span3">
-            <form>
+            <div class="legend-items"></div>
+            <form class="draw-when-to-items hide">
                 <label class="checkbox">
-                <input type="checkbox" name="do-scatter-plot" <%if(!hasTwoItems){%>disabled<%}%>>
+                <input type="checkbox" name="do-scatter-plot">
                 Scatterplot
                 </label>
             </form>
-            <div class="legend-items"></div>
         </div>
       </div>
     </script>
@@ -1064,6 +1064,7 @@
         <script src="scripts/vendor/jquery.gridster.js"></script>
         <script src="scripts/vendor/viewport.js"></script>
         <script src="scripts/vendor/lunr.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/backbone.js -->
@@ -1145,6 +1146,7 @@
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/Geocoder.js"></script>
+        <script src="scripts/lizard/views/Graph.js"></script>
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegendCollection.js"></script>

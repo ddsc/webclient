@@ -1232,5 +1232,6 @@ div.graph-legend ul li{
 
 
 .stitched {
-    border: 2px dashed #0084b4 !important;
+    /* keep this 1px, so we don't trigger a resize and the consequent redraw of the graphs */
+    border: 1px dashed #0084b4 !important;
 }
