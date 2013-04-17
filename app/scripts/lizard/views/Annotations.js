@@ -25,7 +25,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         //"click .do-something": "something:do:it"
     },
     newAnnotation: function(relation){
-    	var annotationCollectionView = new Lizard.Views.AnnotationsCollectionView(relation);
+    	var annotationCollectionView = new Lizard.Views.AnnotationCollectionView(relation);
         $('body').append(annotationCollectionView.render());
     },
     onDomRefresh: function () {
@@ -208,8 +208,8 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
 	itemView: Lizard.Views.Annotations,
 	itemViewOptions: {
 		relation: null
-	}
-	tagName: ul,
+	},
+	tagName: 'ul',
 	initialize: function (relation) {
 		this.itemViewOptions.relation = relation;
 		
@@ -217,14 +217,15 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
 });
 
 Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
+    related_object: null,
 	template: _.template(
             $('#leaflet-annotation-template').html(), {
 			      text: "Kaboo-yah",
 			      visibility: "public"
 			    }, {variable: 'annotation'}),
 	initialize: function(options){
-		var relation = options.relation;
-		// Check what kind of object is making this annotation
+        var relation = options.relation;
+        // Check what kind of object is making this annotation
         // In the case of a non related location, very simple
         // if either timeseries or location check if there are 
         // notations on this already
@@ -232,36 +233,28 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
-            var related_object = {
+            this.related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'timeseries'
             };
         } else if (relation.get('point_geometry')){
-            var related_object = {
+            this.related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'location'
             };
         };
         
-        if (related_object){
-        	var annotation = $.ajax({
-	            url: settings.annotations_search_url,
-	            data: 'model_name=' + related_object.model + '&model_pk=' + related_object.primary,
-	            dataType: 'json'
-        	}).done(function (data, textStatus, jqXHR) {
-	            if (data.results) {
-	                console.log(data.results);
-	            }
-        	});
+        if (this.related_object){
+            var annotation = $.ajax({
+                url: settings.annotations_search_url,
+                data: 'model_name=' + this.related_object.model + '&model_pk=' + this.related_object.primary,
+                dataType: 'json'
+            }).done(function (data, textStatus, jqXHR) {
+                if (data.results) {
+                    console.log(data.results);
+                }
+            });
         }
-        // add leaflet annotation to body. This is a modal
-        // so body is fine
-        (_.template(
-            $('#leaflet-annotation-template').html(), {
-			      text: "Kaboo-yah",
-			      visibility: "public"
-			    }, {variable: 'annotation'})
-            );
 
        // open modal view
         $('#annotation-modal').modal();
@@ -337,6 +330,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
             }
           });
         });
-
+		
 	}
 });

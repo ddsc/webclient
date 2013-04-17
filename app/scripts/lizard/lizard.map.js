@@ -47,7 +47,11 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
 
   if (!lonlatzoom || lonlatzoom.split(',').length < 2) {
-    lonlatzoom = '5.16082763671875,51.95442214470791,7';
+    if (account){
+      lonlatzoom = account.get('initialZoom');
+    } else{
+      lonlatzoom = '5.16082763671875,51.95442214470791,7';
+    }
   }
 
   // Instantiate Map's default layout
