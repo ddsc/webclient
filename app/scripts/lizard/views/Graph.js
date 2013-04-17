@@ -1,5 +1,4 @@
 Lizard.Views.Graph = Backbone.Marionette.View.extend({
-    //templateString: '<div style="height: 100%;"></div>',
     tagName: 'div',
     className: 'graph',
     model: Lizard.Models.Graph,
