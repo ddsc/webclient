@@ -4,6 +4,15 @@ if(typeof(console) === 'undefined') {
     console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
 }
 
+$(window).on('resize', function(e) {
+    console.log('resiizing', $(window).width());
+    if ($(window).width() < 768) {
+        $('.graph-and-legend .legend').css('height', '100px');
+    } else {
+        $('.graph-and-legend .legend').css('height', '300px');
+    }
+});
+
 
 $.fn.serializeObject = function()
 {

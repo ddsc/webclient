@@ -40,18 +40,18 @@ Lizard.Home.home = function(){
     this.ref('id');
   });
   // Fetch the entire timeseries collection...
-  timeseriesCollection.fetch({
-    success: function(e) {
-      // ...and on success, loop over every model in the collection
-      _.each(e.models, function(ts) {
-        // Then, add each model to the timeseries index.
-        timeseries_idx.add({
-          'name': ts.attributes.name,
-          'id': ts.id
-        });
-      });
-    }
-  });
+  // timeseriesCollection.fetch({
+  //   success: function(e) {
+  //     // ...and on success, loop over every model in the collection
+  //     _.each(e.models, function(ts) {
+  //       // Then, add each model to the timeseries index.
+  //       timeseries_idx.add({
+  //         'name': ts.attributes.name,
+  //         'id': ts.id
+  //       });
+  //     });
+  //   }
+  // });
   window.timeseries_idx = timeseries_idx; // Attach to the window variable
   console.log('timeseries_idx:', timeseries_idx);
 
