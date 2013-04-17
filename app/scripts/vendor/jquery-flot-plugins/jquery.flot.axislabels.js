@@ -53,7 +53,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         if (this.opts.axisLabelFontSizePixels)
             this.axisLabelFontSizePixels = this.opts.axisLabelFontSizePixels;
         else
-            this.axisLabelFontSizePixels = 14;
+            this.axisLabelFontSizePixels = 12;
         if (this.opts.axisLabelFontFamily)
             this.axisLabelFontFamily = this.opts.axisLabelFontFamily;
         else
@@ -78,7 +78,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         ctx.textAlign = 'start';
         ctx.textBaseline = 'bottom';
         var f = this.axis.font;
-        ctx.font = f.style + " " + f.variant + " " + "bold" + " " + this.axisLabelFontSizePixels + "px " + f.family;
+        ctx.font = f.style + " " + f.variant + " " + this.axisLabelFontSizePixels + "px " + f.family;
         //ctx.font = this.axisLabelFontSizePixels + 'px ' + this.axisLabelFontFamily;
         var x, y, angle = 0;
         // draw OUTSIDE the axis tick labels box
