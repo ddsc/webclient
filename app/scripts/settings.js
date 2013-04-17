@@ -2,16 +2,19 @@ var extra = '?page_size=10'; //
 // var extra = '?page_size=1000';
 
 
-var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v1/');
-var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/v1/');
+// var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v1/');
+// var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/v1/');
+
+var domain = (domain ? domain : 'http://localhost:8000/api/v1/');
+var test_domain = (test_domain ? test_domain : 'http://localhost:8000/api/v1/');
 
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/' + '?page_size=300&has_geometry=true',
+    locations_url: domain + 'locations/?has_geometry=true&page_size=300',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
-    timeseries_url: domain + 'timeseries/' + extra,
+    timeseries_url: domain + 'timeseries/?page_size=300',
     alarms_url: domain + 'alarms/' + extra,
     collages_url: domain + 'collages/',
     workspace_url: domain + 'workspaces/',
