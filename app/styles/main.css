@@ -478,11 +478,6 @@ input.input-medium.search-query {
     font-size: 0.65em;
 }
 
-#modal-graph-wrapper{
-    height: 300px;
-    width: 90%;
-}
-
 .drop:hover{
     opacity: 1;
 }
@@ -1245,4 +1240,8 @@ div.graph-legend ul li{
 .stitched {
     /* keep this 1px, so we don't trigger a resize and the consequent redraw of the graphs */
     border: 1px dashed #0084b4 !important;
+}
+
+.graph-widget {
+    height: 200px;
 }

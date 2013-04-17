@@ -51,7 +51,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
             name: attributes.name,
             bbModel: model,
             code: attributes.code,
-            
+
           });
 
         //marker.on('mouseover', this.updateInfo);
@@ -66,7 +66,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
-    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker);
+    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker.valueOf().options.bbModel);
     marker.bindPopup(innerStuff, {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
   },
