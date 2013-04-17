@@ -388,7 +388,8 @@ input.input-medium.search-query {
     padding: 5px 0;
 }
 
-.graph-and-legend .graph {
+.graph-and-legend .graph,
+#location-modal .graph {
     height: 300px;
     color: #444;
     background-color: #ffffff;

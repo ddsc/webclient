@@ -11,11 +11,11 @@ Lizard.Collections.InfiniteTimeseries = Backbone.Collection.extend({
 });
 
 Lizard.Collections.Timeseries = Backbone.Collection.extend({
-  initialize: function(){
-   this.fetch({
-      cache: false
-    });
-  },
+  // initialize: function(){
+   // this.fetch({
+      // cache: false
+    // });
+  // },
   comparator: function(timeserie) {
     return timeserie.get('name');
   },
