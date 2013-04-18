@@ -64,7 +64,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         // If annotation is not filled out but closed.
         // View should be removed and marker removed from layer
         $('#annotation-modal').on('hide', function(){
-            debugger
             $(this).remove();
             if (layer){
                 window.drawnItems.removeLayer(layer);
@@ -305,15 +304,34 @@ Lizard.Views.AnnotationLayout = Backbone.Marionette.Layout.extend({
 
 Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     related_object: null,
+    className: 'annotation-item',
     template: function(model){
         return _.template(
             $('#annotation-one-template').html(), model, {variable: 'annotation'})
     },
     initialize: function(options){
         var relation = options.relation;
-        // open modal view
+        // this.$el.find('#annotation-' + this.model.id.toString()).on('hidden', function (event) {
+        //   event.stopPropagation()
+        // })   
+    },
+    events: {
+        'click .annotation-edit' : 'edit',
+        'click .annotation-delete' : 'delete',
+        'submit form' : 'submitChange'
+    },
+    edit: function(){
+        this.$el.find('.collapse').toggleClass('in');
+        // override of the submit function
+    },
+    submitChange: function(e){
+        e.preventDefault(); 
+        var data = $(e.currentTarget).serializeObject();
+        this.model.set(data);    
+        this.model.save();
+    },
+    delete: function(){
 
-     
     }
 });
 

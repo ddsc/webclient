@@ -124,6 +124,17 @@ leaflet-control-legend-icon {
     margin-left: 1em;
 }
 
+.annotation-item{
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius:  0 4px 4px 0;
+}
+
+.annotation-text{
+    vertical-align: middle;
+    padding: 5px;
+}
+
 #liveFeed {
     overflow-y: auto;
     height: 282;

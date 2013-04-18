@@ -372,9 +372,13 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3>Annotatie</h3>
        </div>
-          <form class="annotation">
-            <fieldset>
             <div class="modal-body" id="annotations-body">
+              <div id="annotations-list">
+              </div>
+        <div id="annotation-modal-footer" class="modal-footer">
+                      <form class="annotation">
+              <fieldset>
+              <div class="annotation-form">
                  <div class="input-prepend">
                  <span class="add-on"><i class="icon-comment"></i></span>
                   <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
@@ -404,10 +408,8 @@
                    <span class="add-on"><i class="icon-tag"></i></span>
                   <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
                 </div>
-              <div id="annotations-list">
-              </div>
+              <div>
             </div>
-        <div id="annotation-modal-footer" class="modal-footer">
           <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
             </fieldset>
           </form>
@@ -415,21 +417,60 @@
     </script>
 
     <script type="text/template" id="annotation-one-template">
-            <%if (annotation.visibility != 'public'){%>checked<%}%>
-            <%if (annotation.visibility === 'public'){%>checked<%}%>
-            <%if (annotation.datestart){%><%= annotation.datestart %><%}%>
-            <%if (annotation.datestart){%><%= annotation.datestart %><%}%>
-            <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#thisannotation-<%=annotation.id%>"><%= annotation.text %></button>
-            <div id="thisannotation-<%=annotation.id%>" class="collapse in">
-                <div class="controls">
-                 <div class="input-prepend">
-                 <span class="add-on"><i class="icon-comment"></i></span>
-                  <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required>
-                    <%= annotation.text%>
-                  </textarea>
-                 </div>
+            <span class="annotation-text span4"><%= annotation.text%></span>
+             <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
+            <span class="pull-right">
+              <button type="button" class="btn btn-mini annotation-edit">Wijzig</button>
+              <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete">Wis</button>
+            </span>
+            <form class="annotation">
+              <fieldset>
+              <div id="#annotation-<%=annotation.id%>" class="annotation-form collapse" >
+              <div class="controls">
+               <div class="input-prepend">
+               <span class="add-on"><i class="icon-comment"></i></span>
+                <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required><%if (annotation.text){%><%= annotation.text %><%}%> </textarea>
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-calendar"></i></span>
+                 <input type="text" class="span2" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-calendar"></i></span>
+                 <input type="text" class="span2" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)" value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
+               </div>
+              </div>
+              <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-eye-open"></i></span>
+                  <label class="radio inline spacing">
+                    <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar
+                  </label>
+                  <label class="radio inline controls-row">
+                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility != 'public'){%>checked<%}%> required> Privé
+                  </label>
+              </div>
+            </div>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-picture"></i></span>
+                  <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
                 </div>
             </div>
+            <span class="help-block"><small>Hang een label of <em>tag</em> aan de annotatie.</small></span>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-tag"></i></span>
+                <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" <%if (annotation.tags){%> value="<%= annotation.tags %>" <%}%>/>
+              </div>
+            </div>
+              <button type="submit" class="btn spacer pull-right btn-warning">Wijzigingen opslaan</button>
+            </fieldset>
+          </form>
     </script> 
 
     <script type="text/template" id="layeritem-template">
