@@ -431,7 +431,7 @@
                 <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
             </span>
             <span class="annotation-text span3">
-              
+
               <ul style="list-style:none;margin:0;padding:0;">
                 <li><i class="icon-comment"></i>&nbsp;<%= annotation.text%></li>
                 <li style="font-size:.8em;"><%if (annotation.tags){%> <i><%=annotation.tags%></i> <%} else {%><i>Geen tags...</i><%}%></li>
@@ -998,7 +998,6 @@
         </div>
     </div>
 
-
     <div id="header">
       <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
         <div class="navbar-inner">
@@ -1009,7 +1008,6 @@
               <span class="icon-bar"></span>
             </a>
             <a href="#"><div id="brand" href="#"></div></a>
-
             <div class="nav-collapse collapse" id="menu-bar">
               <ul class="nav">
                 <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
@@ -1021,9 +1019,10 @@
                 <li class="dropdown" id="loginRegion"></li>
               </ul>
             </div>
-      </div>
+          </div>
         </div>
       </div>
+    </div>
 
 
       <div class="container">
@@ -1069,7 +1068,7 @@
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
         <script src="scripts/vendor/l.control.geosearch.js"></script>
-        <script src="scripts/vendor/l.geosearch.provider.google.js"></script>        
+        <script src="scripts/vendor/l.geosearch.provider.google.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/extras.js -->
