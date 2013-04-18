@@ -11,7 +11,6 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'geocoderRegion' : '#geocoderRegion',    
     'extraLayerRegion' : '#extramaplayers'
   },
-  onShow: Lizard.Visualsearch.init
 });
 
 // Create router

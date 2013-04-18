@@ -25,10 +25,12 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         //"click .do-something": "something:do:it"
     },
     newAnnotation: function(relation){
+        console.log('new annotation');
     	var annotationLayout = new Lizard.Views.AnnotationLayout();
+        // show in app. 
+        Lizard.App.hidden.show(annotationLayout);
         annotationLayout.render();
         annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView(relation));
-        $('body').append(annotationLayout.el);
         if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
@@ -57,14 +59,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         });
 
         $('#annotation-modal').modal();
-        $('#annotation-modal').on('hide', function(){
-            $('#annotation-modal').remove();
-        });
 
         // If annotation is not filled out but closed.
         // View should be removed and marker removed from layer
         $('#annotation-modal').on('hide', function(){
-            $(this).remove();
+            Lizard.App.hidden.close()
             if (layer){
                 window.drawnItems.removeLayer(layer);
             }
@@ -101,7 +100,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                   window.drawnItems.removeLayer(layer);
               }
               $('#annotation-modal').modal('toggle');
-              $('#annotation-modal').remove();
+              Lizard.App.hidden.close();
               Lizard.App.vent.trigger('savedpopup');
             },
             error: function(){
@@ -109,7 +108,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                   window.drawnItems.removeLayer(layer);
               }
               $('#annotation-modal').modal('toggle');
-              $('#annotation-modal').remove();
+              Lizard.App.hidden.close();
               $('.top-right').notify({message:{
                 text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
                     }, type: 'danger'
@@ -327,11 +326,27 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     submitChange: function(e){
         e.preventDefault(); 
         var data = $(e.currentTarget).serializeObject();
-        this.model.set(data);    
-        this.model.save();
+        this.model.set(data);
+        this.model.urlRoot = settings.annotations_detail_url;
+        this.model.save({
+            success: function(model, response, that){
+                $('.top-right').notify({
+                message:{text: 'Annotatie gewijzigd'},
+                type: 'success'}).show();
+            },
+            error: function(){
+                $('.top-right').notify({
+                message:{text: 'Annotatie wijzigen mislukt'},
+                type: 'warning'}).show();
+                this.$el.find('.collapse').toggleClass('in');
+            }
+        });
+        this.$el.find('.collapse').toggleClass('in');
+        this.render();
     },
     delete: function(){
-
+        this.model.urlRoot = settings.annotations_detail_url;
+        this.model.destroy();
     }
 });
 

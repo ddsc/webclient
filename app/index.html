@@ -580,7 +580,7 @@
             </i><span class="popup-toggle"> &nbsp;<%= timeserie.name %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
-                <i class="icon-comment"></i>
+                <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
               </span>
             </h5>
         </div>
@@ -633,6 +633,7 @@
         <h5>&nbsp;<%=timeseries.get('name')%> <div class="legendcolor" style="float:left;clear:both;margin:2px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div></h5><%=timeseries.get('timeseries')%>
         <ul class="hide inline">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
+          <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> Comment</button></li>
           <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
         </ul>
       </div>
@@ -1019,6 +1020,9 @@
             <span class="warning pull-right"><p class="visible-desktop">DESKTOP MODE</p><p class="visible-tablet">TABLET MODE</p><p class="visible-phone">PHONE MODE</p></span>
         </div>
       </div>
+
+      <!-- for modal screens -->
+      <div id="hidden"></div>
 
 
         <!--[if lt IE 7]>
