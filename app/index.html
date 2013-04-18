@@ -323,50 +323,7 @@
         <i>Kies een kaart of extra kaartlaag</i>
     </script>
 
-
-    <script type="text/template" id="tabular-template">
-      <div class="row-fluid">
-        <div class="span12" id="tabularRegion">
-
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>
-
-        </div>
-      </div>
-    </script>
-
-    <script type="text/template" id="icon-template">
-        Some icon
-    </script>
-
-    <script type="text/template" id="favorite-item-template">
+     <script type="text/template" id="favorite-item-template">
       <div class="favorite-item oselect">
         <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="favstar icon-star"></i>&nbsp;<%= favorite.name %></h5>
         <div id="<%=favorite.uuid%>" class="collapse">
@@ -418,31 +375,18 @@
           <form class="annotation">
             <fieldset>
             <div class="modal-body" id="annotations-body">
-
-                <div class="controls">
-                 <div class="input-prepend">
-                 <span class="add-on"><i class="icon-edit"></i></span></span><input type="text" placeholder="Titel" class="span4"/>
-                 </div>
-                </div>
-                <div class="controls">
                  <div class="input-prepend">
                  <span class="add-on"><i class="icon-comment"></i></span>
                   <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
                  </div>
-                </div>
-                <div class="controls">
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span4" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
+                   <input type="text" class="span2" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
                  </div>
-                </div>
-                <div class="controls">
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span4" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
+                   <input type="text" class="span2" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
                  </div>
-                </div>
-                <div class="controls">
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-eye-open"></i></span>
                     <label class="radio inline spacing">
@@ -452,20 +396,14 @@
                       <input type="radio" name="visibility" value="private" required> Privé
                     </label>
                 </div>
-              </div>
-              <div class="controls">
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-picture"></i></span>
                     <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
                   </div>
-              </div>
-              <span class="help-block"><small>Hang een label of <em>tag</em> aan de annotatie.</small></span>
-              <div class="controls">
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-tag"></i></span>
                   <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
                 </div>
-              </div>
               <div id="annotations-list">
               </div>
             </div>
@@ -481,7 +419,17 @@
             <%if (annotation.visibility === 'public'){%>checked<%}%>
             <%if (annotation.datestart){%><%= annotation.datestart %><%}%>
             <%if (annotation.datestart){%><%= annotation.datestart %><%}%>
-            <span><%if (annotation.text){%><%= annotation.text %><%}%></span>
+            <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#thisannotation-<%=annotation.id%>"><%= annotation.text %></button>
+            <div id="thisannotation-<%=annotation.id%>" class="collapse in">
+                <div class="controls">
+                 <div class="input-prepend">
+                 <span class="add-on"><i class="icon-comment"></i></span>
+                  <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required>
+                    <%= annotation.text%>
+                  </textarea>
+                 </div>
+                </div>
+            </div>
     </script> 
 
     <script type="text/template" id="layeritem-template">

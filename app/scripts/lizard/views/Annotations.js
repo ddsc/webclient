@@ -29,11 +29,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         annotationLayout.render();
         annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView(relation));
         $('body').append(annotationLayout.el);
-        $('#annotation-modal').modal();
-        $('#annotation-modal').on('hide', function(){
-            $('#annotation-modal').remove();
-        });
-
         if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
@@ -47,6 +42,34 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 'model' : 'location'
             };
         };
+        // // initiate datepickers on the div's
+
+        $('#ui-datepicker-div').css('z-index', 10000);
+        $('#annotation-modal .datepick-annotate').datepicker({
+          format: "yyyy-mm-dd",
+          onRender: function ()
+           {
+              var date = new Date();
+              return date;
+           }
+        }).on('changeDate', function(ev){
+          $('#annotation-modal .datepick-annotate').datepicker('hide');
+        });
+
+        $('#annotation-modal').modal();
+        $('#annotation-modal').on('hide', function(){
+            $('#annotation-modal').remove();
+        });
+
+        // If annotation is not filled out but closed.
+        // View should be removed and marker removed from layer
+        $('#annotation-modal').on('hide', function(){
+            debugger
+            $(this).remove();
+            if (layer){
+                window.drawnItems.removeLayer(layer);
+            }
+        });  
         // override of the submit function
         $('form.annotation').submit(function(e) {
           e.preventDefault();
@@ -290,28 +313,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         var relation = options.relation;
         // open modal view
 
-        // // initiate datepickers on the div's
-
-        $('#ui-datepicker-div').css('z-index', 10000);
-        $('#annotation-modal .datepick-annotate').datepicker({
-          format: "yyyy-mm-dd",
-          onRender: function ()
-           {
-              var date = new Date();
-              return date;
-           }
-        }).on('changeDate', function(ev){
-          $('#annotation-modal .datepick-annotate').datepicker('hide');
-        });
-
-        // If annotation is not filled out but closed.
-        // View should be removed and marker removed from layer
-        $('#annotation-modal').on('hide', function(){
-            $(this).remove();
-            if (layer){
-                window.drawnItems.removeLayer(layer);
-            }
-        });       
+     
     }
 });
 
@@ -319,6 +321,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
 Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.extend({
     collection: null,
 	itemView: Lizard.Views.Annotations,
+    className: 'annotation-items',
 	itemViewOptions: {
 		relation: null
 	},
