@@ -413,6 +413,7 @@ input.input-medium.search-query {
     -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
+    overflow: auto;
 }
 
 .drop{
@@ -1227,4 +1228,10 @@ div.graph-legend ul, div.graph-legend ul li {
 }
 div.graph-legend ul li{
     margin: 2px 0px 0px 0px;
+}
+
+
+.stitched {
+    /* keep this 1px, so we don't trigger a resize and the consequent redraw of the graphs */
+    border: 1px dashed #0084b4 !important;
 }

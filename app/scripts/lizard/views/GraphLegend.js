@@ -36,7 +36,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     }
 });
 
-Lizard.Views.GraphLegendCollectionView = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.GraphLegendCollection = Backbone.Marionette.CollectionView.extend({
     itemView: Lizard.Views.GraphLegendItem,
     emptyView: Lizard.Views.GraphLegendNoItems
 });

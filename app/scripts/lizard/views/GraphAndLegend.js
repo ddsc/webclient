@@ -1,12 +1,16 @@
 Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     template: '#graph-and-legend-template',
+    initialize: function (options) {
+        this.listenTo(this.model, 'change', this.updateScatterPlotCheckbox, this);
+    },
     events: {
         'dragover': function () {return false;},
         'dragenter': function () {return false;},
         'drop': 'onDrop'
     },
     regions: {
-        legend: ".legend"
+        legendItems: ".legend-items",
+        graph: ".graph-region"
     },
     onDragover: function(e) {
     },
@@ -14,7 +18,8 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     },
     onDrop: function(e) {
         e.preventDefault();
-        $('#graphsRegion').css('-webkit-filter', 'blur(0px)'); // disable target div blur
+        $('#sidebar').css('-webkit-filter', 'blur(0px)'); // disable target div blur
+        $('.graph').removeClass('stitched'); // remove stitch border
         // fetch and add the timeseries
         var self = this;
         var dataJson = e.originalEvent.dataTransfer.getData('Text');
@@ -31,13 +36,30 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
                 });
         }
     },
+    updateScatterPlotCheckbox: function(e) {
+        var $drawWhenToItems = this.$el.find('.draw-when-to-items');
+        if (this.model.get('hasTwoItems') === true) {
+            $drawWhenToItems.removeClass('hide');
+        }
+        else {
+            $drawWhenToItems.addClass('hide');
+        }
+    },
     onShow: function(e) {
-        var plot = this.$el.find('.graph').initializePlot();
-        plot.observeCollection(this.model.get('graphItems'));
+        // var plot = this.$el.find('.graph').initializePlot();
+        // plot.observeCollection(this.model.get('graphItems'));
+        // plot.observeInitialPeriod(account);
 
-        var legendView = new Lizard.Views.GraphLegendCollectionView({
+        var graphView = new Lizard.Views.Graph({
+            model: this.model,
+            account: account
+        });
+
+        var legendView = new Lizard.Views.GraphLegendCollection({
             collection: this.model.get('graphItems')
         });
-        this.legend.show(legendView);
+
+        this.graph.show(graphView);
+        this.legendItems.show(legendView);
     }
 });

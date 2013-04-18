@@ -21,8 +21,10 @@ Lizard.Account.View = Backbone.Marionette.ItemView.extend({
             var $btn = $form.find('[type="submit"]');
             $btn.attr('disabled', 'disabled');
 
-            this.model.set('initialPeriod', $form.find('[name="timeperiod"]:checked').val());
-            this.model.set('initialZoom', $form.find('[name="initialzoom"]').val());
+            this.model.set({
+                'initialPeriod': $form.find('[name="timeperiod"]:checked').val(),
+                'initialZoom': $form.find('[name="initialzoom"]').val()
+            });
             this.model.save(null)
                 .done(function (model, response) {
                     $('.top-right').notify({message: {text: 'Voorkeuren opgeslagen.'}}).show();

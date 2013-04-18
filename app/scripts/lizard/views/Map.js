@@ -15,7 +15,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   //modalInfo:Lizard.Utils.Map.modalInfo,
   //updateInfo: Lizard.Utils.Map.updateInfo,
   initialize: function(options) {
-    console.log('LeafletView');
+    // console.log('LeafletView');
     // (value ? this.series.push(value) : 'nothing');
     this.lon = options.lon; //= (options.lon ? options.lon : 5.16082763671875);
     this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
@@ -117,6 +117,50 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     var drawnItems = new L.FeatureGroup();
     this.mapCanvas.addLayer(drawnItems);
 
+
+    var geolocateControl = L.Control.extend({
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+
+          var className = 'leaflet-control-zoom leaflet-bar',
+              container = L.DomUtil.create('div', className);
+
+          this._map = map;
+
+          this._zoomInButton = this._createButton(
+                  '<i class="icon-screenshot"></i>', 'Zoek mijn lokatie',  className + '-geo',  container, this._locateMe,  this);
+
+          return container;
+
+        },
+        _locateMe: function (e) {
+          this._map.locate({
+            setView: true,
+            enableHighAccuracy: true
+          });
+        },        
+        _createButton: function (html, title, className, container, fn, context) {
+          var link = L.DomUtil.create('a', className, container);
+          link.innerHTML = html;
+          link.href = '#';
+          link.title = title;
+
+          var stop = L.DomEvent.stopPropagation;
+
+          L.DomEvent
+              .on(link, 'click', stop)
+              .on(link, 'mousedown', stop)
+              .on(link, 'dblclick', stop)
+              .on(link, 'click', L.DomEvent.preventDefault)
+              .on(link, 'click', fn, context);
+
+          return link;
+        }
+    });
+
     var drawControl = new L.Control.Draw({
       draw: {
         position: 'topleft',
@@ -133,6 +177,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;
     this.mapCanvas.addControl(drawControl);
+    
+    this.mapCanvas.addControl(new geolocateControl());
 
     window.mc.on('draw:created', function (e) {
       var type = e.layerType,

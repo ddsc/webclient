@@ -590,8 +590,8 @@
     <script type="text/template" id="graphs-legend-template">
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <h5>&nbsp;<%=timeseries.get('name')%> <div class="legendcolor" style="float:left;clear:both;margin:2px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div></h5><%=timeseries.get('timeseries')%>
-        <ul class="hide">
-          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Verwijderen</button></li>
+        <ul class="hide inline">
+          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
           <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
         </ul>
       </div>
@@ -599,8 +599,16 @@
 
     <script type="text/template" id="graph-and-legend-template">
       <div class="row-fluid graph-and-legend">
-        <div class="graph span9"></div>
-        <div class="legend span3"></div>
+        <div class="graph-region span9"></div>
+        <div class="legend span3">
+            <div class="legend-items"></div>
+            <form class="draw-when-to-items hide">
+                <label class="checkbox">
+                <input type="checkbox" name="do-scatter-plot">
+                Scatterplot
+                </label>
+            </form>
+        </div>
       </div>
     </script>
 
@@ -797,6 +805,10 @@
                 <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode</label>
                 <div id="timeperiod-controls" class="controls">
                     <label class="radio">
+                        <input type="radio" name="timeperiod" value="" checked>
+                        Geen
+                    </label>
+                    <label class="radio">
                         <input type="radio" name="timeperiod" value="24h">
                         24 uur
                     </label>
@@ -809,7 +821,7 @@
                         1 week
                     </label>
                     <label class="radio">
-                        <input type="radio" name="timeperiod" value="1m" checked>
+                        <input type="radio" name="timeperiod" value="1m">
                         1 maand
                     </label>
                     <label class="radio">
@@ -1018,6 +1030,7 @@
         <script src="scripts/vendor/jquery.gridster.js"></script>
         <script src="scripts/vendor/viewport.js"></script>
         <script src="scripts/vendor/lunr.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/backbone.js -->
@@ -1100,6 +1113,7 @@
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/Geocoder.js"></script>
+        <script src="scripts/lizard/views/Graph.js"></script>
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegendCollection.js"></script>

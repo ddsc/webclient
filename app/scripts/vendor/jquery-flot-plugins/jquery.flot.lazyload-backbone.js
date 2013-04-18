@@ -55,11 +55,19 @@
         });
     };
 
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+
     function LazyLoadBackbone (plot) {
         this.plot = plot;
         this.timeout = null;
         this.datasets = [];
         this.preventUpdates = false;
+        this.backboneCollection = null;
+        this.accountModel = null;
     }
 
     LazyLoadBackbone.prototype.scheduleUpdateAll = function (event) {
@@ -156,6 +164,8 @@
     };
 
     LazyLoadBackbone.prototype.shutdown = function (plot, eventHolder) {
+        this.stopObservingCollection();
+        this.stopObservingInitialPeriod();
         plot.getPlaceholder().unbind("plotzoom.lazyload");
         plot.getPlaceholder().unbind("plotpan.lazyload");
         plot.getPlaceholder().unbind("axisminmaxchanged.lazyload");
@@ -164,9 +174,9 @@
     };
 
     LazyLoadBackbone.prototype.getExtraParams = function () {
-        var xAxes = this.plot.getXAxes();
-        var minX = xAxes[0].min;
-        var maxX = xAxes[0].max;
+        var xaxis = this.plot.getXAxes()[0];
+        var minX = xaxis.min;
+        var maxX = xaxis.max;
         var params = {
             eventsformat: 'flot'
         };
@@ -198,42 +208,124 @@
         return params;
     };
 
+    LazyLoadBackbone.prototype.addGraphItem = function (model) {
+        var timeseries = model.get('timeseries');
+        var events_url = timeseries.get('events');
+        var color = model.get('color');
+
+        for (var i in this.datasets) {
+            var dataset = this.datasets[i];
+            if (dataset.url == events_url) {
+                // already loaded, do nothing
+                return;
+            }
+        }
+
+        var dataset = new DataSet(this, events_url, color);
+        this.datasets.push(dataset);
+        this.refreshData();
+    };
+
+    LazyLoadBackbone.prototype.bbAddHandler = function (model, collection) {
+        this.addGraphItem(model);
+    };
+
+    LazyLoadBackbone.prototype.bbRemoveHandler = function (model, collection) {
+        var timeseries = model.get('timeseries');
+
+        for (var i in this.datasets) {
+            var dataset = this.datasets[i];
+            if (dataset.url == timeseries.get('events')) {
+                delete this.datasets[i];
+            }
+        }
+        this.redraw();
+    };
+
+    LazyLoadBackbone.prototype.bbResetHandler = function (model, collection) {
+        this.datasets.length = 0;
+        this.redraw();
+    };
+
     LazyLoadBackbone.prototype.observeCollection = function (backboneCollection) {
         var self = this;
-        backboneCollection.on('add', function (model, collection) {
-            var timeseries = model.get('timeseries');
-            var events_url = timeseries.get('events');
-            var color = model.get('color');
+        if (this.backboneCollection != null) {
+            throw 'backboneCollection already defined';
+        }
+        this.backboneCollection = backboneCollection;
 
-            for (var i in self.datasets) {
-                var dataset = self.datasets[i];
-                if (dataset.url == events_url) {
-                    // already loaded, do nothing
-                    return;
-                }
-            }
-
-            var dataset = new DataSet(self, events_url, color);
-            self.datasets.push(dataset);
-            self.refreshData();
+        // load the initial set
+        backboneCollection.each(function (model) {
+            self.addGraphItem(model);
         });
 
-        backboneCollection.on('remove', function (model, collection) {
-            var timeseries = model.get('timeseries');
+        // listen for changes
+        backboneCollection.on('add', this.bbAddHandler, this);
+        backboneCollection.on('remove', this.bbRemoveHandler, this);
+        backboneCollection.on('reset', this.bbResetHandler, this);
+    };
 
-            for (var i in self.datasets) {
-                var dataset = self.datasets[i];
-                if (dataset.url == timeseries.get('events')) {
-                    delete self.datasets[i];
-                }
-            }
-            self.redraw();
-        });
+    LazyLoadBackbone.prototype.stopObservingCollection = function () {
+        if (this.backboneCollection != null) {
+            this.backboneCollection.off('add', this.bbAddHandler, this);
+            this.backboneCollection.off('remove', this.bbRemoveHandler, this);
+            this.backboneCollection.off('reset', this.bbResetHandler, this);
+            this.backboneCollection = null;
+        }
+    };
 
-        backboneCollection.on('reset', function (model, collection) {
-            self.datasets.length = 0;
-            self.redraw();
-        });
+    LazyLoadBackbone.prototype.readInitialPeriodFromModel = function () {
+        var xaxis = this.plot.getXAxes()[0];
+        var initialPeriod = this.accountModel.get('initialPeriod');
+        var max = moment();
+        var min = null;
+        switch (initialPeriod) {
+            case '24h':
+                min = moment(max).subtract('hours', 24);
+                break;
+            case '48h':
+                min = moment(max).subtract('hours', 48);
+                break;
+            case '1w':
+                min = moment(max).subtract('weeks', 1);
+                break;
+            case '1m':
+                min = moment(max).subtract('months', 1);
+                break;
+            case '1y':
+                min = moment(max).subtract('years', 1);
+                break;
+            default:
+                // take extent from data
+                max = null;
+                min = null;
+        }
+        if (min && max) {
+            min = min.toDate();
+            max = max.toDate();
+        }
+        xaxis.options.min = min;
+        xaxis.options.max = max;
+        this.scheduleUpdateAll();
+    };
+
+    LazyLoadBackbone.prototype.observeInitialPeriod = function (accountModel) {
+        if (this.accountModel != null) {
+            throw 'accountModel already defined';
+        }
+        this.accountModel = accountModel;
+
+        // initial read
+        this.readInitialPeriodFromModel();
+
+        this.accountModel.on('change', this.readInitialPeriodFromModel, this);
+    };
+
+    LazyLoadBackbone.prototype.stopObservingInitialPeriod = function () {
+        if (this.accountModel != null) {
+            this.accountModel.off('change', this.readInitialPeriodFromModel, this);
+            this.accountModel = null;
+        }
     };
 
     LazyLoadBackbone.prototype.removeAllDataUrls = function () {
@@ -248,16 +340,12 @@
         var lazyLoad = new LazyLoadBackbone(plot);
 
         function processOptions (plot, options) {
-            // force fixed min and max for axes
-            // options.xaxis.min = 0; //1970
-            // options.xaxis.max = (new Date()).getTime(); // today
-            // options.yaxis.min = 0;
-            // options.yaxis.max = 10;
             plot.hooks.bindEvents.push(lazyLoad.bindEvents.bind(lazyLoad));
             plot.hooks.shutdown.push(lazyLoad.shutdown.bind(lazyLoad));
         }
 
         plot.observeCollection = lazyLoad.observeCollection.bind(lazyLoad);
+        plot.observeInitialPeriod = lazyLoad.observeInitialPeriod.bind(lazyLoad);
         plot.setPreventUpdates = lazyLoad.setPreventUpdates.bind(lazyLoad);
 
         plot.hooks.processOptions.push(processOptions);
