@@ -283,7 +283,6 @@
                 </ul>
                 <br class="spacer">
                 <div class="nav sidenav hidden-phone" id="annotationsRegion"></div>
-                <div class="nav sidenav hidden-phone" id="geocoderRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
@@ -416,15 +415,24 @@
     </script>
 
     <script type="text/template" id="annotation-one-template">
-            <span class="annotation-text span4"><%= annotation.text%></span>
+              
+            <span class="annotation-text span3">
+              
+              <ul style="list-style:none;margin:0;padding:0;">
+                <li><i class="icon-comment"></i>&nbsp;<%= annotation.text%></li>
+                <li style="font-size:.8em;"><%if (annotation.tags){%> <i><%=annotation.tags%></i> <%} else {%><i>Geen tags...</i><%}%></li>
+              </ul>
+            </span>
              <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
             <span class="pull-right">
-              <button type="button" class="btn btn-mini annotation-edit">Wijzig</button>
-              <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete">Wis</button>
+              <form class="form-inline">
+                <button type="button" class="btn btn-mini annotation-edit">Wijzig</button>
+                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete">Wis</button>
+              </form>
             </span>
             <form class="annotation">
               <fieldset>
-              <div id="#annotation-<%=annotation.id%>" class="annotation-form collapse" >
+              <div id="#annotation-<%=annotation.id%>" class="annotation-form collapse">
               <div class="controls">
                <div class="input-prepend">
                <span class="add-on"><i class="icon-comment"></i></span>
@@ -450,7 +458,7 @@
                     <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar
                   </label>
                   <label class="radio inline controls-row">
-                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility != 'public'){%>checked<%}%> required> Privé
+                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility !== 'public'){%>checked<%}%> required> Privé
                   </label>
               </div>
             </div>

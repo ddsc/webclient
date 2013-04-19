@@ -129,8 +129,13 @@ leaflet-control-legend-icon {
     border: 1px solid #ddd;
     border-radius:  0 4px 4px 0;
 }
+.annotation-item .btn{
+    margin:2px;
+}
 
 .annotation-text{
+    position: relative;
+    left: -25px;
     vertical-align: middle;
     padding: 5px;
 }

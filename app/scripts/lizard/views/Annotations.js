@@ -26,24 +26,25 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     newAnnotation: function(relation){
         console.log('new annotation');
-    	var annotationLayout = new Lizard.Views.AnnotationLayout();
-        // show in app. 
+        var annotationLayout = new Lizard.Views.AnnotationLayout();
+        // show in app.
+        var related_object = null;
         Lizard.App.hidden.show(annotationLayout);
         annotationLayout.render();
         annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView(relation));
         if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
-            var related_object = {
+            related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'timeseries'
             };
         } else if (relation.get('point_geometry')){
-            var related_object = {
+            related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'location'
             };
-        };
+        }
         // // initiate datepickers on the div's
 
         $('#ui-datepicker-div').css('z-index', 10000);
@@ -63,11 +64,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         // If annotation is not filled out but closed.
         // View should be removed and marker removed from layer
         $('#annotation-modal').on('hide', function(){
-            Lizard.App.hidden.close()
+            Lizard.App.hidden.close();
             if (layer){
                 window.drawnItems.removeLayer(layer);
             }
-        });  
+        });
         // override of the submit function
         $('form.annotation').submit(function(e) {
           e.preventDefault();
@@ -115,7 +116,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 }).show();
             }
           });
-        });        
+        });
     },
     onDomRefresh: function () {
         // manipulate the `el` here. it's already
@@ -266,7 +267,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
 
         var html = '';
-        html += '<h4>' + title + '</h4>';
+        // html += '<h4>' + title + '</h4>';
         html += '<p>' + a.text + '</p>';
         if (a.picture_url) {
             html += '<hr/>';
@@ -306,13 +307,13 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     className: 'annotation-item',
     template: function(model){
         return _.template(
-            $('#annotation-one-template').html(), model, {variable: 'annotation'})
+            $('#annotation-one-template').html(), model, {variable: 'annotation'});
     },
     initialize: function(options){
         var relation = options.relation;
         // this.$el.find('#annotation-' + this.model.id.toString()).on('hidden', function (event) {
         //   event.stopPropagation()
-        // })   
+        // })
     },
     events: {
         'click .annotation-edit' : 'edit',
@@ -324,7 +325,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         // override of the submit function
     },
     submitChange: function(e){
-        e.preventDefault(); 
+        e.preventDefault();
         var data = $(e.currentTarget).serializeObject();
         this.model.set(data);
         this.model.urlRoot = settings.annotations_detail_url;
@@ -360,22 +361,25 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
 	},
 	initialize: function (relation) {
 		this.itemViewOptions.relation = relation;
+        var related_object = null;
         if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
-            var related_object = {
+            related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'timeseries'
             };
         } else if (relation.get('point_geometry')){
-            var related_object = {
+            related_object = {
                 'primary': relation.get('pk').toString(),
                 'model' : 'location'
             };
-        };
-        var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
+        }
         this.collection = new Lizard.Collections.Annotation();
-        this.collection.url = settings.annotations_search_url + query;
-        this.collection.fetch({success: function(res){console.log(res)}});
+        if (related_object !== null) {
+            var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
+            this.collection.url = settings.annotations_search_url + query;
+            this.collection.fetch({success: function(res){console.log(res);}});
+        }
 	}
 });
