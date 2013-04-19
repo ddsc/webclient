@@ -8,7 +8,8 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         'dragend': 'onDragEnd',
         'click': 'onClick',
         // 'mouseleave': 'onMouseLeave',
-        'click .delete': 'removeFromCollection'
+        'click .delete': 'removeFromCollection',
+        'click .annotate': 'openAnnotation'
     },
     onClick: function(e) {
         var that = this;
@@ -18,6 +19,11 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         var self = this;
         self.model.collection.remove(self.model);
         return true;
+    },
+    openAnnotation: function(){
+        var timeseriesInstance = this.model.get('timeseries');
+        debugger
+        Lizard.App.vent.trigger('makeAnnotation', timeseriesInstance);
     },
     onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph

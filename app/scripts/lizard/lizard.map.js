@@ -11,7 +11,6 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'geocoderRegion' : '#geocoderRegion',    
     'extraLayerRegion' : '#extramaplayers'
   },
-  onShow: Lizard.Visualsearch.init
 });
 
 // Create router
@@ -47,7 +46,11 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
   console.log('Lizard.Map.map()');
 
   if (!lonlatzoom || lonlatzoom.split(',').length < 2) {
-    lonlatzoom = '5.16082763671875,51.95442214470791,7';
+    if (account.get('initialZoom').split(',').length === 3){
+      lonlatzoom = account.get('initialZoom');
+    } else{
+      lonlatzoom = '5.16082763671875,51.95442214470791,7';
+    }
   }
 
   // Instantiate Map's default layout
