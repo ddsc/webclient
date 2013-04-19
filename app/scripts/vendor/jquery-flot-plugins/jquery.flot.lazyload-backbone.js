@@ -164,6 +164,7 @@
     };
 
     LazyLoadBackbone.prototype.shutdown = function (plot, eventHolder) {
+        this.datasets = [];
         this.stopObservingCollection();
         this.stopObservingInitialPeriod();
         plot.getPlaceholder().unbind("plotzoom.lazyload");
@@ -181,15 +182,25 @@
             eventsformat: 'flot'
         };
 
+        var start = null;
+        var end = null;
         if (minX !== -1 && maxX !== 1 && minX < maxX) {
+            // use current zoom extent
             // convert back to Date and create a iso8601 timestring
-            minX = (new Date(minX)).toJSON();
-            maxX = (new Date(maxX)).toJSON();
+            start = (new Date(minX)).toJSON();
+            end = (new Date(maxX)).toJSON();
+        }
+        else if (xaxis.options.min && xaxis.options.max) {
+            // no initial zoom extent set, use whatever the graph is initialized with
+            start = xaxis.options.min.toJSON();
+            end = xaxis.options.max.toJSON();
+        }
 
+        if (start && end) {
             // append to parameters
             $.extend(params, {
-                start: minX,
-                end: maxX
+                start: start,
+                end: end
             });
         }
 
@@ -256,7 +267,9 @@
 
         // load the initial set
         backboneCollection.each(function (model) {
+            self.setPreventUpdates(true);
             self.addGraphItem(model);
+            self.setPreventUpdates(false);
         });
 
         // listen for changes
@@ -326,12 +339,6 @@
             this.accountModel.off('change', this.readInitialPeriodFromModel, this);
             this.accountModel = null;
         }
-    };
-
-    LazyLoadBackbone.prototype.removeAllDataUrls = function () {
-        this.datasets = [];
-        //this.refreshData();
-        this.redraw();
     };
 
     /* *************************************************** */

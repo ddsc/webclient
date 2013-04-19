@@ -393,7 +393,8 @@ input.input-medium.search-query {
     padding: 5px 0;
 }
 
-.graph-and-legend .graph {
+.graph-and-legend .graph,
+#location-modal .graph {
     height: 300px;
     color: #444;
     background-color: #ffffff;
@@ -481,11 +482,6 @@ input.input-medium.search-query {
 }
 .miniscule{
     font-size: 0.65em;
-}
-
-#modal-graph-wrapper{
-    height: 300px;
-    width: 90%;
 }
 
 .drop:hover{
@@ -1250,4 +1246,8 @@ div.graph-legend ul li{
 .stitched {
     /* keep this 1px, so we don't trigger a resize and the consequent redraw of the graphs */
     border: 1px dashed #0084b4 !important;
+}
+
+.graph-widget {
+    height: 200px;
 }

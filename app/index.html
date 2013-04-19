@@ -291,24 +291,34 @@
                 <div class="span12" id="leafletRegion"></div>
             </div>
         </div>
+      </div>
+    </script>
 
+    <script type="text/template" id="location-modal-popup">
         <div id="location-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
             <div id="location-modal-header" class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="location-modal-label"></h3>
+                <h3 id="location-modal-label">Locatie</h3>
             </div>
             <div id="location-modal-body" class="modal-body">
-                <div id="modal-graph-wrapper" class="hidden">
-                    <div class="flot-graph modal-graph"></div>
-                </div>
-                <div id="location-modal-collapsables">
-                </div>
+                <div class="modal-graph-region"></div>
+                <div class="modal-timeseries-region"></div>
             </div>
             <div id="location-modal-footer" class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
-      </div>
+    </script>
+
+    <script type="text/template" id="location-modal-popup-item">
+        <div class="timeserie-item oselect">
+            <h5 data-url="<%= events %>"><i class="icon-bar-chart">
+            </i><span class="add-graph-item"> &nbsp;<%= name %></span>
+              <span class="pull-right">
+                <span class="badge badge-info"><%= format_value(latest_value) %></span>
+              </span>
+            </h5>
+        </div>
     </script>
 
     <script type="text/template" id="template-layout-active-workspace">
@@ -478,7 +488,7 @@
               <button type="submit" class="btn spacer pull-right btn-warning">Wijzigingen opslaan</button>
             </fieldset>
           </form>
-    </script> 
+    </script>
 
     <script type="text/template" id="layeritem-template">
 
@@ -563,30 +573,30 @@
     </script>
 
 
-    <script type="text/template" id="location-modal-template">
+    <script type="text/template" id="timeseries-modal">
     </script>
 
-    <script type="text/template" id="location-modal-timeserie">
+    <script type="text/template" id="timeseries-modal-item">
         <div class="timeserie-item oselect">
             <h5 class="modaltimeserie">
             <i class="icon-star-empty fav"></i> &nbsp;
-              <span class="graph-this" data-url="<%= timeserie.url%>">
-                <i class="icon-bar-chart"></i>&nbsp;<%= timeserie.name %>
+              <span class="graph-this" data-url="<%= url %>">
+                <i class="icon-bar-chart"></i>&nbsp;<%= name %>
               </span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
+                <span class="badge badge-info"><%= format_value(latest_value) %></span>
                 <i class="icon-comment"></i>
               </span>
             </h5>
         </div>
     </script>
 
-    <script type="text/template" id="location-popup-timeserie">
+    <script type="text/template" id="location-popup-item">
         <div class="timeserie-item oselect">
-            <h5 data-url="<%= timeserie.events %>"><i class="icon-bar-chart">
-            </i><span class="popup-toggle"> &nbsp;<%= timeserie.name %></span>
+            <h5 data-url="<%= events %>"><i class="icon-bar-chart">
+            </i><span class="popup-toggle"> &nbsp;<%= name %></span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(timeserie.latest_value) %></span>
+                <span class="badge badge-info"><%= format_value(latest_value) %></span>
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
               </span>
             </h5>
@@ -651,7 +661,7 @@
         <div class="graph-region span9"></div>
         <div class="legend span3">
             <div class="legend-items"></div>
-            <form class="draw-when-to-items hide">
+            <form class="scatter-plot-form hide">
                 <label class="checkbox">
                 <input type="checkbox" name="do-scatter-plot">
                 Scatterplot
@@ -671,6 +681,8 @@
               <div id="save-modal-body" class="modal-body">
                   <label>Naam</label>
                   <input name="name" type="text">
+                  <input name="visibility" type="hidden" value="private">
+                  <!--
                   <label>Zichtbaarheid</label>
                   <label class="radio">
                   <input type="radio" name="visibility" value="private" checked>
@@ -680,6 +692,7 @@
                   <input type="radio" name="visibility" value="public">
                   Openbaar
                   </label>
+                  -->
               </div>
               <div id="save-modal-footer" class="modal-footer">
                   <button class="btn btn-primary" type="submit">Opslaan</button>
@@ -841,58 +854,63 @@
     </script>
 
     <script type="text/template" id="account-template">
-        <h4>Uw gegevens</h4>
         <div class="row">
-            <table class="table span5">
-                <tr><td>Gebruikersnaam</td><td><%= user.username %></td></tr>
-                <tr><td>Volledige naam</td><td><%= user.first_name %> <%= user.last_name %></td></tr>
-            </table>
+            <div class="span6">
+                <h4>Uw gegevens</h4>
+                <table class="table">
+                    <tr><td>Gebruikersnaam</td><td><%= user.username %></td></tr>
+                    <tr><td>Volledige naam</td><td><%= user.first_name %> <%= user.last_name %></td></tr>
+                </table>
+                <p>
+                    <a href="https://sso.lizard.net/">Pas uw profiel aan op de Open Water ID site.</a>
+                </p>
+                <h4>Voorkeuren</h4>
+                <form id="preferences-form" class="form-horizontal" method="post">
+                    <div class="control-group">
+                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode</label>
+                        <div id="timeperiod-controls" class="controls">
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="" checked>
+                                Geen
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="24h">
+                                24 uur
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="48h">
+                                48 uur
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="1w">
+                                1 week
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="1m">
+                                1 maand
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="timeperiod" value="1y">
+                                1 jaar
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="intialzoom-controls">Standaard locatie</label>
+                        <div id="initialzoom-controls" class="controls">
+                            <label class="text">
+                                <input type="text" name="initialzoom" value="<%= initialZoom %>">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-primary" type="submit">Opslaan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <h4>Voorkeuren</h4>
-        <form id="preferences-form" class="form-horizontal" method="post">
-            <div class="control-group">
-                <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode</label>
-                <div id="timeperiod-controls" class="controls">
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="" checked>
-                        Geen
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="24h">
-                        24 uur
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="48h">
-                        48 uur
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="1w">
-                        1 week
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="1m">
-                        1 maand
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="timeperiod" value="1y">
-                        1 jaar
-                    </label>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="intialzoom-controls">Standaard locatie</label>
-                <div id="initialzoom-controls" class="controls">
-                    <label class="text">
-                        <input type="text" name="initialzoom" value="<%= initialZoom %>">
-                    </label>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <button class="btn btn-primary" type="submit">Opslaan</button>
-                </div>
-            </div>
-        </form>
     </script>
 
   <!-- unused??? -->
@@ -1110,6 +1128,7 @@
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.tooltip.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.zoombuttons.nens.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload-backbone.js"></script>
+        <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.scatterplot.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/build.js -->
@@ -1142,7 +1161,7 @@
         <script src="scripts/lizard/layers/DdscMarkerLayer.js"></script>
         <script src="scripts/lizard/layers/WMSTemplateLayer.js"></script>
         <script src="scripts/lizard/layers/custom/DinoLayer.js"></script>
-		<script src="scripts/lizard/collections/Annotation.js"></script>	
+		<script src="scripts/lizard/collections/Annotation.js"></script>
         <script src="scripts/lizard/collections/Layer.js"></script>
         <script src="scripts/lizard/collections/Collage.js"></script>
         <script src="scripts/lizard/collections/Favorite.js"></script>
@@ -1161,6 +1180,7 @@
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/Geocoder.js"></script>
         <script src="scripts/lizard/views/Graph.js"></script>
+        <script src="scripts/lizard/views/ScatterPlot.js"></script>
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegendCollection.js"></script>
