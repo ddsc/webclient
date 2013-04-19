@@ -112,6 +112,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection: graphCollection
   });
 
+  // timeseriesCollection.fetch();
 
   window.collageCollection.fetch()
     .done(function (col) {
