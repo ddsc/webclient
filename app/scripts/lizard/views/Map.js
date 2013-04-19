@@ -23,7 +23,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace = options.workspace;
     Lizard.App.vent.on('workspaceZoom', this.setInitialZoom, this);
     this.backgroundLayers = {
-      Satellite :new L.Google("SATELLITE", {detectRetina: true}),
+      // Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
         layers: 'deltaportaal',
         format: 'image/png',
@@ -36,9 +36,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       }),
       MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
         attribution: 'MapBox'
-      }),
-      Terrain: new L.Google("TERRAIN", {detectRetina: true}),
-      Hybrid :new L.Google("HYBRID", {detectRetina: true})
+      })
+      // Terrain: new L.Google("TERRAIN", {detectRetina: true}),
+      // Hybrid :new L.Google("HYBRID", {detectRetina: true})
     };
   },
   extraLayers: {
@@ -96,7 +96,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.workspace = this.options.workspace;
     
     if (this.mapCanvas === null){
-      this.makemapCanvas('Satellite');
+      this.makemapCanvas('OpenStreetMap');
     }
   },
   makemapCanvas: function (requestedBackground){
