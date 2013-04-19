@@ -242,12 +242,12 @@
                       <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
                   </li>
                   <div class="measurement-items" data-group="workspace" id="workspaceListRegion"></div>
-                  <li class="metrics-dropdown mappage">
+                  <li class="metrics-dropdown mappage hidden-phone">
                       <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-globe"></i> Kaartlagen <br><%=name%></a>
                   </li>
-                  <div class="measurement-items" data-group="workspaceitem"  id="workspaceRegion"></div>
+                  <div class="measurement-items hidden-phone" data-group="workspaceitem"  id="workspaceRegion"></div>
                   <div id="extramaplayers-button" class="add-map-item drawer-handle">
-                    <div class="layer-item">
+                    <div class="layer-item hidden-phone">
                       <span class="action handle "><i class="icon-plus"></i></span>
                       Voeg Extra Kaartlaag toe
                       <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
@@ -256,8 +256,8 @@
                     </div>
                   </div>
                 </ul>
-                <br class="spacer">
-                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                <br class="spacer hidden-phone">
+                <ul class="nav nav-list sidenav transition hidden-phone" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
                       <div class="ddsc-item oselect sensor-layer-toggler">
@@ -282,8 +282,8 @@
                   </li></ul></div>
                 </ul>
                 <br class="spacer">
-                <div class="nav sidenav" id="annotationsRegion"></div>
-                <div class="nav sidenav" id="geocoderRegion"></div>
+                <div class="nav sidenav hidden-phone" id="annotationsRegion"></div>
+                <div class="nav sidenav hidden-phone" id="geocoderRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
@@ -688,10 +688,10 @@
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-signal"></i> Grafieken</a>
                     </li>
                     <div data-group="presets" class="measurement-items" id="presetsRegion"></div>
-                    <li class="metrics-dropdown" id="selection">
+                    <li class="metrics-dropdown hidden-phone" id="selection">
                         <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
                     </li>
-                    <div data-group="selection" class="measurement-items">
+                    <div data-group="selection" class="measurement-items hidden-phone">
                         <div id="selectionSearch"></div>
                         <div id="selectionRegion"></div>
                     </div>
