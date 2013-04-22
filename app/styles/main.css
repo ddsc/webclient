@@ -237,23 +237,35 @@ ul.wms_sources span {
 
 ol.drawer-group,
 ul.wms_sources {
-    padding: 3px 3px 3px 10px;
+    padding: 3px 3px 3px 5px;
     position: relative;
     margin: 0;
 }
+
 ol.drawer-group li,
 ul.wms_sources li {
     list-style: none;
     position: relative;
     border: none;
-    margin: 0 0 1px 0;
-    padding: 5px 5px 5px 19px;
-    white-space: nowrap;
+    margin: -10px 0 0px 0;
+    padding: 10px 0px 10px 0px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     cursor: pointer;
+}
+
+
+.layer-item span.content{
+    width:130px;
+    /*font-size: 2em;*/
+    /*display: inline;*/
+    white-space: no-wrap;
+    text-overflow:ellipsis;
+
+}
+
+.layer-item span.pull-right{
+    position: absolute;
+    right:0;
 }
 
 ol.drawer-group li.active,
@@ -269,12 +281,12 @@ ul.wms_sources span.handle{
 
 ol.drawer-group span.action,
 ul.wms_sources span.action {
-    position: absolute;
-    left: 0px;
+    /*position: absolute;*/
+/*    left: 0px;
     top: 35%;
-    /*background: url(../images/layer-handle.png) no-repeat center center;*/
+    background: url(../images/layer-handle.png) no-repeat center center;
     width: 14px;
-    height: 28px;
+    height: 28px;*/
 }
 
 ol.drawer-group span a,
@@ -656,12 +668,6 @@ div.widget li.theader {
     background-color: blue;
     width:500px;
     height:500px;
-}
-
-.layer-item span.content{
-    text-transform:capitalize;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .layer-item.selected {
