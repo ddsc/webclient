@@ -5,7 +5,6 @@ if(typeof(console) === 'undefined') {
 }
 
 $(window).on('resize', function(e) {
-    console.log('resiizing', $(window).width());
     if ($(window).width() < 768) {
         $('.graph-and-legend .legend').css('height', '100px');
     } else {
@@ -434,3 +433,5 @@ $(document).ajaxStop(function () {
 });
 
 }(this));
+
+
