@@ -114,6 +114,18 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         //   event.stopPropagation()
         // })
     },
+    onShow: function(){
+      this.$el.find('.datepick-annotate').datepicker({
+      format: "yyyy-mm-dd",
+      onRender: function ()
+       {
+          var date = new Date();
+          return date;
+       }
+    }).on('changeDate', function(ev){
+      $('#annotation-modal .datepick-annotate').datepicker('hide');
+    });
+    },
     events: {
         'click .annotation-edit' : 'edit',
         'click .annotation-delete' : 'delete',
