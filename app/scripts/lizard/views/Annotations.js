@@ -204,7 +204,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             }
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            console.error('Error while retrieving exceptions.');
+            console.error('Error while retrieving annotations.');
         })
         .complete(function (jqXHR) {
             if (jqXHR == self.currentXhr) {
