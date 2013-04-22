@@ -24,6 +24,9 @@ Lizard.Models.TimeseriesActual = Backbone.Model.extend({
         if (options.url) {
             this.url = options.url;
         }
+        if (options.pk) {
+            this.attributes.pk = options.pk;
+        }
     },
     defaults: {
         url: null

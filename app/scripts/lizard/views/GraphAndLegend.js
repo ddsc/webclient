@@ -27,6 +27,7 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
             var timeseries = new Lizard.Models.TimeseriesActual({url: data.url});
             timeseries.fetch()
                 .done(function (model, response) {
+                    model.set({pk: model.id});
                     var item = new Lizard.Models.GraphItem({
                         timeseries: model
                     });
