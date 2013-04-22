@@ -138,9 +138,9 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
 
   var graphspageTour = new Tour({
     labels: {
-        next: "Volgende »",
-        prev: "« Vorige",
-        end: "Stop"
+        next: "Verder »",
+        prev: "« Terug",
+        end: "Bedankt"
     },
     useLocalStorage: false,
     backdrop: true
