@@ -157,6 +157,24 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
       placement: "top",
       content: "Hiermee slaat u een nieuwe collage op."
   });
+  graphspageTour.addStep({
+      element: "#selectionRegion",
+      title: "Tijdreeksen",
+      placement: "right",
+      content: "Hier kunt u tijdreeksen uitzoeken om in de grafiek te tekenen. Sleep de gewenste tijdreeks naar de blokken aan de rechterkant. (zodra uw begint te slepen, zullen deze blokken oplichten)"
+  });
+  graphspageTour.addStep({
+      element: "#searchTimeseries",
+      title: "Zoeken in tijdreeksen",
+      placement: "right",
+      content: "Hier kunt u de tijdreeksen zoeken die u nodig heeft. (druk op enter om te zoeken)"
+  });
+  graphspageTour.addStep({
+      element: $('.legend').first(),
+      title: "Legenda",
+      placement: "left",
+      content: "Dit is de legenda van de grafiek. Bovendien kunt u hier een CSV bestand exporteren of commentaar plaatsen."
+  });
   graphspageTour.start();
 };
 
