@@ -22,15 +22,15 @@ Lizard.Views.CreateAnnotationView = function(relation){
     // // initiate datepickers on the div's
 
     $('#ui-datepicker-div').css('z-index', 10000);
-    $('#annotation-modal .datepick-annotate').datepicker({
-      format: "yyyy-mm-dd",
+    $('#annotation-modal .datepick-annotate').datetimepicker({
+      format: "yyyy-mm-ddThh:mm",
       onRender: function ()
        {
           var date = new Date();
           return date;
        }
     }).on('changeDate', function(ev){
-      $('#annotation-modal .datepick-annotate').datepicker('hide');
+      $('#annotation-modal .datepick-annotate').datetimepicker('hide');
     });
 
     $('#annotation-modal').modal();
@@ -115,15 +115,15 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         // })
     },
     onShow: function(){
-      this.$el.find('.datepick-annotate').datepicker({
-      format: "yyyy-mm-dd",
+      this.$el.find('.datepick-annotate').datetimepicker({
+      format: "yyyy-mm-ddThh:mm",
       onRender: function ()
        {
           var date = new Date();
           return date;
        }
     }).on('changeDate', function(ev){
-      $('#annotation-modal .datepick-annotate').datepicker('hide');
+      $('#annotation-modal .datepick-annotate').datetimepicker('hide');
     });
     },
     events: {
@@ -190,7 +190,7 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         if (related_object !== null) {
             var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
             this.collection.url = settings.annotations_search_url + query;
-            this.collection.fetch({success: function(res){console.log(res);}});
+            this.collection.fetch();
         }
   }
 });
