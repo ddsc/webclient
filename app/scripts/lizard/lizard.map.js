@@ -183,6 +183,23 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         Backbone.history.navigate('map');
       }
     });
+
+    var mappageTour = new Tour({
+      labels: {
+          next: "Volgende »",
+          prev: "« Vorige",
+          end: "Stop"
+      },
+      useLocalStorage: false,
+      backdrop: true
+    });
+    mappageTour.addStep({
+        element: "#leafletRegion",
+        title: "Kaartlagen",
+        placement: "left",
+        content: "Hier vindt u de kaartlagen"
+    });
+    mappageTour.start();
 };
 
 Lizard.App.addInitializer(function(){

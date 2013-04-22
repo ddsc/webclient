@@ -103,6 +103,31 @@ Lizard.Home.home = function(){
   Lizard.homeView.graph_links.show(collageSelectionView);
 
   Backbone.history.navigate('home');
+
+
+  
+  var homepageTour = new Tour({
+    labels: {
+        next: "Volgende »",
+        prev: "« Vorige",
+        end: "Stop"
+    },
+    useLocalStorage: false,
+    backdrop: true
+  });
+  homepageTour.addStep({
+      element: ".map-menu",
+      title: "Kaart",
+      placement: "bottom",
+      content: "Hier vindt u het kaartscherm"
+  });
+  homepageTour.addStep({
+      element: ".graphs-menu",
+      title: "Grafiek",
+      placement: "bottom",
+      content: "Hier vindt u het grafiekenscherm"
+  });
+  homepageTour.start();
 };
 
 Lizard.App.addInitializer(function(){

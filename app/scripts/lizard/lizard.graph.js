@@ -135,6 +135,23 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   } else {
     Backbone.history.navigate('graphs');
   }
+
+  var graphspageTour = new Tour({
+    labels: {
+        next: "Volgende »",
+        prev: "« Vorige",
+        end: "Stop"
+    },
+    useLocalStorage: false,
+    backdrop: true
+  });
+  graphspageTour.addStep({
+      element: "#presetsRegion",
+      title: "Tijdseries",
+      placement: "right",
+      content: "Hier vindt u de voorgedefinieerde tijdseries"
+  });
+  graphspageTour.start();
 };
 
 Lizard.App.addInitializer(function(){

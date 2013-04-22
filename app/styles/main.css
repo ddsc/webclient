@@ -980,14 +980,17 @@ border-bottom-color: #167884 !important;
     opacity: 0.3;
 }
 
+/* DISABLED BY GIJS WHILE IMPLEMENTING BOOTSTRAP-TOUR
 .popover{
     overflow: auto;
     height: 300px;
 }
 
+
 .popover-content{
     padding:0;
 }
+*/
 
 
 #demo{
