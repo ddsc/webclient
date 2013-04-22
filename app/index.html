@@ -426,7 +426,10 @@
     </script>
 
     <script type="text/template" id="annotation-one-template">
-              
+           <span class="pull-right">
+                <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
+                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
+            </span>
             <span class="annotation-text span3">
               
               <ul style="list-style:none;margin:0;padding:0;">
@@ -435,13 +438,9 @@
               </ul>
             </span>
              <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
-            <span class="pull-right">
-                <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
-                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
-            </span>
-            <form class="annotation">
+            <form class="annotation collapse span5 ">
               <fieldset>
-              <div id="#annotation-<%=annotation.id%>" class="annotation-form collapse">
+              <div id="#annotation-<%=annotation.id%>" class="annotation-form ">
               <div class="controls">
                <div class="input-prepend">
                <span class="add-on"><i class="icon-comment"></i></span>
