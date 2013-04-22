@@ -186,18 +186,36 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
     var mappageTour = new Tour({
       labels: {
-          next: "Volgende »",
-          prev: "« Vorige",
-          end: "Stop"
+          next: "Verder »",
+          prev: "« Terug",
+          end: "Bedankt"
       },
       useLocalStorage: false,
       backdrop: true
     });
     mappageTour.addStep({
         element: "#leafletRegion",
-        title: "Kaartlagen",
+        title: "Kaart",
         placement: "left",
-        content: "Hier vindt u de kaartlagen"
+        content: "Hier ziet u de kaart"
+    });
+    mappageTour.addStep({
+        element: "#workspaceListRegion",
+        title: "Kaartlagen",
+        placement: "right",
+        content: "Hier ziet u de beschikbare Kaartlagen"
+    });
+    mappageTour.addStep({
+        element: "#ddsc_temp",
+        title: "Statuslagen",
+        placement: "right",
+        content: "Hier ziet u de statuslagen die iets vertellen over de alarmen/storingen"
+    });
+    mappageTour.addStep({
+        element: ".annotation-layer-toggler",
+        title: "Annotaties",
+        placement: "right",
+        content: "Hier ziet u commentaar op locaties of tijdreeksen"
     });
     mappageTour.start();
 };

@@ -105,12 +105,12 @@ Lizard.Home.home = function(){
   Backbone.history.navigate('home');
 
 
-  
+
   var homepageTour = new Tour({
     labels: {
-        next: "Volgende »",
-        prev: "« Vorige",
-        end: "Stop"
+        next: "Verder »",
+        prev: "« Terug",
+        end: "Bedankt"
     },
     useLocalStorage: false,
     backdrop: true
@@ -119,13 +119,7 @@ Lizard.Home.home = function(){
       element: ".map-menu",
       title: "Kaart",
       placement: "bottom",
-      content: "Hier vindt u het kaartscherm"
-  });
-  homepageTour.addStep({
-      element: ".graphs-menu",
-      title: "Grafiek",
-      placement: "bottom",
-      content: "Hier vindt u het grafiekenscherm"
+      content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
   });
   homepageTour.start();
 };
