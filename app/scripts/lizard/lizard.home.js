@@ -106,7 +106,7 @@ Lizard.Home.home = function(){
 
 
 
-  var homepageTour = new Tour({
+  tour = new Tour({
     labels: {
         next: "Verder »",
         prev: "« Terug",
@@ -115,13 +115,13 @@ Lizard.Home.home = function(){
     useLocalStorage: false,
     backdrop: true
   });
-  homepageTour.addStep({
+  tour.addStep({
       element: ".map-menu",
       title: "Kaart",
       placement: "bottom",
       content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
   });
-  homepageTour.start();
+  tour.start();
 };
 
 Lizard.App.addInitializer(function(){

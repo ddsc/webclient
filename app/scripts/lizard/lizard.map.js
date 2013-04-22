@@ -184,7 +184,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       }
     });
 
-    var mappageTour = new Tour({
+    tour = new Tour({
       labels: {
           next: "Verder »",
           prev: "« Terug",
@@ -193,31 +193,31 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       useLocalStorage: false,
       backdrop: true
     });
-    mappageTour.addStep({
+    tour.addStep({
         element: "#leafletRegion",
         title: "Kaart",
         placement: "left",
         content: "Hier ziet u de kaart"
     });
-    mappageTour.addStep({
+    tour.addStep({
         element: "#workspaceListRegion",
         title: "Kaartlagen",
         placement: "right",
         content: "Hier ziet u de beschikbare Kaartlagen"
     });
-    mappageTour.addStep({
+    tour.addStep({
         element: "#ddsc_temp",
         title: "Statuslagen",
         placement: "right",
         content: "Hier ziet u de statuslagen die iets vertellen over de alarmen/storingen"
     });
-    mappageTour.addStep({
+    tour.addStep({
         element: ".annotation-layer-toggler",
         title: "Annotaties",
         placement: "right",
         content: "Hier ziet u commentaar op locaties of tijdreeksen"
     });
-    mappageTour.start();
+    tour.start();
 };
 
 Lizard.App.addInitializer(function(){

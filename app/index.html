@@ -946,7 +946,8 @@
     <li><a href="http://api.dijkdata.nl/management/" target="">Beheeromgeving</a></li>
     <li class="divider"></li>
     <li class="nav-header">DDSC</li>
-    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalHelp">Help</a></li>
+    <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalHelp">Help</a></li>
+    <li><a href="javascript:void(0);" id="startTour">Rondleiding</a></li>
     <li><a href="#" id="logout">Uitloggen</a></li>
     </ul>
     <% } else { %>
@@ -1229,6 +1230,7 @@
         $(document).ready(function() {
           Lizard.App.start();
         });
+        var tour;
         </script>
 
 

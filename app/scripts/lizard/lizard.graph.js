@@ -136,7 +136,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     Backbone.history.navigate('graphs');
   }
 
-  var graphspageTour = new Tour({
+  tour = new Tour({
     labels: {
         next: "Verder »",
         prev: "« Terug",
@@ -145,37 +145,37 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     useLocalStorage: false,
     backdrop: true
   });
-  graphspageTour.addStep({
+  tour.addStep({
       element: "#presetsRegion",
       title: "Tijdseries",
       placement: "right",
       content: "Dit zijn de voorgedefinieerde grafieken. Deze bestaan uit meerdere tijdseries. Als de grafiek van u is, kunt u deze verwijderen of opslaan."
   });
-  graphspageTour.addStep({
+  tour.addStep({
       element: "#save-collage",
       title: "Nieuwe collage opslaan",
       placement: "top",
       content: "Hiermee slaat u een nieuwe collage op."
   });
-  graphspageTour.addStep({
+  tour.addStep({
       element: "#selectionRegion",
       title: "Tijdreeksen",
       placement: "right",
       content: "Hier kunt u tijdreeksen uitzoeken om in de grafiek te tekenen. Sleep de gewenste tijdreeks naar de blokken aan de rechterkant. (zodra uw begint te slepen, zullen deze blokken oplichten)"
   });
-  graphspageTour.addStep({
+  tour.addStep({
       element: "#searchTimeseries",
       title: "Zoeken in tijdreeksen",
       placement: "right",
       content: "Hier kunt u de tijdreeksen zoeken die u nodig heeft. (druk op enter om te zoeken)"
   });
-  graphspageTour.addStep({
+  tour.addStep({
       element: $('.legend').first(),
       title: "Legenda",
       placement: "left",
       content: "Dit is de legenda van de grafiek. Bovendien kunt u hier een CSV bestand exporteren of commentaar plaatsen."
   });
-  graphspageTour.start();
+  tour.start();
 };
 
 Lizard.App.addInitializer(function(){

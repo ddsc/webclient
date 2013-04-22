@@ -13,6 +13,10 @@ $(window).on('resize', function(e) {
 });
 
 
+$('#startTour').live('click', function() {
+    tour.start(true);
+});
+
 $.fn.serializeObject = function()
 {
    var o = {};
