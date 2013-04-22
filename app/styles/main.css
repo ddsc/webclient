@@ -373,6 +373,13 @@ input.input-medium.search-query {
     font-weight: 300;
 }
 
+
+.popup-toggle{
+    max-width: 220px;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Graph stuff*/
 
 .noselect,
@@ -1154,8 +1161,14 @@ html.busy, html.busy * {
 **/
 
 
+.leaflet-popup-content{
+    max-height: 285px;
+    overflow:auto;
+}
+
 .leaflet-popup-content ul{
     list-style: none;
+
 }
 
 
