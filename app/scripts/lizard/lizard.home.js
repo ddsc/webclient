@@ -106,22 +106,22 @@ Lizard.Home.home = function(){
 
 
 
-  tour = new Tour({
-    labels: {
-        next: "Verder »",
-        prev: "« Terug",
-        end: "Sla over"
-    },
-    useLocalStorage: false,
-    backdrop: true
-  });
-  tour.addStep({
-      element: ".map-menu",
-      title: "Kaart",
-      placement: "bottom",
-      content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
-  });
-  tour.start();
+  // tour = new Tour({
+  //   labels: {
+  //       next: "Verder »",
+  //       prev: "« Terug",
+  //       end: "Sla over"
+  //   },
+  //   useLocalStorage: false,
+  //   backdrop: true
+  // });
+  // tour.addStep({
+  //     element: ".map-menu",
+  //     title: "Kaart",
+  //     placement: "bottom",
+  //     content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
+  // });
+  // tour.start();
 };
 
 Lizard.App.addInitializer(function(){
