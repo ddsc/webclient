@@ -2,10 +2,27 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   template: '#collage-template',
   events: {
-    'click .layer-item': 'select'
+    'click .layer-item': 'select',
+    'click .remove' : 'remove',
+    'click .save' : 'save'
   },
   initialize: function () {
     this.model.bind('change', this.render);
+  },
+  remove: function(){
+    this.model.destroy();
+    $('.top-right').notify({
+        type: 'alert',
+        message: {
+          text: 'Grafiek samenstelling is succesvol verwijderd'
+        }}).show();
+  },
+  save: function(){
+    this.model.save();
+    $('.top-right').notify({
+        message: {
+          text: 'Grafiek samenstelling is succesvol opgeslagen'
+        }}).show();
   },
   //create a radio button (one workspace selected at a time)
   select: function(e) {
@@ -29,8 +46,8 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
     );
   },
   collection: null, //workspaceCollection,
-  tagName: 'ul',
-  className: 'wms_sources drawer-group',
+  tagName: 'ol',
+  className: 'drawer-group',
 
   selectCollage: function(selectedModel) {
     var self = this;

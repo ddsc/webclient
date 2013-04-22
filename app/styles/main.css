@@ -247,7 +247,7 @@ ul.wms_sources li {
     position: relative;
     border: none;
     margin: 0 0 1px 0;
-    padding: 5px 30px 5px 19px;
+    padding: 5px 5px 5px 19px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -311,6 +311,10 @@ ul.wms_sources h4 {
     margin-right: 0;
     margin-top: 8px;
     text-indent: 0;
+}
+
+.layer-item{
+    width:100%;
 }
 
 .author {
