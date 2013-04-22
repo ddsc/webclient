@@ -140,7 +140,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     labels: {
         next: "Verder »",
         prev: "« Terug",
-        end: "Bedankt"
+        end: "Sla over"
     },
     useLocalStorage: false,
     backdrop: true
@@ -149,7 +149,13 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
       element: "#presetsRegion",
       title: "Tijdseries",
       placement: "right",
-      content: "Hier vindt u de voorgedefinieerde tijdseries"
+      content: "Dit zijn de voorgedefinieerde grafieken. Deze bestaan uit meerdere tijdseries. Als de grafiek van u is, kunt u deze verwijderen of opslaan."
+  });
+  graphspageTour.addStep({
+      element: "#save-collage",
+      title: "Nieuwe collage opslaan",
+      placement: "top",
+      content: "Hiermee slaat u een nieuwe collage op."
   });
   graphspageTour.start();
 };

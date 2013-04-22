@@ -110,7 +110,7 @@ Lizard.Home.home = function(){
     labels: {
         next: "Verder »",
         prev: "« Terug",
-        end: "Bedankt"
+        end: "Sla over"
     },
     useLocalStorage: false,
     backdrop: true

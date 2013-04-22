@@ -188,7 +188,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       labels: {
           next: "Verder »",
           prev: "« Terug",
-          end: "Bedankt"
+          end: "Sla over"
       },
       useLocalStorage: false,
       backdrop: true
