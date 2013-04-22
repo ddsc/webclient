@@ -566,10 +566,15 @@
     <script type="text/template" id="info-modal-template">
       <div id="info-modal-header" class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="info-modal-label">Informatie</h3>
+        <h3 id="info-modal-label"><%= name %></h3>
      </div>
       <div id="info-modal-body" class="modal-body">
-        Info
+        <table class="table">
+          <tr><td>Parameter</td><td><%= parameter %></td></tr>
+          <tr><td>Laatste Waarde</td><td><%= latest_value %></td></tr>
+          <tr><td>Tijdstip laatste waarde</td><td><%= latest_value_timestamp %></td></tr>
+          <tr><td>Eenheid</td><td><%= unit %></td></tr>
+        </table>
       </div>
       <div id="info-modal-footer" class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
@@ -632,11 +637,13 @@
     <script id="timeserie-item-template" type="text/template">
         <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
+
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
-          <i class="icon-bar-chart fav"></i>&nbsp;
-          <span class="add" data-url="<%= timeserie.url%>"><%= timeserie.name %></span>
-          <!-- <i class="icon-question-sign info pull-right"></i>-->
+          <span class="add" data-url="<%= timeserie.url%>">
+          <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %></span>
+            <i class="icon-question-sign info pull-right"></i>
         </h5>
+
         </div>
         <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
     </script>

@@ -917,18 +917,36 @@ div#selectionRegion{
 .timeserie-item h5,
 .ddsc-item h5 {
     font-size: .98em;
-    text-decoration: none;
-    text-overflow: ellipsis;
     padding: 0;
     margin: 0;
     display: block;
     cursor: pointer;
-    overflow: hidden;
-    /*white-space: nowrap;*/
-    width: 100%;
+    overflow:hidden;
     height: 23px;
     color: #0084B4;
+    width:100%;
 }
+
+.timeserie-item h5 >span.add{
+    text-overflow: ellipsis;
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    width: 90%
+}
+
+.timeserie-item h5 > i.info{
+    margin-top: -14px;
+}
+
+.timeserie-item > i.info{
+    height: 23px;
+    color: #0084B4;
+    font-size: .98em;
+
+}
+
 .ddsc-item h5 {
     white-space: normal;
 }

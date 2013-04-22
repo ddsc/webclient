@@ -76,6 +76,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection: graphCollection
   });
 
+
   // Disabled this, because the graphs aren't really meant to be dynamicly resized (canvas).
   // graphsView.on('ui:expand:sidebar', function(args) {
     // $('#sidebar').removeClass('span3').addClass('span5');
@@ -125,6 +126,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   graphsView.selectionSearch.show(timeseriesSearch.render());
   graphsView.selectionRegion.show(timeseriesView.render());
 
+  window.graphsView = graphsView
   // And set URL to #graphs
   if (collageid) {
     window.collageCollection.listenTo(window.collageCollection, 'gotAll', function(col){
