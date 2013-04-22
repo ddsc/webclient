@@ -192,6 +192,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     // end mock alarm layer
 
+    new L.Control.GeoSearch({
+        provider: new L.GeoSearch.Provider.Google()
+    }).addTo(mapCanvas);
+
     var fullScreen = new L.Control.FullScreen();
     this.mapCanvas.addControl(fullScreen);
 
