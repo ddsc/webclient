@@ -22,7 +22,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     },
     openAnnotation: function(){
         var timeseriesInstance = this.model.get('timeseries');
-        Lizard.App.vent.trigger('makeAnnotation', timeseriesInstance);
+        Lizard.Views.CreateAnnotationView(timeseriesInstance);
     },
     onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph

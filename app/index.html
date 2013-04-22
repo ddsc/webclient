@@ -387,7 +387,7 @@
        </div>
             <div class="modal-body" id="annotations-body">
               <div id="annotations-list"></div>
-        <div id="annotation-modal-footer">
+        <div id="annotation-modal-footer" class="modal-footer">
                       <form class="annotation">
               <fieldset>
               <div class="annotation-form">
@@ -397,11 +397,11 @@
                  </div>
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span2" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
+                   <input type="text" class="span2 datepick-annotate" name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
                  </div>
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span2" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
+                   <input type="text" class="span2 datepick-annotate" name="datetime_until" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
                  </div>
                  <div class="input-prepend">
                    <span class="add-on"><i class="icon-eye-open"></i></span>
@@ -429,24 +429,21 @@
     </script>
 
     <script type="text/template" id="annotation-one-template">
-              
+           <span class="pull-right">
+                <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
+                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
+            </span>
             <span class="annotation-text span3">
-              
+
               <ul style="list-style:none;margin:0;padding:0;">
                 <li><i class="icon-comment"></i>&nbsp;<%= annotation.text%></li>
                 <li style="font-size:.8em;"><%if (annotation.tags){%> <i><%=annotation.tags%></i> <%} else {%><i>Geen tags...</i><%}%></li>
               </ul>
             </span>
              <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
-            <span class="pull-right">
-              <form class="form-inline">
-                <button type="button" class="btn btn-mini annotation-edit">Wijzig</button>
-                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete">Wis</button>
-              </form>
-            </span>
-            <form class="annotation">
+            <form class="annotation collapse span5 ">
               <fieldset>
-              <div id="#annotation-<%=annotation.id%>" class="annotation-form collapse">
+              <div id="#annotation-<%=annotation.id%>" class="annotation-form ">
               <div class="controls">
                <div class="input-prepend">
                <span class="add-on"><i class="icon-comment"></i></span>
@@ -456,13 +453,13 @@
               <div class="controls">
                <div class="input-prepend">
                  <span class="add-on"><i class="icon-calendar"></i></span>
-                 <input type="text" class="span2" name="datetime_from" class="datepick-annotate" placeholder="Geldig vanaf (bijv. 2013-04-10) " value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
+                 <input type="text" class="span2 datepick-annotate " name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
                </div>
               </div>
               <div class="controls">
                <div class="input-prepend">
                  <span class="add-on"><i class="icon-calendar"></i></span>
-                 <input type="text" class="span2" name="datetime_until" class="datepick-annotate" placeholder="Geldig tot en met (bijv. 2013-04-11)" value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
+                 <input type="text" class="span2 datepick-annotate" name="datetime_until" placeholder="Geldig tot en met (bijv. 2013-04-11)" value="<%if (annotation.datestart){%><%= annotation.datestart %><%}%>"/>
                </div>
               </div>
               <div class="controls">
@@ -544,7 +541,10 @@
             <i class="icon-signal"></i>
         </span>
             <span class="content"><%= name %></span>
-            <span class="indicator save-collage"></span>
+          <span class="pull-right">
+            <i class="icon-remove remove"></i>
+            <i class="icon-save save"></i>
+          </span>
         </div>
     </script>
 
@@ -1004,7 +1004,6 @@
         </div>
     </div>
 
-
     <div id="header">
       <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
         <div class="navbar-inner">
@@ -1015,7 +1014,6 @@
               <span class="icon-bar"></span>
             </a>
             <a href="#"><div id="brand" href="#"></div></a>
-
             <div class="nav-collapse collapse" id="menu-bar">
               <ul class="nav">
                 <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
@@ -1027,9 +1025,10 @@
                 <li class="dropdown" id="loginRegion"></li>
               </ul>
             </div>
-      </div>
+          </div>
         </div>
       </div>
+    </div>
 
 
       <div class="container">
@@ -1076,7 +1075,7 @@
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
         <script src="scripts/vendor/l.control.geosearch.js"></script>
-        <script src="scripts/vendor/l.geosearch.provider.google.js"></script>        
+        <script src="scripts/vendor/l.geosearch.provider.google.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/extras.js -->
@@ -1208,6 +1207,7 @@
 
         <script src="scripts/lizard/views/CollageList.js"></script>
         <script src="scripts/lizard/views/FavoriteCollection.js"></script>
+        <script src="scripts/lizard/views/CreateAnnotationView.js"></script>
         <script src="scripts/lizard/views/Annotations.js"></script>
         <script src="scripts/lizard/views/HomePageList.js"></script>
 

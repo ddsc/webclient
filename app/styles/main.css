@@ -128,7 +128,14 @@ leaflet-control-legend-icon {
     margin-bottom: 5px;
     border: 1px solid #ddd;
     border-radius:  0 4px 4px 0;
+    overflow:hidden;
 }
+
+.annotation-form{
+    position:relative;
+    float:left;
+}
+
 .annotation-item .btn{
     margin:2px;
 }
@@ -240,7 +247,7 @@ ul.wms_sources li {
     position: relative;
     border: none;
     margin: 0 0 1px 0;
-    padding: 5px 30px 5px 19px;
+    padding: 5px 5px 5px 19px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -304,6 +311,10 @@ ul.wms_sources h4 {
     margin-right: 0;
     margin-top: 8px;
     text-indent: 0;
+}
+
+.layer-item{
+    width:100%;
 }
 
 .author {
@@ -482,6 +493,15 @@ input.input-medium.search-query {
 }
 .miniscule{
     font-size: 0.65em;
+}
+
+#annotation-modal > .modal-footer{
+    text-align: left;
+}
+
+
+#annotation-modal > .in{
+    height:350px;
 }
 
 .drop:hover{
@@ -972,8 +992,13 @@ border-bottom-color: #167884 !important;
 }
 
 .modal {
-  width: 60%;
-  margin-left:-30%;
+/*  width: 60%;*/
+  /*margin-left:-30%;*/
+}
+
+div#annotation-modal-footer.modal-footer{
+    text-align: left;
+    clear:both;
 }
 
 .modal-backdrop, .modal-backdrop.fade.in {
