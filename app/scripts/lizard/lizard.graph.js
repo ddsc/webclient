@@ -142,7 +142,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     labels: {
         next: "Verder »",
         prev: "« Terug",
-        end: "Sla over"
+        end: "Einde uitleg"
     },
     useLocalStorage: false,
     backdrop: true

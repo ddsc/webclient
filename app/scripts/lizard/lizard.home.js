@@ -110,7 +110,7 @@ Lizard.Home.home = function(){
   //   labels: {
   //       next: "Verder »",
   //       prev: "« Terug",
-  //       end: "Sla over"
+  //       end: "Einde uitleg"
   //   },
   //   useLocalStorage: false,
   //   backdrop: true
