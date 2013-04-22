@@ -484,6 +484,10 @@ input.input-medium.search-query {
     font-size: 0.65em;
 }
 
+#annotation-modal.modal-footer{
+    text-align: left;
+}
+
 .drop:hover{
     opacity: 1;
 }

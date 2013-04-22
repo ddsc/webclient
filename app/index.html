@@ -383,7 +383,7 @@
        </div>
             <div class="modal-body" id="annotations-body">
               <div id="annotations-list"></div>
-        <div id="annotation-modal-footer">
+        <div id="annotation-modal-footer" class="modal-footer">
                       <form class="annotation">
               <fieldset>
               <div class="annotation-form">
@@ -435,10 +435,8 @@
             </span>
              <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
             <span class="pull-right">
-              <form class="form-inline">
-                <button type="button" class="btn btn-mini annotation-edit">Wijzig</button>
-                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete">Wis</button>
-              </form>
+                <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
+                <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
             </span>
             <form class="annotation">
               <fieldset>
