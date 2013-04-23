@@ -24,6 +24,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     $('#ui-datepicker-div').css('z-index', 10000);
     $('#annotation-modal .datepick-annotate').datetimepicker({
       format: "yyyy-mm-ddThh:mm",
+      timezone: "WET",
       onRender: function ()
        {
           var date = new Date();
@@ -117,11 +118,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
       format: "yyyy-mm-ddTHH:mm",
-      onRender: function ()
-       {
-          var date = new Date();
-          return date;
-       }
+      timezone: 'WET'
     }).on('changeDate', function(ev){
       $('#annotation-modal .datepick-annotate').datetimepicker('hide');
     });
@@ -160,7 +157,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
             }
         });
         this.$el.find('.collapse').toggleClass('in');
-        this.render();
     },
     delete: function(){
         this.model.urlRoot = settings.annotations_detail_url;
