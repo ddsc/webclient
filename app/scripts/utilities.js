@@ -405,11 +405,13 @@ function panAndZoomOtherGraphs(plot) {
             if (otherPlot && plot !== otherPlot) {
                 var otherXAxis = otherPlot.getAxes().xaxis;
                 var otherXAxisOptions = otherXAxis.options;
-                otherXAxisOptions.min = xmin;
-                otherXAxisOptions.max = xmax;
-                otherPlot.setupGrid();
-                otherPlot.draw();
-                otherPlot.getPlaceholder().trigger('axisminmaxchanged', otherXAxis);
+                if (otherXAxisOptions.mode == 'time') {
+                    otherXAxisOptions.min = xmin;
+                    otherXAxisOptions.max = xmax;
+                    otherPlot.setupGrid();
+                    otherPlot.draw();
+                    otherPlot.getPlaceholder().trigger('axisminmaxchanged', otherXAxis);
+                }
             }
         }
     });
