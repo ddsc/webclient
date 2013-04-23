@@ -116,7 +116,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     },
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
-      format: "yyyy-mm-ddThh:mm",
+      format: "yyyy-mm-ddTHH:mm",
       onRender: function ()
        {
           var date = new Date();
@@ -138,6 +138,12 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     submitChange: function(e){
         e.preventDefault();
         var data = $(e.currentTarget).serializeObject();
+        if (data.datetime_from){
+        data.datetime_from = new Date(data.datetime_from).toISOString();
+        }
+        if (data.datetime_until){
+        data.datetime_until = new Date(data.datetime_until).toISOString();
+        }
         this.model.set(data);
         this.model.urlRoot = settings.annotations_detail_url;
         this.model.save({
