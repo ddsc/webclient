@@ -90,7 +90,8 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   Lizard.App.content.show(graphsView);
 
   // for some reason, timeseriesCollection is also a superglobal
-  var timeseriesCollection = new Lizard.Collections.Timeseries();
+  var timeseriesCollection = new Lizard.Collections.InfiniteTimeseries();
+  window.tsc = timeseriesCollection;
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
 
@@ -98,10 +99,11 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     timeseriesCollection: timeseriesCollection
   });
 
-  var timeseriesView = new Lizard.Views.TimeseriesCollection({
-    collection: timeseriesCollection,
-    graphCollection: graphCollection
-  });
+  var timeseriesView = new Lizard.Views.InfiniteTimeseries();
+//  var timeseriesView = new Lizard.Views.TimeseriesCollection({
+//    collection: timeseriesCollection,
+//    graphCollection: graphCollection
+//  });
 
   var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
     collection: graphCollection
@@ -125,7 +127,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
 
   graphsView.selectionSearch.show(timeseriesSearch.render());
 
-  graphsView.selectionRegion.show(new Lizard.Views.InfiniteTimeseries());
+  graphsView.selectionRegion.show(timeseriesView);
 
   window.graphsView = graphsView;
   // And set URL to #graphs

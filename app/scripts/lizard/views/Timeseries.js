@@ -46,9 +46,9 @@ Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
 Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
   className: 'infinite-timeseries',
   initialize: function() {
-    console.log('Lizard.Views.InfiniteTimeseries initialize()');
     this.isLoading = false;
-    this.timeseriesCollection = new Lizard.Collections.InfiniteTimeseries();
+    window.infiniteTimeseriesView = this;
+    this.timeseriesCollection = window.tsc;
     _.bindAll(this, 'checkScroll');
     $(window).scroll(this.checkScroll);
   },
@@ -56,11 +56,9 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     'scroll': 'checkScroll'
   },
   render: function() {
-    console.log('render()');
     this.loadResults();
   },
   loadResults: function() {
-    console.log('loadResults()');
     var self = this;
     this.isLoading = true;
     this.timeseriesCollection.fetch({
@@ -73,7 +71,6 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     });
   },
   checkScroll: function() {
-    console.log('checkScroll()');
     var triggerPoint = 100;
     if(!this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
       this.timeseriesCollection.page += 1; // Load next page
@@ -84,7 +81,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   initialize: function (options) {
-    this.timeseriesCollection = options.timeseriesCollection;
+    this.timeseriesCollection = window.tsc;
   },
   render: function() {
     tpl = '<div class="row-fluid"><input type="text" class="span12 search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries"></div>';
@@ -93,6 +90,19 @@ Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   },
   events: {'change #searchTimeseries': 'search'},
   search: function(e) {
-    this.timeseriesCollection.fetch({data:{'name': $('#searchTimeseries').val()}});
+    $(window.infiniteTimeseriesView.el).html("");
+    
+    window.tsc.page = 1;
+ //   window.infiniteTimeseriesView.loadResults();
+    window.tsc.name = $('#searchTimeseries').val();
+    window.infiniteTimeseriesView.render();
+//     window.tsc.fetch({
+// //      data:{'name': $('#searchTimeseries').val()},
+//       reset: true,
+//       success: function(e) {
+//         console.log('successful fetch', e);
+//         // window.infiniteTimeseriesView.setResults(e);
+//       }
+//     });
   }
 });
