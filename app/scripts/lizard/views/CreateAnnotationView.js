@@ -22,15 +22,16 @@ Lizard.Views.CreateAnnotationView = function(relation){
     // // initiate datepickers on the div's
 
     $('#ui-datepicker-div').css('z-index', 10000);
-    $('#annotation-modal .datepick-annotate').datepicker({
-      format: "yyyy-mm-dd",
+    $('#annotation-modal .datepick-annotate').datetimepicker({
+      format: "yyyy-mm-ddThh:mm",
+      timezone: "WET",
       onRender: function ()
        {
           var date = new Date();
           return date;
        }
     }).on('changeDate', function(ev){
-      $('#annotation-modal .datepick-annotate').datepicker('hide');
+      $('#annotation-modal .datepick-annotate').datetimepicker('hide');
     });
 
     $('#annotation-modal').modal();
@@ -114,6 +115,14 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         //   event.stopPropagation()
         // })
     },
+    onShow: function(){
+      this.$el.find('.datepick-annotate').datetimepicker({
+      format: "yyyy-mm-ddTHH:mm",
+      timezone: 'WET'
+    }).on('changeDate', function(ev){
+      $('#annotation-modal .datepick-annotate').datetimepicker('hide');
+    });
+    },
     events: {
         'click .annotation-edit' : 'edit',
         'click .annotation-delete' : 'delete',
@@ -126,6 +135,12 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     submitChange: function(e){
         e.preventDefault();
         var data = $(e.currentTarget).serializeObject();
+        if (data.datetime_from){
+        data.datetime_from = new Date(data.datetime_from).toISOString();
+        }
+        if (data.datetime_until){
+        data.datetime_until = new Date(data.datetime_until).toISOString();
+        }
         this.model.set(data);
         this.model.urlRoot = settings.annotations_detail_url;
         this.model.save({
@@ -142,7 +157,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
             }
         });
         this.$el.find('.collapse').toggleClass('in');
-        this.render();
     },
     delete: function(){
         this.model.urlRoot = settings.annotations_detail_url;
@@ -178,7 +192,7 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         if (related_object !== null) {
             var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
             this.collection.url = settings.annotations_search_url + query;
-            this.collection.fetch({success: function(res){console.log(res);}});
+            this.collection.fetch();
         }
   }
 });

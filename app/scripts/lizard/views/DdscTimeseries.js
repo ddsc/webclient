@@ -188,8 +188,9 @@ Lizard.geo.Popups.DdscTimeseries = {
     // $('#location-modal').modal();
   // },
   getPopupContent: function (location, $elem) {
-    var url = settings.timeseries_url + '&location=' + location.uuid;
-    var timeseriesCollection = new Lizard.Collections.Timeseries({url: url});
+    var url = settings.timeseries_url + '&location=' + location.get('uuid');
+    var timeseriesCollection = new Lizard.Collections.Timeseries();
+    timeseriesCollection.url = url;
     timeseriesCollection.fetch().done(function (collection, response) {
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection

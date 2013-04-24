@@ -188,7 +188,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       labels: {
           next: "Verder »",
           prev: "« Terug",
-          end: "Sla over"
+          end: "Einde uitleg"
       },
       useLocalStorage: false,
       backdrop: true
@@ -197,7 +197,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         element: "#leafletRegion",
         title: "Kaart",
         placement: "left",
-        content: "Hier ziet u de kaart"
+        content: "Hier ziet u de kaart. Hier ziet u de locaties van de sensoren. Voor meer informatie kunt u hier op klikken."
     });
     tour.addStep({
         element: "#workspaceListRegion",

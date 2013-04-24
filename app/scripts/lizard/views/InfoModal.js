@@ -1,6 +1,9 @@
 Lizard.Views.InfoModal = Backbone.Marionette.ItemView.extend({
   template: '#info-modal-template',
-  initialize: function() {
+  model: null,
+  initialize: function(options) {
     console.log('Lizard.Views.Info initializing');
+    this.model = options.model;
   }
+
 });
