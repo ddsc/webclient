@@ -43,6 +43,45 @@ Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
     }
 });
 
+Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
+  className: 'infinite-timeseries',
+  initialize: function() {
+    console.log('Lizard.Views.InfiniteTimeseries initialize()');
+    this.isLoading = false;
+    this.timeseriesCollection = new Lizard.Collections.InfiniteTimeseries();
+    _.bindAll(this, 'checkScroll');
+    $(window).scroll(this.checkScroll);
+  },
+  events: {
+    'scroll': 'checkScroll'
+  },
+  render: function() {
+    console.log('render()');
+    this.loadResults();
+  },
+  loadResults: function() {
+    console.log('loadResults()');
+    var self = this;
+    this.isLoading = true;
+    this.timeseriesCollection.fetch({
+      success: function(timeseries) {
+        _.each(timeseries.models, function(model) {
+          $(self.el).append(_.template($('#timeserie-item-template').html(), {url: model.get('url'), name: model.get('name'), uuid: model.get('uuid'), events: model.get('events'), favorite: model.get('favorite')}, {variable: 'timeserie'}));
+        });
+        self.isLoading = false;
+      }
+    });
+  },
+  checkScroll: function() {
+    console.log('checkScroll()');
+    var triggerPoint = 100;
+    if(!this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
+      this.timeseriesCollection.page += 1; // Load next page
+      this.loadResults();
+    }
+  }
+});
+
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   initialize: function (options) {
     this.timeseriesCollection = options.timeseriesCollection;

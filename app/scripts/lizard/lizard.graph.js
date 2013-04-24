@@ -124,9 +124,10 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   graphsView.favoriteRegion.show(favoritecollectionview);
 
   graphsView.selectionSearch.show(timeseriesSearch.render());
-  graphsView.selectionRegion.show(timeseriesView.render());
 
-  window.graphsView = graphsView
+  graphsView.selectionRegion.show(new Lizard.Views.InfiniteTimeseries());
+
+  window.graphsView = graphsView;
   // And set URL to #graphs
   if (collageid) {
     window.collageCollection.listenTo(window.collageCollection, 'gotAll', function(col){
