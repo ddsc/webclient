@@ -49,14 +49,36 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     this.isLoading = false;
     window.infiniteTimeseriesView = this;
     this.timeseriesCollection = window.tsc;
-    _.bindAll(this, 'checkScroll');
-    $(window).scroll(this.checkScroll);
+    //_.bindAll(this, 'checkScroll');
+    //$(window).scroll(this.checkScroll);
+    console.log(this.el);
+    // $('#selectionRegion').scroll(this.checkScroll);
   },
   events: {
-    'scroll': 'checkScroll'
+    //'scroll': 'checkScroll'
   },
+  // delegateEvents: function (events) {
+  //   console.log(this.$el.parent());
+  //   //debugger;
+  //   Backbone.View.prototype.delegateEvents.call(this);
+  //   this.$el.parent().on('scroll', function () {console.log('x')} );
+  // },
+  handleScroll: function (e) {
+    this.checkScroll();
+  },
+  onShow: function (e) {
+    this.$el.parent().on('scroll.timeseries', this.handleScroll.bind(this));
+  },
+  onClose: function (e) {
+    this.$el.parent().off('scroll.timeseries');
+  },
+  // undelegateEvents: function (events) {
+  //   Backbone.View.prototype.undelegateEvents.call(this);
+  //   this.$el.parent().off('scroll.timeseries');
+  // },
   render: function() {
     this.loadResults();
+    return this;
   },
   loadResults: function() {
     var self = this;
@@ -64,7 +86,14 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     this.timeseriesCollection.fetch({
       success: function(timeseries) {
         _.each(timeseries.models, function(model) {
-          $(self.el).append(_.template($('#timeserie-item-template').html(), {url: model.get('url'), name: model.get('name'), uuid: model.get('uuid'), events: model.get('events'), favorite: model.get('favorite')}, {variable: 'timeserie'}));
+          self.$el.append(_.template($('#timeserie-item-template').html(), {
+            url: model.get('url'),
+            name: model.get('name'),
+            uuid: model.get('uuid'),
+            events: model.get('events'),
+            favorite: model.get('favorite')}, {
+              variable: 'timeserie'
+            }));
         });
         self.isLoading = false;
       }
@@ -72,7 +101,10 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
   },
   checkScroll: function() {
     var triggerPoint = 100;
-    if(!this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
+    console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
+    console.log('this.el.clientHeight', this.el.clientHeight);
+    console.log('triggerPoint', triggerPoint);
+    if(!this.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight ) {
       this.timeseriesCollection.page += 1; // Load next page
       this.loadResults();
     }
