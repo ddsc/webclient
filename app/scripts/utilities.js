@@ -255,6 +255,11 @@ function initializePlot($container, options) {
                     axisLabel: '',
                     zoomRange: false,
                     panRange: false,
+                },
+                {
+                    axisLabel: '',
+                    zoomRange: false,
+                    panRange: false,
                 }
             ],
             grid: {
@@ -381,7 +386,7 @@ function initializePlot($container, options) {
 
     if (!options || !options.scatterplot) {
         // make sure all plots on the document scroll in synch with this plot
-        bindPanZoomEvents($container);
+        //bindPanZoomEvents($container);
     }
 
     return plot;

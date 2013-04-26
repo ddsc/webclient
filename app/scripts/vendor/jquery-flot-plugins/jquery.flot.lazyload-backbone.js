@@ -66,7 +66,7 @@
         this.timeout = null;
         this.datasets = [];
         this.preventUpdates = false;
-        this.backboneCollection = null;
+        this.graphModel = null;
         this.accountModel = null;
     }
 
@@ -84,6 +84,13 @@
 
     LazyLoadBackbone.prototype.refreshData = function (updateAll) {
         var self = this;
+
+        var xAxis = this.plot.getXAxes()[0];
+        var xAxisOptions = xAxis.options;
+        xAxisOptions.min = this.graphModel.get('dateRange').get('start');
+        xAxisOptions.max = this.graphModel.get('dateRange').get('end');
+        xAxis.min = this.graphModel.get('dateRange').get('start');
+        xAxis.max = this.graphModel.get('dateRange').get('end');
 
         if (this.preventUpdates) {
             return;
@@ -156,20 +163,19 @@
     };
 
     LazyLoadBackbone.prototype.bindEvents = function (plot, eventHolder) {
-        plot.getPlaceholder().bind("plotzoom.lazyload", this.scheduleUpdateAll.bind(this));
-        plot.getPlaceholder().bind("plotpan.lazyload", this.scheduleUpdateAll.bind(this));
-        plot.getPlaceholder().bind("axisminmaxchanged.lazyload", this.scheduleUpdateAll.bind(this));
+        //plot.getPlaceholder().bind("plotzoom.lazyload", this.scheduleUpdateAll.bind(this));
+        //plot.getPlaceholder().bind("plotpan.lazyload", this.scheduleUpdateAll.bind(this));
+        //plot.getPlaceholder().bind("axisminmaxchanged.lazyload", this.scheduleUpdateAll.bind(this));
         // plot.getPlaceholder().bind("dragstart.lazyload", this.setPreventUpdates.bind(this, true));
         // plot.getPlaceholder().bind("dragend.lazyload", this.setPreventUpdates.bind(this, false));
     };
 
     LazyLoadBackbone.prototype.shutdown = function (plot, eventHolder) {
         this.datasets = [];
-        this.stopObservingCollection();
-        this.stopObservingInitialPeriod();
-        plot.getPlaceholder().unbind("plotzoom.lazyload");
-        plot.getPlaceholder().unbind("plotpan.lazyload");
-        plot.getPlaceholder().unbind("axisminmaxchanged.lazyload");
+        this.stopObservingGraphModel();
+        //plot.getPlaceholder().unbind("plotzoom.lazyload");
+        //plot.getPlaceholder().unbind("plotpan.lazyload");
+        //plot.getPlaceholder().unbind("axisminmaxchanged.lazyload");
         // plot.getPlaceholder().unbind("dragstart.lazyload");
         // plot.getPlaceholder().unbind("dragend.lazyload");
     };
@@ -258,12 +264,13 @@
         this.redraw();
     };
 
-    LazyLoadBackbone.prototype.observeCollection = function (backboneCollection) {
+    LazyLoadBackbone.prototype.observeGraphModel = function (graphModel) {
         var self = this;
-        if (this.backboneCollection != null) {
-            throw 'backboneCollection already defined';
+        if (this.graphModel != null) {
+            throw 'graphModel already defined';
         }
-        this.backboneCollection = backboneCollection;
+        this.graphModel = graphModel;
+        var backboneCollection = graphModel.get('graphItems');
 
         // load the initial set
         backboneCollection.each(function (model) {
@@ -273,71 +280,42 @@
         });
 
         // listen for changes
+        graphModel.get('dateRange').on('change:start change:end', this.startEndChanged, this);
+        this.plot.getPlaceholder().on('plotpan.lazyload', this.plotPannedZoomed.bind(this));
+        this.plot.getPlaceholder().on('plotzoom.lazyload', this.plotPannedZoomed.bind(this));
         backboneCollection.on('add', this.bbAddHandler, this);
         backboneCollection.on('remove', this.bbRemoveHandler, this);
         backboneCollection.on('reset', this.bbResetHandler, this);
     };
 
-    LazyLoadBackbone.prototype.stopObservingCollection = function () {
-        if (this.backboneCollection != null) {
-            this.backboneCollection.off('add', this.bbAddHandler, this);
-            this.backboneCollection.off('remove', this.bbRemoveHandler, this);
-            this.backboneCollection.off('reset', this.bbResetHandler, this);
-            this.backboneCollection = null;
+    LazyLoadBackbone.prototype.stopObservingGraphModel = function () {
+        if (this.graphModel != null) {
+            var graphModel = this.graphModel;
+            var backboneCollection = graphModel.get('graphItems');
+            graphModel.get('dateRange').off('change:start change:end', this.startEndChanged, this);
+            this.plot.getPlaceholder().off('plotpan.lazyload');
+            this.plot.getPlaceholder().off('plotzoom.lazyload');
+            backboneCollection.off('add', this.bbAddHandler, this);
+            backboneCollection.off('remove', this.bbRemoveHandler, this);
+            backboneCollection.off('reset', this.bbResetHandler, this);
+            this.graphModel = null;
         }
     };
 
-    LazyLoadBackbone.prototype.readInitialPeriodFromModel = function () {
-        var xaxis = this.plot.getXAxes()[0];
-        var initialPeriod = this.accountModel.get('initialPeriod');
-        var max = moment();
-        var min = null;
-        switch (initialPeriod) {
-            case '24h':
-                min = moment(max).subtract('hours', 24);
-                break;
-            case '48h':
-                min = moment(max).subtract('hours', 48);
-                break;
-            case '1w':
-                min = moment(max).subtract('weeks', 1);
-                break;
-            case '1m':
-                min = moment(max).subtract('months', 1);
-                break;
-            case '1y':
-                min = moment(max).subtract('years', 1);
-                break;
-            default:
-                // take extent from data
-                max = null;
-                min = null;
-        }
-        if (min && max) {
-            min = min.toDate();
-            max = max.toDate();
-        }
-        xaxis.options.min = min;
-        xaxis.options.max = max;
+    LazyLoadBackbone.prototype.startEndChanged = function () {
         this.scheduleUpdateAll();
     };
 
-    LazyLoadBackbone.prototype.observeInitialPeriod = function (accountModel) {
-        if (this.accountModel != null) {
-            throw 'accountModel already defined';
-        }
-        this.accountModel = accountModel;
-
-        // initial read
-        this.readInitialPeriodFromModel();
-
-        this.accountModel.on('change', this.readInitialPeriodFromModel, this);
-    };
-
-    LazyLoadBackbone.prototype.stopObservingInitialPeriod = function () {
-        if (this.accountModel != null) {
-            this.accountModel.off('change', this.readInitialPeriodFromModel, this);
-            this.accountModel = null;
+    LazyLoadBackbone.prototype.plotPannedZoomed = function (event, plot) {
+        var xAxis = plot.getXAxes()[0];
+        var xAxisOptions = xAxis.options;
+        if (xAxisOptions.mode == 'time' && this.graphModel) {
+            var start = xAxisOptions.min;
+            var end = xAxisOptions.max;
+            this.graphModel.get('dateRange').set({
+                start: new Date(start),
+                end: new Date(end)
+            });
         }
     };
 
@@ -351,8 +329,7 @@
             plot.hooks.shutdown.push(lazyLoad.shutdown.bind(lazyLoad));
         }
 
-        plot.observeCollection = lazyLoad.observeCollection.bind(lazyLoad);
-        plot.observeInitialPeriod = lazyLoad.observeInitialPeriod.bind(lazyLoad);
+        plot.observeGraphModel = lazyLoad.observeGraphModel.bind(lazyLoad);
         plot.setPreventUpdates = lazyLoad.setPreventUpdates.bind(lazyLoad);
 
         plot.hooks.processOptions.push(processOptions);

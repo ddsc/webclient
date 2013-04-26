@@ -25,16 +25,23 @@
                 'border': '1px solid #111',
                 'background-color': '#fff',
                 'display': 'none',
-                'white-space': 'nowrap'
+                'white-space': 'nowrap',
+                'font-size': '80%'
             });
             // position under the drag/zoom overlay div
             plot.getPlaceholder().find('.flot-base').after($tooltip);
         }
 
         function showTooltip (x, y, datapoint) {
-            //var formatted = (new Date(datapoint[0])).toString();
-            var d = $.plot.dateGenerator(datapoint[0], plot.getXAxes()[0].options);
-            var formatted = $.plot.formatDate(d, '%d %b %Y %H:%M:%S', monthNames, dayNames);
+            var datapoint_x_fmt = '';
+            var xOptions = plot.getXAxes()[0].options;
+            if (xOptions.mode == 'time') {
+                var d = $.plot.dateGenerator(datapoint[0], xOptions);
+                datapoint_x_fmt = $.plot.formatDate(d, '%d %b %Y %H:%M:%S', monthNames, dayNames);
+            }
+            else {
+                datapoint_x_fmt = datapoint[0].toFixed(3);
+            }
 
             // stop the hiding timeout if one is active
             if (hideTimeout) {
@@ -43,8 +50,8 @@
             }
 
             // update text
-            var datapoint_fmt = datapoint[1].toFixed(3);
-            $tooltip.text(datapoint_fmt + ' (' + formatted + ')');
+            var datapoint_y_fmt = datapoint[1].toFixed(3);
+            $tooltip.html('X: ' + datapoint_x_fmt + '<br>Y: ' + datapoint_y_fmt);
 
             // its not positioned in the graph div, so subtract the parent's document offset
             var refpos = plot.getPlaceholder().offset();
@@ -54,7 +61,7 @@
             // reposition instantly (animation code remove due to slowness)
             $tooltip.css({
                 'top': y - 25,
-                'left': x + 5
+                'left': x + 15
             });
 
             // fade in if invisible

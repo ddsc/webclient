@@ -658,7 +658,15 @@
 
     <script type="text/template" id="graphs-legend-template">
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
-        <h5>&nbsp;<%=timeseries.get('name')%> <div class="legendcolor" style="float:left;clear:both;margin:2px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div></h5><%=timeseries.get('timeseries')%>
+        <div style="height: 60px;">
+            <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
+            <div class="pull-left">
+                <h5>
+                    <%=timeseries.get('name')%><br/>
+                    <%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)
+                </h5>
+            </div>
+        </div>
         <ul class="hide inline">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> Annoteer</button></li>
@@ -727,11 +735,12 @@
                         <div id="selectionRegion"></div>
                     </div>
                 </ul>
-                </div>
-                <div class="" id="collageRegion"></div>
+            </div>
+            <div class="" id="collageRegion"></div>
         </div>
 
         <div class="span9" id="mainRegion">
+            <div id="dateRangeRegion"></div>
             <div id="graphsRegion"></div>
         </div>
         <div class="btn-toolbar pull-right">
@@ -1159,6 +1168,7 @@
         <script src="scripts/lizard/models/Filter.js"></script>
 
         <!-- keep these in the following order, due to them being dependent on each other -->
+        <script src="scripts/lizard/models/DateRange.js"></script>
         <script src="scripts/lizard/models/GraphItem.js"></script>
         <script src="scripts/lizard/collections/GraphItem.js"></script>
         <script src="scripts/lizard/models/Graph.js"></script>
@@ -1196,6 +1206,7 @@
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/Geocoder.js"></script>
         <script src="scripts/lizard/views/Graph.js"></script>
+        <script src="scripts/lizard/views/DateRange.js"></script>
         <script src="scripts/lizard/views/ScatterPlot.js"></script>
         <script src="scripts/lizard/views/GraphLegend.js"></script>
         <script src="scripts/lizard/views/GraphAndLegend.js"></script>

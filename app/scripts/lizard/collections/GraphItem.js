@@ -15,10 +15,10 @@ Lizard.Collections.GraphItem = Backbone.Collection.extend({
         var self = this;
         var timeseries = new Lizard.Models.TimeseriesActual({url: url});
         timeseries.fetch()
-            .done(function (model, response) {
-                model.set({pk: model.id});
-                var graphItem = new Lizard.Models.GraphItem({timeseries: model});
-                self.add(graphItem);
-            });
+        .done(function (model, response) {
+            model.set({pk: model.id});
+            var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+            self.add(graphItem);
+        });
     }
 });

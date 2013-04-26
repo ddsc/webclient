@@ -45,10 +45,10 @@ Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
 
 Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
   className: 'infinite-timeseries',
-  initialize: function() {
+  initialize: function(options) {
     this.isLoading = false;
     window.infiniteTimeseriesView = this;
-    this.timeseriesCollection = window.tsc;
+    this.timeseriesCollection = options.timeseriesCollection;
     //_.bindAll(this, 'checkScroll');
     //$(window).scroll(this.checkScroll);
     console.log(this.el);
@@ -113,7 +113,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
 
 Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   initialize: function (options) {
-    this.timeseriesCollection = window.tsc;
+    this.timeseriesCollection = options.timeseriesCollection;
   },
   render: function() {
     tpl = '<div class="row-fluid"><input type="text" class="span12 search-query" placeholder="Zoeken" id="searchTimeseries" name="searchTimeseries"></div>';
@@ -123,10 +123,10 @@ Lizard.Views.TimeseriesSearch = Backbone.View.extend({
   events: {'change #searchTimeseries': 'search'},
   search: function(e) {
     $(window.infiniteTimeseriesView.el).html("");
-    
-    window.tsc.page = 1;
+
+    this.timeseriesCollection.page = 1;
  //   window.infiniteTimeseriesView.loadResults();
-    window.tsc.name = $('#searchTimeseries').val();
+    this.timeseriesCollection.name = $('#searchTimeseries').val();
     window.infiniteTimeseriesView.render();
 //     window.tsc.fetch({
 // //      data:{'name': $('#searchTimeseries').val()},

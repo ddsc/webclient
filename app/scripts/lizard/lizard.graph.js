@@ -18,7 +18,8 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'selectionSearch': '#selectionSearch',
     'selectionRegion': '#selectionRegion',
     'infomodal': '#info-modal',
-    'graphsRegion': '#graphsRegion'
+    'graphsRegion': '#graphsRegion',
+    'dateRangeRegion': '#dateRangeRegion',
   },
   events: {
     'click #reset-collage': 'resetCollage',
@@ -65,9 +66,16 @@ Lizard.Windows.Graphs.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 Lizard.Windows.Graphs.graphsRoute = function(collageid){
+  var dateRange = new Lizard.Models.DateRange({
+    accountModel: account // pass the global account instance
+  });
+  window.dateRange = dateRange; // temp global access
+
   var graphCollection = new Lizard.Collections.Graph();
   for (var i=0; i<4; i++) {
-    var graph = new Lizard.Models.Graph();
+    var graph = new Lizard.Models.Graph({
+      dateRange: dateRange
+    });
     graphCollection.add(graph);
   }
 
@@ -76,34 +84,22 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection: graphCollection
   });
 
-
-  // Disabled this, because the graphs aren't really meant to be dynamicly resized (canvas).
-  // graphsView.on('ui:expand:sidebar', function(args) {
-    // $('#sidebar').removeClass('span3').addClass('span5');
-    // $('#mainRegion').removeClass('span9').addClass('span7');
-  // });
-  // graphsView.on('ui:expand:mainregion', function(args) {
-    // $('#sidebar').removeClass('span5').addClass('span3');
-    // $('#mainRegion').removeClass('span7').addClass('span9');
-  // });
-
   Lizard.App.content.show(graphsView);
 
-  // for some reason, timeseriesCollection is also a superglobal
-  var timeseriesCollection = new Lizard.Collections.InfiniteTimeseries();
-  window.tsc = timeseriesCollection;
+  var dateRangeView = new Lizard.Views.DateRange({model: dateRange});
+  graphsView.dateRangeRegion.show(dateRangeView);
 
   var favoritecollectionview = new Lizard.Views.FavoriteCollection();
+
+  var timeseriesCollection = new Lizard.Collections.InfiniteTimeseries();
 
   var timeseriesSearch = new Lizard.Views.TimeseriesSearch({
     timeseriesCollection: timeseriesCollection
   });
 
-  var timeseriesView = new Lizard.Views.InfiniteTimeseries();
-//  var timeseriesView = new Lizard.Views.TimeseriesCollection({
-//    collection: timeseriesCollection,
-//    graphCollection: graphCollection
-//  });
+  var timeseriesView = new Lizard.Views.InfiniteTimeseries({
+    timeseriesCollection: timeseriesCollection
+  });
 
   var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
     collection: graphCollection
@@ -115,11 +111,10 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection: graphCollection
   });
 
-
   window.collageCollection.fetch()
-    .done(function (col) {
-      col.trigger('gotAll', col);
-    });
+  .done(function (col) {
+    col.trigger('gotAll', col);
+  });
 
   graphsView.presetsRegion.show(collageListView.render());
 
@@ -130,6 +125,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   graphsView.selectionRegion.show(timeseriesView);
 
   window.graphsView = graphsView;
+
   // And set URL to #graphs
   if (collageid) {
     window.collageCollection.listenTo(window.collageCollection, 'gotAll', function(col){
