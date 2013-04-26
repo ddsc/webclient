@@ -1316,7 +1316,17 @@ div.graph-legend ul li{
 .graph-widget {
     height: 200px;
 }
-
+.overlayer {
+    position: relative;
+    top: 35px;
+    left: 75px;
+}
+.overlayer h1{
+    font-size: 15px;
+}
+.overlayer span {
+    font-size: 12px;
+}
 
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
