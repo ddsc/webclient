@@ -409,7 +409,7 @@
                       <input type="radio" name="visibility" value="public" required> Openbaar
                     </label>
                     <label class="radio inline controls-row">
-                      <input type="radio" name="visibility" value="private" required CHECKED> Privé
+                      <input type="radio" name="visibility" value="private" required CHECKED> Persoonlijk
                     </label>
                 </div>
                  <div class="input-prepend">
@@ -469,7 +469,7 @@
                     <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar
                   </label>
                   <label class="radio inline controls-row">
-                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility !== 'public'){%>checked<%}%> required> Privé
+                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility !== 'public'){%>checked<%}%> required> Persoonlijk
                   </label>
               </div>
             </div>
@@ -494,7 +494,7 @@
     <script type="text/template" id="layeritem-template">
 
 	  <div class="layer-item">
-        <span class="indicato">
+        <span class="indicator">
             <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
         </span>
         <span class="action handle">
@@ -705,7 +705,7 @@
                   <label>Zichtbaarheid</label>
                   <label class="radio">
                   <input type="radio" name="visibility" value="private" checked>
-                  Priv&eacute;
+                  Persoonlijk
                   </label>
                   <label class="radio">
                   <input type="radio" name="visibility" value="public">
@@ -728,7 +728,7 @@
                     </li>
                     <div data-group="presets" class="measurement-items" id="presetsRegion"></div>
                     <li class="metrics-dropdown hidden-phone" id="selection">
-                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen</a>
+                        <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-bar-chart"></i> Tijdreeksen <span class="loading-indicator hide"><img src="images/ajax-spinner-1.gif"/></span></a>
                     </li>
                     <div data-group="selection" class="measurement-items hidden-phone">
                         <div id="selectionSearch"></div>
@@ -959,7 +959,7 @@
     </a>
     <ul class="dropdown-menu">
     <li><a href="#account" target="">Uw gegevens</a></li>
-    <li><a href="http://api.dijkdata.nl/management/" target="">Beheeromgeving</a></li>
+    <li><a href="http://api.dijkdata.nl/management/" target="_blank">Beheeromgeving</a></li>
     <li class="divider"></li>
     <li class="nav-header">DDSC</li>
     <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalHelp">Help</a></li>

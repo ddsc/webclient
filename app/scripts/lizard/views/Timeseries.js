@@ -9,6 +9,7 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
     'click .add': 'drawGraph'
   },
   showInfoModal: function() {
+    console.log('showInfoModal');
     infoModalView = new Lizard.Views.InfoModal({model: this.model});
     window.graphsView.infomodal.show(infoModalView.render());
     $('#info-modal').modal();
@@ -81,10 +82,12 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     return this;
   },
   loadResults: function() {
+    $('.loading-indicator').show();
     var self = this;
     this.isLoading = true;
     this.timeseriesCollection.fetch({
       success: function(timeseries) {
+        $('.loading-indicator').hide();
         _.each(timeseries.models, function(model) {
           self.$el.append(_.template($('#timeserie-item-template').html(), {
             url: model.get('url'),
@@ -101,9 +104,9 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
   },
   checkScroll: function() {
     var triggerPoint = 100;
-    console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
-    console.log('this.el.clientHeight', this.el.clientHeight);
-    console.log('triggerPoint', triggerPoint);
+    // console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
+    // console.log('this.el.clientHeight', this.el.clientHeight);
+    // console.log('triggerPoint', triggerPoint);
     if(!this.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight ) {
       this.timeseriesCollection.page += 1; // Load next page
       this.loadResults();
