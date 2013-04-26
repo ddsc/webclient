@@ -81,10 +81,12 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     return this;
   },
   loadResults: function() {
+    $('.loading-indicator').show();
     var self = this;
     this.isLoading = true;
     this.timeseriesCollection.fetch({
       success: function(timeseries) {
+        $('.loading-indicator').hide();
         _.each(timeseries.models, function(model) {
           self.$el.append(_.template($('#timeserie-item-template').html(), {
             url: model.get('url'),
