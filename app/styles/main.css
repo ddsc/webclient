@@ -17,6 +17,10 @@ a {
   min-height: 700px; /*prefent lizard-logo on top of page*/
 }
 
+.full-width {
+  width: 100%;
+}
+
 div#brand {
     display: block;
     float: left;
