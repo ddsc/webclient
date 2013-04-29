@@ -50,20 +50,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     this.isLoading = false;
     window.infiniteTimeseriesView = this;
     this.timeseriesCollection = options.timeseriesCollection;
-    //_.bindAll(this, 'checkScroll');
-    //$(window).scroll(this.checkScroll);
-    console.log(this.el);
-    // $('#selectionRegion').scroll(this.checkScroll);
   },
-  events: {
-    //'scroll': 'checkScroll'
-  },
-  // delegateEvents: function (events) {
-  //   console.log(this.$el.parent());
-  //   //debugger;
-  //   Backbone.View.prototype.delegateEvents.call(this);
-  //   this.$el.parent().on('scroll', function () {console.log('x')} );
-  // },
   handleScroll: function (e) {
     this.checkScroll();
   },
@@ -73,10 +60,6 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
   onClose: function (e) {
     this.$el.parent().off('scroll.timeseries');
   },
-  // undelegateEvents: function (events) {
-  //   Backbone.View.prototype.undelegateEvents.call(this);
-  //   this.$el.parent().off('scroll.timeseries');
-  // },
   render: function() {
     this.loadResults();
     return this;

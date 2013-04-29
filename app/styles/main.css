@@ -298,7 +298,8 @@ ul.wms_sources span a {
 ol.drawer-group span.indicator,
 ul.wms_sources span.indicator {
     position: absolute;
-    right: 2px;
+    /*right: 2px;*/
+    left: 0px;
     top: 4px;
     width: 35px;
     top: 10px;
