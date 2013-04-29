@@ -358,6 +358,10 @@
             return;
         }
 
+        if (this.datasets.length !== 2) {
+            return;
+        }
+
         var firstDataset = this.datasets[0];
         if (updateAll === true || firstDataset.needsUpdate) {
             firstDataset.fetch(function () {

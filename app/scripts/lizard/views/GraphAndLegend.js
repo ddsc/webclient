@@ -49,8 +49,10 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
             $scatterPlotForm.removeClass('hide');
         }
         else {
+            $scatterPlotForm.find('[name="do-scatter-plot"]')
+            .removeAttr('checked')
+            .trigger('change');
             $scatterPlotForm.addClass('hide');
-            this.model.set('drawScatterPlot', false);
         }
     },
     showNormalGraph: function() {
