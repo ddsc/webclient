@@ -213,6 +213,12 @@
             end = new Date(end);
         }
 
+        // use global start and end, instead of axes viewpoint
+        if (this.scatterplot) {
+            start = this.graphModel.get('dateRange').get('start');
+            end = this.graphModel.get('dateRange').get('end');
+        }
+
         if (start && end) {
             // convert to iso 8601 and append to parameters
             $.extend(params, {
