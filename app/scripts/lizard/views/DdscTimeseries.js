@@ -125,7 +125,6 @@ Lizard.geo.Popups.DdscTimeseries = {
     var url = settings.timeseries_url + '&location=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
-    debugger
     tsCollection.fetch().done(function (collection, response) {
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
