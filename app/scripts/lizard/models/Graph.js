@@ -1,6 +1,8 @@
 Lizard.Models.Graph = Backbone.Model.extend({
     initialize: function (options) {
-        var graphItems = new Lizard.Collections.GraphItem();
+        var graphItems = new Lizard.Collections.GraphItem([], {
+            graphModel: this
+        });
         this.set({
             graphItems: graphItems,
             dateRange: options.dateRange

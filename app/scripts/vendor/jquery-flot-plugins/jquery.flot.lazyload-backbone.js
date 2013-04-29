@@ -37,8 +37,12 @@
         .done(function (data, textStatus, jqXHR) {
             self.data = data.data;
             self.label = data.label;
-            self.parameterPk = data.parameter_pk;
-            self.axisLabel = data.axis_label;
+            if (data.parameter_pk) {
+                self.parameterPk = data.parameter_pk;
+            }
+            if (data.axis_label) {
+                self.axisLabel = data.axis_label;
+            }
             if (data.axis_label_x) {
                 self.axisLabelX = data.axis_label_x;
             }

@@ -1,4 +1,10 @@
 Lizard.Collections.GraphItem = Backbone.Collection.extend({
+    graphModel: null,
+    initialize: function (models, options) {
+        if (options.graphModel) {
+            this.graphModel = options.graphModel;
+        }
+    },
     model: Lizard.Models.GraphItem,
     // ensure uniqueness of added timeseries
     add: function (graphItem) {
