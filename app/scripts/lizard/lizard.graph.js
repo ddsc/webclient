@@ -69,7 +69,6 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   var dateRange = new Lizard.Models.DateRange({
     accountModel: account // pass the global account instance
   });
-  window.dateRange = dateRange; // temp global access
 
   var graphCollection = new Lizard.Collections.Graph();
   for (var i=0; i<4; i++) {

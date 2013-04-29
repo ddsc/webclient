@@ -234,7 +234,9 @@
         <div class="span3 text-right pull-right"><small class="muted"><%=time %></small></div>
     </script>
 
-
+    <script type="text/template" id="management-template">
+      <iframe name="content" src=<%=management_ui_url%> width="100%" height="700px" seamless=true></iframe>
+    </script>
 
     <script type="text/template" id="map-template">
       <div class="row-fluid">
@@ -509,7 +511,7 @@
         <span class="action handle indicator">
             <i class="icon-check<% if(!visibility) { %>-empty<%  } %>"></i>
         </span>
-        <span class="content"><%= display_name %>&nbsp;<i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
+        <span class="content" style="position:relative;left:18px;"><%= display_name %>&nbsp;<i class="<% if(selected) { %>icon-info-sign<% } %>"></i></span>
         <span class="toggle-layer-configuration chevron-right">
           <i class="icon-chevron-right"></i>
         </span>
@@ -670,7 +672,7 @@
         <ul class="hide inline">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> Annoteer</button></li>
-          <li><a href="http://api.dijkdata.nl/api/v1/events/<%=timeseries.get('uuid')%>/?format=csv" class="btn btn-mini"><i class="icon-share-alt"></i> CSV</a></li>
+          <li><a href="" class="btn btn-mini csv-link"><i class="icon-share-alt"></i> CSV</a></li>
         </ul>
       </div>
     </script>
@@ -1035,6 +1037,7 @@
               <ul class="nav">
                 <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
                 <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafiek</a></li>
+                <li class="management-menu"><a href="#management"><em class="icon-list icon-white"></em> Beheer</a></li>
                 <!-- DISABLING FOR NOW <li class="tabular-menu"><a href="#tabular"><em class="icon-list icon-white"></em> Tabel</a></li> -->
                 <!-- <li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li> -->
               </ul>
@@ -1239,6 +1242,7 @@
         <script src="scripts/lizard/lizard.graph.js"></script>
         <script src="scripts/lizard/lizard.tabular.js"></script>
         <script src="scripts/lizard/lizard.dashboard.js"></script>
+        <script src="scripts/lizard/lizard.management.js"></script>
 
         <script src="scripts/lizard/models/Annotations.js"></script>
         <!-- endbuild -->

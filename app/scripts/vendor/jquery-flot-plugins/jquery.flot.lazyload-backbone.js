@@ -12,10 +12,10 @@
         this.needsUpdate = true;
         this.data = [];
         this.label = '';
-        this.xLabel = '';
-        this.yLabel = '';
         this.parameterPk = null;
-        this.parameterName = null;
+        this.axisLabel = null;
+        this.axisLabelX = null;
+        this.axisLabelY = null;
         this.xhr = null;
     }
 
@@ -37,13 +37,17 @@
         .done(function (data, textStatus, jqXHR) {
             self.data = data.data;
             self.label = data.label;
-            self.parameterPk = data.parameter_pk;
-            self.parameterName = data.parameter_name;
-            if (data.x_label) {
-                self.xLabel = data.x_label;
+            if (data.parameter_pk) {
+                self.parameterPk = data.parameter_pk;
             }
-            if (data.y_label) {
-                self.yLabel = data.y_label;
+            if (data.axis_label) {
+                self.axisLabel = data.axis_label;
+            }
+            if (data.axis_label_x) {
+                self.axisLabelX = data.axis_label_x;
+            }
+            if (data.axis_label_y) {
+                self.axisLabelY = data.axis_label_y;
             }
             self.needsUpdate = false;
             if (typeof successCallback !== 'undefined') {
@@ -134,7 +138,7 @@
                 yaxis = allocatedYAxes + 1;
                 allocatedYAxes++;
                 // Set the axisLabel of the new axis.
-                yAxes[yaxis - 1].options.axisLabel = dataset.parameterName;
+                yAxes[yaxis - 1].options.axisLabel = dataset.axisLabel;
                 // Add the axis to a map so any following dataset can find
                 // a suitable axis for their parameters.
                 parameterPkToYAxis[dataset.parameterPk] = yaxis;
@@ -369,8 +373,8 @@
             data: firstDataset.data
         };
         this.setPreventUpdates(true);
-        this.plot.getXAxes()[0].options.axisLabel = firstDataset.x_label;
-        this.plot.getYAxes()[0].options.axisLabel = firstDataset.y_label;
+        this.plot.getXAxes()[0].options.axisLabel = firstDataset.axisLabelX;
+        this.plot.getYAxes()[0].options.axisLabel = firstDataset.axisLabelY;
         this.plot.setData([line]);
         this.plot.setupGrid();
         this.plot.draw();

@@ -9,20 +9,40 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         'click': 'onClick',
         // 'mouseleave': 'onMouseLeave',
         'click .delete': 'removeFromCollection',
-        'click .annotate': 'openAnnotation'
+        'click .annotate': 'openAnnotation',
+        'click .csv-link': 'redirectToCsv'
     },
     onClick: function(e) {
-        var that = this;
-        that.$el.find('ul').first().toggleClass('hide', 'show');
+        e.preventDefault();
+        this.$el.find('ul').first().toggleClass('hide', 'show');
     },
     removeFromCollection: function(e) {
-        var self = this;
-        self.model.collection.remove(self.model);
+        e.preventDefault();
+        this.model.collection.remove(self.model);
         return true;
     },
     openAnnotation: function(){
+        e.preventDefault();
         var timeseriesInstance = this.model.get('timeseries');
         Lizard.Views.CreateAnnotationView(timeseriesInstance);
+    },
+    redirectToCsv: function (e) {
+        e.preventDefault();
+        var url = this.model.get('timeseries').get('events');
+        var params = {
+            format: 'csv'
+        };
+        var dateRange = this.model.collection.graphModel.get('dateRange');
+        var start = dateRange.get('start');
+        var end = dateRange.get('end');
+        if (start) {
+            params.start = start.toJSON();
+        }
+        if (end) {
+            params.end = end.toJSON();
+        }
+        url += '?' +$.param(params);
+        window.location = url;
     },
     onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph

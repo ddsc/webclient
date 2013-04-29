@@ -17,6 +17,10 @@ a {
   min-height: 700px; /*prefent lizard-logo on top of page*/
 }
 
+.full-width {
+  width: 100%;
+}
+
 div#brand {
     display: block;
     float: left;
@@ -298,7 +302,8 @@ ul.wms_sources span a {
 ol.drawer-group span.indicator,
 ul.wms_sources span.indicator {
     position: absolute;
-    right: 2px;
+    /*right: 2px;*/
+    left: 0px;
     top: 4px;
     width: 35px;
     top: 10px;
