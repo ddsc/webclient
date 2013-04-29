@@ -5,9 +5,10 @@ Lizard.Views.Graph = Backbone.Marionette.View.extend({
     initialize: function (options) {
         this.account = options.account;
 
+        // listenTo automatically deregisters event handler
+        this.listenTo(this.model.get('graphItems'), 'add remove reset', this.showHideTemplate, this);
     },
     showHideTemplate: function(e) {
-        console.log('changed:', this.$el);
         if (this.model.get('graphItems').length === 0) {
             this.$el.find('.overlayer').show();
         } else {
@@ -19,12 +20,11 @@ Lizard.Views.Graph = Backbone.Marionette.View.extend({
         plot.observeGraphModel(this.model);
         this.plot = plot;
         this.$el.append('<div class="overlayer hidden-tablet hidden-phone"><img src="images/drag_animation.gif"/></div>');
-        this.model.get('graphItems').on('add remove reset', this.showHideTemplate, this);
+        this.showHideTemplate();
     },
     onClose: function (e) {
         if (this.plot) {
             this.plot.shutdown();
         }
-        this.model.get('graphItems').off('add remove reset', this.showHideTemplate, this);
     }
 });

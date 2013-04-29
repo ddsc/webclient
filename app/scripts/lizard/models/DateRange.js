@@ -1,7 +1,15 @@
 Lizard.Models.DateRange = Backbone.Model.extend({
+    accountModel: null,
     initialize: function (options) {
         if (options.accountModel) {
-            this.readInitialPeriod(options.accountModel);
+            this.accountModel = options.accountModel;
+            this.readInitialPeriod(this.accountModel);
+            this.accountModel.on('change:initialPeriod', this.readInitialPeriod, this);
+        }
+    },
+    teardown: function () {
+        if (this.accountModel) {
+            this.accountModel.off('change:initialPeriod', this.readInitialPeriod, this);
         }
     },
     readInitialPeriod: function (accountModel) {
