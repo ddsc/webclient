@@ -12,7 +12,7 @@ Lizard.Models.Graph = Backbone.Model.extend({
         graphItems.off('add remove reset', this.onGraphItemsChange, this);
     },
     onGraphItemsChange: function (e) {
-        this.set('hasTwoItems', this.get('graphItems').length == 2);
+        this.set('hasTwoItems', this.get('graphItems').length === 2);
     },
     defaults: {
         graphItems: null,

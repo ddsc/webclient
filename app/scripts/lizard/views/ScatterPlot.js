@@ -7,9 +7,7 @@ Lizard.Views.ScatterPlot = Backbone.Marionette.View.extend({
     },
     onShow: function (e) {
         var plot = this.$el.initializePlot({scatterplot: true});
-        var url = this.model.get('graphItems').models[0].get('timeseries').get('events');
-        var combine_with_uuid = this.model.get('graphItems').models[1].get('timeseries').get('uuid');
-        plot.loadScatterPlotData(url, combine_with_uuid);
+        plot.observeGraphModel(this.model);
         this.plot = plot;
     },
     onClose: function (e) {

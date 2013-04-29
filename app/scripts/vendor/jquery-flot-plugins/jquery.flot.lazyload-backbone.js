@@ -4,17 +4,18 @@
 
     /* *************************************************** */
 
-    function DataSet (lazyLoad, events_url, color) {
+    function DataSet (lazyLoad, events_url, color, uuid) {
         this.lazyLoad = lazyLoad;
         this.url = events_url;
         this.color = color;
+        this.uuid = uuid;
         this.needsUpdate = true;
         this.data = [];
         this.label = '';
         this.parameterPk = null;
-        this.parameterName = null;
-        this.xmin = null;
-        this.xmax = null;
+        this.axisLabel = null;
+        this.axisLabelX = null;
+        this.axisLabelY = null;
         this.xhr = null;
     }
 
@@ -37,9 +38,13 @@
             self.data = data.data;
             self.label = data.label;
             self.parameterPk = data.parameter_pk;
-            self.parameterName = data.parameter_name;
-            self.xmin = data.xmin;
-            self.xmax = data.xmax;
+            self.axisLabel = data.axis_label;
+            if (data.axis_label_x) {
+                self.axisLabelX = data.axis_label_x;
+            }
+            if (data.axis_label_y) {
+                self.axisLabelY = data.axis_label_y;
+            }
             self.needsUpdate = false;
             if (typeof successCallback !== 'undefined') {
                 successCallback(self);
@@ -68,6 +73,7 @@
         this.preventUpdates = false;
         this.graphModel = null;
         this.accountModel = null;
+        this.scatterplot = false;
     }
 
     LazyLoadBackbone.prototype.scheduleUpdateAll = function (event) {
@@ -79,11 +85,15 @@
             clearTimeout(this.timeout);
             this.timeout = null;
         }
-        this.timeout = setTimeout(this.refreshData.bind(this, true), 750);
+        this.timeout = setTimeout(this.fetchData.bind(this, true), 750);
     };
 
-    LazyLoadBackbone.prototype.refreshData = function (updateAll) {
+    LazyLoadBackbone.prototype.fetchData = function (updateAll) {
         var self = this;
+
+        if (this.preventUpdates) {
+            return;
+        }
 
         var xAxis = this.plot.getXAxes()[0];
         var xAxisOptions = xAxis.options;
@@ -91,10 +101,6 @@
         xAxisOptions.max = this.graphModel.get('dateRange').get('end');
         xAxis.min = this.graphModel.get('dateRange').get('start');
         xAxis.max = this.graphModel.get('dateRange').get('end');
-
-        if (this.preventUpdates) {
-            return;
-        }
 
         for (var i in this.datasets) {
             var dataset = this.datasets[i];
@@ -128,7 +134,7 @@
                 yaxis = allocatedYAxes + 1;
                 allocatedYAxes++;
                 // Set the axisLabel of the new axis.
-                yAxes[yaxis - 1].options.axisLabel = dataset.parameterName;
+                yAxes[yaxis - 1].options.axisLabel = dataset.axisLabel;
                 // Add the axis to a map so any following dataset can find
                 // a suitable axis for their parameters.
                 parameterPkToYAxis[dataset.parameterPk] = yaxis;
@@ -163,21 +169,15 @@
     };
 
     LazyLoadBackbone.prototype.bindEvents = function (plot, eventHolder) {
-        //plot.getPlaceholder().bind("plotzoom.lazyload", this.scheduleUpdateAll.bind(this));
-        //plot.getPlaceholder().bind("plotpan.lazyload", this.scheduleUpdateAll.bind(this));
-        //plot.getPlaceholder().bind("axisminmaxchanged.lazyload", this.scheduleUpdateAll.bind(this));
-        // plot.getPlaceholder().bind("dragstart.lazyload", this.setPreventUpdates.bind(this, true));
-        // plot.getPlaceholder().bind("dragend.lazyload", this.setPreventUpdates.bind(this, false));
+        this.plot.getPlaceholder().on('plotpan.lazyload', this.plotPannedZoomed.bind(this));
+        this.plot.getPlaceholder().on('plotzoom.lazyload', this.plotPannedZoomed.bind(this));
     };
 
     LazyLoadBackbone.prototype.shutdown = function (plot, eventHolder) {
         this.datasets = [];
         this.stopObservingGraphModel();
-        //plot.getPlaceholder().unbind("plotzoom.lazyload");
-        //plot.getPlaceholder().unbind("plotpan.lazyload");
-        //plot.getPlaceholder().unbind("axisminmaxchanged.lazyload");
-        // plot.getPlaceholder().unbind("dragstart.lazyload");
-        // plot.getPlaceholder().unbind("dragend.lazyload");
+        this.plot.getPlaceholder().off('plotpan.lazyload');
+        this.plot.getPlaceholder().off('plotzoom.lazyload');
     };
 
     LazyLoadBackbone.prototype.getExtraParams = function () {
@@ -192,21 +192,28 @@
         var end = null;
         if (minX !== -1 && maxX !== 1 && minX < maxX) {
             // use current zoom extent
-            // convert back to Date and create a iso8601 timestring
-            start = (new Date(minX)).toJSON();
-            end = (new Date(maxX)).toJSON();
+            start = minX;
+            end = maxX;
         }
         else if (xaxis.options.min && xaxis.options.max) {
             // no initial zoom extent set, use whatever the graph is initialized with
-            start = xaxis.options.min.toJSON();
-            end = xaxis.options.max.toJSON();
+            start = xaxis.options.min;
+            end = xaxis.options.max;
+        }
+
+        // convert back to Date objects in case of timestamps
+        if (typeof start === 'number') {
+            start = new Date(start);
+        }
+        if (typeof end === 'number') {
+            end = new Date(end);
         }
 
         if (start && end) {
-            // append to parameters
+            // convert to iso 8601 and append to parameters
             $.extend(params, {
-                start: start,
-                end: end
+                start: start.toJSON(),
+                end: end.toJSON()
             });
         }
 
@@ -222,25 +229,32 @@
             });
         }
 
+        if (this.scatterplot) {
+            var secondDataset = this.datasets[1];
+            $.extend(params, {
+                combine_with: secondDataset.uuid
+            });
+        }
+
         return params;
     };
 
     LazyLoadBackbone.prototype.addGraphItem = function (model) {
         var timeseries = model.get('timeseries');
-        var events_url = timeseries.get('events');
+        var eventsUrl = timeseries.get('events');
         var color = model.get('color');
 
         for (var i in this.datasets) {
             var dataset = this.datasets[i];
-            if (dataset.url == events_url) {
+            if (dataset.url == eventsUrl) {
                 // already loaded, do nothing
                 return;
             }
         }
 
-        var dataset = new DataSet(this, events_url, color);
+        var dataset = new DataSet(this, eventsUrl, color, timeseries.get('uuid'));
         this.datasets.push(dataset);
-        this.refreshData();
+        this.fetchData();
     };
 
     LazyLoadBackbone.prototype.bbAddHandler = function (model, collection) {
@@ -270,34 +284,36 @@
             throw 'graphModel already defined';
         }
         this.graphModel = graphModel;
-        var backboneCollection = graphModel.get('graphItems');
+
+        var graphItems = graphModel.get('graphItems');
+
+        // listen for any changes
+        graphModel.get('dateRange').on('change:start change:end', this.startEndChanged, this);
+        graphItems.on('add', this.bbAddHandler, this);
+        graphItems.on('remove', this.bbRemoveHandler, this);
+        graphItems.on('reset', this.bbResetHandler, this);
 
         // load the initial set
-        backboneCollection.each(function (model) {
+        graphItems.each(function (graphItem) {
             self.setPreventUpdates(true);
-            self.addGraphItem(model);
+            self.addGraphItem(graphItem);
             self.setPreventUpdates(false);
         });
-
-        // listen for changes
-        graphModel.get('dateRange').on('change:start change:end', this.startEndChanged, this);
-        this.plot.getPlaceholder().on('plotpan.lazyload', this.plotPannedZoomed.bind(this));
-        this.plot.getPlaceholder().on('plotzoom.lazyload', this.plotPannedZoomed.bind(this));
-        backboneCollection.on('add', this.bbAddHandler, this);
-        backboneCollection.on('remove', this.bbRemoveHandler, this);
-        backboneCollection.on('reset', this.bbResetHandler, this);
+        this.fetchData();
     };
 
     LazyLoadBackbone.prototype.stopObservingGraphModel = function () {
         if (this.graphModel != null) {
             var graphModel = this.graphModel;
-            var backboneCollection = graphModel.get('graphItems');
+
+            var graphItems = graphModel.get('graphItems');
+
+            // remove all model event handlers
             graphModel.get('dateRange').off('change:start change:end', this.startEndChanged, this);
-            this.plot.getPlaceholder().off('plotpan.lazyload');
-            this.plot.getPlaceholder().off('plotzoom.lazyload');
-            backboneCollection.off('add', this.bbAddHandler, this);
-            backboneCollection.off('remove', this.bbRemoveHandler, this);
-            backboneCollection.off('reset', this.bbResetHandler, this);
+            graphItems.off('add', this.bbAddHandler, this);
+            graphItems.off('remove', this.bbRemoveHandler, this);
+            graphItems.off('reset', this.bbResetHandler, this);
+
             this.graphModel = null;
         }
     };
@@ -319,18 +335,74 @@
         }
     };
 
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+    /* ************************************************************** */
+
+    function LazyLoadBackboneScatter (plot) {
+        LazyLoadBackbone.apply(this, arguments);
+        this.scatterplot = true;
+    }
+    LazyLoadBackboneScatter.prototype = new LazyLoadBackbone();
+
+    LazyLoadBackboneScatter.prototype.fetchData = function (updateAll) {
+        var self = this;
+
+        if (this.preventUpdates) {
+            return;
+        }
+
+        var firstDataset = this.datasets[0];
+        if (updateAll === true || firstDataset.needsUpdate) {
+            firstDataset.fetch(function () {
+                self.redraw();
+            });
+        }
+    };
+
+    LazyLoadBackboneScatter.prototype.redraw = function () {
+        var firstDataset = this.datasets[0];
+        var line = {
+            yaxis: 1,
+            data: firstDataset.data
+        };
+        this.setPreventUpdates(true);
+        this.plot.getXAxes()[0].options.axisLabel = firstDataset.axisLabelX;
+        this.plot.getYAxes()[0].options.axisLabel = firstDataset.axisLabelY;
+        this.plot.setData([line]);
+        this.plot.setupGrid();
+        this.plot.draw();
+        this.plot.triggerRedrawOverlay();
+        this.setPreventUpdates(false);
+    };
+
+    LazyLoadBackboneScatter.prototype.bindEvents = function (plot, eventHolder) {
+    };
+
+    LazyLoadBackboneScatter.prototype.shutdown = function (plot, eventHolder) {
+        this.datasets = [];
+        this.stopObservingGraphModel();
+    };
+
     /* *************************************************** */
 
     function init (plot) {
-        var lazyLoad = new LazyLoadBackbone(plot);
-
         function processOptions (plot, options) {
+            var lazyLoad = null;
+
+            lazyLoad = new LazyLoadBackbone(plot);
+
+            if (options.scatterplot && options.scatterplot.enabled) {
+                lazyLoad = new LazyLoadBackboneScatter(plot);
+            }
             plot.hooks.bindEvents.push(lazyLoad.bindEvents.bind(lazyLoad));
             plot.hooks.shutdown.push(lazyLoad.shutdown.bind(lazyLoad));
-        }
 
-        plot.observeGraphModel = lazyLoad.observeGraphModel.bind(lazyLoad);
-        plot.setPreventUpdates = lazyLoad.setPreventUpdates.bind(lazyLoad);
+            plot.observeGraphModel = lazyLoad.observeGraphModel.bind(lazyLoad);
+            plot.setPreventUpdates = lazyLoad.setPreventUpdates.bind(lazyLoad);
+        }
 
         plot.hooks.processOptions.push(processOptions);
     }
