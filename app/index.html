@@ -486,7 +486,7 @@
                     <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar
                   </label>
                   <label class="radio inline controls-row">
-                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility !== 'public'){%>checked<%}%> required> Persoonlijk
+                    <input type="radio" name="visibility" value="private" <%if (annotation.visibility === 'private'){%>checked<%}%> required> Persoonlijk
                   </label>
               </div>
             </div>
