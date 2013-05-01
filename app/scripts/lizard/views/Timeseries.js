@@ -6,7 +6,17 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   events: {
     'click .info': 'showInfoModal',
-    'click .add': 'drawGraph'
+    'click .add': 'drawGraph',
+    'scroll' : 'loadMore'
+  },
+  loadMore: function(){
+    var totalHeight = this.$('> div').height(),
+    scrollTop = this.$el.scrollTop() + this.$el.height(),
+    margin = 100;
+    console.log('scroll')
+    if (scrollTop + margin >= totalHeight) {
+      this.model.collection
+    }
   },
   showInfoModal: function() {
     console.log('showInfoModal');
@@ -34,6 +44,7 @@ Lizard.Views.TimeseriesCollection = Backbone.Marionette.CollectionView.extend({
     initialize: function (options) {
         this.collection = options.collection;
         this.graphCollection = options.graphCollection;
+        this.collection.fetch()
     },
     tagName: 'ul',
     itemView: Lizard.Views.Timeseries,
@@ -50,6 +61,16 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     this.isLoading = false;
     window.infiniteTimeseriesView = this;
     this.timeseriesCollection = options.timeseriesCollection;
+  },
+  events: {
+    'click .info': 'showInfoModal'
+  },
+  showInfoModal: function(event) {
+    var tsuuid = $(event.target).parent().parent().data().uuid;
+    model = this.timeseriesCollection.where({uuid: tsuuid})[0];
+    infoModalView = new Lizard.Views.InfoModal({model: model});
+    window.graphsView.infomodal.show(infoModalView.render());
+    $('#info-modal').modal();
   },
   handleScroll: function (e) {
     this.checkScroll();
@@ -86,7 +107,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.View.extend({
     });
   },
   checkScroll: function() {
-    var triggerPoint = 100;
+    var triggerPoint = 200;
     // console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
     // console.log('this.el.clientHeight', this.el.clientHeight);
     // console.log('triggerPoint', triggerPoint);

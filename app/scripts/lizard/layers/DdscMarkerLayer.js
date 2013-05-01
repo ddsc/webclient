@@ -66,7 +66,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
-    var $elem = $('<div>');
+    var name = marker.valueOf().options.bbModel.get('name');
+    var $elem = $('<div><h5>'+ name +'</h5></div>');
     var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker.valueOf().options.bbModel, $elem);
     marker.bindPopup($elem.get(0), {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
