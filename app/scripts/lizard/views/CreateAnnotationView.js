@@ -142,10 +142,9 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         if (this.model.get('location')){
           var location = this.model.get('location')
           this.model.set({
-            location: 'POINT(' + location[0].toString() + ' ' + location[1].toString() +')'
+            location: [parseFloat(location[0]), parseFloat(location[1])]
           })
         }
-        this.model.urlRoot = settings.annotations_detail_url;
         this.model.save({
             success: function(model, response, that){
                 $('.top-right').notify({
@@ -162,7 +161,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         this.$el.find('.collapse').toggleClass('in');
     },
     'delete': function(){
-        this.model.urlRoot = settings.annotations_detail_url;
         this.model.destroy();
     }
 });
@@ -212,8 +210,9 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         this.relation = options.relation;
         this.collection = new Lizard.Collections.Annotation();
         if (this.relation !== null) {
-            this.collection.url = settings.annotations_search_url + '?' + $.param(this.buildQueryUrlParams());
-            this.collection.fetch();
+            this.collection.fetch({
+                url: settings.annotations_search_url + '?' + $.param(this.buildQueryUrlParams())
+            });
         }
     }
 });
