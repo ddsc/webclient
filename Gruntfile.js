@@ -189,35 +189,7 @@ module.exports = function (grunt) {
         },
         cssmin: {
             dist: {
-                files: {
-                    '<%= yeoman.dist %>/styles/main.css': [
-                        '<%= yeoman.app %>/styles/main.css'
-                    ],
-                    '<%= yeoman.dist %>/styles/ie.css': [
-                        '<%= yeoman.app %>/styles/ie/{,*/}*.{css}'
-                    ],
-                    '<%= yeoman.dist %>/styles/jquery.css': [
-                        '<%= yeoman.app %>/styles/vendor/jquery-ui-1.9.2.custom.css',
-                        '<%= yeoman.app %>/styles/vendor/jquery.gridster.css'
-                    ],
-                    '<%= yeoman.dist %>/styles/bootstrap.css': [
-                        '<%= yeoman.app %>/styles/vendor/bootstrap.css',
-                        '<%= yeoman.app %>/styles/vendor/bootstrap-responsive.css',
-                        '<%= yeoman.app %>/styles/vendor/bootstrap-notify.css',
-                        '<%= yeoman.app %>/styles/vendor/alert-blackgloss.css',
-                        '<%= yeoman.app %>/styles/vendor/font-awesome.css',
-                        '<%= yeoman.app %>/styles/vendor/datepicker.css'
-                    ],
-                    '<%= yeoman.dist %>/styles/leaflet.css': [
-                        '<%= yeoman.app %>/styles/vendor/leaflet.css',
-                        '<%= yeoman.app %>/styles/vendor/leaflet.draw.css',
-                        '<%= yeoman.app %>/styles/vendor/MarkerCluster.Default.css',
-                        '<%= yeoman.app %>/styles/vendor/MarkerCluster.css'
-                    ],
-                    '<%= yeoman.dist %>/styles/visualsearch.css': [
-                        '<%= yeoman.app %>/styles/vendor/visualsearch.css'
-                    ]
-                }
+
             }
         },
         htmlmin: {
