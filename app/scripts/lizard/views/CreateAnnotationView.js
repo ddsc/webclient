@@ -179,28 +179,35 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         var params = {
             category: 'ddsc'
         };
-        if (/(.*)annotation(.*)/.test(this.relation.url)) {
+        if (this.relation._leaflet_id) {
+            // random leaflet marker
             $.extend(params, {
-                location: this.relation.get('location')
+                north: this.relation.getLatLng().lat,
+                south: this.relation.getLatLng().lat,
+                west: this.relation.getLatLng().lng,
+                east: this.relation.getLatLng().lng
             });
         }
-        else if (/(.*)timeseries(.*)/.test(this.relation.url)) {
-            // timeseries
-            $.extend(params, {
-                model_pk: this.relation.get('pk').toString(),
-                model_name: 'timeseries'
-            });
-        }
-        else if (this.relation.has('location')) {
-            // annotation
-            var location = this.relation.get('location');
-            if (location.length === 2) {
+        else {
+            // backbone model
+            if (/(.*)timeseries(.*)/.test(this.relation.url)) {
+                // timeseries
                 $.extend(params, {
-                    north: location[0],
-                    south: location[0],
-                    west: location[1],
-                    east: location[1]
+                    model_pk: this.relation.get('pk').toString(),
+                    model_name: 'timeseries'
                 });
+            }
+            else if (this.relation.has('location')) {
+                // annotation
+                var location = this.relation.get('location');
+                if (location.length === 2) {
+                    $.extend(params, {
+                        north: location[0],
+                        south: location[0],
+                        west: location[1],
+                        east: location[1]
+                    });
+                }
             }
         }
 
