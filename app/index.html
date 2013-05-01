@@ -495,7 +495,7 @@
           </form>
     </script>
 
-    
+
     <script type="text/template" id="annotation-popup">
         <p> <%= text %></p>;
         <% if (picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
@@ -1177,6 +1177,7 @@
         <script type="text/javascript" src="scripts/vendor/jquery-flot-plugins/jquery.flot.lazyload-backbone.js"></script>
         <!-- endbuild -->
 
+        <!-- keep these in the following order, due to some of them being dependent on each other -->
         <!-- build:js scripts/build.js -->
         <script src="scripts/lizard/lizard.app.js"></script>
 
@@ -1188,7 +1189,6 @@
         <script src="scripts/lizard/models/Favorite.js"></script>
         <script src="scripts/lizard/models/Filter.js"></script>
 
-        <!-- keep these in the following order, due to them being dependent on each other -->
         <script src="scripts/lizard/models/DateRange.js"></script>
         <script src="scripts/lizard/models/GraphItem.js"></script>
         <script src="scripts/lizard/collections/GraphItem.js"></script>
