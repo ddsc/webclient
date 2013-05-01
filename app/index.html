@@ -493,6 +493,21 @@
           </form>
     </script>
 
+    
+    <script type="text/template" id="annotation-popup">
+        <p> <%= text %></p>;
+        <% if (a.picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
+        <%  } %>
+        <hr/>
+        <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
+            <p></p>
+            <table class="table table-condensed table-bordered" style="font-size: 80%;">
+                <tr><td>Geldig van</td><td><%= datetime_from %></td></tr>
+                <tr><td>Geldig tot</td><td><%= datetime_until %></td></tr>
+                <tr><td>Tags</td><td><%= a.tags %></td></tr>
+            </table>
+    </script>
+
     <script type="text/template" id="layeritem-template">
 
 	  <div class="layer-item">
