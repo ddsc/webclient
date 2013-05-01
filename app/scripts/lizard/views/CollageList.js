@@ -64,11 +64,11 @@ Lizard.Views.CollageList = Backbone.Marionette.CollectionView.extend({
             var timeseriesUrl = timeseriesList[i];
             var timeseries = new Lizard.Models.TimeseriesActual({url: timeseriesUrl});
             timeseries.fetch()
-                .done(function (model, response) {
-                    model.set({pk: model.id});
-                    var graphItem = new Lizard.Models.GraphItem({timeseries: model});
-                    graph.get('graphItems').add(graphItem);
-                });
+            .done(function (model, response) {
+                model.set({pk: model.id});
+                var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+                graph.get('graphItems').add(graphItem);
+            });
         }
     });
     Backbone.history.navigate('graphs/' + selectedModel.id);
