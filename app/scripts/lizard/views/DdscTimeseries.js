@@ -42,8 +42,12 @@ Lizard.Views.LocationModalPopupItem = Backbone.Marionette.ItemView.extend({
     'click .add-graph-item' : "addGraphItem"
   },
   addGraphItem: function () {
-    var graphItem = new Lizard.Models.GraphItem({timeseries: this.model});
-    this.graphModel.get('graphItems').add(graphItem);
+    var self = this;
+    this.model.fetch()
+    .done(function (model) {
+        var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+        self.graphModel.get('graphItems').add(graphItem);
+    });
   }
 });
 
