@@ -8,6 +8,7 @@ Lizard.Views.SavePopup = Backbone.Marionette.View.extend({
 Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   initialize: function (options) {
     this.graphCollection = options.graphCollection;
+    this.collageCollection = options.collageCollection;
   },
   template: '#graphs-template',
   regions: {
@@ -34,7 +35,7 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     this.graphCollection.each(function (model) {
         model.get('graphItems').reset();
     });
-    window.collageCollection.each(function (model) {
+    this.collageCollection.each(function (model) {
         model.set('selected', false);
     });
     Backbone.history.navigate('graphs');
@@ -52,7 +53,7 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
         .done(function () {
             modal.modal('hide');
             // refresh the collages
-            window.collageCollection.fetch();
+            self.collageCollection.fetch();
         });
     });
   }
@@ -78,9 +79,12 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
     graphCollection.add(graph);
   }
 
+  var collageCollection = new Lizard.Collections.Collage();
+
   // Instantiate Graphs's default layout
   var graphsView = new Lizard.Windows.Graphs.DefaultLayout({
-    graphCollection: graphCollection
+    graphCollection: graphCollection,
+    collageCollection: collageCollection
   });
 
   Lizard.App.content.show(graphsView);
@@ -106,13 +110,8 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   graphsView.graphsRegion.show(graphAndLegendCollectionView);
 
   var collageListView = new Lizard.Views.CollageList({
-    collection: window.collageCollection,
+    collection: collageCollection,
     graphCollection: graphCollection
-  });
-
-  window.collageCollection.fetch()
-  .done(function (col) {
-    col.trigger('gotAll', col);
   });
 
   graphsView.presetsRegion.show(collageListView.render());
@@ -126,15 +125,18 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   window.graphsView = graphsView;
 
   // And set URL to #graphs
-  if (collageid) {
-    window.collageCollection.listenTo(window.collageCollection, 'gotAll', function(col){
-      var selectedCollage = window.collageCollection.get(collageid);
-      selectedCollage.set('selected', true);
-      col.trigger('select_collage', selectedCollage);
-    });
-  } else {
-    Backbone.history.navigate('graphs');
-  }
+  Backbone.history.navigate('graphs');
+
+  collageCollection.fetch()
+  .done(function (col) {
+      if (collageid) {
+          var selectedCollage = collageCollection.get(collageid);
+          if (selectedCollage) {
+              selectedCollage.set('selected', true);
+              col.trigger('select_collage', selectedCollage);
+          }
+      }
+  });
 
   tour = new Tour({
     labels: {

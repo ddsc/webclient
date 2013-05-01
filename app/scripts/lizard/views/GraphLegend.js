@@ -18,8 +18,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     },
     removeFromCollection: function(e) {
         e.preventDefault();
-        this.model.collection.remove(self.model);
-        return true;
+        this.model.collection.remove(this.model);
     },
     openAnnotation: function(){
         e.preventDefault();
