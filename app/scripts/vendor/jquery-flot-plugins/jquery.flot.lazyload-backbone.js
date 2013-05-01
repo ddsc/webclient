@@ -101,10 +101,12 @@
 
         var xAxis = this.plot.getXAxes()[0];
         var xAxisOptions = xAxis.options;
-        xAxisOptions.min = this.graphModel.get('dateRange').get('start');
-        xAxisOptions.max = this.graphModel.get('dateRange').get('end');
-        xAxis.min = this.graphModel.get('dateRange').get('start');
-        xAxis.max = this.graphModel.get('dateRange').get('end');
+        if (this.graphModel) {
+            xAxisOptions.min = this.graphModel.get('dateRange').get('start');
+            xAxisOptions.max = this.graphModel.get('dateRange').get('end');
+            xAxis.min = this.graphModel.get('dateRange').get('start');
+            xAxis.max = this.graphModel.get('dateRange').get('end');
+        }
 
         for (var i in this.datasets) {
             var dataset = this.datasets[i];
@@ -211,6 +213,12 @@
         }
         if (typeof end === 'number') {
             end = new Date(end);
+        }
+
+        // use global start and end, instead of axes viewpoint
+        if (this.scatterplot) {
+            start = this.graphModel.get('dateRange').get('start');
+            end = this.graphModel.get('dateRange').get('end');
         }
 
         if (start && end) {

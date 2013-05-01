@@ -1,3 +1,5 @@
+var lineColors = ["#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed", "#9e0142", "#d53e4f", "#f46d43", "#fdae61", "#fee08b", "#ffffbf", "#e6f598", "#abdda4", "#66c2a5", "#3288bd", "#5e4fa2"];
+
 Lizard.Models.GraphItem = Backbone.Model.extend({
     defaults: {
         timeseries: null,
@@ -14,19 +16,12 @@ Lizard.Models.GraphItem = Backbone.Model.extend({
         hash = (hash & hash) + m;
         return Math.round(hash * (maxExcl - 1) / Math.pow(2, 32));
     },
-    initialize: function (options) {
-        //var colors = ["#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed"];
-        // Get a random color set from Colorbrewer.js
-        var colorSet = colorbrewer[Object.keys(colorbrewer)[Math.floor(Object.keys(colorbrewer).length * Math.random())]];
-
-        // Get a random array from colorSet
-        var colorArray = colorSet[Object.keys(colorSet)[Math.floor(Object.keys(colorSet).length * Math.random())]];
-
-        // Get a random color from colorArray
-        var color = colorArray[(Math.floor(Math.random()*colorArray.length-1)+1)];
-
+    determineColor: function () {
         this.set({
-            'color': color
+            'color': lineColors[this.collection.indexOf(this)]
         });
+    },
+    initialize: function (options) {
+        this.listenTo(this, 'add', this.determineColor, this);
     }
 });
