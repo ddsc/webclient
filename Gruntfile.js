@@ -227,6 +227,15 @@ module.exports = function (grunt) {
                 },
                 {
                     expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>/images',
+                    dest: '<%= yeoman.dist %>/images',
+                    src: [
+                        '*.{gif,cur,svg}'
+                    ]
+                },
+                {
+                    expand: true,
                     cwd: '<%= yeoman.app%>/font',
                     dest: '<%= yeoman.dist %>/font',
                     src: [
@@ -277,7 +286,6 @@ module.exports = function (grunt) {
         'htmlmin',
         'concat',
         'cssmin',
-        'uglify',
         'copy',
         'usemin'
     ]);
