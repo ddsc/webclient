@@ -18,8 +18,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     },
     removeFromCollection: function(e) {
         e.preventDefault();
-        this.model.collection.remove(self.model);
-        return true;
+        this.model.collection.remove(this.model);
     },
     openAnnotation: function(){
         e.preventDefault();
@@ -47,9 +46,16 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     onDragEnd: function (e) {
         // remove the timeseries when dragged to another graph
         var self = this;
+        var data = null;
         var dataJson = e.originalEvent.dataTransfer.getData('Text');
         if (dataJson) {
-            var data = JSON.parse(dataJson);
+            data = JSON.parse(dataJson);
+        }
+        else {
+            // for some reason Google Chrome won't let us read the dataTransfer object
+            data = $(e.target).data();
+        }
+        if (data) {
             if (data.uuid) {
                 this.model.collection.each(function (otherItem) {
                     if (otherItem.get('timeseries').get('uuid') == data.uuid) {

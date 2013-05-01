@@ -42,8 +42,12 @@ Lizard.Views.LocationModalPopupItem = Backbone.Marionette.ItemView.extend({
     'click .add-graph-item' : "addGraphItem"
   },
   addGraphItem: function () {
-    var graphItem = new Lizard.Models.GraphItem({timeseries: this.model});
-    this.graphModel.get('graphItems').add(graphItem);
+    var self = this;
+    this.model.fetch()
+    .done(function (model) {
+        var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+        self.graphModel.get('graphItems').add(graphItem);
+    });
   }
 });
 
@@ -75,11 +79,22 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
         graphRegion: '.modal-graph-region'
     },
     onRender: function (e) {
+        var self = this;
         this.$el.find('.modal').modal();
-        var graphModel = new Lizard.Models.Graph();
+        var dateRange = new Lizard.Models.DateRange({
+          accountModel: account // pass the global account instance
+        });
+        var graphModel = new Lizard.Models.Graph({
+            dateRange: dateRange
+        });
         if (this.primaryTimeseries) {
-            var graphItem = new Lizard.Models.GraphItem({timeseries: this.primaryTimeseries});
-            graphModel.get('graphItems').add(graphItem);
+            // refetch because the inline Serializer seems different from the Detail serializer
+            this.primaryTimeseries.fetch()
+            .done(function (model) {
+                self.primaryTimeseries = model;
+                var graphItem = new Lizard.Models.GraphItem({timeseries: model});
+                graphModel.get('graphItems').add(graphItem);
+            });
         }
         var graphView = new Lizard.Views.GraphAndLegendView({model: graphModel});
         this.graphRegion.show(graphView);
