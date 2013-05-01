@@ -111,9 +111,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     },
     initialize: function(options){
         var relation = options.relation;
-        // this.$el.find('#annotation-' + this.model.id.toString()).on('hidden', function (event) {
-        //   event.stopPropagation()
-        // })
     },
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
