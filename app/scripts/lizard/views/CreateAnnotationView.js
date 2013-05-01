@@ -77,7 +77,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
           }
           $('#annotation-modal').modal('toggle');
           Lizard.App.hidden.close();
-          Lizard.App.vent.trigger('savedpopup');
+          Lizard.App.vent.trigger('updateAnnotationsMap');
         },
         error: function(){
           if (layer){
@@ -142,6 +142,12 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         data.datetime_until = new Date(data.datetime_until).toISOString();
         }
         this.model.set(data);
+        if (this.model.get('location')){
+          var location = this.model.get('location')
+          this.model.set({
+            location: 'POINT(' + location[0].toString() + ' ' + location[1].toString() +')'
+          })
+        }
         this.model.urlRoot = settings.annotations_detail_url;
         this.model.save({
             success: function(model, response, that){
@@ -175,7 +181,12 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
   initialize: function (relation) {
     this.itemViewOptions.relation = relation;
         var related_object = null;
-        if (relation._leaflet_id){
+        if (relation.get('location')){
+          related_object= {
+            'location': relation.get('location')
+          }
+        }
+        else if (relation._leaflet_id){
             var layer = relation;
         } else if (relation.get('events')){
             related_object = {
@@ -190,9 +201,15 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         }
         this.collection = new Lizard.Collections.Annotation();
         if (related_object !== null) {
-            var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
+          if (related_object.location){
+                var xy = related_object.location.reverse()
+                var query = '?category=ddsc&bbox=' + xy.toString() + ',' + xy.toString();
+            } else {
+              var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
+            }
             this.collection.url = settings.annotations_search_url + query;
             this.collection.fetch();
+
         }
   }
 });

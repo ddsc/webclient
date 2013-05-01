@@ -388,10 +388,12 @@
           <h3>Annotatie</h3>
        </div>
             <div class="modal-body" id="annotations-body">
+              <h5>Wijzig deze annotaties</h5>
               <div id="annotations-list"></div>
-        <div id="annotation-modal-footer" class="modal-footer">
-                      <form class="annotation">
-              <fieldset>
+              <div id="annotation-modal-footer" class="modal-footer">
+                <h5>Een nieuwe annotatie</h5>
+                  <form class="annotation">
+                  <fieldset>
               <div class="annotation-form">
                  <div class="input-prepend">
                  <span class="add-on"><i class="icon-comment"></i></span>
@@ -496,7 +498,7 @@
     
     <script type="text/template" id="annotation-popup">
         <p> <%= text %></p>;
-        <% if (a.picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
+        <% if (picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
         <%  } %>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
@@ -504,8 +506,10 @@
             <table class="table table-condensed table-bordered" style="font-size: 80%;">
                 <tr><td>Geldig van</td><td><%= datetime_from %></td></tr>
                 <tr><td>Geldig tot</td><td><%= datetime_until %></td></tr>
-                <tr><td>Tags</td><td><%= a.tags %></td></tr>
+                <tr><td>Tags</td><td><%= tags %></td></tr>
             </table>
+          <button type="button" class="btn btn-danger annotation-delete">Wis</button>
+          <button type="button" class="btn btn-warning annotation-edit">Wijzig</button>
     </script>
 
     <script type="text/template" id="layeritem-template">

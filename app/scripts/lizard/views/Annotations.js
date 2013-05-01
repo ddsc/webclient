@@ -17,7 +17,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
         this.updateAnnotations();
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
-        Lizard.App.vent.on("savedpopup", this.updateAnnotations, this);
+        Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
     },
     events: {
     },
@@ -58,8 +58,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                         autoPan: false,
                         zoomAnimation: false
                     })
-                    .setContent(html);
-                    marker.bindPopup(popup);
+                    marker.bindPopup(html, popup);
                     this.annotationLayer.addLayer(marker);
                 }
                 catch (ex) {
@@ -190,6 +189,19 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
     template: '#annotation-popup',
     initialize: function(options){
         this.model = options.model
+    },
+    events: {
+        'click .annotation-delete' : 'destroyAnnotation',
+        'click .annotation-edit' : 'editAnnotation'
+    },
+    destroyAnnotation: function(){
+        this.model.urlRoot = settings.annotations_detail_url;
+        this.model.destroy().done({success: function(){
+            Lizard.App.vent.trigger("updateAnnotationsMap", this);        
+        }});
+    },
+    editAnnotation: function(){
+        Lizard.App.vent.trigger("makeAnnotation", this.model);
     }
 });
 
