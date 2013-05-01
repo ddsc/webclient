@@ -5,7 +5,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     var related_object = null;
     Lizard.App.hidden.show(annotationLayout);
     annotationLayout.render();
-    annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView(relation));
+    annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
         var layer = relation;
     } else if (relation.get('events')){
@@ -161,52 +161,59 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         });
         this.$el.find('.collapse').toggleClass('in');
     },
-    delete: function(){
+    'delete': function(){
         this.model.urlRoot = settings.annotations_detail_url;
         this.model.destroy();
     }
 });
 
-
 Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.extend({
     collection: null,
-  itemView: Lizard.Views.Annotations,
+    itemView: Lizard.Views.Annotations,
     className: 'annotation-items',
-  itemViewOptions: {
-    relation: null
-  },
-  initialize: function (relation) {
-    this.itemViewOptions.relation = relation;
-        var related_object = null;
-        if (relation.get('location')){
-          related_object= {
-            'location': relation.get('location')
-          }
+    relation: null,
+    itemViewOptions: function () {
+        return {
+            relation: this.relation
+        };
+    },
+    buildQueryUrlParams: function () {
+        var params = {
+            category: 'ddsc'
+        };
+        if (/(.*)annotation(.*)/.test(this.relation.url)) {
+            $.extend(params, {
+                location: this.relation.get('location')
+            });
         }
-        else if (relation._leaflet_id){
-            var layer = relation;
-        } else if (relation.get('events')){
-            related_object = {
-                'primary': relation.get('pk').toString(),
-                'model' : 'timeseries'
-            };
-        } else if (relation.get('point_geometry')){
-            related_object = {
-                'primary': relation.get('pk').toString(),
-                'model' : 'location'
-            };
+        else if (/(.*)timeseries(.*)/.test(this.relation.url)) {
+            // timeseries
+            $.extend(params, {
+                model_pk: this.relation.get('pk').toString(),
+                model_name: 'timeseries'
+            });
         }
-        this.collection = new Lizard.Collections.Annotation();
-        if (related_object !== null) {
-          if (related_object.location){
-                var xy = related_object.location.reverse()
-                var query = '?category=ddsc&bbox=' + xy.toString() + ',' + xy.toString();
-            } else {
-              var query = '?model_name=' + related_object.model + '&model_pk=' + related_object.primary;
+        else if (this.relation.has('location')) {
+            // annotation
+            var location = this.relation.get('location');
+            if (location.length === 2) {
+                $.extend(params, {
+                    north: location[0],
+                    south: location[0],
+                    west: location[1],
+                    east: location[1]
+                });
             }
-            this.collection.url = settings.annotations_search_url + query;
-            this.collection.fetch();
-
         }
-  }
+
+        return params;
+    },
+    initialize: function(options) {
+        this.relation = options.relation;
+        this.collection = new Lizard.Collections.Annotation();
+        if (this.relation !== null) {
+            this.collection.url = settings.annotations_search_url + '?' + $.param(this.buildQueryUrlParams());
+            this.collection.fetch();
+        }
+    }
 });
