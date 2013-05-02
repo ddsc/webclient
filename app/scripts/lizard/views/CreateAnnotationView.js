@@ -8,7 +8,6 @@ Lizard.Views.CreateAnnotationView = function(relation){
     annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
         var layer = relation;
-        annotationLayout.footer.show();
     } else if (relation.get('events')){
         related_object = {
             'primary': relation.get('pk').toString(),
@@ -112,7 +111,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
             $('#annotation-one-template').html(), model, {variable: 'annotation'});
     },
     initialize: function(options){
-        var relation = options.relation;
+        this.relation = options.relation;
     },
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
@@ -120,7 +119,10 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
       timezone: 'WET'
     }).on('changeDate', function(ev){
       $('#annotation-modal .datepick-annotate').datetimepicker('hide');
-    });
+      });
+      if (this.model.get('location')){
+        $('#annotation-modal-footer').html("")
+      }
     },
     events: {
         'click .annotation-edit' : 'edit',
@@ -152,6 +154,7 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
                 $('.top-right').notify({
                 message:{text: 'Annotatie gewijzigd'},
                 type: 'success'}).show();
+
             },
             error: function(){
                 $('.top-right').notify({
