@@ -127,7 +127,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     modelChanged: function (model, value) {
     },
     modelEvents: {
-        "change:isLoading": function (){
+        'change:isLoading': function (){
         }
     },
     onBeforeClose: function () {
@@ -137,7 +137,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     onClose: function () {
         // custom cleanup or closing code, here
         if (this.mapCanvasEvent) {
-            this.mapCanvas.off("moveend", this.mapCanvasEvent);
+            this.mapCanvas.off('moveend', this.mapCanvasEvent);
         }
     },
     templateHelpers: {
@@ -190,6 +190,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         html += '<tr><td>Geldig tot</td><td>' + datetime_until + '</td></tr>';
         html += '<tr><td>Tags</td><td>' + a.tags + '</td></tr>';
         html += '</table>';
+        html += '<button class="btn btn-mini btn-danger pull-right annotation-delete" type="button">Verwijderen</button>';
         return html;
     }
 });

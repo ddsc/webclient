@@ -44,57 +44,57 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   extraLayers: {
   },
   getAlarms: function(){
-  	  var alarms = new Lizard.geo.Layers.WMSLayer({
-		  "layer_name": "dijkdata:alarm_view", 
-		  "wms_source": {
-		  	  "layer_name": "dijkdata:alarm_view",
-			  "display_name": "Alarmen", 
-			  "description": "", 
-			  "metadata": null, 
-			  "legend_url": "", 
-			  "enable_search": true, 
-			  "styles": "", 
-			  "format": "image/png", 
-			  "height": "256", 
-			  "width": "256", 
-			  "tiled": "true", 
-			  "transparent": "true", 
-			  "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
-			  "opacity": null, 
-			  "type": "wms", 
-			  "options": {
-				  "buffer": 0, 
-				  "isBaseLayer": false, 
-				  "opacity": 1.0
-			  }
-		  },
-		  "display_name": "Alarmen", 
-		  "description": "", 
-		  "metadata": null, 
-		  "legend_url": "", 
-		  "enable_search": true, 
-		  "styles": "", 
-		  "format": "image/png", 
-		  "height": "256", 
-		  "width": "256", 
-		  "tiled": "true", 
-		  "transparent": "true",
-		  "selected": true,
-		  "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms", 
-		  "opacity": null, 
-		  "type": "wms", 
-		  "options": {
-			  "buffer": 0, 
-			  "isBaseLayer": false, 
-			  "opacity": 1.0
-		  }
+      var alarms = new Lizard.geo.Layers.WMSLayer({
+      "layer_name": "dijkdata:alarm_view",
+      "wms_source": {
+          "layer_name": "dijkdata:alarm_view",
+        "display_name": "Alarmen",
+        "description": "",
+        "metadata": null,
+        "legend_url": "",
+        "enable_search": true,
+        "styles": "",
+        "format": "image/png",
+        "height": "256",
+        "width": "256",
+        "tiled": "true",
+        "transparent": "true",
+        "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms",
+        "opacity": null,
+        "type": "wms",
+        "options": {
+          "buffer": 0,
+          "isBaseLayer": false,
+          "opacity": 1.0
+        }
+      },
+      "display_name": "Alarmen",
+      "description": "",
+      "metadata": null,
+      "legend_url": "",
+      "enable_search": true,
+      "styles": "",
+      "format": "image/png",
+      "height": "256",
+      "width": "256",
+      "tiled": "true",
+      "transparent": "true",
+      "selected": true,
+      "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms",
+      "opacity": null,
+      "type": "wms",
+      "options": {
+        "buffer": 0,
+        "isBaseLayer": false,
+        "opacity": 1.0
+      }
     });
-    return alarms
+    return alarms;
   },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
     this.workspace = this.options.workspace;
-    
+
     if (this.mapCanvas === null){
       this.makemapCanvas('OpenStreetMap');
     }
@@ -141,7 +141,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
             setView: true,
             enableHighAccuracy: true
           });
-        },        
+        },
         _createButton: function (html, title, className, container, fn, context) {
           var link = L.DomUtil.create('a', className, container);
           link.innerHTML = html;
@@ -177,12 +177,12 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;
     this.mapCanvas.addControl(drawControl);
-    
+
     this.mapCanvas.addControl(new geolocateControl());
 
     window.mc.on('draw:created', function (e) {
       var type = e.layerType,
-        layer = e.layer; 
+        layer = e.layer;
 
       if (type === 'marker') {
         window.drawnItems.addLayer(layer);
