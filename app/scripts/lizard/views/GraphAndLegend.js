@@ -17,7 +17,6 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     },
     onDrop: function(e) {
         e.preventDefault();
-        $('#sidebar').css('-webkit-filter', 'blur(0px)'); // disable target div blur
         $('.graph').removeClass('stitched'); // remove stitch border
         // fetch and add the timeseries
         var self = this;
