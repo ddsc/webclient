@@ -154,7 +154,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
                 $('.top-right').notify({
                 message:{text: 'Annotatie gewijzigd'},
                 type: 'success'}).show();
-
             },
             error: function(){
                 $('.top-right').notify({
@@ -164,9 +163,16 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
             }
         });
         this.$el.find('.collapse').toggleClass('in');
+        $('#annotation-modal').modal('toggle');
+        Lizard.App.hidden.close();
+        Lizard.App.vent.trigger('updateAnnotationsMap');
     },
     'delete': function(){
         this.model.destroy();
+          $('#annotation-modal').modal('toggle');
+          Lizard.App.hidden.close();
+          Lizard.App.vent.trigger('updateAnnotationsMap');
+
     }
 });
 
