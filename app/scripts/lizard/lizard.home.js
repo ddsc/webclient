@@ -3,7 +3,7 @@ Lizard.Home = {};
 Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   template: '#home-template',
   className: 'home',
-  onShow: Lizard.Visualsearch.init,
+  //onShow: Lizard.Visualsearch.init,
   onDomRefresh: function() {
     console.log('onDomRefresh');
   },
