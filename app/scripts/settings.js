@@ -6,13 +6,13 @@ var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/?has_geometry=true&page_size=600',
+    locations_url: domain + 'locations/?has_geometry=true&page_size=5000',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
-    timeseries_url: domain + 'timeseries/?page_size=300',
-    alarms_url: domain + 'alarms/' + extra,
-    collages_url: domain + 'collages/?page_size=15',
-    workspace_url: domain + 'workspaces/',
+    timeseries_url: domain + 'timeseries/?page_size=100',
+    alarms_url: domain + 'alarms/',
+    collages_url: domain + 'collages/?page_size=100',
+    workspace_url: domain + 'workspaces/?page_size=100',
     layers_url: domain + 'layers/?page_size=100',
     account_url: domain + 'account/',
     login_token_url: domain + 'account/login-url/',
