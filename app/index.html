@@ -696,16 +696,16 @@
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
             <div class="pull-left">
-                <h5>
-                    <%=timeseries.get('name')%><br/>
-                    <%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)
+                <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
+                    <%=truncateString(timeseries.get('name'), 10, '', '...')%><br/>
+                    <small><%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)</small>
                 </h5>
             </div>
         </div>
         <ul class="hide inline">
-          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> Wis</button></li>
-          <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> Annoteer</button></li>
-          <li><a href="" class="btn btn-mini csv-link"><i class="icon-share-alt"></i> CSV</a></li>
+          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
+          <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> <span class="hidden-tablet">Annoteer</span></button></li>
+          <li><a href="" class="btn btn-mini csv-link"><i class="icon-share-alt"></i> <span class="hidden-tablet">CSV</span></a></li>
         </ul>
       </div>
     </script>

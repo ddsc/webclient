@@ -8,6 +8,9 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
   onBeforeRender: function () {
     this.el.setAttribute("id", this.model.cid);
   },
+  onClose: function() {
+    $('#map').css('cursor', 'pointer');
+  },
   onRender: function() {
     var that = this;
     that.$el.find('.opacity-slider').slider({
@@ -57,8 +60,10 @@ Lizard.Views.WorkspaceItem = Backbone.Marionette.ItemView.extend({
     if(this.model.get('selected') === false) {
       this.model.collection.each(function(workspaceItem) {
         workspaceItem.set('selected', false);
+        $('#map').css('cursor', 'pointer');
       });
       this.model.set('selected', true);
+      $('#map').css('cursor', 'crosshair');
       //this.model.trigger('select_layer', this.model);
     }
   }

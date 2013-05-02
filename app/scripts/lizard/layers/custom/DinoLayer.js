@@ -89,7 +89,7 @@ Lizard.geo.Layers.Custom.DinoLayer = Lizard.geo.Layers.WMSLayer.extend({
     return url;
   },
   getPopupContent: function(data) {
-    var objects = $.evalJSON(data).results;
+    var objects = $.parseJSON(data).results;
 
     if (objects.length > 0) {
       return this.getContent(objects[0]);
