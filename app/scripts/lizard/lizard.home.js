@@ -95,9 +95,14 @@ Lizard.Home.home = function(){
     collection: workspaceCollection
   });
 
+
+  var collageCollection = new Lizard.Collections.Collage();
+
   var collageSelectionView = new Lizard.Views.HomePageGraphList({
     collection: collageCollection
   });
+
+  collageCollection.fetch();
 
   Lizard.homeView.map_links.show(workspaceSelectionView);
   Lizard.homeView.graph_links.show(collageSelectionView);

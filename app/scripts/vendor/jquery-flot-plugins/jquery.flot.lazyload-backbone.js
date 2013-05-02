@@ -380,18 +380,20 @@
 
     LazyLoadBackboneScatter.prototype.redraw = function () {
         var firstDataset = this.datasets[0];
-        var line = {
-            yaxis: 1,
-            data: firstDataset.data
-        };
-        this.setPreventUpdates(true);
-        this.plot.getXAxes()[0].options.axisLabel = firstDataset.axisLabelX;
-        this.plot.getYAxes()[0].options.axisLabel = firstDataset.axisLabelY;
-        this.plot.setData([line]);
-        this.plot.setupGrid();
-        this.plot.draw();
-        this.plot.triggerRedrawOverlay();
-        this.setPreventUpdates(false);
+        if (firstDataset) {
+            var line = {
+                yaxis: 1,
+                data: firstDataset.data
+            };
+            this.setPreventUpdates(true);
+            this.plot.getXAxes()[0].options.axisLabel = firstDataset.axisLabelX;
+            this.plot.getYAxes()[0].options.axisLabel = firstDataset.axisLabelY;
+            this.plot.setData([line]);
+            this.plot.setupGrid();
+            this.plot.draw();
+            this.plot.triggerRedrawOverlay();
+            this.setPreventUpdates(false);
+        }
     };
 
     LazyLoadBackboneScatter.prototype.bindEvents = function (plot, eventHolder) {

@@ -17,7 +17,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
         this.updateAnnotations();
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
-        Lizard.App.vent.on("savedpopup", this.updateAnnotations, this);
+        Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
     },
     events: {
     },
@@ -58,8 +58,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                         autoPan: false,
                         zoomAnimation: false
                     })
-                    .setContent(html);
-                    marker.bindPopup(popup);
+                    marker.bindPopup(html, popup);
                     this.annotationLayer.addLayer(marker);
                 }
                 catch (ex) {
@@ -172,26 +171,10 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             title = 'Annotatie ' + a.id;
         }
 
-        var html = '';
-        // html += '<h4>' + title + '</h4>';
-        html += '<p>' + a.text + '</p>';
-        if (a.picture_url) {
-            html += '<hr/>';
-            // extra style="" is needed to override a leaflet CSS !important statement
-            html += '<div><img src="'+ a.picture_url +'" alt="'+ a.picture_url +'" style="max-width: 100% !important" /></div>';
-        }
-        html += '<hr/>';
-        html += '<div class="author">Aangemaakt door ' + a.username + ' op ' + created_at + '</div>';
-        html += '<p></p>';
-        html += '<table class="table table-condensed table-bordered" style="font-size: 80%;">';
-        //html += '<tr><td>Aangemaakt door</td><td>' + a.username + '</td></tr>';
-        //html += '<tr><td>Aangemaakt op</td><td>' + created_at + '</td></tr>';
-        html += '<tr><td>Geldig van</td><td>' + datetime_from + '</td></tr>';
-        html += '<tr><td>Geldig tot</td><td>' + datetime_until + '</td></tr>';
-        html += '<tr><td>Tags</td><td>' + a.tags + '</td></tr>';
-        html += '</table>';
-        html += '<button class="btn btn-mini btn-danger pull-right annotation-delete" type="button">Verwijderen</button>';
-        return html;
+        var annoModel = new Backbone.Model(a);
+        var annotationPopup = new Lizard.Views.AnnotationPopupView({model: annoModel});
+        var html = annotationPopup.render().el;
+        return html
     }
 });
 
@@ -200,3 +183,24 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
 $('.datepick-annotate').live('focus', function(e) {
     $('#ui-datepicker-div').css('z-index', 10000);
 });
+
+
+Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
+    template: '#annotation-popup',
+    initialize: function(options){
+        this.model = options.model
+    },
+    events: {
+        'click .annotation-delete' : 'destroyAnnotation',
+        'click .annotation-edit' : 'editAnnotation'
+    },
+    destroyAnnotation: function(){
+        this.model.destroy().done({success: function(){
+            Lizard.App.vent.trigger("updateAnnotationsMap", this);
+        }});
+    },
+    editAnnotation: function(){
+        Lizard.App.vent.trigger("makeAnnotation", this.model);
+    }
+});
+

@@ -258,6 +258,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
         var content = layer.getPopupContent(data);
         if (content) {
+          $content = $(content);
+          $content.find('caption').html(layer.get('display_name'));
+          var content = $content.html()
           var popup = L.popup({maxWidth: 525}).setContent(content).setLatLng(coords);
           that.mapCanvas.openPopup(popup);
         }

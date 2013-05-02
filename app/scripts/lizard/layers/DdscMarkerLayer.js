@@ -43,7 +43,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
           var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({
-              iconUrl: 'scripts/vendor/images/marker-dam-3.png',
+              iconUrl: 'images/marker-dam-3.png',
               iconAnchor: [16,35],
               popupAnchor: [0, -30]
             }),
@@ -66,7 +66,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
-    var $elem = $('<div>');
+    var name = marker.valueOf().options.bbModel.get('name');
+    var $elem = $('<div><h5>'+ name +'</h5></div>');
     var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker.valueOf().options.bbModel, $elem);
     marker.bindPopup($elem.get(0), {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
