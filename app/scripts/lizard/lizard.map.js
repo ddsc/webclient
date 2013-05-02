@@ -8,7 +8,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
     'annotationsRegion' : '#annotationsRegion',
-    'geocoderRegion' : '#geocoderRegion',    
+    'geocoderRegion' : '#geocoderRegion',
     'extraLayerRegion' : '#extramaplayers'
   },
 });
@@ -127,12 +127,12 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       Lizard.Map.ddsc_layers.removeFromMap();
     }
   });
-  
+
   var alarmWMS = leafletView.getAlarms()
   var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
   alarms.set({visibility: true});
   var activeWorkspace = Lizard.workspaceView.getCollection();
-  
+
   $('.alarm-layer-toggler').click(function(e) {
         var $icon = $(this).find('i');
         if ($icon.hasClass('icon-check-empty')) {
@@ -145,12 +145,12 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
             activeWorkspace.remove(alarms);
         }
     });
-    
+
   var alarmWMS = leafletView.getAlarms();
   var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
   alarms.set({visibility: true, display_name: "Status"});
   var activeWorkspace = Lizard.workspaceView.getCollection();
-  
+
   $('.status-layer-toggler').click(function(e) {
         var $icon = $(this).find('i');
         if ($icon.hasClass('icon-check-empty')) {
@@ -203,7 +203,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         element: "#workspaceListRegion",
         title: "Kaartlagen",
         placement: "right",
-        content: "Hier ziet u de beschikbare Kaartlagen"
+        content: "Hier ziet u de beschikbare kaartlagen"
     });
     tour.addStep({
         element: "#ddsc_temp",

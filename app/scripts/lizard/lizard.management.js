@@ -6,7 +6,7 @@ Lizard.Management.DefaultView = Backbone.Marionette.Layout.extend({
     management_ui_url: settings.management_ui_url
   },
   className: 'management',
-  onShow: Lizard.Visualsearch.init,
+  //onShow: Lizard.Visualsearch.init,
   onDomRefresh: function() {
     console.log('onDomRefresh');
   },
