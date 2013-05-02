@@ -16,9 +16,20 @@ Lizard.Models.GraphItem = Backbone.Model.extend({
         hash = (hash & hash) + m;
         return Math.round(hash * (maxExcl - 1) / Math.pow(2, 32));
     },
-    determineColor: function () {
+    determineColor: function (model, collection) {
+        var preferredColor = '#ccc';
+        // find first unused color
+        for (var i=0; i<lineColors.length; i++) {
+            var color = lineColors[i];
+            var modelsWithThisColor = collection.where({color: color});
+            console.log(modelsWithThisColor.length);
+            if (modelsWithThisColor.length === 0) {
+                preferredColor = color;
+                break;
+            }
+        };
         this.set({
-            'color': lineColors[this.collection.indexOf(this)]
+            color: preferredColor
         });
     },
     initialize: function (options) {
