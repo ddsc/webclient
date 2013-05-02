@@ -24,7 +24,7 @@ var settings = {
     annotations_create_url: domain + 'annotations/create/',
     collages_create_url: domain + 'collages/create/',
     collageitems_create_url: domain + 'collageitems/create/',
-    management_ui_url: domain +  'management/'
+    management_ui_url: 'http://api.dijkdata.nl/management/'
 };
 
 /**

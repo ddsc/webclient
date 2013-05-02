@@ -20,7 +20,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
         e.preventDefault();
         this.model.collection.remove(this.model);
     },
-    openAnnotation: function(){
+    openAnnotation: function(e){
         e.preventDefault();
         var timeseriesInstance = this.model.get('timeseries');
         Lizard.Views.CreateAnnotationView(timeseriesInstance);
