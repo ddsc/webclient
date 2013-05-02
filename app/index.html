@@ -696,7 +696,7 @@
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
             <div class="pull-left">
-                <h5>
+                <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
                     <%=truncateString(timeseries.get('name'), 10, '', '...')%><br/>
                     <small><%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)</small>
                 </h5>
