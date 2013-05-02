@@ -13,7 +13,7 @@ function format_value(value) {
   } else {
     return value;
   }
-}
+};
 
 Lizard.Map.LocationModalTimeseries = Backbone.Marionette.Layout.extend({
   template: '#location-modal-timeserie',
@@ -29,7 +29,7 @@ Lizard.Map.LocationModalTimeseries = Backbone.Marionette.Layout.extend({
     var data_url = this.model.attributes.events;
     $('#modal-graph-wrapper').removeClass('hidden');
     $('#modal-graph-wrapper').find('.flot-graph').loadPlotData(data_url + '?eventsformat=flot');
-  },
+  }
 });
 
 Lizard.Views.LocationModalPopupItem = Backbone.Marionette.ItemView.extend({
@@ -104,7 +104,7 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
             graphModel: graphModel
         });
         this.timeseriesRegion.show(timeseriesView);
-    },
+    }
 });
 
 Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({

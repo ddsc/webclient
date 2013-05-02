@@ -41,20 +41,33 @@
       (http://github.com/lizardsystem) and developed by
       Nelen & Schuurmans (http://github.com/nens).
     -->
-    <link href="styles/jquery.css" rel="stylesheet">
-    <link href="styles/bootstrap.css" rel="stylesheet">
-    <link href="styles/bootstrap-tour.css" rel="stylesheet">
-    <link href="styles/visualsearch.css" rel="stylesheet">
-    <link href="styles/leaflet.css" rel="stylesheet">
-    <link href="styles/l.geosearch.css" rel="stylesheet" />
-    <link href="styles/colorbrewer.css" rel="stylesheet">
-    <link href="styles/main.css" rel="stylesheet" >
+    <!-- build:css styles/vendor.css -->
+    <link href="styles/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
+    <link href="styles/jquery.gridster.css" rel="stylesheet" />
+    <link href="styles/bootstrap.css" rel="stylesheet" />
+    <link href="styles/fuelux-responsive.css" rel="stylesheet" />
+    <link href="styles/bootstrap-notify.css" rel="stylesheet" />
+    <link href="styles/alert-blackgloss.css" rel="stylesheet" />
+    <link href="styles/fontawesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="styles/datepicker.css" rel="stylesheet" />
     <link href="styles/introjs.css" rel="stylesheet">
+
+    <link href="styles/leaflet.css" rel="stylesheet" />
+    <link href="styles/leaflet.draw.css" rel="stylesheet" />
+    <link href="styles/MarkerCluster.Default.css" rel="stylesheet" />
+    <link href="styles/MarkerCluster.css" rel="stylesheet" />
+    <link href="styles/leaflet.draw.css" rel="stylesheet" />
+    <link href="styles/l.geosearch.css" rel="stylesheet" />
+    <!-- endbuild -->
+
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="styles/ie.css" />
       <link rel="stylesheet" href="styles/introjs-ie.css">
     <![endif]-->
 
+    <!-- build:css styles/main.css -->
+    <link href="styles/main.css" rel="stylesheet" >
+    <!-- endbuild -->
 
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="scripts/vendor/modernizr.min.js"></script>
@@ -1106,11 +1119,9 @@
         <!-- endbuild -->
 
         <!-- build:js scripts/leaflet.js -->
-        <!-- <script src="scripts/vendor/googlemap.js"></script> -->
         <script src="scripts/vendor/leaflet.js"></script>
         <script src="scripts/vendor/leaflet.markercluster-src.js"></script>
         <script src="scripts/vendor/leaflet.draw.js"></script>
-        <!-- <script src="scripts/vendor/leaflet.google.js"></script>-->
         <script src="scripts/vendor/Control.FullScreen.js"></script>
         <script src="scripts/vendor/proj4js-combined.js"></script>
         <script src="scripts/vendor/tile.stamen.js"></script>
@@ -1149,8 +1160,7 @@
         <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
-        <script src="scripts/vendor/backbone.marionette.1.0.2.js">
-        </script>
+        <script src="scripts/vendor/backbone.marionette.1.0.2.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
         <script src="scripts/vendor/visualsearch.js" type="text/javascript"></script>

@@ -126,7 +126,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     modelChanged: function (model, value) {
     },
     modelEvents: {
-        "change:isLoading": function (){
+        'change:isLoading': function (){
         }
     },
     onBeforeClose: function () {
@@ -136,7 +136,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     onClose: function () {
         // custom cleanup or closing code, here
         if (this.mapCanvasEvent) {
-            this.mapCanvas.off("moveend", this.mapCanvasEvent);
+            this.mapCanvas.off('moveend', this.mapCanvasEvent);
         }
     },
     templateHelpers: {
