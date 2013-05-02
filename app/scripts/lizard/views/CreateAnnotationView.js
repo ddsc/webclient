@@ -8,6 +8,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
         var layer = relation;
+        annotationLayout.footer.show();
     } else if (relation.get('events')){
         related_object = {
             'primary': relation.get('pk').toString(),
@@ -97,7 +98,8 @@ Lizard.Views.CreateAnnotationView = function(relation){
 Lizard.Views.AnnotationLayout = Backbone.Marionette.Layout.extend({
     template: '#annotation-template',
     regions: {
-        body: '#annotations-list'
+        body: '#annotations-list',
+        footer: '#annotation-modal-footer'
     }
 });
 
