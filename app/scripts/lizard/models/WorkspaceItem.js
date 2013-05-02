@@ -15,7 +15,7 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
     this.set('layer', new layerClass(obj.wms_source));
     this.get('layer').set('order', this.get('order'));
     this.on('change:opacity', function(model) {
-      console.log('Change opacity of ', model);
+      // console.log('Change opacity of ', model);
     });
     this.on('change:order', function(model){
       model.get('layer').set('order',model.get('order'));

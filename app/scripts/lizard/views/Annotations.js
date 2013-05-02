@@ -171,7 +171,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             title = 'Annotatie ' + a.id;
         }
 
-        var annoModel = new Backbone.Model(a);
+        var annoModel = new Lizard.Models.Annotation(a);
         var annotationPopup = new Lizard.Views.AnnotationPopupView({model: annoModel});
         var html = annotationPopup.render().el;
         return html
@@ -195,9 +195,11 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
         'click .annotation-edit' : 'editAnnotation'
     },
     destroyAnnotation: function(){
-        this.model.destroy().done({success: function(){
-            Lizard.App.vent.trigger("updateAnnotationsMap", this);
-        }});
+        var self = this;
+        this.model.destroy()
+        .done(function(){
+            Lizard.App.vent.trigger("updateAnnotationsMap", self);
+        });
     },
     editAnnotation: function(){
         Lizard.App.vent.trigger("makeAnnotation", this.model);

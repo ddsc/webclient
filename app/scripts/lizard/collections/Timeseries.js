@@ -9,6 +9,7 @@ Lizard.Collections.InfiniteTimeseries = Backbone.Collection.extend({
     return resp.results;
   },
   page: 1,
+  pageSize: 20,
   name: ''
 });
 

@@ -511,7 +511,7 @@
 
 
     <script type="text/template" id="annotation-popup">
-        <p> <%= text %></p>;
+        <p><%= text %></p>
         <% if (picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
         <%  } %>
         <hr/>
@@ -529,11 +529,8 @@
     <script type="text/template" id="layeritem-template">
 
 	  <div class="layer-item">
-        <span class="indicator">
-            <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
-        </span>
         <span class="action handle">
-            <i class="icon-globe"></i>
+            <i class="<% if(addedToMap) { %>icon-plus<% } else { %>icon-minus<%  } %>"></i>
         </span>
         <span class="content handle"><%= display_name %></span>
 	  </div>
@@ -680,7 +677,6 @@
         </h5>
 
         </div>
-        <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
     </script>
 
     <script id="parameterview-template" type="text/template">
@@ -696,7 +692,7 @@
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
             <div class="pull-left">
-                <h5>
+                <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
                     <%=truncateString(timeseries.get('name'), 10, '', '...')%><br/>
                     <small><%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)</small>
                 </h5>
@@ -780,9 +776,10 @@
         </div>
         <div class="btn-toolbar pull-right">
           <!-- <button type="button" id="reset-collage" class="btn btn-danger">Reset collage</button> -->
-          <button type="button" id="save-collage" class="btn btn-success">Nieuwe collage opslaan</button>
+          <button type="button" id="save-collage" class="btn btn-success">Kaartenscherm opslaan</button>
         </div>
       </div>
+      <div id="ts-info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
     </script>
 
     <script type="text/template" id="graph-slot"></script>

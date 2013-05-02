@@ -1310,6 +1310,9 @@ div.graph-legend ul li{
     margin: 2px 0px 0px 0px;
 }
 
+div#dateRangeRegion{
+    font-size: .9em;
+}
 
 .stitched {
     /* keep this 1px, so we don't trigger a resize and the consequent redraw of the graphs */
@@ -1329,6 +1332,10 @@ div.graph-legend ul li{
 }
 .overlayer span {
     font-size: 12px;
+}
+
+.opacity-slider {
+    width: 90%;
 }
 
 /* css for timepicker */
