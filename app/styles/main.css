@@ -1203,7 +1203,7 @@ html.busy, html.busy * {
 
 
 .leaflet-popup-content{
-    max-height: 285px;
+    max-height: 420px;
     overflow:auto;
 }
 

@@ -91,7 +91,7 @@ Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
   getPopupContent: function(data) {
     var xml = $.parseXML(data);
     if ($(xml).find('table').length > 0) {
-      return '<div style="overflow:auto">' + data + '</div>';
+      return '<div style="overflow:auto">' + '<h4>' + this.get('display_name') + '</h4>' + data + '</div>';
     } else {
       return false;
     }
