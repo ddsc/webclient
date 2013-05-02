@@ -195,9 +195,11 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
         'click .annotation-edit' : 'editAnnotation'
     },
     destroyAnnotation: function(){
-        this.model.destroy().done({success: function(){
-            Lizard.App.vent.trigger("updateAnnotationsMap", this);
-        }});
+        var self = this;
+        this.model.destroy()
+        .done(function(){
+            Lizard.App.vent.trigger("updateAnnotationsMap", self);
+        });
     },
     editAnnotation: function(){
         Lizard.App.vent.trigger("makeAnnotation", this.model);
