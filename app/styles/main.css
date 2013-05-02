@@ -1334,6 +1334,10 @@ div#dateRangeRegion{
     font-size: 12px;
 }
 
+.opacity-slider {
+    width: 90%;
+}
+
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
 .ui-timepicker-div dl { text-align: left; }
