@@ -26,6 +26,11 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'click #reset-collage': 'resetCollage',
     'click #save-collage': 'saveCollage'
   },
+  onShow: function(){
+    this.modal = this.$el.find('#save-modal').modal({ 
+      show: false
+    });
+  },
   triggers: {
     // Disabled this, because the graphs aren't really meant to be dynamicly resized.
     // It causes an invalidation of the view, and all data has to be retrieved again.
@@ -42,18 +47,20 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   },
   saveCollage: function (e) {
     var self = this;
-    var modal = this.$el.find('#save-modal').modal();
+    
+    self.modal.modal('show');
     // attach submit event to spawned form
-    modal.find('form').submit(function (e) {
+    self.modal.find('form').submit(function (e) {
         e.preventDefault();
         var name = $(this).find('input[name="name"]').val();
         var visibility = $(this).find('input[name="visibility"]').val();
-
         self.graphCollection.saveCollage(name, visibility)
         .done(function () {
-            modal.modal('hide');
+            self.modal.modal('hide');
             // refresh the collages
             self.collageCollection.fetch();
+            self.modal.find('form').unbind('submit');
+            $(this).find('input[name="name"]').val("");
         });
     });
   }
