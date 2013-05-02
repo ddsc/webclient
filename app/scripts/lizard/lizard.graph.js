@@ -18,7 +18,7 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'favoriteRegion': '#favoriteRegion',
     'selectionSearch': '#selectionSearch',
     'selectionRegion': '#selectionRegion',
-    'infomodal': '#info-modal',
+    'infomodal': '#ts-info-modal',
     'graphsRegion': '#graphsRegion',
     'dateRangeRegion': '#dateRangeRegion',
   },
@@ -108,7 +108,8 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   });
 
   var timeseriesView = new Lizard.Views.InfiniteTimeseries({
-    timeseriesCollection: timeseriesCollection
+    collection: timeseriesCollection,
+    graphCollection: graphCollection
   });
 
   var graphAndLegendCollectionView = new Lizard.Views.GraphAndLegendCollection({
