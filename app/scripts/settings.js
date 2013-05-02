@@ -11,7 +11,7 @@ var settings = {
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/?page_size=300',
     alarms_url: domain + 'alarms/' + extra,
-    collages_url: domain + 'collages/?page_size=0',
+    collages_url: domain + 'collages/?page_size=15',
     workspace_url: domain + 'workspaces/',
     layers_url: domain + 'layers/?page_size=100',
     account_url: domain + 'account/',
