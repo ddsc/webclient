@@ -13,6 +13,10 @@ a {
     cursor: pointer;
 }
 
+iframe {
+    border: 0;
+}
+
 #content {
   min-height: 700px; /*prefent lizard-logo on top of page*/
 }
