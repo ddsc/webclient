@@ -22,7 +22,6 @@ Lizard.Models.GraphItem = Backbone.Model.extend({
         for (var i=0; i<lineColors.length; i++) {
             var color = lineColors[i];
             var modelsWithThisColor = collection.where({color: color});
-            console.log(modelsWithThisColor.length);
             if (modelsWithThisColor.length === 0) {
                 preferredColor = color;
                 break;
