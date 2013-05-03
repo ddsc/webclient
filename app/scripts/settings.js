@@ -6,7 +6,7 @@ var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/?has_geometry=true&page_size=5000',
+    locations_url: domain + 'locations/?has_geometry=true&for_map=true&page_size=5000',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/?page_size=100',
