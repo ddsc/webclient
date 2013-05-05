@@ -49,6 +49,9 @@
             if (data.axis_label_y) {
                 self.axisLabelY = data.axis_label_y;
             }
+            for (var key in data) {
+                if (/^timer/.test(key)) { console.log(data.label + ': ' + key + ' = ' + data[key]); }
+            }
             self.needsUpdate = false;
             if (typeof successCallback !== 'undefined') {
                 successCallback(self);
