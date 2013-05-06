@@ -44,7 +44,9 @@ Lizard.App.addRegions({
 
 Lizard.App.on('initialize:before', function() {
   account = new Lizard.Models.Account();
-  account.fetch();
+  account.fetch({error: function(){
+    $('#iecrossdomain').modal();
+  }});
 
   workspaceCollection = new Lizard.Collections.Workspace();
   workspaceCollection.fetch();

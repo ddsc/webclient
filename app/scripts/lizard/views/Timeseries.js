@@ -114,6 +114,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
+    searchTimeout: null,
     initialize: function(options) {
         this.timeseriesCollection = options.timeseriesCollection;
     },
@@ -123,12 +124,21 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         return this;
     },
     events: {
-        'change #searchTimeseries': 'search'
+        'keypress #searchTimeseries': 'search'
     },
     search: function(e) {
-        this.timeseriesCollection.reset();
-        this.timeseriesCollection.page = 1;
-        this.timeseriesCollection.name = $('#searchTimeseries').val();
-        this.timeseriesCollection.fetch();
+        var self = this;
+
+        if (this.searchTimeout !== null) {
+            window.clearTimeout(this.searchTimeout);
+            this.searchTimeout = null;
+        }
+
+        this.searchTimeout = window.setTimeout(function () {
+            self.timeseriesCollection.reset();
+            self.timeseriesCollection.page = 1;
+            self.timeseriesCollection.name = $('#searchTimeseries').val();
+            self.timeseriesCollection.fetch();
+        }, 700);
     }
 });

@@ -280,22 +280,22 @@
                 <ul class="nav nav-list sidenav transition hidden-phone" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
-                      <div class="ddsc-item oselect sensor-layer-toggler">
+                      <div class="ddsc-item noselect sensor-layer-toggler">
                       <h5><i class="icon-check"></i>&nbsp;Sensoren <!-- <span class="pull-right badge badge-info">192</span>--></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
-                      <div class="ddsc-item oselect status-layer-toggler">
+                      <div class="ddsc-item noselect status-layer-toggler">
                            <h5><i class="icon-check-empty"></i>&nbsp;Status<!-- <span class="pull-right badge badge-warning">5</span> --></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
-                      <div class="ddsc-item oselect alarm-layer-toggler">
+                      <div class="ddsc-item noselect alarm-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Alarmen<!-- <span class="pull-right badge badge-important">2</span> --></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
-                      <div class="ddsc-item oselect annotation-layer-toggler">
+                      <div class="ddsc-item noselect annotation-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">0</span></h5>
                       </div>
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
@@ -331,7 +331,7 @@
     </script>
 
     <script type="text/template" id="location-modal-popup-item">
-        <div class="timeserie-item oselect">
+        <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="icon-bar-chart">
             </i><span class="add-graph-item"> &nbsp;<%= name %></span>
               <span class="pull-right">
@@ -353,7 +353,7 @@
     </script>
 
      <script type="text/template" id="favorite-item-template">
-      <div class="favorite-item oselect">
+      <div class="favorite-item noselect">
         <h5 data-toggle="collapse" data-target="#<%=favorite.uuid%>"><i class="favstar icon-star"></i>&nbsp;<%= favorite.name %></h5>
         <div id="<%=favorite.uuid%>" class="collapse">
           <ul class="timeserie-actions">
@@ -617,7 +617,7 @@
     </script>
 
     <script type="text/template" id="timeseries-modal-item">
-        <div class="timeserie-item oselect">
+        <div class="timeserie-item noselect">
             <h5 class="modaltimeserie">
             <i class="icon-star-empty fav"></i> &nbsp;
               <span class="graph-this" data-url="<%= url %>">
@@ -632,7 +632,7 @@
     </script>
 
     <script type="text/template" id="location-popup-item">
-        <div class="timeserie-item oselect">
+        <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="icon-bar-chart">
             </i><span class="popup-toggle"> &nbsp;<%= name %></span>
               <span class="pull-right">
@@ -666,7 +666,7 @@
 
 
     <script id="timeserie-item-template" type="text/template">
-        <div class="timeserie-item" class="oselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
+        <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
 
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
@@ -964,21 +964,6 @@
         </div>
     </script>
 
-  <!-- unused??? -->
-  <!--
-  <script type="text/template" id="menu-template">
-      <ul class="nav">
-        <li class="map-menu"><a href="#map"><em class="icon-map-marker icon-white"></em>&nbsp;Kaart</a></li>
-        <li class="graphs-menu"><a href="#graphs"><em class="icon-signal icon-white"></em> Grafieken</a></li>
-        <li class="overview-menu"><a href="#overview"><em class="icon-bell icon-white"></em> Overzichten</a></li>
-      </ul>
-      <ul class="nav pull-right">
-        <li class="dropdown" id="loginRegion">
-        </li>
-      </ul>
-  </script>
-  -->
-
   <script type="text/template" id="loggedin-template">
       <% if (authenticated === true) { %>
       <a id="account-dropdown" class="dropdown-toggle" data-toggle="dropdown"
@@ -1082,6 +1067,10 @@
       <div class="container">
         <div class='notifications top-right'></div>
         <div id="content">
+          <!--[if lte IE 8]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+          <![endif]-->
+
           Loading....
         </div>
         <div class="row-fluid spacer footer">
@@ -1092,14 +1081,101 @@
         </div>
       </div>
 
+
+          <!--[if gte IE 9]>
+            <div class="modal hide fade" id="iecrossdomain">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Instellingen van uw browser</h3>
+                </div>
+                <div class="modal-body">
+                  Het lijkt erop dat uw browser onze bronnen niet toestaat. Maak je geen zorgen, die zijn veilig. En het probleem is makkelijk te verhelpen. Volg de volgende stappen om het op te lossen.
+                    <ol>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep1">
+                          Klik op opties (het tandwiel) rechts boven in uw browser
+                        </span>
+                        <div id="crossdomainstep1" class="collapse">
+                          <img src="images/ie9/step1.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep2">
+                          Selecteer <i>"Internetopties"</i>
+                        </span>
+                        <div id="crossdomainstep2" class="collapse">
+                          <img src="images/ie9/step2.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep3">
+                          Selecteer het tabblad <i>"Beveiliging"</i>
+                        </span>
+                        <div id="crossdomainstep3" class="collapse">
+                          <img src="images/ie9/step3.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep4">
+                          Klik op de knop met <i>"Aangepast niveau..."</i>
+                        </span>
+                        <div id="crossdomainstep4" class="collapse">
+                          <img src="images/ie9/step4.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep5">
+                          Kies onder <i>Diversen</i> bij de categorie <i>"Toegang tot gegevensbronnen tussen domeinen"</i>
+                           de optie <i>"Inschakelen"</i>
+                        </span>
+                        <div id="crossdomainstep5" class="collapse">
+                          <img src="images/ie9/step5.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep6">
+                          Klik daarna op OK en daarna op <i>"Ja"</i> bij het volgende dialoog wat vraagt om bevestiging voor deze veranderingen.
+                        </span>
+                        <div id="crossdomainstep6" class="collapse">
+                          <img src="images/ie9/step6.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep7">
+                          Selecteer <i>"Internetopties"</i>
+                        </span>
+                        <div id="crossdomainstep7" class="collapse">
+                          <img src="images/ie9/step7.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep8">
+                          Klik daarna weer op OK om alles toe te passen.
+                        </span>
+                        <div id="crossdomainstep8" class="collapse">
+                          <img src="images/ie9/step8.png"/>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="clickable noselect" data-toggle="collapse" data-target="#crossdomainstep9">
+                          Druk nu op F5 of op het herlaad knopje rechts in de adresbalk.
+                        </span>
+                        <div id="crossdomainstep9" class="collapse">
+                          <img src="images/ie9/step9.png"/>
+                        </div>
+                      </li>
+                    </ol>
+
+                    Als het probleem blijft bestaand kunt u het beste contact opnemen met uw locale systeembeheerder.
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0)" class="btn" data-dismiss="modal" aria-hidden="true">Sluit</a>
+                </div>
+            </div>
+          <![endif]-->
+
       <!-- for modal screens -->
       <div id="hidden"></div>
-
-
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
 
         <!-- build:js scripts/jquery.js -->
         <script src="scripts/vendor/jquery-1.8.3.js"></script>

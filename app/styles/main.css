@@ -421,6 +421,15 @@ input.input-medium.search-query {
     user-select: none;
 }
 
+.clickable{
+    cursor: pointer;
+    color: rgb(0, 132, 180);
+}
+
+.clickable:hover{
+    color: rgb(0, 112, 160);
+}
+
 #chart-y-axis{
     width: 5%;
 }
