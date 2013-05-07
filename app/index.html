@@ -509,6 +509,17 @@
           </form>
     </script>
 
+    <script type="text/template" id="annotationbox-one-template">
+            <span class="annotationbox-text">
+
+              <ul style="list-style:none;margin:0;padding:0;">
+                <li><i class="icon-comment"></i>&nbsp;<%= annotation.text%></li>
+                <li style="font-size:.8em;"><%if (annotation.tags){%> <i><%=annotation.tags%></i> <%} else {%><i>Geen tags...</i><%}%></li>
+              </ul>
+            </span>
+             <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
+    </script>
+
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
@@ -998,14 +1009,17 @@
     <script type="text/template" id="annotations-template">
       <p>Annotaties</p>
       <%if(isLoading){%>
-          <span class="lazy loading" style="width: 100%; height: 50px;"></span>
+          <span class="lazy text-center" style="width: 100%; height: 50px;"><i class="icon-spinner icon-spin icon-2x"></i></span>
       <%}else{%>
           <%if(annotationsCount == 0){%>
-              <p>Er zijn geen notities gevonden.</p>
-          <%}else if (annotationsCount == 1) {%>
-              <p>Er is <strong><%= annotationsCount %></strong> notitie gevonden.</p>
-          <%}else{%>
-              <p>Er zijn <strong><%= annotationsCount %></strong> notities gevonden.</p>
+              <p>Er zijn geen annotaties gevonden.</p>
+          <%}else {%>
+              <% if (annotationsCount == 1) {%>
+                <p>Er is <strong><%= annotationsCount %></strong> annotatie gevonden.</p>
+                <%} else {%>
+                  <p>Er zijn <strong><%= annotationsCount %></strong> annotaties gevonden.</p>
+              <%}%>
+              <div id="annotation-overview"></div>
           <%}%>
       <%}%>
     </script>

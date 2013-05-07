@@ -561,7 +561,7 @@ input.input-medium.search-query {
     margin-right:5px;
 }
 
-span.lazy.loading { background-image: url('../images/loading.gif'); }
+span.lazy.loading { background-image: url('../images/ajax-spinner-2.gif'); }
 span.lazy.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
 span.lazy {
     background-color: #fff;
