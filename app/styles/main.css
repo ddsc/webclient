@@ -450,6 +450,7 @@ input.input-medium.search-query {
 }
 
 .graph-and-legend .graph,
+#carousel-modal .graph,
 #location-modal .graph {
     height: 300px;
     color: #444;

@@ -330,6 +330,25 @@
         </div>
     </script>
 
+    <script type="text/template" id="image-carousel-popup">
+        <div id="carousel-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="carousel-modal-label" aria-hidden="true">
+            <div id="carousel-modal-header" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="carousel-modal-label">Afbeeldingen</h3>
+            </div>
+            <div id="carousel-modal-body" class="modal-body">
+                <div class="carousel-graph-region"></div>
+            </div>
+            <div id="carousel-modal-footer" class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="image-carousel-itemview">
+      <img src="<%=url%>"/><br/>
+    </script>
+
     <script type="text/template" id="location-modal-popup-item">
         <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="icon-bar-chart">
@@ -632,15 +651,27 @@
     </script>
 
     <script type="text/template" id="location-popup-item">
+      <% if(name === 'LMW_EMSH_H10') { %>
         <div class="timeserie-item noselect">
-            <h5 data-url="<%= events %>"><i class="icon-bar-chart">
-            </i><span class="popup-toggle"> &nbsp;<%= name %></span>
+            <h5 data-url="<%= events %>"><i class="icon-picture"></i>
+              <span class="image-popup-toggle"> &nbsp;<%= name %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(latest_value) %></span>
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
               </span>
             </h5>
         </div>
+      <% } else { %>
+        <div class="timeserie-item noselect">
+            <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else { %>icon-picture<% } %>"></i>
+              <span class="<% if(value_type === 'float') { %>popup-toggle<% } else { %>image-popup-toggle<% } %>"> &nbsp;<%= name %></span>
+              <span class="pull-right">
+                <span class="badge badge-info"><%= format_value(latest_value) %></span>
+                <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+              </span>
+            </h5>
+        </div>        
+      <% } %>
     </script>
 
 

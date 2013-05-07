@@ -107,11 +107,41 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
     }
 });
 
+ImageCarouselItemView = Backbone.Marionette.ItemView.extend({
+  template: '#image-carousel-itemview'
+});
+
+Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
+    template: '#image-carousel-popup',
+    regions: {
+        graphRegion: '.carousel-graph-region'
+    },
+    onRender: function (e) {
+      var self = this;
+      this.$el.find('.modal').modal();
+      
+      var timeserieImage = Backbone.Model.extend({defaults: {url: 'http://lorempixel.com/g/400/200/sports/'}});
+      var timeserieImageCollection = Backbone.Collection.extend({
+        model: timeserieImage
+      });
+      var tic = new timeserieImageCollection();
+      for(var i=0; i < Math.round(Math.random(15)*15); i++) {
+        tic.add(new timeserieImage());
+      }
+      var myView = Backbone.Marionette.CollectionView.extend({
+        collection: tic,
+        itemView: ImageCarouselItemView
+      });
+      this.graphRegion.show(new myView());
+    }
+});
+
 Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   template: '#location-popup-item',
   tagName: 'li',
   events: {
-    'click .popup-toggle' : "openModal",
+    'click .popup-toggle' : 'openModal',
+    'click .image-popup-toggle' : 'openCarouselModal',
     'click .icon-comment' : 'openAnnotation'
   },
   openAnnotation: function(){
@@ -122,6 +152,14 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
         primaryTimeseries: this.model,
         otherTimeseries: this.model.collection
     });
+    Lizard.App.hidden.show(modalView);
+    modalView.$el.find('.modal').on('hide', function () {
+        Lizard.App.hidden.close();
+    });
+  },
+  openCarouselModal: function(e) {
+    console.log('openCarouselModal');
+    var modalView = new Lizard.Views.ImageCarouselModal();
     Lizard.App.hidden.show(modalView);
     modalView.$el.find('.modal').on('hide', function () {
         Lizard.App.hidden.close();
@@ -141,6 +179,7 @@ Lizard.geo.Popups.DdscTimeseries = {
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
+      // console.log(collection.models[0].attributes);
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });
