@@ -10,7 +10,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'annotationsRegion' : '#annotationsRegion',
     'geocoderRegion' : '#geocoderRegion',
     'extraLayerRegion' : '#extramaplayers'
-  },
+  }
 });
 
 // Create router
@@ -128,7 +128,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     }
   });
 
-  var alarmWMS = leafletView.getAlarms()
+  var alarmWMS = leafletView.getAlarms();
   var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
   alarms.set({visibility: true});
   var activeWorkspace = Lizard.workspaceView.getCollection();
@@ -137,7 +137,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         var $icon = $(this).find('i');
         if ($icon.hasClass('icon-check-empty')) {
             $icon.addClass('icon-check').removeClass('icon-check-empty');
-            Lizard.Models.WorkspaceItem
+            // Lizard.Models.WorkspaceItem;
             activeWorkspace.add(alarms);
         }
         else {
@@ -155,7 +155,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         var $icon = $(this).find('i');
         if ($icon.hasClass('icon-check-empty')) {
             $icon.addClass('icon-check').removeClass('icon-check-empty');
-            Lizard.Models.WorkspaceItem
+            // Lizard.Models.WorkspaceItem
             activeWorkspace.add(alarms);
         }
         else {
