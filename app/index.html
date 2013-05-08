@@ -443,10 +443,11 @@
     </script>
 
     <script type="text/template" id="annotation-one-template">
+          <% if (annotation.rwpermission === true) {%>
            <span class="pull-right">
                 <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
                 <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
-            </span>
+            </span><% } %>
             <span class="annotation-text span3">
 
               <ul style="list-style:none;margin:0;padding:0;">
@@ -517,8 +518,10 @@
                 <tr><td>Geldig tot</td><td><%= datetime_until %></td></tr>
                 <tr><td>Tags</td><td><%= tags %></td></tr>
             </table>
+          <% if (rwpermission === true) {%>
           <button type="button" class="btn btn-danger annotation-delete">Wis</button>
           <button type="button" class="btn btn-warning annotation-edit">Wijzig</button>
+          <%}%>
     </script>
 
     <script type="text/template" id="layeritem-template">

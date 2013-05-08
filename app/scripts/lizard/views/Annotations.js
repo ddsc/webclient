@@ -184,6 +184,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
 
         var annoModel = new Lizard.Models.Annotation(a);
+        if (annoModel.get('username') === account.get('user').username){
+            annoModel.set({rwpermission: true});
+        } else {
+            annoModel.set({rwpermission: false});
+        }
         var annotationPopup = new Lizard.Views.AnnotationPopupView({model: annoModel});
         var html = annotationPopup.render().el;
         return html
