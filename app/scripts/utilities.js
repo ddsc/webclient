@@ -450,8 +450,9 @@ function truncateString (string, limit, breakChar, rightPad) {
 
     var substr = string.substr(0, limit);
     if ((breakPoint = substr.lastIndexOf(breakChar)) >= 0) {
-        if (breakPoint < string.length -1) {
+        if (breakPoint <= string.length -1) {
             return string.substr(0, breakPoint) + rightPad;
         }
     }
+    return string
 }
