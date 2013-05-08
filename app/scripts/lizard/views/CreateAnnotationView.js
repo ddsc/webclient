@@ -136,6 +136,11 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     },
     initialize: function(options){
         this.relation = options.relation;
+        if (this.model.get('username') === account.get('user').username){
+            this.model.set({rwpermission: true});
+        } else {
+            this.model.set({rwpermission: false});
+        }
     },
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
