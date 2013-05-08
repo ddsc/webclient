@@ -44,6 +44,30 @@ Lizard.Views.CreateAnnotationView = function(relation){
             window.drawnItems.removeLayer(layer);
         }
     });
+
+    // initialize file upload form
+    $('form.annotation input[name="attachment"]').fileupload({
+        dataType: 'json',
+        url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
+        done: function (e, data) {
+            if (data.result.success === true) {
+                var $a = $('<a>')
+                .attr({
+                    href: data.result.url,
+                    target: '_blank'
+                })
+                .text('Bekijk ' + data.result.filename);
+                var $form = $(this).parents('form').first();
+                $form.find('.uploaded-file').empty().append($a);
+                $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
+                $form.find('input[name="picture_url"]').val(data.result.url);
+            }
+            else {
+                $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
+            }
+        }
+    });
+
     // override of the submit function
     $('form.annotation').submit(function(e) {
       e.preventDefault();
@@ -137,6 +161,29 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     edit: function(){
         this.$el.find('.collapse').toggleClass('in');
         // override of the submit function
+
+        // initialize file upload form
+        $('form.annotation input[name="attachment"]').fileupload({
+            dataType: 'json',
+            url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
+            done: function (e, data) {
+                if (data.result.success === true) {
+                    var $a = $('<a>')
+                    .attr({
+                        href: data.result.url,
+                        target: '_blank'
+                    })
+                    .text('Bekijk ' + data.result.filename);
+                    var $form = $(this).parents('form').first();
+                    $form.find('.uploaded-file').empty().append($a);
+                    $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
+                    $form.find('input[name="picture_url"]').val(data.result.url);
+                }
+                else {
+                    $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
+                }
+            }
+        });
     },
     submitChange: function(e){
         e.preventDefault();
