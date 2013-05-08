@@ -221,17 +221,18 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
 
 Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
     related_object: null,
+    tagName: 'li',
     template: function(model){
         return _.template(
-            $('#annotationbox-one-template').html(), model, {variable: 'annotation'});
+            '<%= annotation.text %>', {text: model.text}, {variable: 'annotation'});
     },
 });
 
 Lizard.Views.AnnotationBoxCollectionView = Backbone.Marionette.CollectionView.extend({
     collection: null,
+    tagName: 'ol',
     initialize: function(options){
-        this.collection = options.collection
+        this.collection = new Backbone.Collection(options.collection.first(10))
     },
     itemView: Lizard.Views.AnnotationBoxItem
-
 });

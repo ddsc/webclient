@@ -276,7 +276,7 @@
                     </div>
                   </div>
                 </ul>
-                <br class="spacer hidden-phone">
+                <br class="hidden-phone">
                 <ul class="nav nav-list sidenav transition hidden-phone" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
@@ -301,7 +301,7 @@
                       <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li></ul></div>
                 </ul>
-                <br class="spacer">
+                <br>
                 <div class="nav sidenav hidden-phone" id="annotationsRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
@@ -508,18 +508,6 @@
             </fieldset>
           </form>
     </script>
-
-    <script type="text/template" id="annotationbox-one-template">
-            <span class="annotationbox-text">
-
-              <ul style="list-style:none;margin:0;padding:0;">
-                <li><i class="icon-comment"></i>&nbsp;<%= annotation.text%></li>
-                <li style="font-size:.8em;"><%if (annotation.tags){%> <i><%=annotation.tags%></i> <%} else {%><i>Geen tags...</i><%}%></li>
-              </ul>
-            </span>
-             <%if (annotation.picture_url){%> <a href="<%= annotation.picture_url %>" target="_blank"><i class="icon-picture"></i> </a><%}%>
-    </script>
-
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
@@ -1007,7 +995,7 @@
 
 
     <script type="text/template" id="annotations-template">
-      <p>Annotaties</p>
+      <h5>Annotaties</h5>
       <%if(isLoading){%>
           <span class="lazy text-center" style="width: 100%; height: 50px;"><i class="icon-spinner icon-spin icon-2x"></i></span>
       <%}else{%>
@@ -1015,9 +1003,9 @@
               <p>Er zijn geen annotaties gevonden.</p>
           <%}else {%>
               <% if (annotationsCount == 1) {%>
-                <p>Er is <strong><%= annotationsCount %></strong> annotatie gevonden.</p>
+                <p>De meest recente annotatie:</p>
                 <%} else {%>
-                  <p>Er zijn <strong><%= annotationsCount %></strong> annotaties gevonden.</p>
+                  <p>De meest recente annotaties:</p>
               <%}%>
               <div id="annotation-overview"></div>
           <%}%>

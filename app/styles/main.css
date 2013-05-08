@@ -59,7 +59,7 @@ div#brand:hover {
 
 #map {
     height: 960px;
-    box-shadow: 0 8px 16px -8px #222;
+    box-shadow: 0 8px 8px -8px #222;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -131,36 +131,6 @@ leaflet-control-legend-icon {
     height: 0;
     border-top: 1px solid #ddd;
     margin: 5px -10px 5px -6px;
-}
-
-#annotation-modal.modal{
-    width: 500px;
-}
-#annotation-modal .spacing{
-    margin-left: 1em;
-}
-
-.annotation-item{
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius:  0 4px 4px 0;
-    overflow:hidden;
-}
-
-.annotation-form{
-    position:relative;
-    float:left;
-}
-
-.annotation-item .btn{
-    margin:2px;
-}
-
-.annotation-text{
-    position: relative;
-    left: -25px;
-    vertical-align: middle;
-    padding: 5px;
 }
 
 #liveFeed {
@@ -408,6 +378,47 @@ input.input-medium.search-query {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Annotation Stuff*/
+
+#annotation-modal.modal{
+    width: 500px;
+}
+#annotation-modal .spacing{
+    margin-left: 1em;
+}
+
+.annotation-item{
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius:  0 4px 4px 0;
+    overflow:hidden;
+}
+
+.annotation-form{
+    position:relative;
+    float:left;
+}
+
+.annotation-item .btn{
+    margin:2px;
+}
+
+.annotation-text{
+    position: relative;
+    left: -25px;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+#annotation-overview{
+    padding: 2px;
+}
+
+#annotation-overview ol {
+    line-height: 1.3em;  
+}
+
 
 /* Graph stuff*/
 
@@ -718,7 +729,7 @@ div.widget li.theader {
     padding: 5px 15px;
     background-color: white;
     border-radius: 6px;
-    box-shadow: 0 8px 16px -8px #222;
+    box-shadow: 0 8px 10px -8px #222;
 }
 .sidenav > li > a {
     display: block;
