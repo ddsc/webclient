@@ -283,22 +283,18 @@
                       <div class="ddsc-item noselect sensor-layer-toggler">
                       <h5><i class="icon-check"></i>&nbsp;Sensoren <!-- <span class="pull-right badge badge-info">192</span>--></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect status-layer-toggler">
                            <h5><i class="icon-check-empty"></i>&nbsp;Status<!-- <span class="pull-right badge badge-warning">5</span> --></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect alarm-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Alarmen<!-- <span class="pull-right badge badge-important">2</span> --></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect annotation-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">0</span></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li></ul></div>
                 </ul>
                 <br>
@@ -719,7 +715,8 @@
       </div>
     </script>
 
-    <script type="text/template" id="graphs-template">
+
+    <script type="text/template" id="save-modal-template">
       <div id="save-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="save-modal-label" aria-hidden="true">
           <div id="save-modal-header" class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -748,6 +745,9 @@
               </div>
           </form>
       </div>
+    </script>
+
+    <script type="text/template" id="graphs-template">
       <div class="row-fluid">
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">

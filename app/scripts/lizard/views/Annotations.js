@@ -149,6 +149,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         if (this.mapCanvasEvent) {
             this.mapCanvas.off('moveend', this.mapCanvasEvent);
         }
+        Lizard.App.vent.off("makeAnnotation", Lizard.Views.CreateAnnotationView);
     },
     templateHelpers: {
         showMessage: function (){
