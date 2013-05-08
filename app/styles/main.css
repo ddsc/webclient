@@ -9,7 +9,7 @@ body {
 }
 
 /* Media selectors */
-@media (min-width: 980px) and (max-width: 1200px) { 
+@media (min-width: 980px) and (max-width: 1200px) {
     .graph-legend ul li button span {
         display: none;
     }

@@ -405,10 +405,9 @@
               <h5>Wijzig deze annotaties</h5>
               <div id="annotations-list"></div>
               <div id="annotation-modal-footer" class="modal-footer">
-                <h5>Een nieuwe annotatie</h5>
                   <form class="annotation">
-                  <fieldset>
-              <div class="annotation-form">
+              <fieldset>
+              <h5>Een nieuwe annotatie</h5>
                  <div class="input-prepend">
                  <span class="add-on"><i class="icon-comment"></i></span>
                   <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
@@ -431,18 +430,25 @@
                     </label>
                 </div>
                  <div class="input-prepend">
-                   <span class="add-on"><i class="icon-picture"></i></span>
-                    <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
-                  </div>
-                 <div class="input-prepend">
                    <span class="add-on"><i class="icon-tag"></i></span>
                   <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
                 </div>
-              <div>
+             <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
+             <div class="input-prepend">
+               <span class="add-on"><i class="icon-picture"></i></span>
+               <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
+             </div>
+             <span class="help-block"><small>Upload een afbeelding.</small></span>
+             <div class="input-prepend">
+                 <span class="add-on"><i class="icon-upload-alt"></i></span>
+                 <input type="file" class="span4" name="attachment" placeholder="Upload een foto"/>
+             </div>
+             <div class="uploaded-file" style="margin-left:28px;"></div>
+            <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
+            <input type="hidden" name="attachment_pk" value="">
+             </fieldset>
+             </form>
             </div>
-          <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
-            </fieldset>
-          </form>
         </div>
     </script>
 
@@ -491,12 +497,6 @@
                   </label>
               </div>
             </div>
-            <div class="controls">
-               <div class="input-prepend">
-                 <span class="add-on"><i class="icon-picture"></i></span>
-                  <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
-                </div>
-            </div>
             <span class="help-block"><small>Hang een label of <em>tag</em> aan de annotatie.</small></span>
             <div class="controls">
                <div class="input-prepend">
@@ -504,8 +504,24 @@
                 <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" <%if (annotation.tags){%> value="<%= annotation.tags %>" <%}%>/>
               </div>
             </div>
+            <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-picture"></i></span>
+                  <input type="text" class="span4" name="picture_url" placeholder="Url naar afbeelding" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
+                </div>
+            </div>
+            <span class="help-block"><small>Upload een afbeelding.</small></span>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-upload-alt"></i></span>
+                    <input type="file" class="span4" name="attachment" placeholder="Upload een afbeelding"/>
+                </div>
+                <div class="uploaded-file" style="margin-left:28px;"></div>
+            </div>
               <button type="submit" class="btn spacer pull-right btn-warning">Wijzigingen opslaan</button>
             </fieldset>
+            <input type="hidden" name="attachment_pk" value="">
           </form>
     </script>
 
@@ -1188,6 +1204,9 @@
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
         <script src="scripts/vendor/globalize.js"></script>
         <script src="scripts/vendor/cultures/globalize.culture.nl.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.ui.widget.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.iframe-transport.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.fileupload.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/leaflet.js -->
@@ -1354,7 +1373,5 @@
         });
         var tour;
         </script>
-
-
 </body>
 </html>
