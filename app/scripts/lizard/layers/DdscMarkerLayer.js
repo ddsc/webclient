@@ -66,12 +66,44 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
-    var name = marker.valueOf().options.bbModel.get('name');
-    var $elem = $('<div><h5>'+ name +'</h5></div>');
-    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(marker.valueOf().options.bbModel, $elem);
-    marker.bindPopup($elem.get(0), {maxHeight: 300, minWidth: 400, maxWidth: 450});
+    var model = marker.valueOf().options.bbModel;
+    var name = marker.valueOf().options.name;
+    var popupLayout = new Lizard.geo.Popups.Layout();
+    popupLayout.render();
+    popupLayout.title.show(new Lizard.geo.Popups.LocationPopupTitle({
+      model: model, name: name
+    }));
+    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(model, popupLayout.content);
+    marker.bindPopup(popupLayout.el, {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
   },
   // largePopupContent: Lizard.Views.TimeserieView,
   // getMouseOverContent: null
 });
+
+Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
+  initialize: function (options){
+    this.model = options.model
+    this.model.set({pk: this.model.get('id')})
+  },
+  events:{
+    'click .icon-comment': 'createAnnotation'
+  },
+  template: function(model){
+        return _.template(
+            $('#timeserie-popup-title-template').html(), {title: model.name});
+  },
+  createAnnotation: function(){
+    Lizard.Views.CreateAnnotationView(this.model);
+  }
+});
+
+Lizard.geo.Popups.Layout = Backbone.Marionette.Layout.extend({
+    template: '#timeseries-popup-template',
+    regions:{
+      'content' :'#ts-popup-content',
+      'title' : '#ts-popup-title'
+    }
+});
+
+

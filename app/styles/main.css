@@ -419,6 +419,9 @@ input.input-medium.search-query {
     line-height: 1.3em;  
 }
 
+#ts-popup-title{
+    margin-left: 1.8em;
+}
 
 /* Graph stuff*/
 

@@ -213,6 +213,13 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
                     model_name: 'timeseries'
                 });
             }
+            else if (/(.*)locations(.*)/.test(this.relation.url)) {
+                // locations
+                $.extend(params, {
+                    model_pk: this.relation.get('pk').toString(),
+                    model_name: 'location'
+                });
+            }
             else if (this.relation.has('location')) {
                 // annotation
                 var location = this.relation.get('location');
