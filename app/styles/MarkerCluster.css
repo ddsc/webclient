@@ -28,3 +28,16 @@
 .marker-cluster-large div {
 	background-color: rgba(144, 144, 144, 0.8);
 	}
+
+.leaflet-div-icon {
+background: transparent;
+border: none;
+}
+ 
+.leaflet-marker-icon .number{
+position: relative;
+top: -37px;
+font-size: 12px;
+width: 25px;
+text-align: center;
+}

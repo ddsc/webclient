@@ -31,7 +31,15 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     createAnnotationsLayer: function () {
         var self = this;
-        this.annotationLayer = new L.LayerGroup();
+        this.annotationLayer = new L.MarkerClusterGroup({
+                  spiderfyOnMaxZoom: true,
+                  showCoverageOnHover: false,
+                  maxClusterRadius: 10,
+                  iconCreateFunction: function(cluster) {
+                    return new L.DivIcon({ html: '<span class="badge badge-info">' + 
+                        cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
+                  }
+                });
         $('.annotation-layer-toggler').click(function(e) {
             var $icon = $(this).find('i');
             if ($icon.hasClass('icon-check-empty')) {
