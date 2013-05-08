@@ -442,6 +442,10 @@ $(document).ajaxStop(function () {
     $('html').removeClass('busy');
 });
 
+$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError){
+        $('.top-right').notify({type: 'error', 
+          message: {text: 'Er gaat iets fout, namelijk: ' + thrownError}}).show();
+    });
 }(this));
 
 
