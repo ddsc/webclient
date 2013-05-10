@@ -59,6 +59,7 @@ div#brand:hover {
 
 #map {
     height: 960px;
+    min-height: 500px;
     box-shadow: 0 8px 8px -8px #222;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
