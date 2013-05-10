@@ -442,10 +442,18 @@ $(document).ajaxStop(function () {
     $('html').removeClass('busy');
 });
 
-$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError){
-        $('.top-right').notify({type: 'error', 
-          message: {text: 'Er gaat iets fout, namelijk: ' + thrownError}}).show();
-    });
+$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+    // Aborted request are not an error.
+    if (thrownError !== 'abort') {
+        $('.top-right').notify({
+            type: 'error',
+            message: {
+                text: 'Er gaat iets fout, namelijk: ' + thrownError
+            }
+        }).show();
+    }
+});
+
 }(this));
 
 
