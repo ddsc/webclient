@@ -977,15 +977,10 @@ div#selectionRegion{
     width: 90%
 }
 
-.timeserie-item h5 > i.info{
-    margin-top: -14px;
-}
-
 .timeserie-item > i.info{
     height: 23px;
     color: #0084B4;
     font-size: .98em;
-
 }
 
 .ddsc-item h5 {
