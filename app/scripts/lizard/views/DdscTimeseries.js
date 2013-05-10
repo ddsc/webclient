@@ -137,9 +137,11 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
       this.$el.find('.modal').modal();
 
       var url = self.imageTimeseriesCollection.where({'value_type': 'image'})[0].get('events');
-      var itsCollection = new Lizard.Collections.Timeseries();
-      itsCollection.url = url;
-      itsCollection.fetch().done(function (collection, response) {
+      var eventsCollection = new Lizard.Collections.Events();
+      eventsCollection.url = url + '?page_size=0';
+      eventsCollection.fetch().done(function (collection, response) {
+        console.log(collection);
+        console.log(response);
         collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
         var carouselView = new ImageCarouselCollectionView({
           collection: collection,
@@ -147,7 +149,6 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
           emptyView: Lizard.Views.GraphLegendNoItems
         });
         self.graphRegion.show(carouselView);
-        $('img.lazy').lazyload();
       });
     }
 });

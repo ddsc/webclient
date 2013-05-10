@@ -10,6 +10,9 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
   }
 });
 
+Lizard.Models.Event = Backbone.Model.extend();
+
+
 /**
  * A Timeseries that is actually linked to the Timeseries API,
  * unlike the above version, which is collection from a nested set,

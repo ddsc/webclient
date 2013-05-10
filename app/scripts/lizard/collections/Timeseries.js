@@ -20,3 +20,11 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
   url: settings.timeseries_url,
   model: Lizard.Models.Timeserie
 });
+
+Lizard.Collections.Events = Backbone.Collection.extend({
+  url: settings.timeseries_url,
+  model: Lizard.Models.Event,
+  parse: function(resp, xhr) {
+    return resp;
+  }
+});
