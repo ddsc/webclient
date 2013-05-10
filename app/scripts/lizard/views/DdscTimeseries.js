@@ -107,32 +107,34 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
     }
 });
 
-ImageCarouselItemView = Backbone.Marionette.ItemView.extend({
-  template: '#image-carousel-itemview'
-});
 
+ImageCarouselItemView = Backbone.Marionette.ItemView.extend({template: '#image-carousel-itemview'});
+ImageCarouselCollectionView = Backbone.Marionette.CollectionView.extend();
 Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
     template: '#image-carousel-popup',
     regions: {
         graphRegion: '.carousel-graph-region'
     },
+    initialize: function (options) {
+        this.imageTimeseriesCollection = options.imageTimeseries;
+    },
     onRender: function (e) {
       var self = this;
       this.$el.find('.modal').modal();
-      
-      var timeserieImage = Backbone.Model.extend({defaults: {url: 'http://lorempixel.com/g/400/200/sports/'}});
-      var timeserieImageCollection = Backbone.Collection.extend({
-        model: timeserieImage
+
+      var url = self.imageTimeseriesCollection.where({'value_type': 'image'})[0].get('events');
+      var itsCollection = new Lizard.Collections.Timeseries();
+      itsCollection.url = url;
+      itsCollection.fetch().done(function (collection, response) {
+        console.log(collection);
+        // console.log(response);
+        var carouselView = new ImageCarouselCollectionView({
+          collection: collection,
+          itemView: ImageCarouselItemView,
+          emptyView: Lizard.Views.GraphLegendNoItems
+        });
+        self.graphRegion.show(carouselView);
       });
-      var tic = new timeserieImageCollection();
-      for(var i=0; i < Math.round(Math.random(15)*15); i++) {
-        tic.add(new timeserieImage());
-      }
-      var myView = Backbone.Marionette.CollectionView.extend({
-        collection: tic,
-        itemView: ImageCarouselItemView
-      });
-      this.graphRegion.show(new myView());
     }
 });
 
@@ -159,7 +161,9 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   },
   openCarouselModal: function(e) {
     console.log('openCarouselModal');
-    var modalView = new Lizard.Views.ImageCarouselModal();
+    var modalView = new Lizard.Views.ImageCarouselModal({
+      imageTimeseries: this.model.collection
+    });
     Lizard.App.hidden.show(modalView);
     modalView.$el.find('.modal').on('hide', function () {
         Lizard.App.hidden.close();

@@ -346,8 +346,9 @@
     </script>
 
     <script type="text/template" id="image-carousel-itemview">
-      <img src="<%=url%>"/><br/>
+      <img src="<%=value%>"/><br/>
     </script>
+
 
     <script type="text/template" id="location-modal-popup-item">
         <div class="timeserie-item noselect">
@@ -651,17 +652,6 @@
     </script>
 
     <script type="text/template" id="location-popup-item">
-      <% if(name === 'LMW_EMSH_H10') { %>
-        <div class="timeserie-item noselect">
-            <h5 data-url="<%= events %>"><i class="icon-picture"></i>
-              <span class="image-popup-toggle"> &nbsp;<%= name %></span>
-              <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %></span>
-                <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
-              </span>
-            </h5>
-        </div>
-      <% } else { %>
         <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else { %>icon-picture<% } %>"></i>
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else { %>image-popup-toggle<% } %>"> &nbsp;<%= name %></span>
@@ -670,8 +660,7 @@
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
               </span>
             </h5>
-        </div>        
-      <% } %>
+        </div>
     </script>
 
 
