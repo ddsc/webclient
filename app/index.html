@@ -256,7 +256,7 @@
       <div class="row-fluid">
 
         <div class="span3" id="sidebar">
-            <div class="" id="sidebarRegion">
+            <div class="hidden-print" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                   <li class="metrics-dropdown mappage" id="favorite">
                       <a href="javascript:void(0);"><em class="icon-chevron-down toggle"></em> <i class="icon-list"></i> Kaarten</a>
@@ -806,7 +806,7 @@
 
     <script type="text/template" id="graphs-template">
       <div class="row-fluid">
-        <div class="span3" id="sidebar">
+        <div class="span3 hidden-print" id="sidebar">
             <div class="" id="sidebarRegion">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <li class="metrics-dropdown" id="presets">
@@ -831,7 +831,7 @@
         </div>
         <div class="btn-toolbar pull-right">
           <!-- <button type="button" id="reset-collage" class="btn btn-danger">Reset collage</button> -->
-          <button type="button" id="save-collage" class="btn btn-success">Kaartenscherm opslaan</button>
+          <button type="button" id="save-collage" class="btn btn-success hidden-print">Kaartenscherm opslaan</button>
         </div>
       </div>
       <div id="ts-info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
@@ -1136,7 +1136,7 @@
             <!-- <span>
                 <a href="http://lizard.net">Powered by <img id="lizardlogo" src="images/lizard_logo.png" /></a>
             </span> -->
-            <span class="warning pull-right"><p class="visible-desktop">DESKTOP MODE</p><p class="visible-tablet">TABLET MODE</p><p class="visible-phone">PHONE MODE</p></span>
+            <span class="warning pull-right hidden-print"><p class="visible-desktop">DESKTOP MODE</p><p class="visible-tablet">TABLET MODE</p><p class="visible-phone">PHONE MODE</p></span>
         </div>
       </div>
 
