@@ -442,6 +442,18 @@ $(document).ajaxStop(function () {
     $('html').removeClass('busy');
 });
 
+$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+    // Aborted request are not an error.
+    if (thrownError !== 'abort') {
+        $('.top-right').notify({
+            type: 'error',
+            message: {
+                text: 'Er gaat iets fout, namelijk: ' + thrownError
+            }
+        }).show();
+    }
+});
+
 }(this));
 
 
@@ -450,8 +462,9 @@ function truncateString (string, limit, breakChar, rightPad) {
 
     var substr = string.substr(0, limit);
     if ((breakPoint = substr.lastIndexOf(breakChar)) >= 0) {
-        if (breakPoint < string.length -1) {
+        if (breakPoint <= string.length -1) {
             return string.substr(0, breakPoint) + rightPad;
         }
     }
+    return string
 }

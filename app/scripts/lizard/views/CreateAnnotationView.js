@@ -44,6 +44,30 @@ Lizard.Views.CreateAnnotationView = function(relation){
             window.drawnItems.removeLayer(layer);
         }
     });
+
+    // initialize file upload form
+    $('form.annotation input[name="attachment"]').fileupload({
+        dataType: 'json',
+        url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
+        done: function (e, data) {
+            if (data.result.success === true) {
+                var $a = $('<a>')
+                .attr({
+                    href: data.result.url,
+                    target: '_blank'
+                })
+                .text('Bekijk ' + data.result.filename);
+                var $form = $(this).parents('form').first();
+                $form.find('.uploaded-file').empty().append($a);
+                $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
+                $form.find('input[name="picture_url"]').val(data.result.url);
+            }
+            else {
+                $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
+            }
+        }
+    });
+
     // override of the submit function
     $('form.annotation').submit(function(e) {
       e.preventDefault();
@@ -112,6 +136,11 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     },
     initialize: function(options){
         this.relation = options.relation;
+        if (this.model.get('username') === account.get('user').username){
+            this.model.set({rwpermission: true});
+        } else {
+            this.model.set({rwpermission: false});
+        }
     },
     onShow: function(){
       this.$el.find('.datepick-annotate').datetimepicker({
@@ -132,6 +161,29 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     edit: function(){
         this.$el.find('.collapse').toggleClass('in');
         // override of the submit function
+
+        // initialize file upload form
+        $('form.annotation input[name="attachment"]').fileupload({
+            dataType: 'json',
+            url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
+            done: function (e, data) {
+                if (data.result.success === true) {
+                    var $a = $('<a>')
+                    .attr({
+                        href: data.result.url,
+                        target: '_blank'
+                    })
+                    .text('Bekijk ' + data.result.filename);
+                    var $form = $(this).parents('form').first();
+                    $form.find('.uploaded-file').empty().append($a);
+                    $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
+                    $form.find('input[name="picture_url"]').val(data.result.url);
+                }
+                else {
+                    $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
+                }
+            }
+        });
     },
     submitChange: function(e){
         e.preventDefault();
@@ -206,6 +258,13 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
                 $.extend(params, {
                     model_pk: this.relation.get('pk').toString(),
                     model_name: 'timeseries'
+                });
+            }
+            else if (/(.*)locations(.*)/.test(this.relation.url)) {
+                // locations
+                $.extend(params, {
+                    model_pk: this.relation.get('pk').toString(),
+                    model_name: 'location'
                 });
             }
             else if (this.relation.has('location')) {
