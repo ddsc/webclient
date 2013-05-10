@@ -108,8 +108,22 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
 });
 
 
-ImageCarouselItemView = Backbone.Marionette.ItemView.extend({template: '#image-carousel-itemview'});
-ImageCarouselCollectionView = Backbone.Marionette.CollectionView.extend();
+ImageCarouselItemView = Backbone.Marionette.ItemView.extend({
+  template: '#image-carousel-itemview',
+  className: 'item',
+  tagName: 'div',
+  onRender: function() {
+    var self = this;
+    // If this is the first item, add the classname 'active'
+    if(self.model.get('first')) {
+      self.$el.attr('class', 'active item');
+    }
+  }
+});
+ImageCarouselCollectionView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'div',
+  className: 'carousel-inner'
+});
 Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
     template: '#image-carousel-popup',
     regions: {
@@ -126,14 +140,14 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
       var itsCollection = new Lizard.Collections.Timeseries();
       itsCollection.url = url;
       itsCollection.fetch().done(function (collection, response) {
-        console.log(collection);
-        // console.log(response);
+        collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
         var carouselView = new ImageCarouselCollectionView({
           collection: collection,
           itemView: ImageCarouselItemView,
           emptyView: Lizard.Views.GraphLegendNoItems
         });
         self.graphRegion.show(carouselView);
+        $('img.lazy').lazyload();
       });
     }
 });
@@ -160,7 +174,6 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     });
   },
   openCarouselModal: function(e) {
-    console.log('openCarouselModal');
     var modalView = new Lizard.Views.ImageCarouselModal({
       imageTimeseries: this.model.collection
     });

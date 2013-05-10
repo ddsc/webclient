@@ -325,7 +325,7 @@
                 <div class="modal-timeseries-region"></div>
             </div>
             <div id="location-modal-footer" class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
             </div>
         </div>
     </script>
@@ -337,16 +337,22 @@
                 <h3 id="carousel-modal-label">Afbeeldingen</h3>
             </div>
             <div id="carousel-modal-body" class="modal-body">
-                <div class="carousel-graph-region"></div>
+              <div id="myCarousel" class="carousel slide">
+                  <div class="carousel-graph-region"></div>
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+              </div>
+
+            
             </div>
             <div id="carousel-modal-footer" class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
             </div>
         </div>
     </script>
 
     <script type="text/template" id="image-carousel-itemview">
-      <img src="<%=value%>"/><br/>
+      <img src="<%=value%>" class="lazy" data-original="<%=value%>" width="640" height="480"/>
     </script>
 
 
@@ -1245,6 +1251,7 @@
         <script src="scripts/vendor/viewport.js"></script>
         <script src="scripts/vendor/lunr.js"></script>
         <script src="scripts/vendor/moment.js"></script>
+        <script src="scripts/vendor/jquery.lazyload.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/backbone.js -->
