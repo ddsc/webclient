@@ -22,6 +22,7 @@ var settings = {
     annotations_search_url: domain + 'annotations/search/',
     annotations_detail_url: domain + 'annotations/detail/',
     annotations_create_url: domain + 'annotations/create/',
+    annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
     collages_create_url: domain + 'collages/create/',
     collageitems_create_url: domain + 'collageitems/create/',
     management_ui_url: 'http://api.dijkdata.nl/management/'

@@ -276,32 +276,28 @@
                     </div>
                   </div>
                 </ul>
-                <br class="spacer hidden-phone">
+                <br class="hidden-phone">
                 <ul class="nav nav-list sidenav transition hidden-phone" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
                       <div class="ddsc-item noselect sensor-layer-toggler">
                       <h5><i class="icon-check"></i>&nbsp;Sensoren <!-- <span class="pull-right badge badge-info">192</span>--></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect status-layer-toggler">
                            <h5><i class="icon-check-empty"></i>&nbsp;Status<!-- <span class="pull-right badge badge-warning">5</span> --></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect alarm-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Alarmen<!-- <span class="pull-right badge badge-important">2</span> --></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li><li>
                       <div class="ddsc-item noselect annotation-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">0</span></h5>
                       </div>
-                      <div id="info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
                   </li></ul></div>
                 </ul>
-                <br class="spacer">
+                <br>
                 <div class="nav sidenav hidden-phone" id="annotationsRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
@@ -405,10 +401,9 @@
               <h5>Wijzig deze annotaties</h5>
               <div id="annotations-list"></div>
               <div id="annotation-modal-footer" class="modal-footer">
-                <h5>Een nieuwe annotatie</h5>
                   <form class="annotation">
-                  <fieldset>
-              <div class="annotation-form">
+              <fieldset>
+              <h5>Een nieuwe annotatie</h5>
                  <div class="input-prepend">
                  <span class="add-on"><i class="icon-comment"></i></span>
                   <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
@@ -431,26 +426,34 @@
                     </label>
                 </div>
                  <div class="input-prepend">
-                   <span class="add-on"><i class="icon-picture"></i></span>
-                    <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
-                  </div>
-                 <div class="input-prepend">
                    <span class="add-on"><i class="icon-tag"></i></span>
                   <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
                 </div>
-              <div>
+             <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
+             <div class="input-prepend">
+               <span class="add-on"><i class="icon-picture"></i></span>
+               <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
+             </div>
+             <span class="help-block"><small>Upload een afbeelding.</small></span>
+             <div class="input-prepend">
+                 <span class="add-on"><i class="icon-upload-alt"></i></span>
+                 <input type="file" class="span4" name="attachment" placeholder="Upload een foto"/>
+             </div>
+             <div class="uploaded-file" style="margin-left:28px;"></div>
+            <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
+            <input type="hidden" name="attachment_pk" value="">
+             </fieldset>
+             </form>
             </div>
-          <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
-            </fieldset>
-          </form>
         </div>
     </script>
 
     <script type="text/template" id="annotation-one-template">
+          <% if (annotation.rwpermission === true) {%>
            <span class="pull-right">
                 <button type="button" class="btn btn-mini annotation-edit" title="Wijzig"><i class="icon-edit"></i></button>
                 <button type="button" data-pk="<%= annotation.id %>" class="btn btn-danger btn-mini annotation-delete" title="Wis"><i class="icon-remove"></i></button>
-            </span>
+            </span><% } %>
             <span class="annotation-text span3">
 
               <ul style="list-style:none;margin:0;padding:0;">
@@ -491,12 +494,6 @@
                   </label>
               </div>
             </div>
-            <div class="controls">
-               <div class="input-prepend">
-                 <span class="add-on"><i class="icon-picture"></i></span>
-                  <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
-                </div>
-            </div>
             <span class="help-block"><small>Hang een label of <em>tag</em> aan de annotatie.</small></span>
             <div class="controls">
                <div class="input-prepend">
@@ -504,11 +501,26 @@
                 <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" <%if (annotation.tags){%> value="<%= annotation.tags %>" <%}%>/>
               </div>
             </div>
+            <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
+            <div class="controls">
+               <div class="input-prepend">
+                 <span class="add-on"><i class="icon-picture"></i></span>
+                  <input type="text" class="span4" name="picture_url" placeholder="Url naar afbeelding" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
+                </div>
+            </div>
+            <span class="help-block"><small>Upload een afbeelding.</small></span>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-upload-alt"></i></span>
+                    <input type="file" class="span4" name="attachment" placeholder="Upload een afbeelding"/>
+                </div>
+                <div class="uploaded-file" style="margin-left:28px;"></div>
+            </div>
               <button type="submit" class="btn spacer pull-right btn-warning">Wijzigingen opslaan</button>
             </fieldset>
+            <input type="hidden" name="attachment_pk" value="">
           </form>
     </script>
-
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
@@ -522,8 +534,20 @@
                 <tr><td>Geldig tot</td><td><%= datetime_until %></td></tr>
                 <tr><td>Tags</td><td><%= tags %></td></tr>
             </table>
+          <% if (rwpermission === true) {%>
           <button type="button" class="btn btn-danger annotation-delete">Wis</button>
           <button type="button" class="btn btn-warning annotation-edit">Wijzig</button>
+          <%}%>
+    </script>
+
+    <script type="text/template" id="timeseries-popup-template">
+        <div><h5 id="ts-popup-title"></h5>
+        <div id="ts-popup-content"></div>
+        </div>
+    </script>
+
+    <script type="text/template" id="timeserie-popup-title-template">
+    <%= title %> <span class="pull-right"><i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -668,11 +692,11 @@
     <script id="timeserie-item-template" type="text/template">
         <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
-
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
-          <span class="add" data-url="<%= timeserie.url%>">
-          <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %></span>
-            <i class="icon-question-sign info pull-right"></i>
+          <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
+            <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %>
+          </a>
+          <i class="icon-question-sign info pull-right"></i>
         </h5>
 
         </div>
@@ -687,7 +711,8 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
+      <div class="graph-legend">
+        <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
             <div class="pull-left">
@@ -697,6 +722,7 @@
                 </h5>
             </div>
         </div>
+        </a>
         <ul class="hide inline">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> <span class="hidden-tablet">Annoteer</span></button></li>
@@ -720,7 +746,8 @@
       </div>
     </script>
 
-    <script type="text/template" id="graphs-template">
+
+    <script type="text/template" id="save-modal-template">
       <div id="save-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="save-modal-label" aria-hidden="true">
           <div id="save-modal-header" class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -749,6 +776,9 @@
               </div>
           </form>
       </div>
+    </script>
+
+    <script type="text/template" id="graphs-template">
       <div class="row-fluid">
         <div class="span3" id="sidebar">
             <div class="" id="sidebarRegion">
@@ -913,7 +943,7 @@
                     <tr><td>Volledige naam</td><td><%= user.first_name %> <%= user.last_name %></td></tr>
                 </table>
                 <p>
-                    <a href="https://sso.lizard.net/">Pas uw profiel aan op de Open Water ID site.</a>
+                    <a href="https://sso.lizard.net/" target="_blank">Pas uw profiel aan op de Open Water ID site.</a>
                 </p>
                 <h4>Voorkeuren</h4>
                 <form id="preferences-form" class="form-horizontal" method="post">
@@ -996,16 +1026,19 @@
 
 
     <script type="text/template" id="annotations-template">
-      <p>Annotaties</p>
+      <h5>Annotaties</h5>
       <%if(isLoading){%>
-          <span class="lazy loading" style="width: 100%; height: 50px;"></span>
+          <span class="lazy text-center" style="width: 100%; height: 50px;"><i class="icon-spinner icon-spin icon-2x"></i></span>
       <%}else{%>
           <%if(annotationsCount == 0){%>
-              <p>Er zijn geen notities gevonden.</p>
-          <%}else if (annotationsCount == 1) {%>
-              <p>Er is <strong><%= annotationsCount %></strong> notitie gevonden.</p>
-          <%}else{%>
-              <p>Er zijn <strong><%= annotationsCount %></strong> notities gevonden.</p>
+              <p>Er zijn geen annotaties gevonden.</p>
+          <%}else {%>
+              <% if (annotationsCount == 1) {%>
+                <p>De meest recente annotatie:</p>
+                <%} else {%>
+                  <p>De meest recente annotaties:</p>
+              <%}%>
+              <div id="annotation-overview"></div>
           <%}%>
       <%}%>
     </script>
@@ -1188,6 +1221,9 @@
         <script src="scripts/vendor/jquery.ui.touch-punch.js"></script>
         <script src="scripts/vendor/globalize.js"></script>
         <script src="scripts/vendor/cultures/globalize.culture.nl.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.ui.widget.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.iframe-transport.js"></script>
+        <script src="scripts/vendor/jquery-file-upload/jquery.fileupload.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/leaflet.js -->
@@ -1354,7 +1390,5 @@
         });
         var tour;
         </script>
-
-
 </body>
 </html>

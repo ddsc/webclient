@@ -136,7 +136,7 @@ Lizard.Views.LocationPopup = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.geo.Popups.DdscTimeseries = {
-  getPopupContent: function (location, $elem) {
+  getPopupContent: function (location, region) {
     var url = settings.timeseries_url + '&location=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
@@ -145,8 +145,8 @@ Lizard.geo.Popups.DdscTimeseries = {
             collection: collection
         });
 
-        var popupContent = popupView.render().el;
-        $elem.append(popupContent);
+        var popupContent = popupView.render()
+        region.show(popupContent);
     });
   }
 };
