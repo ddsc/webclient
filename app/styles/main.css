@@ -416,7 +416,7 @@ input.input-medium.search-query {
 }
 
 #annotation-overview ol {
-    line-height: 1.3em;  
+    line-height: 1.3em;
 }
 
 #ts-popup-title{
@@ -1359,6 +1359,12 @@ div#dateRangeRegion{
 
 .opacity-slider {
     width: 90%;
+}
+
+a.nohover:hover,
+a.nohover:focus {
+    text-decoration: none;
+    color: #08c;
 }
 
 /* css for timepicker */

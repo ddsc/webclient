@@ -692,11 +692,11 @@
     <script id="timeserie-item-template" type="text/template">
         <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
-
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
-          <span class="add" data-url="<%= timeserie.url%>">
-          <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %></span>
-            <i class="icon-question-sign info pull-right"></i>
+          <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
+            <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %>
+          </a>
+          <i class="icon-question-sign info pull-right"></i>
         </h5>
 
         </div>
@@ -711,7 +711,8 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
+      <div class="graph-legend">
+        <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%>;"></div>
             <div class="pull-left">
@@ -721,6 +722,7 @@
                 </h5>
             </div>
         </div>
+        </a>
         <ul class="hide inline">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> <span class="hidden-tablet">Annoteer</span></button></li>
