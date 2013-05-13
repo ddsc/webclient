@@ -194,7 +194,8 @@
         var minX = xaxis.min;
         var maxX = xaxis.max;
         var params = {
-            eventsformat: 'flot'
+            eventsformat: 'flot',
+            ignore_rejected: 'true'
         };
 
         var start = null;
