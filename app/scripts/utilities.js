@@ -163,7 +163,7 @@ var timeUnitSize = {
     "year": 365.2425 * 24 * 60 * 60 * 1000
 };
 var dayNames = ['zo', 'ma', 'di', 'wo', 'do', 'vr','za'];
-var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+var monthNames = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
 function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
