@@ -3,13 +3,6 @@
 
 **DDSC Webclient** is a javascript application built with [Backbone](http://backbonejs.org/), [Backbone-Marionette](http://marionettejs.com/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/), [Leaflet](http://leafletjs.com/) and [more](https://github.com/ddsc/webclient/tree/master/app/scripts/vendor)...
 
-## Demo
-
-Not much to see here yet, as we're mostly experimenting with Backbone, Marionette and Modelbinder.
-
-[http://ddsc.github.com/webclient/](http://ddsc.github.com/webclient/)
-
-
 ## Installation
 
 We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
@@ -188,14 +181,3 @@ This API was hacked together using node.js/PostGIS and lives here: https://githu
 
  * [Loads of Backbone.js plugins](https://github.com/documentcloud/backbone/wiki/Extensions,-Plugins,-Resources)
 
- ## Far Future Philosophy
-
- If this API centered and Javascript powered approach proves to be a successful way of implementing an application, we'll continue down this path. Examples of other companies in the same domain who've taken this approach are:
-
-
- * Mapbox with [mapbox.js](http://mapbox.com/mapbox.js/)
-
- * CartoDB with [cartodb.js](https://github.com/CartoDB/cartodb.js)
- 
- * [Google](https://code.google.com/p/google-api-javascript-client/source/browse/samples/authSample.html)
- 
