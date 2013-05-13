@@ -1,8 +1,8 @@
-Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
+Lizard.Views.AnnotationsView = Backbone.Marionette.View.extend({
     //tagName: 'div',
     template: '#annotations-template',
+    enableUpdateAnnotations: true,
     mapCanvas: null,
-    mapCanvasEvent: null,
     annotationLayer: null,
     currentXhr: null,
     initialize: function (options) {
@@ -12,22 +12,19 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         if (this.mapCanvas) {
             // This won't work, because Leaflet only pretends to support jQuery events.
             //this.listenTo(this.mapCanvas, "moveend", this.updateAnnotations, this);
-            this.mapCanvasEvent = this.updateAnnotations.bind(this);
-            this.mapCanvas.on("moveend", this.mapCanvasEvent);
+            this.mapCanvas.on("moveend", this.updateAnnotations, this);
+            this.mapCanvas.on("popupopen", this.popupOpen, this);
+            this.mapCanvas.on("popupclose", this.popupClose, this);
         }
         this.updateAnnotations();
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
         Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
     },
-    events: {
+    popupOpen: function () {
+        this.enableUpdateAnnotations = false;
     },
-    triggers: {
-        //"click .do-something": "something:do:it"
-    },
-    onDomRefresh: function () {
-        // manipulate the `el` here. it's already
-        // been rendered, and is full of the view's
-        // HTML, ready to go.
+    popupClose: function () {
+        this.enableUpdateAnnotations = true;
     },
     createAnnotationsLayer: function () {
         var self = this;
@@ -36,7 +33,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                   showCoverageOnHover: false,
                   maxClusterRadius: 10,
                   iconCreateFunction: function(cluster) {
-                    return new L.DivIcon({ html: '<span class="badge badge-info">' + 
+                    return new L.DivIcon({ html: '<span class="badge badge-info">' +
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
                   }
                 });
@@ -55,18 +52,18 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         });
     },
     updateAnnotationsLayer: function (annotations) {
+        var self = this;
         this.annotationLayer.clearLayers();
+
         for (var i=0; i<annotations.length; i++) {
             var a = annotations[i];
             if (a.location) {
                 try {
-                    var marker = L.marker(a.location);
-                    var html = this.annotation2html(a);
-                    var popup = L.popup({
-                        autoPan: false,
-                        zoomAnimation: false
-                    })
-                    marker.bindPopup(html, popup);
+                    var marker = L.marker(a.location, {
+                        clickable: true,
+                        url: a.url
+                    });
+                    marker.on('click', self.showPopup, self);
                     this.annotationLayer.addLayer(marker);
                 }
                 catch (ex) {
@@ -75,6 +72,25 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             }
         }
     },
+    showPopup: function (e) {
+        var self = this;
+        var marker = e.target;
+        var url = marker.valueOf().options.url;
+
+        marker.unbindPopup();
+
+        var model = new Lizard.Models.Annotation({url: url});
+        model.fetch()
+        .done(function (model) {
+            var html = self.annotation2html(model);
+            var popup = L.popup({
+                autoPan: false,
+                zoomAnimation: false
+            });
+            marker.bindPopup(html, popup);
+            marker.openPopup();
+        });
+    },
     buildQueryUrlParams: function () {
         var bbox = this.mapCanvas ? this.mapCanvas.getBounds().toBBoxString() : null;
         return {
@@ -82,12 +98,16 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             bbox: bbox
         };
     },
-    updateAnnotations: function () {
+    updateAnnotations: function (e) {
         var self = this;
-        // dont retrieve annotations, when the layer
-        // has been deactivated
+        // dont retrieve annotations, when updating has been 'paused',
+        // for example, during autopan
+        if (!self.enableUpdateAnnotations) {
+            return;
+        }
+
         var url = settings.annotations_search_url;
-            var urlParams = this.buildQueryUrlParams();
+        var urlParams = this.buildQueryUrlParams();
 
         // abort previous XHR
         if (this.currentXhr !== null) {
@@ -142,8 +162,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             'isLoading': isLoading
         });
     },
-    modelChanged: function (model, value) {
-    },
     modelEvents: {
         'change:isLoading': function (){
         }
@@ -154,9 +172,9 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     onClose: function () {
         // custom cleanup or closing code, here
-        if (this.mapCanvasEvent) {
-            this.mapCanvas.off('moveend', this.mapCanvasEvent);
-        }
+        this.mapCanvas.off('moveend', this.updateAnnotations, this);
+        this.mapCanvas.off("popupopen", this.popupOpen, this);
+        this.mapCanvas.off("popupclose", this.popupClose, this);
         Lizard.App.vent.off("makeAnnotation", Lizard.Views.CreateAnnotationView);
     },
     templateHelpers: {
@@ -164,34 +182,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             return '...';
         }
     },
-    annotation2html: function (a) {
-        var created_at = 'n.v.t.';
-        if (a.created_at) {
-            created_at = new Date(a.created_at);
-            created_at = created_at.toLocaleString();
-        }
-
-        var datetime_from = 'n.v.t.';
-        if (a.datetime_from) {
-            datetime_from = new Date(a.datetime_from);
-            datetime_from = datetime_from.toLocaleString();
-        }
-
-        var datetime_until = 'n.v.t.';
-        if (a.datetime_until) {
-            datetime_until = new Date(a.datetime_until);
-            datetime_until = datetime_until.toLocaleString();
-        }
-
-        var title = '';
-        if (a.related_model_str) {
-            title = 'Annotatie bij ' + a.related_model_str;
-        }
-        else {
-            title = 'Annotatie ' + a.id;
-        }
-
-        var annoModel = new Lizard.Models.Annotation(a);
+    annotation2html: function (annoModel) {
         if (annoModel.get('username') === account.get('user').username){
             annoModel.set({rwpermission: true});
         } else {
