@@ -357,7 +357,7 @@
             <h5 data-url="<%= events %>"><i class="icon-bar-chart">
             </i><span class="add-graph-item"> &nbsp;<%= name %></span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %></span>
+                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
               </span>
             </h5>
         </div>
@@ -666,6 +666,7 @@
     <script type="text/template" id="timeseries-modal">
     </script>
 
+    <!-- wordt volgens mij niet meer gebruikt?
     <script type="text/template" id="timeseries-modal-item">
         <div class="timeserie-item noselect">
             <h5 class="modaltimeserie">
@@ -674,19 +675,19 @@
                 <i class="icon-bar-chart"></i>&nbsp;<%= name %>
               </span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %></span>
+                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <i class="icon-comment"></i>
               </span>
             </h5>
         </div>
-    </script>
+    </script> -->
 
     <script type="text/template" id="location-popup-item">
         <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else { %>icon-picture<% } %>"></i>
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else { %>image-popup-toggle<% } %>"> &nbsp;<%= name %></span>
               <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %></span>
+                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
               </span>
             </h5>
