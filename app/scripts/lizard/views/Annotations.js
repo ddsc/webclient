@@ -34,7 +34,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.annotationLayer = new L.MarkerClusterGroup({
                   spiderfyOnMaxZoom: true,
                   showCoverageOnHover: false,
-                  maxClusterRadius: 10,
+                  maxClusterRadius: 200,
                   iconCreateFunction: function(cluster) {
                     return new L.DivIcon({ html: '<span class="badge badge-info">' + 
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
@@ -236,9 +236,15 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
 Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
     related_object: null,
     tagName: 'li',
+    events:{
+        'click .annotation-open' : 'openAnnotation'
+    },
+    openAnnotation: function(){
+            Lizard.App.vent.trigger("makeAnnotation", this.model);
+    },
     template: function(model){
         return _.template(
-            '<%= annotation.text %>', {text: model.text}, {variable: 'annotation'});
+            '<span class="annotation-open"> <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
     },
 });
 
