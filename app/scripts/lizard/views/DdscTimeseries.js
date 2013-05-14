@@ -202,7 +202,7 @@ Lizard.geo.Popups.DdscTimeseries = {
             collection: collection
         });
 
-        var popupContent = popupView.render()
+        var popupContent = popupView.render();
         region.show(popupContent);
     });
   }
