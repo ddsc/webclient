@@ -956,9 +956,6 @@ ul.timeserie-actions li {
     list-style: decimal outside none;
 }
 
-#annotation-modal.modal{
-    width: 500px;
-}
 #annotation-modal .spacing{
     margin-left: 1em;
 }
@@ -979,13 +976,12 @@ ul.timeserie-actions li {
     margin:2px;
 }
 
-.annotation-text{
+/*.annotation-text{
     position: relative;
-    left: -25px;
     vertical-align: middle;
     padding: 5px;
 }
-
+*/
 #annotation-overview{
     padding: 2px;
 }
