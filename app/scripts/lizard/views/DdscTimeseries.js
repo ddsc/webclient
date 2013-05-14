@@ -153,12 +153,58 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
     }
 });
 
+TextTimeserieItemView = Backbone.Marionette.ItemView.extend({
+  template: '#timeserie-text-itemview',
+  className: 'item',
+  tagName: 'div',
+  onRender: function() {
+    var self = this;
+    // If this is the first item, add the classname 'active'
+    if(self.model.get('first')) {
+      self.$el.attr('class', 'active item');
+    }
+  }
+});
+TextTimeserieCollectionView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'div',
+  className: 'text-timeserie-collection'
+});
+Lizard.Views.TextModal = Backbone.Marionette.Layout.extend({
+    template: '#textmodal-popup',
+    regions: {
+        textRegion: '.text-region'
+    },
+    initialize: function (options) {
+        this.textTimeseriesCollection = options.textTimeseries;
+    },
+    onRender: function (e) {
+      var self = this;
+      this.$el.find('.modal').modal();
+
+      var url = self.textTimeseriesCollection.where({'value_type': 'text'})[0].get('events');
+      var eventsCollection = new Lizard.Collections.Events();
+      eventsCollection.url = url + '?page_size=0';
+      eventsCollection.fetch().done(function (collection, response) {
+        console.log(collection);
+        console.log(response);
+        collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
+        var textTimeserieCollectionView = new TextTimeserieCollectionView({
+          collection: collection,
+          itemView: TextTimeserieItemView,
+          emptyView: Lizard.Views.GraphLegendNoItems
+        });
+        self.textRegion.show(textTimeserieCollectionView);
+      });
+    }
+});
+
 Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   template: '#location-popup-item',
   tagName: 'li',
   events: {
     'click .popup-toggle' : 'openModal',
     'click .image-popup-toggle' : 'openCarouselModal',
+    'click .image-popup-text': 'openTextModal',
     'click .icon-comment' : 'openAnnotation'
   },
   openAnnotation: function(){
@@ -177,6 +223,15 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   openCarouselModal: function(e) {
     var modalView = new Lizard.Views.ImageCarouselModal({
       imageTimeseries: this.model.collection
+    });
+    Lizard.App.hidden.show(modalView);
+    modalView.$el.find('.modal').on('hide', function () {
+        Lizard.App.hidden.close();
+    });
+  },
+  openTextModal: function(e) {
+    var modalView = new Lizard.Views.TextModal({
+      textTimeseries: this.model.collection
     });
     Lizard.App.hidden.show(modalView);
     modalView.$el.find('.modal').on('hide', function () {
@@ -203,6 +258,7 @@ Lizard.geo.Popups.DdscTimeseries = {
         });
 
         var popupContent = popupView.render();
+        
         region.show(popupContent);
     });
   }

@@ -356,6 +356,25 @@
       <img src="<%=value%>" width="640" height="480"/>
     </script>
 
+    <script type="text/template" id="timeserie-text-itemview">
+      <%=value%>
+    </script>
+
+    <script type="text/template" id="textmodal-popup">
+        <div id="text-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="text-modal-label" aria-hidden="true">
+            <div id="text-modal-header" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="text-modal-label">Tekst</h3>
+            </div>
+            <div class="text-region"></div>
+
+            <div id="text-modal-footer" class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
+            </div>
+        </div>
+    </script>
+
+
 
     <script type="text/template" id="location-modal-popup-item">
         <div class="timeserie-item noselect">
@@ -689,8 +708,8 @@
 
     <script type="text/template" id="location-popup-item">
         <div class="timeserie-item noselect">
-            <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else { %>icon-picture<% } %>"></i>
-              <span class="<% if(value_type === 'float') { %>popup-toggle<% } else { %>image-popup-toggle<% } %>"> &nbsp;<%= name %></span>
+            <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else if(value_type === 'image') { %>icon-picture<% } else { %>icon-align-left<% } %>"></i>
+              <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%= name %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
