@@ -291,14 +291,19 @@
                       <div class="ddsc-item noselect alarm-layer-toggler">
                       <h5><i class="icon-check-empty"></i>&nbsp;Alarmen<!-- <span class="pull-right badge badge-important">2</span> --></h5>
                       </div>
-                  </li><li>
-                      <div class="ddsc-item noselect annotation-layer-toggler">
-                      <h5><i class="icon-check-empty"></i>&nbsp;Annotaties <span class="badge badge-default pull-right">0</span></h5>
+                  </li><li class="metrics-dropdown">
+                      <div class="ddsc-item noselect annotation" >
+                      <h5><span class=" annotation-layer-toggler"><i class="icon-check-empty"></i>Annotaties</span>
+                       <span class="pull-right">
+                         <span class="badge badge-default">0</span>
+                         <em class="icon-chevron-down chevron-oneeighty toggle"></em>
+                       </span></h5>
                       </div>
-                  </li></ul></div>
+                  </li>
+                  <div id="annotationsRegion" class="hide"></div>
+                  </ul></div>
                 </ul>
                 <br>
-                <div class="nav sidenav hidden-phone" id="annotationsRegion"></div>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
@@ -339,7 +344,7 @@
                 <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
               </div>
 
-            
+
             </div>
             <div id="carousel-modal-footer" class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
@@ -738,7 +743,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend">
+      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%> !important;"></div>
@@ -1053,21 +1058,12 @@
 
 
     <script type="text/template" id="annotations-template">
-      <h5>Annotaties</h5>
-      <%if(isLoading){%>
+
+         <%if(isLoading){%>
           <span class="lazy text-center" style="width: 100%; height: 50px;"><i class="icon-spinner icon-spin icon-2x"></i></span>
       <%}else{%>
-          <%if(annotationsCount == 0){%>
-              <p>Er zijn geen annotaties gevonden.</p>
-          <%}else {%>
-              <% if (annotationsCount == 1) {%>
-                <p>De meest recente annotatie:</p>
-                <%} else {%>
-                  <p>De meest recente annotaties:</p>
-              <%}%>
-              <div id="annotation-overview"></div>
-          <%}%>
-      <%}%>
+        <div id="annotation-overview" class="add-map-item drawer-handle"></div>
+         <% }%>
     </script>
     </head>
     <body>
