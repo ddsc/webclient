@@ -380,45 +380,7 @@ input.input-medium.search-query {
     text-overflow: ellipsis;
 }
 
-/* Annotation Stuff*/
 
-#annotation-modal.modal{
-    width: 500px;
-}
-#annotation-modal .spacing{
-    margin-left: 1em;
-}
-
-.annotation-item{
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius:  0 4px 4px 0;
-    overflow:hidden;
-}
-
-.annotation-form{
-    position:relative;
-    float:left;
-}
-
-.annotation-item .btn{
-    margin:2px;
-}
-
-.annotation-text{
-    position: relative;
-    left: -25px;
-    vertical-align: middle;
-    padding: 5px;
-}
-
-#annotation-overview{
-    padding: 2px;
-}
-
-#annotation-overview ol {
-    line-height: 1.3em;
-}
 
 #ts-popup-title{
     margin-left: 1.8em;
@@ -556,14 +518,6 @@ input.input-medium.search-query {
     font-size: 0.65em;
 }
 
-#annotation-modal > .modal-footer{
-    text-align: left;
-}
-
-
-#annotation-modal > .in{
-    height:350px;
-}
 
 .drop:hover{
     opacity: 1;
@@ -751,12 +705,7 @@ div.widget li.theader {
     opacity: .25;
 }
 
-.sidenav .icon-chevron-down {
-    float: right;
-    margin-top: 2px;
-    margin-right: -6px;
-    opacity: .25;
-}
+.sidenav .icon-chevron-down,
 .sidenav .icon-chevron-up {
     float: right;
     margin-top: 2px;
@@ -998,6 +947,75 @@ ul.timeserie-actions li {
     list-style: none;
     cursor: pointer;
     display:inline;
+}
+
+
+/* Annotation Stuff*/
+
+#annotation-overview ol li{
+    list-style: decimal outside none;
+}
+
+#annotation-modal.modal{
+    width: 500px;
+}
+#annotation-modal .spacing{
+    margin-left: 1em;
+}
+
+.annotation-item{
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius:  0 4px 4px 0;
+    overflow:hidden;
+}
+
+.annotation-form{
+    position:relative;
+    float:left;
+}
+
+.annotation-item .btn{
+    margin:2px;
+}
+
+.annotation-text{
+    position: relative;
+    left: -25px;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+#annotation-overview{
+    padding: 2px;
+}
+
+#annotation-overview ol {
+    line-height: 1.3em;
+}
+
+.annotation-open{
+    color: #0084B4;
+    cursor: pointer;
+}
+
+#annotation-modal > .modal-footer{
+    text-align: left;
+}
+
+
+#annotation-modal > .in{
+    height:350px;
+}
+
+
+.sidenav .annotation .icon-chevron-up,
+.sidenav .annotation .icon-chevron-down{
+    margin-right: 0.5em;
+}
+
+.annotation .badge{
+    margin-right: 0.5em;
 }
 
 
