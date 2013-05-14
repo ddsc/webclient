@@ -956,9 +956,6 @@ ul.timeserie-actions li {
     list-style: decimal outside none;
 }
 
-#annotation-modal.modal{
-    width: 500px;
-}
 #annotation-modal .spacing{
     margin-left: 1em;
 }
@@ -979,24 +976,18 @@ ul.timeserie-actions li {
     margin:2px;
 }
 
-.annotation-text{
-    position: relative;
-    left: -25px;
-    vertical-align: middle;
-    padding: 5px;
-}
-
 #annotation-overview{
     padding: 2px;
 }
 
-#annotation-overview ol {
+#annotation-overview ol li{
     line-height: 1.3em;
 }
 
 .annotation-open{
     color: #0084B4;
     cursor: pointer;
+     width: 100%;
 }
 
 #annotation-modal > .modal-footer{
@@ -1011,6 +1002,7 @@ ul.timeserie-actions li {
 .sidenav .annotation .icon-chevron-up,
 .sidenav .annotation .icon-chevron-down{
     margin-right: 0.5em;
+    float: none;
 }
 
 .annotation .badge{
