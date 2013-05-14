@@ -1007,6 +1007,7 @@ ul.timeserie-actions li {
 .sidenav .annotation .icon-chevron-up,
 .sidenav .annotation .icon-chevron-down{
     margin-right: 0.5em;
+    float: none;
 }
 
 .annotation .badge{

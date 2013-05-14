@@ -1,4 +1,4 @@
-Lizard.Views.AnnotationsView = Backbone.Marionette.View.extend({
+Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     //tagName: 'div',
     template: '#annotations-template',
     enableUpdateAnnotations: true,
