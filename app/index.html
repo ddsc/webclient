@@ -344,7 +344,7 @@
                 <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
               </div>
 
-            
+
             </div>
             <div id="carousel-modal-footer" class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Sluit</button>
@@ -730,7 +730,7 @@
           </a>
           <i class="icon-question-sign info pull-right"></i>
         </h5>
-
+        <small class="muted"><%= timeserie.parameter %> (<%= timeserie.unit %>)</small>
         </div>
     </script>
 
@@ -743,7 +743,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend">
+      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%> !important;"></div>

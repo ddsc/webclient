@@ -1,7 +1,5 @@
 Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
     template: '#graph-and-legend-template',
-    initialize: function (options) {
-    },
     modelEvents: {
         "change:hasTwoItems": "updateScatterPlotCheckbox"
     },
