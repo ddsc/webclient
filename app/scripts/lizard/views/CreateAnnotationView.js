@@ -1,13 +1,15 @@
+// Note: this "View" isn't actually a Backbone / Marionette View for some reason
 Lizard.Views.CreateAnnotationView = function(relation){
     console.log('new annotation');
     var annotationLayout = new Lizard.Views.AnnotationLayout();
     // show in app.
     var related_object = null;
+    var marker = null;
     Lizard.App.hidden.show(annotationLayout);
     annotationLayout.render();
     annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
-        var layer = relation;
+        marker = relation;
     } else if (relation.get('events')){
         related_object = {
             'primary': relation.get('pk').toString(),
@@ -16,7 +18,8 @@ Lizard.Views.CreateAnnotationView = function(relation){
     } else if (relation.get('point_geometry')){
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'location'
+            'model' : 'location',
+            'location': relation.get('point_geometry')
         };
     }
     // // initiate datepickers on the div's
@@ -37,11 +40,11 @@ Lizard.Views.CreateAnnotationView = function(relation){
     $('#annotation-modal').modal();
 
     // If annotation is not filled out but closed.
-    // View should be removed and marker removed from layer
+    // View should be removed and marker removed from marker
     $('#annotation-modal').on('hide', function(){
         Lizard.App.hidden.close();
-        if (layer){
-            window.drawnItems.removeLayer(layer);
+        if (marker){
+            window.drawnItems.removeLayer(marker);
         }
     });
 
@@ -78,12 +81,15 @@ Lizard.Views.CreateAnnotationView = function(relation){
       if (data.datetime_until){
         data.datetime_until = new Date(data.datetime_until).toISOString();
       }
-      if (layer){
-          data.location = layer._latlng.lat.toString() + ',' + layer._latlng.lng.toString();
+      if (marker){
+          data.location = marker._latlng.lat.toString() + ',' + marker._latlng.lng.toString();
       }
       if (related_object){
         data.the_model_name = related_object.model;
         data.the_model_pk = related_object.primary;
+        if (related_object.location) {
+            data.location = related_object.location;
+        }
       }
       data.category = 'ddsc';
       $.ajax({
@@ -96,16 +102,16 @@ Lizard.Views.CreateAnnotationView = function(relation){
             type: 'success'}).show();
         // Close and unbind the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
-          if (layer){
-              window.drawnItems.removeLayer(layer);
+          if (marker){
+              window.drawnItems.removeLayer(marker);
           }
           $('#annotation-modal').modal('toggle');
           Lizard.App.hidden.close();
           Lizard.App.vent.trigger('updateAnnotationsMap');
         },
         error: function(){
-          if (layer){
-              window.drawnItems.removeLayer(layer);
+          if (marker){
+              window.drawnItems.removeLayer(marker);
           }
           $('#annotation-modal').modal('toggle');
           Lizard.App.hidden.close();
