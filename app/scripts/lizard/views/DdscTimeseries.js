@@ -13,7 +13,7 @@ function format_value(value) {
   } else {
     return value;
   }
-};
+}
 
 Lizard.Map.LocationModalTimeseries = Backbone.Marionette.Layout.extend({
   template: '#location-modal-timeserie',

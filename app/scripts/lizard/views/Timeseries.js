@@ -29,6 +29,7 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
         this.graphCollection.models[0].get('graphItems').addTimeseriesByUrl(url);
     },
     template: function(model) {
+        console.log(model);
         return _.template($('#timeserie-item-template').html(), {
             url: model.url,
             name: model.name,
