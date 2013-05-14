@@ -976,23 +976,18 @@ ul.timeserie-actions li {
     margin:2px;
 }
 
-/*.annotation-text{
-    position: relative;
-    vertical-align: middle;
-    padding: 5px;
-}
-*/
 #annotation-overview{
     padding: 2px;
 }
 
-#annotation-overview ol {
+#annotation-overview ol li{
     line-height: 1.3em;
 }
 
 .annotation-open{
     color: #0084B4;
     cursor: pointer;
+     width: 100%;
 }
 
 #annotation-modal > .modal-footer{

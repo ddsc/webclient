@@ -227,15 +227,16 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
 Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
     related_object: null,
     tagName: 'li',
+    className: 'annotation-open',
     events:{
-        'click .annotation-open' : 'openAnnotation'
+        'click': 'openAnnotation'
     },
     openAnnotation: function(){
             Lizard.App.vent.trigger("makeAnnotation", this.model);
     },
     template: function(model){
         return _.template(
-            '<span class="annotation-open"> <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
+            '<span > <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
     },
 });
 
