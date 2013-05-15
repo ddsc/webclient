@@ -217,7 +217,9 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         placement: "right",
         content: "Hier ziet u commentaar op locaties of tijdreeksen"
     });
-    tour.start();
+    if(typeof window.orientation === 'undefined') {
+      tour.start();
+    }
 };
 
 Lizard.App.addInitializer(function(){
