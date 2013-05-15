@@ -73,18 +73,17 @@ Lizard.Utils.Favorites = {
   toggleSelected: function (model){
     uuid = model.url.split("eries/")[1].split("/")[0];
     if (favoriteCollection.where({timeserie: uuid}).length === 0){
-            name = model.attributes.name;
             var favorite = favoriteCollection.create({
               data: {
                 location: model.attributes.location,
                 timeserie: uuid,
-                name: name
+                name: model.attributes.name
             }
             });
             // favoriteCollection.add(favorite);
     }
     else {
-      favorite = favoriteCollection.where({timeserie: uuid})[0];
+      var favorite = favoriteCollection.where({timeserie: uuid})[0];
       favorite.destroy({wait:true});
     }
   }
@@ -253,12 +252,12 @@ function initializePlot($container, options) {
                 {
                     axisLabel: '',
                     zoomRange: false,
-                    panRange: false,
+                    panRange: false
                 },
                 {
                     axisLabel: '',
                     zoomRange: false,
-                    panRange: false,
+                    panRange: false
                 }
             ],
             grid: {
@@ -466,5 +465,5 @@ function truncateString (string, limit, breakChar, rightPad) {
             return string.substr(0, breakPoint) + rightPad;
         }
     }
-    return string
+    return string;
 }
