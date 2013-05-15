@@ -117,6 +117,11 @@ ImageCarouselItemView = Backbone.Marionette.ItemView.extend({
     // If this is the first item, add the classname 'active'
     if(self.model.get('first')) {
       self.$el.attr('class', 'active item');
+
+      var img_element = self.$el.find('img').first();
+
+      var src = img_element.data('img-src');
+      img_element.attr('src', src);
     }
   }
 });
@@ -135,6 +140,12 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
     onRender: function (e) {
       var self = this;
       this.$el.find('.modal').modal();
+
+      self.$el.on('slid', function(e) {
+        var next = $(e.target).find('div .active');
+        var img = next.find('img');
+        img.attr('src', img.data('img-src'));
+      });
 
       var url = self.imageTimeseriesCollection.where({'value_type': 'image'})[0].get('events');
       var eventsCollection = new Lizard.Collections.Events();
@@ -185,9 +196,7 @@ Lizard.Views.TextModal = Backbone.Marionette.Layout.extend({
       var eventsCollection = new Lizard.Collections.Events();
       eventsCollection.url = url + '?page_size=0';
       eventsCollection.fetch().done(function (collection, response) {
-        console.log(collection);
-        console.log(response);
-        collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
+        collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap needs to know this
         var textTimeserieCollectionView = new TextTimeserieCollectionView({
           collection: collection,
           itemView: TextTimeserieItemView,
