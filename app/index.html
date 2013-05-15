@@ -133,7 +133,7 @@
                 <li><em class="icon-signal icon-white"></em>&nbsp;<a href="#">Buitenwater</a></li>
               </ul>
             </div>
-            <div class="measure-info-header">
+            <!-- <div class="measure-info-header">
                 <h4><em class="icon-th icon-white"></em>&nbsp;Dashboard</h4>
             </div>
             <div id="dashboard-links">
@@ -142,7 +142,7 @@
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">DMC systeem</a></li>
                 <li><em class="icon-th icon-white"></em>&nbsp;<a href="#dashboard">Grechtdijk</a></li>
               </ul>
-            </div>
+            </div>-->
         </div>
         <div class="span9 measure-details">
           <div class="measure-info-header">
@@ -741,14 +741,19 @@
 
     <script id="timeserie-item-template" type="text/template">
         <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
-        <h5>
-          <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
-          <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
-            <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %>
-          </a>
-          <i class="icon-question-sign info pull-right"></i>
-        </h5>
-        <small class="muted"><%= timeserie.parameter %> (<%= timeserie.unit %>)</small>
+          <h5>
+            <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
+              <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %>
+            </a>
+            <i class="icon-question-sign info pull-right"></i>
+          </h5>
+          <small class="muted"><%= timeserie.parameter %> (<%= timeserie.unit %>)</small>
+          <div class="visible-tablet">
+            <button class="btn btn btn-mini add-tablet" data-url="<%= timeserie.url%>">1</button>
+            <button class="btn btn btn-mini add-tablet" data-url="<%= timeserie.url%>">2</button>
+            <button class="btn btn btn-mini add-tablet" data-url="<%= timeserie.url%>">3</button>
+            <button class="btn btn btn-mini add-tablet" data-url="<%= timeserie.url%>">4</button>
+          </div>
         </div>
     </script>
 
