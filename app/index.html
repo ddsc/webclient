@@ -743,8 +743,8 @@
         <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
         <h5>
           <!-- <i class="icon-star-empty fav"></i>&nbsp;-->
-          <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
-            <i class="icon-bar-chart fav"></i>&nbsp;<%= timeserie.name %>
+          <a href="javascript:void(null)" class="add nohover" title="<%=timeserie.name%>" data-url="<%= timeserie.url%>">
+            <i class="icon-bar-chart fav"></i>&nbsp;<%= truncateString(timeserie.name, 10, '', '...') %>
           </a>
           <i class="icon-question-sign info pull-right"></i>
         </h5>
