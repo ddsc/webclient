@@ -14,8 +14,8 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'map_links': '#map-links',
     'graph_links': '#graph-links',
     'dashboard_links': '#dashboard-links',
-    'status': '#status-overview',
-    'liveFeed': '#liveFeed'
+    'status': '#status-overview'
+    // 'liveFeed': '#liveFeed'
   }
 });
 
@@ -60,19 +60,19 @@ Lizard.Home.home = function(){
     model: currentStatus
   });
 
-  var liveFeedView = new Marionette.CollectionView({
-    collection: liveFeedCollection,
-    tagName: 'div',
-    className: '',
-    itemView: Marionette.ItemView.extend({
-      template: '#homepage-livefeed-template',
-      tagName: 'div',
-      className: 'row-fluid'
-    })
-  });
+  // var liveFeedView = new Marionette.CollectionView({
+  //   collection: liveFeedCollection,
+  //   tagName: 'div',
+  //   className: '',
+  //   itemView: Marionette.ItemView.extend({
+  //     template: '#homepage-livefeed-template',
+  //     tagName: 'div',
+  //     className: 'row-fluid'
+  //   })
+  // });
 
   Lizard.homeView.status.show(statusOverview);
-  Lizard.homeView.liveFeed.show(liveFeedView);
+  // Lizard.homeView.liveFeed.show(liveFeedView);
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
