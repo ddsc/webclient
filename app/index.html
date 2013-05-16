@@ -733,7 +733,7 @@
       <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
-            <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:15px;height:15px;background-color:<%=color%> !important;"></div>
+            <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:1px;height:1px;border:8px solid <%=color%>; background-color: <%= color %>!important;"></div>
             <div class="pull-left">
                 <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
                     <%=truncateString(timeseries.get('name'), 10, '', '...')%><br/>
