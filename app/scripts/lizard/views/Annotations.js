@@ -31,7 +31,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.annotationLayer = new L.MarkerClusterGroup({
                   spiderfyOnMaxZoom: true,
                   showCoverageOnHover: false,
-                  maxClusterRadius: 200,
+                  maxClusterRadius: 100,
                   iconCreateFunction: function(cluster) {
                     return new L.DivIcon({ html: '<span class="badge badge-info">' +
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });

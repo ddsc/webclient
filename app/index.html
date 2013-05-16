@@ -197,9 +197,9 @@
 
     <script type="text/template" id="homepage-status-template">
       <ul class="homepage-list">
-        <li><span class="badge badge-important"><%= alarms %> alarmen actief</span></li>
-        <li><span class="badge badge-warning"><%= storingen %> in storing</span></li>
-        <li><span class="badge badge-success"><%= activeSensors %> sensoren actief</span></li>
+        <li><span class="badge badge-important"><%= alarms.active %> alarmen actief</span></li>
+        <li><span class="badge badge-warning"><%= timeseries.disrupted %> in storing</span></li>
+        <li><span class="badge badge-success"><%= events.new %> nieuwe metingen</span></li>
       </ul>
     </script>
 

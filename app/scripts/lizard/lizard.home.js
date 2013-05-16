@@ -55,10 +55,41 @@ Lizard.Home.home = function(){
   window.timeseries_idx = timeseries_idx; // Attach to the window variable
   console.log('timeseries_idx:', timeseries_idx);
 
-  var statusOverview = new Marionette.ItemView({
-    template: '#homepage-status-template',
-    model: currentStatus
+  function addWidgetToView(settings, view) {
+    var model = new Lizard.Models.Widget(settings);
+    var widget = new Lizard.ui.Widgets.GageWidget({model: model, tagName: 'div'});
+    view.show(widget.render());
+  }
+
+  Lizard.Home.Summary = Backbone.Model.extend({
+    defaults: {
+      alarms: {active: 0},
+      events: {new: 0},
+      timeseries: {disrupted:0}
+    }
   });
+  var summary = new Lizard.Home.Summary();
+  summary.url = 'http://api.dijkdata.nl/api/v1/summary'
+  summary.fetch({success: function(model, xhr){
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: model.get('alarms').active,
+          levelColors:['FFFF00','FF0000']},
+          Lizard.homeView.measureAlarm);
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Nieuw', max:150000, value: model.get('events').new,
+          levelColors:['FFFF00','00CC00']},
+          Lizard.homeView.measureNewMeasurement);
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:20, value: model.get('timeseries').disrupted,
+          levelColors:['FFFF00','FF0000']},
+          Lizard.homeView.measureStatus);
+  }});
+
+  var statusOverview = new Backbone.Marionette.ItemView({
+    model: summary,
+    template: '#homepage-status-template',
+    modelEvents:{
+      'change':'render'
+    }
+  });
+
 
   // var liveFeedView = new Marionette.CollectionView({
   //   collection: liveFeedCollection,
@@ -70,26 +101,10 @@ Lizard.Home.home = function(){
   //     className: 'row-fluid'
   //   })
   // });
-
-  Lizard.homeView.status.show(statusOverview);
   // Lizard.homeView.liveFeed.show(liveFeedView);
 
-  function addWidgetToView(settings, view) {
-    var model = new Lizard.Models.Widget(settings);
-    var widget = new Lizard.ui.Widgets.GageWidget({model: model, tagName: 'div'});
-    view.show(widget.render());
-  }
 
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: currentStatus.get('alarms'),
-      levelColors:['FFFF00','FF0000']},
-      Lizard.homeView.measureAlarm);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:2000, value: currentStatus.get('newMeasurementsLastHour'),
-      levelColors:['FFFF00','00CC00']},
-      Lizard.homeView.measureNewMeasurement);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:20, value: currentStatus.get('storingen'),
-      levelColors:['FFFF00','FF0000']},
-      Lizard.homeView.measureStatus);
-
+  Lizard.homeView.status.show(statusOverview);
 
   var workspaceSelectionView = new Lizard.Views.HomePageMapList({
     collection: workspaceCollection
