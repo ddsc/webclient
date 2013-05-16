@@ -153,7 +153,7 @@
               <div class="span1 hidden-phone hide-tablet"><em class="icon-white"></em></div>
               <div class="span6">
               <p>Welkom op het Dijkdata Service center. Hier krijgt u een overzicht van allerlei data die uit sensoren komt. Hiervoor dient u wel ingelogd te zijn.</p>
-              <p>Voor een overzicht, klikt u bij rechts bovenin op uw gebruikersnaam en kiest u <i>"Rondleiding"</i>.</p>
+              <p>Voor een overzicht van wat u kunt doen, klikt rechts bovenin op <a href="javascript:tour.start({star:true})"><i>"Rondleiding"</i></a>. Dit geeft een kort overzicht van de mogelijkheden per pagina.</p>
               </div>
               <div class="span3 text-right pull-right"><small class="muted"></small></div>
             </div>
@@ -537,7 +537,7 @@
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
-        <% if (picture_url) { %><hr/><div><a href="<%= picture_url %>" title="Attachment" target="_blank" style="max-width: 100% !important" /></div>
+        <% if (picture_url) { %><hr/><div><a href="<%= picture_url %>" title="Attachment" target="_blank" style="max-width: 100% !important">Link naar bijgevoegde bestand</a></div>
         <%  } %>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
@@ -1098,6 +1098,7 @@
                 <!-- <li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li> -->
               </ul>
               <ul class="nav pull-right">
+                <li><a href="javascript:tour.start({start:true})">Rondleiding</a></li>
                 <li class="dropdown" id="loginRegion"></li>
               </ul>
             </div>

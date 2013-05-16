@@ -190,9 +190,6 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
       placement: "left",
       content: "Dit is de legenda van de grafiek. Bovendien kunt u hier een CSV bestand exporteren of commentaar plaatsen."
   });
-  if(typeof window.orientation === 'undefined') {
-    tour.start();
-  }
 };
 
 Lizard.App.addInitializer(function(){
