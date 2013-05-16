@@ -147,8 +147,11 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     });
 
   var alarmWMS = leafletView.getAlarms();
+  var statusWMS = leafletView.getStatus();
   var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
+  var status = new Lizard.Models.WorkspaceItem(statusWMS.toJSON());
   alarms.set({visibility: true, selected: false});
+  status.set({visibility: true, selected: false});
   var activeWorkspace = Lizard.workspaceView.getCollection();
 
   $('.status-layer-toggler').click(function(e) {
@@ -156,11 +159,11 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         if ($icon.hasClass('icon-check-empty')) {
             $icon.addClass('icon-check').removeClass('icon-check-empty');
             // Lizard.Models.WorkspaceItem
-            activeWorkspace.add(alarms);
+            activeWorkspace.add(status);
         }
         else {
             $icon.addClass('icon-check-empty').removeClass('icon-check');
-            activeWorkspace.remove(alarms);
+            activeWorkspace.remove(status);
         }
     });
 
