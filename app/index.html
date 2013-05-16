@@ -154,7 +154,6 @@
               <div class="span6">
               <p>Welkom op het Dijkdata Service center. Hier krijgt u een overzicht van allerlei data die uit sensoren komt. Hiervoor dient u wel ingelogd te zijn.</p>
               <p>Voor een overzicht, klikt u bij rechts bovenin op uw gebruikersnaam en kiest u <i>"Rondleiding"</i>.</p>
-              <p>Veel succes.</p>
               </div>
               <div class="span3 text-right pull-right"><small class="muted"></small></div>
             </div>
@@ -538,7 +537,7 @@
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
-        <% if (picture_url) { %><hr/><div><img src="<%= picture_url %>" alt="<%= picture_url %>" style="max-width: 100% !important" /></div>
+        <% if (picture_url) { %><hr/><div><a href="<%= picture_url %>" title="Attachment" target="_blank" style="max-width: 100% !important" /></div>
         <%  } %>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
@@ -673,7 +672,7 @@
     <script type="text/template" id="location-popup-item">
         <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else if(value_type === 'image') { %>icon-picture<% } else { %>icon-align-left<% } %>"></i>
-              <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%= name %></span>
+              <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%=  truncateString(name, 30, '', '...') %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>

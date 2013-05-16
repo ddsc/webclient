@@ -148,7 +148,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
 
   var alarmWMS = leafletView.getAlarms();
   var alarms = new Lizard.Models.WorkspaceItem(alarmWMS.toJSON());
-  alarms.set({visibility: true, display_name: "Status"});
+  alarms.set({visibility: true, selected: false});
   var activeWorkspace = Lizard.workspaceView.getCollection();
 
   $('.status-layer-toggler').click(function(e) {
