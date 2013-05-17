@@ -9,7 +9,7 @@ var settings = {
     locations_url: domain + 'locations/?has_geometry=true&for_map=true&page_size=5000',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
-    timeseries_url: domain + 'timeseries/?page_size=100',
+    timeseries_url: domain + 'timeseries/',
     alarms_url: domain + 'alarms/',
     collages_url: domain + 'collages/?page_size=100',
     workspace_url: domain + 'workspaces/?page_size=100',
