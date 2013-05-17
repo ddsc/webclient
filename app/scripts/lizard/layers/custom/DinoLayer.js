@@ -39,7 +39,7 @@ Lizard.geo.Layers.Custom.DinoLayer = Lizard.geo.Layers.WMSLayer.extend({
     var extra_settings = "/export?dpi=256&_ts=1362253889361&bboxSR=3857&imageSR=3857&f=image";
 
     if (this.get('subtype') === 'sondering') {
-      extra_settings += "&layerDefs=0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')";
+      extra_settings += "&layerDefs=0:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD ='BOTH');1:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD = 'BOTH')";
     }
 
     return  L.tileLayer.wms(this.get('wms_url') + extra_settings, {
@@ -82,7 +82,7 @@ Lizard.geo.Layers.Custom.DinoLayer = Lizard.geo.Layers.WMSLayer.extend({
       layerDefs:'{}'
     };
     if (this.get('subtype') === 'sondering') {
-      param.layerDefs = "0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')";
+      param.layerDefs = "0:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD ='BOTH');1:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD = 'BOTH')";
     }
 
     var url = base_url + $.param(param);
