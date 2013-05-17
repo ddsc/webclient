@@ -69,15 +69,27 @@ Lizard.Home.home = function(){
     }
   });
   var summary = new Lizard.Home.Summary();
-  summary.url = 'http://api.dijkdata.nl/api/v1/summary'
+  summary.url = 'http://api.dijkdata.nl/api/v1/summary';
   summary.fetch({success: function(model, xhr){
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: model.get('alarms').active,
+
+    console.log('model', model);
+
+    var maxActiveCount = 50;
+    var activeCount = model.get('alarms').active;
+
+    var maxNewMeasurementCount = 200000;
+    var newMeasurementCount = model.get('events').new;
+
+    var maxDisruptedTimeseriesCount = 20;
+    var disruptedTimeseriesCount = model.get('timeseries').disrupted;
+
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:maxActiveCount, value: activeCount,
           levelColors:['FFFF00','FF0000']},
           Lizard.homeView.measureAlarm);
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Nieuw', max:150000, value: model.get('events').new,
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Nieuw', max:maxNewMeasurementCount, value: newMeasurementCount,
           levelColors:['FFFF00','00CC00']},
           Lizard.homeView.measureNewMeasurement);
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:20, value: model.get('timeseries').disrupted,
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
           levelColors:['FFFF00','FF0000']},
           Lizard.homeView.measureStatus);
   }});
