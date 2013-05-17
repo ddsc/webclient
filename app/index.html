@@ -707,7 +707,7 @@
         <div class="timeserie-item" class="noselect" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeserie.url%>" data-uuid="<%=timeserie.uuid%>">
           <h5>
             <a href="javascript:void(null)" class="add nohover" data-url="<%= timeserie.url%>">
-              <i class="icon-bar-chart fav"></i>&nbsp;<%= truncateString(timeserie.name, 10, '', '...') %>
+              <i class="icon-bar-chart fav"></i>&nbsp;<span class="hidden-desktop"><%= truncateString(timeserie.name, 10, '', '...') %></span><span class="hidden-phone hidden-tablet"><%= truncateString(timeserie.name, 30, '', '...') %></span>
             </a>
             <i class="icon-question-sign info pull-right"></i>
           </h5>
@@ -1069,8 +1069,8 @@
             <p>
                 <h4>Aanvullende informatie</h4>
                 <ul>
-                    <li><a href="#" target="_blank">Gebruikershandleiding DDSC (pdf)</a></li>
-                    <li><a href="#" class="talkback">Rapporteer een problem</a></li>
+                    <li><a href="downloads/Gebruikershandleiding - Dijk Data Service Centrum v1.2.docx" target="_blank">Gebruikershandleiding DDSC (docx)</a></li>
+                    <!-- <li><a href="#" class="talkback">Rapporteer een problem</a></li> -->
                 </ul>
             </p>
         </div>

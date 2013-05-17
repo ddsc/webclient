@@ -29,14 +29,15 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         format: 'image/png',
         transparent: true,
         reuseTiles: true,
-        attribution: "Dijkdata"
+        attribution: "Dijkdata",
+        maxZoom: 30
       }),
       OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data © OpenStreetMap contributors'
-      }),
-      MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
-        attribution: 'MapBox'
       })
+      // MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+      //   attribution: 'MapBox'
+      // })
       // Terrain: new L.Google("TERRAIN", {detectRetina: true}),
       // Hybrid :new L.Google("HYBRID", {detectRetina: true})
     };
