@@ -72,8 +72,6 @@ Lizard.Home.home = function(){
   summary.url = 'http://api.dijkdata.nl/api/v1/summary';
   summary.fetch({success: function(model, xhr){
 
-    console.log('model', model);
-
     var maxActiveCount = 50;
     var activeCount = model.get('alarms').active;
 
