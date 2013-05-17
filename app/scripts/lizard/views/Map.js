@@ -29,7 +29,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         format: 'image/png',
         transparent: true,
         reuseTiles: true,
-        attribution: "Dijkdata"
+        attribution: "Dijkdata",
+        maxZoom: 30
       }),
       OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data © OpenStreetMap contributors'
