@@ -84,7 +84,7 @@ Lizard.Home.home = function(){
     addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:maxActiveCount, value: activeCount,
           levelColors:['FFFF00','FF0000']},
           Lizard.homeView.measureAlarm);
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Sinds gisteren', max:maxNewMeasurementCount, value: newMeasurementCount,
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Gisteren', max:maxNewMeasurementCount, value: newMeasurementCount,
           levelColors:['FFFF00','00CC00']},
           Lizard.homeView.measureNewMeasurement);
     addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
