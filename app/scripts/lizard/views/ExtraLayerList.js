@@ -68,7 +68,9 @@ Lizard.Views.LayerList = Backbone.Marionette.CollectionView.extend({
   workspaceItemAdded: function(workspaceItem) {
   	if (workspaceItem.get('display_name')!= 'Alarmen'){
 	    var models = this.collection.where({display_name: workspaceItem.get('display_name')});
-	    models[0].set({'addedToMap': true});  		
+      if(models.length !== 0) {
+        models[0].set({'addedToMap': true});  
+      }
   	}
   },
   workspaceItemRemoved: function(workspaceItem) {
