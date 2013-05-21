@@ -447,6 +447,10 @@ input.input-medium.search-query {
           background-clip: padding-box;
 }
 
+fieldset{
+    display: inline-block;
+}
+
 .graph-and-legend .legend {
     height: 300px;
     color: #444;

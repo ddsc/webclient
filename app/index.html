@@ -414,49 +414,52 @@
               <h5>Wijzig deze annotaties</h5>
               <div id="annotations-list"></div>
               <div id="annotation-modal-footer" class="modal-footer">
-                  <form class="annotation">
-              <fieldset>
-              <h5>Een nieuwe annotatie</h5>
+                <div class="row-fluid">
+                  <form class="annotation span12">
+                  <fieldset>
+                  <h5>Een nieuwe annotatie</h5>
+                     <div class="input-prepend">
+                     <span class="add-on"><i class="icon-comment"></i></span>
+                      <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
+                     </div>
+                     <div class="input-prepend">
+                       <span class="add-on"><i class="icon-calendar"></i></span>
+                       <input type="text" class="span2 datepick-annotate" name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
+                     </div>
+                     <div class="input-prepend">
+                       <span class="add-on"><i class="icon-calendar"></i></span>
+                       <input type="text" class="span2 datepick-annotate" name="datetime_until" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
+                     </div>
+                     <div class="input-prepend">
+                       <span class="add-on"><i class="icon-eye-open"></i></span>
+                        <label class="radio inline spacing">
+                          <input type="radio" name="visibility" value="public" required> Openbaar
+                        </label>
+                        <label class="radio inline controls-row">
+                          <input type="radio" name="visibility" value="private" required CHECKED> Persoonlijk
+                        </label>
+                    </div>
+                     <div class="input-prepend">
+                       <span class="add-on"><i class="icon-tag"></i></span>
+                      <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
+                    </div>
+                 <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
                  <div class="input-prepend">
-                 <span class="add-on"><i class="icon-comment"></i></span>
-                  <textarea rows="4" class="annotation-textarea span4" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
+                   <span class="add-on"><i class="icon-picture"></i></span>
+                   <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
                  </div>
+                 <span class="help-block"><small>Upload een afbeelding.</small></span>
                  <div class="input-prepend">
-                   <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span2 datepick-annotate" name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
+                     <span class="add-on"><i class="icon-upload-alt"></i></span>
+                     <input type="file" class="span4" name="attachment" placeholder="Upload een foto"/>
                  </div>
-                 <div class="input-prepend">
-                   <span class="add-on"><i class="icon-calendar"></i></span>
-                   <input type="text" class="span2 datepick-annotate" name="datetime_until" placeholder="Geldig tot en met (bijv. 2013-04-11)" value=""/>
-                 </div>
-                 <div class="input-prepend">
-                   <span class="add-on"><i class="icon-eye-open"></i></span>
-                    <label class="radio inline spacing">
-                      <input type="radio" name="visibility" value="public" required> Openbaar
-                    </label>
-                    <label class="radio inline controls-row">
-                      <input type="radio" name="visibility" value="private" required CHECKED> Persoonlijk
-                    </label>
-                </div>
-                 <div class="input-prepend">
-                   <span class="add-on"><i class="icon-tag"></i></span>
-                  <input type="text" class="span4" name="tags" placeholder="Tags scheiden met spaties" />
-                </div>
-             <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
-             <div class="input-prepend">
-               <span class="add-on"><i class="icon-picture"></i></span>
-               <input type="text" class="span4" name="picture_url" placeholder="Url naar foto" />
-             </div>
-             <span class="help-block"><small>Upload een afbeelding.</small></span>
-             <div class="input-prepend">
-                 <span class="add-on"><i class="icon-upload-alt"></i></span>
-                 <input type="file" class="span4" name="attachment" placeholder="Upload een foto"/>
-             </div>
-             <div class="uploaded-file" style="margin-left:28px;"></div>
-            <button type="submit" class="btn spacer pull-right btn-primary">Opslaan</button>
-            <input type="hidden" name="attachment_pk" value="">
-             </fieldset>
-             </form>
+                 <div class="uploaded-file" style="margin-left:28px;"></div>
+                <button type="submit" class="btn spacer pull-right btn-primary hidden-phone">Opslaan</button>
+                <button type="submit" class="btn spacer btn-primary visible-phone">Opslaan</button>
+                <input type="hidden" name="attachment_pk" value="">
+                 </fieldset>
+                 </form>
+              </div>
             </div>
         </div>
     </script>
@@ -1098,7 +1101,7 @@
                 <!-- <li class="dashboard-menu"><a href="#dashboard"><em class="icon-th icon-white"></em> Dashboard</a></li> -->
               </ul>
               <ul class="nav pull-right">
-                <li><a href="javascript:tour.start({start:true})">Rondleiding</a></li>
+                <li class="hidden-phone"><a href="javascript:tour.start({start:true})">Rondleiding</a></li>
                 <li class="dropdown" id="loginRegion"></li>
               </ul>
             </div>
