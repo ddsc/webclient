@@ -46,9 +46,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   },
   getAlarms: function(){
       var alarms = new Lizard.geo.Layers.WMSLayer({
-      "layer_name": "dijkdata:alarm_locaties",
+      "layer_name": "dijkdata:alarm_view",
       "wms_source": {
-          "layer_name": "dijkdata:alarm_locaties",
+          "layer_name": "dijkdata:alarm_view",
         "display_name": "Alarmen",
         "description": "",
         "metadata": null,
