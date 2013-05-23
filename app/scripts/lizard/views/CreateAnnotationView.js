@@ -244,6 +244,11 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
             relation: this.relation
         };
     },
+    onShow: function(){
+        if (this.collection.length != 0 ){
+            this.$el.find('.edit-header').removeClass('hide');
+        }
+    },
     buildQueryUrlParams: function () {
         var params = {
             category: 'ddsc'

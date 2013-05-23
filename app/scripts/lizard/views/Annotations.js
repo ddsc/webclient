@@ -108,7 +108,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         // dont retrieve annotations, when updating has been 'paused',
         // for example, during autopan
         if (!self.enableUpdateAnnotations) {
-            console.log('jaja')
             return;
         }
 
