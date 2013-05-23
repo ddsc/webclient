@@ -19,6 +19,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         this.updateAnnotations();
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
         Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
+        self = this;
+        Lizard.App.vent.on("deleteAnnotation", function(){
+            self.enableUpdateAnnotations = true;
+            self.updateAnnotations();
+        });
     },
     popupOpen: function () {
         this.enableUpdateAnnotations = false;
@@ -103,6 +108,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         // dont retrieve annotations, when updating has been 'paused',
         // for example, during autopan
         if (!self.enableUpdateAnnotations) {
+            console.log('jaja')
             return;
         }
 
@@ -214,7 +220,7 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
         var self = this;
         this.model.destroy()
         .done(function(){
-            Lizard.App.vent.trigger("updateAnnotationsMap", self);
+            Lizard.App.vent.trigger("deleteAnnotation", self);
         });
     },
     editAnnotation: function(){
@@ -230,6 +236,9 @@ Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
     className: 'annotation-open',
     events:{
         'click': 'openAnnotation'
+    },
+    collectionEvents: {
+        'change reset remove add' : 'render'
     },
     openAnnotation: function(){
             Lizard.App.vent.trigger("makeAnnotation", this.model);
