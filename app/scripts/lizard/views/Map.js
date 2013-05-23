@@ -78,7 +78,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
         onAdd: function (map) {
 
-          var className = 'leaflet-control-zoom leaflet-bar',
+          var className = 'leaflet-control-zoom leaflet-bar leaflet-bar-geolocate',
               container = L.DomUtil.create('div', className);
 
           this._map = map;
