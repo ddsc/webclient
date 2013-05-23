@@ -234,11 +234,15 @@
                     <div class="layer-item hidden-phone">
                       <span class="action handle "><i class="icon-plus"></i></span>
                       Voeg Extra Kaartlaag toe
-                      <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true">
-                        <div id="extramaplayers" class="modal-body"></div>
-                      </div>
                     </div>
                   </div>
+                  <div id="extramodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="extramaplayers-label" aria-hidden="true">
+                        <div id="extramaplayers-modal-header" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="extramaplayers-label">Extra Kaartlagen</h3>
+                        </div>
+                        <div id="extramaplayers" class="modal-body"></div>
+                      </div>
                 </ul>
                 <br class="hidden-phone">
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
