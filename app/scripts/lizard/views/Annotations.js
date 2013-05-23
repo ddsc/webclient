@@ -20,7 +20,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
         Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
         self = this;
-        Lizard.App.vent.on("deleteAnnotation", function(){
+        Lizard.App.vent.on("changedestroyAnnotation", function(){
             self.enableUpdateAnnotations = true;
             self.updateAnnotations();
         });
@@ -219,7 +219,7 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
         var self = this;
         this.model.destroy()
         .done(function(){
-            Lizard.App.vent.trigger("deleteAnnotation", self);
+            Lizard.App.vent.trigger("changedestroyAnnotation", self);
         });
     },
     editAnnotation: function(){

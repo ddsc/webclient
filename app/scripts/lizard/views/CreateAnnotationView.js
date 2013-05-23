@@ -107,7 +107,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
           }
           $('#annotation-modal').modal('toggle');
           Lizard.App.hidden.close();
-          Lizard.App.vent.trigger('updateAnnotationsMap');
+          Lizard.App.vent.trigger('changedestroyAnnotation');
         },
         error: function(){
           if (marker){
@@ -223,14 +223,14 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         this.$el.find('.collapse').toggleClass('in');
         $('#annotation-modal').modal('toggle');
         Lizard.App.hidden.close();
-        Lizard.App.vent.trigger('updateAnnotationsMap');
+        Lizard.App.vent.trigger('changedestroyAnnotation');
     },
     'delete': function(){
-        this.model.destroy();
+        this.model.destroy().done(function(){
           $('#annotation-modal').modal('toggle');
           Lizard.App.hidden.close();
-          Lizard.App.vent.trigger('updateAnnotationsMap');
-
+          Lizard.App.vent.trigger('changedestroyAnnotation');
+        });
     }
 });
 
