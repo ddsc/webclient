@@ -14,8 +14,8 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'map_links': '#map-links',
     'graph_links': '#graph-links',
     'dashboard_links': '#dashboard-links',
-    'status': '#status-overview',
-    'liveFeed': '#liveFeed'
+    'status': '#status-overview'
+    // 'liveFeed': '#liveFeed'
   }
 });
 
@@ -55,41 +55,66 @@ Lizard.Home.home = function(){
   window.timeseries_idx = timeseries_idx; // Attach to the window variable
   console.log('timeseries_idx:', timeseries_idx);
 
-  var statusOverview = new Marionette.ItemView({
-    template: '#homepage-status-template',
-    model: currentStatus
-  });
-
-  var liveFeedView = new Marionette.CollectionView({
-    collection: liveFeedCollection,
-    tagName: 'div',
-    className: '',
-    itemView: Marionette.ItemView.extend({
-      template: '#homepage-livefeed-template',
-      tagName: 'div',
-      className: 'row-fluid'
-    })
-  });
-
-  Lizard.homeView.status.show(statusOverview);
-  Lizard.homeView.liveFeed.show(liveFeedView);
-
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
     var widget = new Lizard.ui.Widgets.GageWidget({model: model, tagName: 'div'});
     view.show(widget.render());
   }
 
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:20, value: currentStatus.get('alarms'),
-      levelColors:['FFFF00','FF0000']},
-      Lizard.homeView.measureAlarm);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Afgelopen uur', max:2000, value: currentStatus.get('newMeasurementsLastHour'),
-      levelColors:['FFFF00','00CC00']},
-      Lizard.homeView.measureNewMeasurement);
-  addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:20, value: currentStatus.get('storingen'),
-      levelColors:['FFFF00','FF0000']},
-      Lizard.homeView.measureStatus);
+  Lizard.Home.Summary = Backbone.Model.extend({
+    defaults: {
+      alarms: {active: 0},
+      events: {new: 0},
+      timeseries: {disrupted:0}
+    }
+  });
+  var summary = new Lizard.Home.Summary();
+  summary.url = 'http://api.dijkdata.nl/api/v1/summary';
+  summary.fetch({success: function(model, xhr){
 
+    var maxActiveCount = 50;
+    var activeCount = model.get('alarms').active;
+
+    var maxNewMeasurementCount = 200000;
+    var newMeasurementCount = model.get('events').new;
+
+    var maxDisruptedTimeseriesCount = 20;
+    var disruptedTimeseriesCount = model.get('timeseries').disrupted;
+
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:maxActiveCount, value: activeCount,
+          levelColors:['FFFF00','FF0000']},
+          Lizard.homeView.measureAlarm);
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Gisteren', max:maxNewMeasurementCount, value: newMeasurementCount,
+          levelColors:['FFFF00','00CC00']},
+          Lizard.homeView.measureNewMeasurement);
+    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
+          levelColors:['FFFF00','FF0000']},
+          Lizard.homeView.measureStatus);
+  }});
+
+  var statusOverview = new Backbone.Marionette.ItemView({
+    model: summary,
+    template: '#homepage-status-template',
+    modelEvents:{
+      'change':'render'
+    }
+  });
+
+
+  // var liveFeedView = new Marionette.CollectionView({
+  //   collection: liveFeedCollection,
+  //   tagName: 'div',
+  //   className: '',
+  //   itemView: Marionette.ItemView.extend({
+  //     template: '#homepage-livefeed-template',
+  //     tagName: 'div',
+  //     className: 'row-fluid'
+  //   })
+  // });
+  // Lizard.homeView.liveFeed.show(liveFeedView);
+
+
+  Lizard.homeView.status.show(statusOverview);
 
   var workspaceSelectionView = new Lizard.Views.HomePageMapList({
     collection: workspaceCollection
@@ -111,22 +136,21 @@ Lizard.Home.home = function(){
 
 
 
-  // tour = new Tour({
-  //   labels: {
-  //       next: "Verder »",
-  //       prev: "« Terug",
-  //       end: "Einde uitleg"
-  //   },
-  //   useLocalStorage: false,
-  //   backdrop: true
-  // });
-  // tour.addStep({
-  //     element: ".map-menu",
-  //     title: "Kaart",
-  //     placement: "bottom",
-  //     content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
-  // });
-  // tour.start();
+  tour = new Tour({
+    labels: {
+        next: "Verder »",
+        prev: "« Terug",
+        end: "Einde uitleg"
+    },
+    useLocalStorage: false,
+    backdrop: true,
+  });
+  tour.addStep({
+      element: ".map-menu",
+      title: "Kaart",
+      placement: "bottom",
+      content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
+  });
 };
 
 Lizard.App.addInitializer(function(){

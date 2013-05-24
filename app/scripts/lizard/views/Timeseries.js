@@ -6,7 +6,8 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
     tagName: 'li',
     events: {
         'click .info': 'showInfoModal',
-        'click .add': 'drawGraph'
+        'click .add': 'drawGraph',
+        'click .add-tablet' : 'tabletGraph'
         // 'scroll': 'loadMore'
     },
     // loadMore: function() {
@@ -28,10 +29,19 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
         var url = $(e.target).data('url');
         this.graphCollection.models[0].get('graphItems').addTimeseriesByUrl(url);
     },
+    tabletGraph: function(e) {
+        // add to first graph in the graphs view
+        var url = $(e.target).data('url');
+        var index = parseInt($(e.target).html()) - 1
+        this.graphCollection.models[index].get('graphItems').addTimeseriesByUrl(url);
+    },
     template: function(model) {
+        console.log(model);
         return _.template($('#timeserie-item-template').html(), {
             url: model.url,
             name: model.name,
+            parameter: model.parameter,
+            unit: model.unit,
             uuid: model.uuid,
             events: model.events,
             favorite: model.favorite
@@ -114,6 +124,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.Marionette.CollectionView.extend({
 });
 
 Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
+    searchTimeout: null,
     initialize: function(options) {
         this.timeseriesCollection = options.timeseriesCollection;
     },
@@ -123,12 +134,21 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         return this;
     },
     events: {
-        'change #searchTimeseries': 'search'
+        'keypress #searchTimeseries': 'search'
     },
     search: function(e) {
-        this.timeseriesCollection.reset();
-        this.timeseriesCollection.page = 1;
-        this.timeseriesCollection.name = $('#searchTimeseries').val();
-        this.timeseriesCollection.fetch();
+        var self = this;
+
+        if (this.searchTimeout !== null) {
+            window.clearTimeout(this.searchTimeout);
+            this.searchTimeout = null;
+        }
+
+        this.searchTimeout = window.setTimeout(function () {
+            self.timeseriesCollection.reset();
+            self.timeseriesCollection.page = 1;
+            self.timeseriesCollection.name = $('#searchTimeseries').val();
+            self.timeseriesCollection.fetch();
+        }, 700);
     }
 });

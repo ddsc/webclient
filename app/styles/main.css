@@ -9,7 +9,7 @@ body {
 }
 
 /* Media selectors */
-@media (min-width: 980px) and (max-width: 1200px) { 
+@media (min-width: 980px) and (max-width: 1200px) {
     .graph-legend ul li button span {
         display: none;
     }
@@ -59,7 +59,8 @@ div#brand:hover {
 
 #map {
     height: 960px;
-    box-shadow: 0 8px 16px -8px #222;
+    min-height: 500px;
+    box-shadow: 0 8px 8px -8px #222;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -131,36 +132,6 @@ leaflet-control-legend-icon {
     height: 0;
     border-top: 1px solid #ddd;
     margin: 5px -10px 5px -6px;
-}
-
-#annotation-modal.modal{
-    width: 500px;
-}
-#annotation-modal .spacing{
-    margin-left: 1em;
-}
-
-.annotation-item{
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius:  0 4px 4px 0;
-    overflow:hidden;
-}
-
-.annotation-form{
-    position:relative;
-    float:left;
-}
-
-.annotation-item .btn{
-    margin:2px;
-}
-
-.annotation-text{
-    position: relative;
-    left: -25px;
-    vertical-align: middle;
-    padding: 5px;
 }
 
 #liveFeed {
@@ -409,6 +380,12 @@ input.input-medium.search-query {
     text-overflow: ellipsis;
 }
 
+
+
+#ts-popup-title{
+    margin-left: 1.8em;
+}
+
 /* Graph stuff*/
 
 .noselect,
@@ -419,6 +396,15 @@ input.input-medium.search-query {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.clickable{
+    cursor: pointer;
+    color: rgb(0, 132, 180);
+}
+
+.clickable:hover{
+    color: rgb(0, 112, 160);
 }
 
 #chart-y-axis{
@@ -441,6 +427,7 @@ input.input-medium.search-query {
 }
 
 .graph-and-legend .graph,
+#carousel-modal .graph,
 #location-modal .graph {
     height: 300px;
     color: #444;
@@ -458,6 +445,10 @@ input.input-medium.search-query {
     -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
+}
+
+fieldset{
+    display: inline-block;
 }
 
 .graph-and-legend .legend {
@@ -531,14 +522,6 @@ input.input-medium.search-query {
     font-size: 0.65em;
 }
 
-#annotation-modal > .modal-footer{
-    text-align: left;
-}
-
-
-#annotation-modal > .in{
-    height:350px;
-}
 
 .drop:hover{
     opacity: 1;
@@ -552,7 +535,7 @@ input.input-medium.search-query {
     margin-right:5px;
 }
 
-span.lazy.loading { background-image: url('../images/loading.gif'); }
+span.lazy.loading { background-image: url('../images/ajax-spinner-2.gif'); }
 span.lazy.broken { background-image: url('../images/broken.png'); background-color: #be3730; }
 span.lazy {
     background-color: #fff;
@@ -709,7 +692,7 @@ div.widget li.theader {
     padding: 5px 15px;
     background-color: white;
     border-radius: 6px;
-    box-shadow: 0 8px 16px -8px #222;
+    box-shadow: 0 8px 10px -8px #222;
 }
 .sidenav > li > a {
     display: block;
@@ -726,12 +709,7 @@ div.widget li.theader {
     opacity: .25;
 }
 
-.sidenav .icon-chevron-down {
-    float: right;
-    margin-top: 2px;
-    margin-right: -6px;
-    opacity: .25;
-}
+.sidenav .icon-chevron-down,
 .sidenav .icon-chevron-up {
     float: right;
     margin-top: 2px;
@@ -953,15 +931,10 @@ div#selectionRegion{
     width: 90%
 }
 
-.timeserie-item h5 > i.info{
-    margin-top: -14px;
-}
-
 .timeserie-item > i.info{
     height: 23px;
     color: #0084B4;
     font-size: .98em;
-
 }
 
 .ddsc-item h5 {
@@ -978,6 +951,66 @@ ul.timeserie-actions li {
     list-style: none;
     cursor: pointer;
     display:inline;
+}
+
+
+/* Annotation Stuff*/
+
+#annotation-overview ol li{
+    list-style: decimal outside none;
+}
+
+#annotation-modal .spacing{
+    margin-left: 1em;
+}
+
+.annotation-item{
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius:  0 4px 4px 0;
+    overflow:hidden;
+}
+
+.annotation-form{
+    position:relative;
+    float:left;
+}
+
+.annotation-item .btn{
+    margin:2px;
+}
+
+#annotation-overview{
+    padding: 2px;
+}
+
+#annotation-overview ol li{
+    line-height: 1.3em;
+}
+
+.annotation-open{
+    color: #0084B4;
+    cursor: pointer;
+     width: 100%;
+}
+
+#annotation-modal > .modal-footer{
+    text-align: left;
+}
+
+
+#annotation-modal > .in{
+    height:350px;
+}
+
+.sidenav .annotation .icon-chevron-up,
+.sidenav .annotation .icon-chevron-down{
+    margin-right: 0.5em;
+    float: none;
+}
+
+.annotation .badge{
+    margin-right: 0.5em;
 }
 
 
@@ -1338,6 +1371,12 @@ div#dateRangeRegion{
     width: 90%;
 }
 
+a.nohover:hover,
+a.nohover:focus {
+    text-decoration: none;
+    color: #08c;
+}
+
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
 .ui-timepicker-div dl { text-align: left; }
@@ -1349,3 +1388,18 @@ div#dateRangeRegion{
 .ui-timepicker-rtl{ direction: rtl; }
 .ui-timepicker-rtl dl { text-align: right; }
 .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+
+
+.visible-print {
+    display: none !important;
+}
+
+@media print {
+    .visible-print {
+        display: inherit !important;
+    }
+
+    .hidden-print {
+        display: none !important;
+    }
+}

@@ -93,6 +93,7 @@ Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
     if ($(xml).find('table').length > 0) {
       return '<div style="overflow:auto">' + '<h4>' + this.get('display_name') + '</h4>' + data + '</div>';
     } else {
+      $('.top-right').notify({type: 'error', message: {text: 'Op dit punt op de kaart is geen informatie beschikbaar. Probeer het nog eens.'}}).show();
       return false;
     }
   }

@@ -44,7 +44,20 @@ Lizard.App.addRegions({
 
 Lizard.App.on('initialize:before', function() {
   account = new Lizard.Models.Account();
-  account.fetch();
+  account.fetch({
+    error: function(){
+    $('#iecrossdomain').modal();
+  },
+  success: function(model){
+      if (!model.get('authenticated')) {
+        $('.top-right').notify({
+          type: 'warning', 
+          message: {text: 'U bent niet ingelogd.'},
+          fadeOut: {enabled: true, delay: 6000}
+        }).show();
+      }
+    }
+  });
 
   workspaceCollection = new Lizard.Collections.Workspace();
   workspaceCollection.fetch();

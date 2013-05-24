@@ -6,7 +6,7 @@ var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/?has_geometry=true&page_size=5000',
+    locations_url: domain + 'locations/?has_geometry=true&for_map=true&page_size=5000',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/?page_size=100',
@@ -22,9 +22,11 @@ var settings = {
     annotations_search_url: domain + 'annotations/search/',
     annotations_detail_url: domain + 'annotations/detail/',
     annotations_create_url: domain + 'annotations/create/',
+    annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
     collages_create_url: domain + 'collages/create/',
     collageitems_create_url: domain + 'collageitems/create/',
-    management_ui_url: 'http://api.dijkdata.nl/management/'
+    management_ui_url: 'http://api.dijkdata.nl/management/',
+    summary_url: domain + 'summary/'
 };
 
 /**

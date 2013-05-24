@@ -2,7 +2,7 @@
 
 Lizard.Collections.InfiniteTimeseries = Backbone.Collection.extend({
   url: function() {
-    return settings.timeseries_url + '?order=name&page_size=20&page=' + this.page + '&name=' + this.name;
+    return settings.timeseries_url + '&order=name&value_type=0,1&page_size=' + (this.pageSize * this.page) + '&page=1&name=' + this.name;
   },
   // COMPARATOR DOES NOT WORK WELL HERE, MUST HAVE PROPER ORDERING ON SERVER RETURN?
   parse: function(resp, xhr) {
@@ -19,4 +19,12 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
   },
   url: settings.timeseries_url,
   model: Lizard.Models.Timeserie
+});
+
+Lizard.Collections.Events = Backbone.Collection.extend({
+  url: settings.timeseries_url,
+  model: Lizard.Models.Event,
+  parse: function(resp, xhr) {
+    return resp;
+  }
 });

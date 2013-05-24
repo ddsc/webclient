@@ -26,11 +26,6 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
     'click #reset-collage': 'resetCollage',
     'click #save-collage': 'saveCollage'
   },
-  onShow: function(){
-    this.modal = this.$el.find('#save-modal').modal({ 
-      show: false
-    });
-  },
   triggers: {
     // Disabled this, because the graphs aren't really meant to be dynamicly resized.
     // It causes an invalidation of the view, and all data has to be retrieved again.
@@ -47,7 +42,12 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
   },
   saveCollage: function (e) {
     var self = this;
-    
+    var saveLayout = new Lizard.Windows.Graphs.SaveLayout();
+    Lizard.App.hidden.show(saveLayout);
+    saveLayout.render();
+    this.modal = $('#save-modal').modal({ 
+      show: false
+    });
     self.modal.modal('show');
     // attach submit event to spawned form
     self.modal.find('form').submit(function (e) {
@@ -56,14 +56,19 @@ Lizard.Windows.Graphs.DefaultLayout = Backbone.Marionette.Layout.extend({
         var visibility = $(this).find('input[name="visibility"]').val();
         self.graphCollection.saveCollage(name, visibility)
         .done(function () {
-            self.modal.modal('hide');
             // refresh the collages
             self.collageCollection.fetch();
             self.modal.find('form').unbind('submit');
             $(this).find('input[name="name"]').val("");
+            self.modal.modal('hide');
+            Lizard.App.hidden.close();
         });
     });
   }
+});
+
+Lizard.Windows.Graphs.SaveLayout = Backbone.Marionette.Layout.extend({
+    template: '#save-modal-template'
 });
 
 Lizard.Windows.Graphs.Router = Backbone.Marionette.AppRouter.extend({
@@ -185,7 +190,6 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
       placement: "left",
       content: "Dit is de legenda van de grafiek. Bovendien kunt u hier een CSV bestand exporteren of commentaar plaatsen."
   });
-  tour.start();
 };
 
 Lizard.App.addInitializer(function(){

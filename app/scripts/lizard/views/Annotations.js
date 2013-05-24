@@ -1,8 +1,8 @@
 Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     //tagName: 'div',
     template: '#annotations-template',
+    enableUpdateAnnotations: true,
     mapCanvas: null,
-    mapCanvasEvent: null,
     annotationLayer: null,
     currentXhr: null,
     initialize: function (options) {
@@ -12,26 +12,36 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         if (this.mapCanvas) {
             // This won't work, because Leaflet only pretends to support jQuery events.
             //this.listenTo(this.mapCanvas, "moveend", this.updateAnnotations, this);
-            this.mapCanvasEvent = this.updateAnnotations.bind(this);
-            this.mapCanvas.on("moveend", this.mapCanvasEvent);
+            this.mapCanvas.on("moveend", this.updateAnnotations, this);
+            this.mapCanvas.on("popupopen", this.popupOpen, this);
+            this.mapCanvas.on("popupclose", this.popupClose, this);
         }
         this.updateAnnotations();
         Lizard.App.vent.on("makeAnnotation", Lizard.Views.CreateAnnotationView);
         Lizard.App.vent.on("updateAnnotationsMap", this.updateAnnotations, this);
+        self = this;
+        Lizard.App.vent.on("changedestroyAnnotation", function(){
+            self.enableUpdateAnnotations = true;
+            self.updateAnnotations();
+        });
     },
-    events: {
+    popupOpen: function () {
+        this.enableUpdateAnnotations = false;
     },
-    triggers: {
-        //"click .do-something": "something:do:it"
-    },
-    onDomRefresh: function () {
-        // manipulate the `el` here. it's already
-        // been rendered, and is full of the view's
-        // HTML, ready to go.
+    popupClose: function () {
+        this.enableUpdateAnnotations = true;
     },
     createAnnotationsLayer: function () {
         var self = this;
-        this.annotationLayer = new L.LayerGroup();
+        this.annotationLayer = new L.MarkerClusterGroup({
+                  spiderfyOnMaxZoom: true,
+                  showCoverageOnHover: false,
+                  maxClusterRadius: 100,
+                  iconCreateFunction: function(cluster) {
+                    return new L.DivIcon({ html: '<span class="badge badge-info">' +
+                        cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
+                  }
+                });
         $('.annotation-layer-toggler').click(function(e) {
             var $icon = $(this).find('i');
             if ($icon.hasClass('icon-check-empty')) {
@@ -47,18 +57,18 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         });
     },
     updateAnnotationsLayer: function (annotations) {
+        var self = this;
         this.annotationLayer.clearLayers();
+
         for (var i=0; i<annotations.length; i++) {
             var a = annotations[i];
             if (a.location) {
                 try {
-                    var marker = L.marker(a.location);
-                    var html = this.annotation2html(a);
-                    var popup = L.popup({
-                        autoPan: false,
-                        zoomAnimation: false
-                    })
-                    marker.bindPopup(html, popup);
+                    var marker = L.marker(a.location, {
+                        clickable: true,
+                        url: a.url
+                    });
+                    marker.on('click', self.showPopup, self);
                     this.annotationLayer.addLayer(marker);
                 }
                 catch (ex) {
@@ -67,6 +77,25 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             }
         }
     },
+    showPopup: function (e) {
+        var self = this;
+        var marker = e.target;
+        var url = marker.valueOf().options.url;
+
+        marker.unbindPopup();
+
+        var model = new Lizard.Models.Annotation({url: url});
+        model.fetch()
+        .done(function (model) {
+            var html = self.annotation2html(model);
+            var popup = L.popup({
+                autoPan: false,
+                zoomAnimation: false
+            });
+            marker.bindPopup(html, popup);
+            marker.openPopup();
+        });
+    },
     buildQueryUrlParams: function () {
         var bbox = this.mapCanvas ? this.mapCanvas.getBounds().toBBoxString() : null;
         return {
@@ -74,13 +103,15 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             bbox: bbox
         };
     },
-    updateAnnotations: function () {
+    updateAnnotations: function (e) {
         var self = this;
-        // dont retrieve annotations, when the layer
-        // has been deactivated
-        var url = this.mapCanvas.hasLayer(this.annotationLayer) ?
-            settings.annotations_search_url :
-            settings.annotations_count_url;
+        // dont retrieve annotations, when updating has been 'paused',
+        // for example, during autopan
+        if (!self.enableUpdateAnnotations) {
+            return;
+        }
+
+        var url = settings.annotations_search_url;
         var urlParams = this.buildQueryUrlParams();
 
         // abort previous XHR
@@ -100,10 +131,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         })
         .done(function (data, textStatus, jqXHR) {
             self.model.set({
-                annotationsCount: data.count
+                annotationsCount: data.count,
+                annotations: data.results.length != 0 ? data.results : null
             });
             // hack: update the toggler as well
-            $('.annotation-layer-toggler .badge').text(data.count);
+            $('.annotation .badge').text(data.count);
             if (data.results) {
                 self.updateAnnotationsLayer(data.results);
             }
@@ -116,14 +148,24 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 self.currentXhr = null;
             }
             self.setIsLoading(false);
+
+            if (self.model.get('annotations') != null){
+                var annotationCollection = new Lizard.Collections.Annotation();
+                var annotations = _.each(self.model.get('annotations'), function(annotation){
+                    var model = new Backbone.Model(annotation);
+                    annotationCollection.add(model);
+                });
+                var annotationCollectionView = new Lizard.Views.AnnotationBoxCollectionView({
+                    collection: annotationCollection
+                });
+                self.$el.find('#annotation-overview').append(annotationCollectionView.render().el);
+            }
         });
     },
     setIsLoading: function (isLoading) {
         this.model.set({
             'isLoading': isLoading
         });
-    },
-    modelChanged: function (model, value) {
     },
     modelEvents: {
         'change:isLoading': function (){
@@ -135,43 +177,22 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     onClose: function () {
         // custom cleanup or closing code, here
-        if (this.mapCanvasEvent) {
-            this.mapCanvas.off('moveend', this.mapCanvasEvent);
-        }
+        this.mapCanvas.off('moveend', this.updateAnnotations, this);
+        this.mapCanvas.off("popupopen", this.popupOpen, this);
+        this.mapCanvas.off("popupclose", this.popupClose, this);
+        Lizard.App.vent.off("makeAnnotation", Lizard.Views.CreateAnnotationView);
     },
     templateHelpers: {
         showMessage: function (){
             return '...';
         }
     },
-    annotation2html: function (a) {
-        var created_at = 'n.v.t.';
-        if (a.created_at) {
-            created_at = new Date(a.created_at);
-            created_at = created_at.toLocaleString();
+    annotation2html: function (annoModel) {
+        if (annoModel.get('username') === account.get('user').username){
+            annoModel.set({rwpermission: true});
+        } else {
+            annoModel.set({rwpermission: false});
         }
-
-        var datetime_from = 'n.v.t.';
-        if (a.datetime_from) {
-            datetime_from = new Date(a.datetime_from);
-            datetime_from = datetime_from.toLocaleString();
-        }
-
-        var datetime_until = 'n.v.t.';
-        if (a.datetime_until) {
-            datetime_until = new Date(a.datetime_until);
-            datetime_until = datetime_until.toLocaleString();
-        }
-
-        var title = '';
-        if (a.related_model_str) {
-            title = 'Annotatie bij ' + a.related_model_str;
-        }
-        else {
-            title = 'Annotatie ' + a.id;
-        }
-
-        var annoModel = new Lizard.Models.Annotation(a);
         var annotationPopup = new Lizard.Views.AnnotationPopupView({model: annoModel});
         var html = annotationPopup.render().el;
         return html
@@ -198,7 +219,7 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
         var self = this;
         this.model.destroy()
         .done(function(){
-            Lizard.App.vent.trigger("updateAnnotationsMap", self);
+            Lizard.App.vent.trigger("changedestroyAnnotation", self);
         });
     },
     editAnnotation: function(){
@@ -206,3 +227,32 @@ Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
     }
 });
 
+
+
+Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
+    related_object: null,
+    tagName: 'li',
+    className: 'annotation-open',
+    events:{
+        'click': 'openAnnotation'
+    },
+    collectionEvents: {
+        'change reset remove add' : 'render'
+    },
+    openAnnotation: function(){
+            Lizard.App.vent.trigger("makeAnnotation", this.model);
+    },
+    template: function(model){
+        return _.template(
+            '<span > <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
+    },
+});
+
+Lizard.Views.AnnotationBoxCollectionView = Backbone.Marionette.CollectionView.extend({
+    collection: null,
+    tagName: 'ol',
+    initialize: function(options){
+        this.collection = new Backbone.Collection(options.collection.first(10))
+    },
+    itemView: Lizard.Views.AnnotationBoxItem
+});

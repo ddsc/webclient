@@ -29,67 +29,20 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         format: 'image/png',
         transparent: true,
         reuseTiles: true,
-        attribution: "Dijkdata"
+        attribution: "Dijkdata",
+        maxZoom: 30
       }),
       OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data © OpenStreetMap contributors'
-      }),
-      MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
-        attribution: 'MapBox'
       })
+      // MapBox: new L.TileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-2k9d7u0c/{z}/{x}/{y}.png', {
+      //   attribution: 'MapBox'
+      // })
       // Terrain: new L.Google("TERRAIN", {detectRetina: true}),
       // Hybrid :new L.Google("HYBRID", {detectRetina: true})
     };
   },
   extraLayers: {
-  },
-  getAlarms: function(){
-      var alarms = new Lizard.geo.Layers.WMSLayer({
-      "layer_name": "dijkdata:alarm_view",
-      "wms_source": {
-          "layer_name": "dijkdata:alarm_view",
-        "display_name": "Alarmen",
-        "description": "",
-        "metadata": null,
-        "legend_url": "",
-        "enable_search": true,
-        "styles": "",
-        "format": "image/png",
-        "height": "256",
-        "width": "256",
-        "tiled": "true",
-        "transparent": "true",
-        "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms",
-        "opacity": null,
-        "type": "wms",
-        "options": {
-          "buffer": 0,
-          "isBaseLayer": false,
-          "opacity": 1.0
-        }
-      },
-      "display_name": "Alarmen",
-      "description": "",
-      "metadata": null,
-      "legend_url": "",
-      "enable_search": true,
-      "styles": "",
-      "format": "image/png",
-      "height": "256",
-      "width": "256",
-      "tiled": "true",
-      "transparent": "true",
-      "selected": true,
-      "wms_url": "http://maps.dijkdata.nl/geoserver/dijkdata/wms",
-      "opacity": null,
-      "type": "wms",
-      "options": {
-        "buffer": 0,
-        "isBaseLayer": false,
-        "opacity": 1.0
-      }
-    });
-    return alarms;
   },
   onShow: function(){
     // Best moment to initialize Leaflet and other DOM-dependent stuff
@@ -125,7 +78,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
         onAdd: function (map) {
 
-          var className = 'leaflet-control-zoom leaflet-bar',
+          var className = 'leaflet-control-zoom leaflet-bar leaflet-bar-geolocate',
               container = L.DomUtil.create('div', className);
 
           this._map = map;

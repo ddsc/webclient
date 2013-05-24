@@ -73,18 +73,17 @@ Lizard.Utils.Favorites = {
   toggleSelected: function (model){
     uuid = model.url.split("eries/")[1].split("/")[0];
     if (favoriteCollection.where({timeserie: uuid}).length === 0){
-            name = model.attributes.name;
             var favorite = favoriteCollection.create({
               data: {
                 location: model.attributes.location,
                 timeserie: uuid,
-                name: name
+                name: model.attributes.name
             }
             });
             // favoriteCollection.add(favorite);
     }
     else {
-      favorite = favoriteCollection.where({timeserie: uuid})[0];
+      var favorite = favoriteCollection.where({timeserie: uuid})[0];
       favorite.destroy({wait:true});
     }
   }
@@ -163,7 +162,7 @@ var timeUnitSize = {
     "year": 365.2425 * 24 * 60 * 60 * 1000
 };
 var dayNames = ['zo', 'ma', 'di', 'wo', 'do', 'vr','za'];
-var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+var monthNames = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
 function timeTickFormatter (v, axis, tickIndex, tickLength) {
     var d = $.plot.dateGenerator(v, axis.options);
 
@@ -253,12 +252,12 @@ function initializePlot($container, options) {
                 {
                     axisLabel: '',
                     zoomRange: false,
-                    panRange: false,
+                    panRange: false
                 },
                 {
                     axisLabel: '',
                     zoomRange: false,
-                    panRange: false,
+                    panRange: false
                 }
             ],
             grid: {
@@ -442,6 +441,18 @@ $(document).ajaxStop(function () {
     $('html').removeClass('busy');
 });
 
+$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+    // Aborted request are not an error.
+    if (thrownError !== 'abort') {
+        $('.top-right').notify({
+            type: 'error',
+            message: {
+                text: 'Er gaat iets fout, namelijk: ' + thrownError
+            }
+        }).show();
+    }
+});
+
 }(this));
 
 
@@ -450,8 +461,9 @@ function truncateString (string, limit, breakChar, rightPad) {
 
     var substr = string.substr(0, limit);
     if ((breakPoint = substr.lastIndexOf(breakChar)) >= 0) {
-        if (breakPoint < string.length -1) {
+        if (breakPoint <= string.length -1) {
             return string.substr(0, breakPoint) + rightPad;
         }
     }
+    return string;
 }

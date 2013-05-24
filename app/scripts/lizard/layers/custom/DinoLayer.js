@@ -82,7 +82,7 @@ Lizard.geo.Layers.Custom.DinoLayer = Lizard.geo.Layers.WMSLayer.extend({
       layerDefs:'{}'
     };
     if (this.get('subtype') === 'sondering') {
-      param.layerDefs = "0:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE ='BOTH');1:(INFORMATION_TYPE = 'DATA' OR INFORMATION_TYPE = 'BOTH')";
+      param.layerDefs = "0:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD ='BOTH');1:(INFORMATION_TYPE_CD = 'DATA' OR INFORMATION_TYPE_CD = 'BOTH')";
     }
 
     var url = base_url + $.param(param);

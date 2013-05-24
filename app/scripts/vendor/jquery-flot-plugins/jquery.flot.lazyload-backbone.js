@@ -49,6 +49,9 @@
             if (data.axis_label_y) {
                 self.axisLabelY = data.axis_label_y;
             }
+            for (var key in data) {
+                if (/^timer/.test(key)) { console.log(data.label + ': ' + key + ' = ' + data[key]); }
+            }
             self.needsUpdate = false;
             if (typeof successCallback !== 'undefined') {
                 successCallback(self);
@@ -191,7 +194,8 @@
         var minX = xaxis.min;
         var maxX = xaxis.max;
         var params = {
-            eventsformat: 'flot'
+            eventsformat: 'flot',
+            ignore_rejected: 'true'
         };
 
         var start = null;

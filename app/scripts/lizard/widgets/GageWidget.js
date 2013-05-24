@@ -7,7 +7,7 @@ Lizard.ui.Widgets.GageWidget = Marionette.ItemView.extend({
     var that = this;
     var settings = {
       id: 'gage_' + this.model.get('widgetId'),
-      value: getRandomInt(this.model.get('min'), this.model.get('max')),
+      value: this.model.get('value'),
       min: this.model.get('min'),
       max: this.model.get('max'),
       title: this.model.get('title'),
@@ -24,11 +24,11 @@ Lizard.ui.Widgets.GageWidget = Marionette.ItemView.extend({
 
     this.justGageRef = new JustGage(settings);
 
-    if (!this.model.get('value')) {
-      setInterval(function() { // <-- commented during development...
-        that.justGageRef.refresh(getRandomInt(that.model.get('min'),that.model.get('max')));
-      }, getRandomInt(that.model.get('refreshRate') * 0.7,that.model.get('refreshRate') * 1.3));
-    }
+    // if (!this.model.get('value') && (this.model.get('value') !== 0)) {
+    //   setInterval(function() { // <-- commented during development...
+    //     that.justGageRef.refresh(getRandomInt(that.model.get('min'),that.model.get('max')));
+    //   }, getRandomInt(that.model.get('refreshRate') * 0.7,that.model.get('refreshRate') * 1.3));
+    // }
     return this;
   }
 });
