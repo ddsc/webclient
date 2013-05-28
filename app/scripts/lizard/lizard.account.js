@@ -85,7 +85,7 @@ Lizard.Account.accountRoute = function() {
     content: "Stel hier uw default zoom in van de kaart. Het formaat is latitude, longitude en zoomniveau, " +
       "Gescheiden door een komma. " +
       "Als u op de kaart zoomt naar het gebied dat u wilt zien, dan kunt u in de adresbalk het deel na de '/'" +
-      "kopiëren en hier invullen (als voorbeeld: 5.16082763671875,51.95442214470791,7 "
+      "kopiëren en hier invullen (als voorbeeld: 5.1608276367,51.95442214470,7 "
   });
 
 };
