@@ -49,13 +49,45 @@ Lizard.Account.Router = Backbone.Marionette.AppRouter.extend({
 });
 
 Lizard.Account.accountRoute = function() {
-    // Apparantly, 'account' is a global instance model, like
-    // workspaceCollection et al. It's initialized in lizard.app.js,
-    // but only AFTER this code is executed.
-    accountView = new Lizard.Account.View({
-        model: account
-    });
-    Lizard.App.content.show(accountView);
+  // Apparantly, 'account' is a global instance model, like
+  // workspaceCollection et al. It's initialized in lizard.app.js,
+  // but only AFTER this code is executed.
+  accountView = new Lizard.Account.View({
+      model: account
+  });
+  Lizard.App.content.show(accountView);
+
+  tour = new Tour({
+    labels: {
+        next: "Verder »",
+        prev: "« Terug",
+        end: "Einde uitleg"
+    },
+    useLocalStorage: false,
+    backdrop: true
+  });
+  tour.addStep({
+      element: "#profile_link",
+      title: "Profiel",
+      placement: "right",
+      content: "Via deze link komt u op een pagina, waar u uw profiel kunt beheren."
+  });
+  tour.addStep({
+    element: "#timeperiod-controls",
+    title: "Default periode",
+    placement: "right",
+    content: "Stel hier u default tijdsperiode in."
+  });
+  tour.addStep({
+    element: "#default-location",
+    title: "Default zoom",
+    placement: "right",
+    content: "Stel hier uw default zoom in van de kaart. Het formaat is latitude, longitude en zoomniveau, " +
+      "Gescheiden door een komma. " +
+      "Als u op de kaart zoomt naar het gebied dat u wilt zien, dan kunt u in de adresbalk het deel na de '/'" +
+      "kopiëren en hier invullen (als voorbeeld: 5.16082763671875,51.95442214470791,7 "
+  });
+
 };
 
 Lizard.App.addInitializer(function() {

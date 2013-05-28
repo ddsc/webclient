@@ -162,7 +162,7 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   });
   tour.addStep({
       element: "#presetsRegion",
-      title: "Tijdseries",
+      title: "Grafieken",
       placement: "right",
       content: "Dit zijn de voorgedefinieerde grafieken. Deze bestaan uit meerdere tijdseries. Als de grafiek van u is, kunt u deze verwijderen."
   });

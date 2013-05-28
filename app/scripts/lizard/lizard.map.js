@@ -189,7 +189,7 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
           "aan de kaart. Hier zitten ook de kaartlagen voor alarmen en status/storingen bij."
     });
     tour.addStep({
-        element: "#ddsc_layers",
+        element: "#ddsc_temp",
         title: "DDSC kaartlagen",
         placement: "right",
         content: "Dit zijn twee specifieke kaartlagen voor het DDSC. De sensor locaties en de annotaties " +
