@@ -216,18 +216,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       }, 350);
     }
     return;
-
-
-
-    //this.clickcount += 1;
-    if (that.clickcount = 1 ){
-      setTimeout(function(){
-        if (that.clickcount = 1){
-          that.onMapClick(event)
-        }
-        that.clickcount = 0;
-      }, 1000);
-    } 
   }, 
   onMapClick: function(event) {
     var coords = event.latlng;
