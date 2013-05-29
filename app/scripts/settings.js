@@ -26,7 +26,9 @@ var settings = {
     collages_create_url: domain + 'collages/create/',
     collageitems_create_url: domain + 'collageitems/create/',
     management_ui_url: 'http://api.dijkdata.nl/management/',
-    summary_url: domain + 'summary/'
+    summary_url: domain + 'summary/',
+    api_version: 'v1',
+    webclient_version: '1.0.0'
 };
 
 /**

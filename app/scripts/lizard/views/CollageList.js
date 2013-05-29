@@ -21,7 +21,7 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
         $('.top-right').notify({
             type: 'error',
             message: {
-              text: 'Grafiek is NIET verwijderd.'
+              text: 'Er gaat iets mis. Grafiek is NIET verwijderd.'
             }}).show(); 
       });
     

@@ -1024,9 +1024,14 @@
     <li><a href="#account" target="">Uw gegevens</a></li>
     <li class="divider"></li>
     <li class="nav-header">DDSC</li>
+
     <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalHelp">Help</a></li>
     <li><a href="javascript:void(0);" id="startTour">Rondleiding</a></li>
     <li><a href="#" id="logout">Uitloggen</a></li>
+    
+    <li class="divider"></li>
+    <li class="nav-header">Webclient version: <%= settings.webclient_version %></li>
+    <li class="nav-header">API version : <%= settings.api_version %></li>
     </ul>
     <% } else { %>
     <a id="login" href="#">
