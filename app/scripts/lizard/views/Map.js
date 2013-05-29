@@ -180,6 +180,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.clickcount = 0;
     var that = this;
     this.mapCanvas.on('click', this.checkSingleClick, that);
+    this.mapCanvas.on('dblclick', this.cancelSingleClick, that);
   },
   setInitialZoom: function(lonlatzoom) {
     this.lon = lonlatzoom.split(',')[0];
@@ -196,9 +197,29 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       lonlatzoom.split(',')[2]
     );
   },
+  clickTimer: null,
+  cancelSingleClick: function(event){
+    if (this.clickTimer != null) {
+      clearTimeout(this.clickTimer);
+      this.clickTimer = null;
+    }
+  },
   checkSingleClick: function(event){
-    this.clickcount += 1;
-    var that = this;
+      var that = this;
+      if (this.clickTimer == null) {
+      this.clickTimer = setTimeout(function(){
+        //if (that.clickcount = 1){
+          that.onMapClick(event);
+          that.clickTimer = null;
+        //}
+        //that.clickcount = 0;
+      }, 350);
+    }
+    return;
+
+
+
+    //this.clickcount += 1;
     if (that.clickcount = 1 ){
       setTimeout(function(){
         if (that.clickcount = 1){
