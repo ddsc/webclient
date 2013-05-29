@@ -32,10 +32,28 @@ Lizard.Management.management = function(){
   Lizard.managementView = new Lizard.Management.DefaultView({
 
   });
+
   Lizard.App.content.show(Lizard.managementView);
 
   Backbone.history.navigate('management');
+
+  tour = new Tour({
+      labels: {
+        next: "Verder »",
+        prev: "« Terug",
+        end: "Einde uitleg"
+      },
+      useLocalStorage: false,
+      backdrop: true
+    });
+    tour.addStep({
+        element: "#content",
+        placement: "up",
+        content: "Kies de 'help' knop."
+    });
 };
+
+
 
 Lizard.App.addInitializer(function(){
   Lizard.Management.router = new Lizard.Management.Router({

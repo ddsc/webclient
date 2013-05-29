@@ -162,21 +162,21 @@ Lizard.Windows.Graphs.graphsRoute = function(collageid){
   });
   tour.addStep({
       element: "#presetsRegion",
-      title: "Tijdseries",
+      title: "Grafieken",
       placement: "right",
-      content: "Dit zijn de voorgedefinieerde grafieken. Deze bestaan uit meerdere tijdseries. Als de grafiek van u is, kunt u deze verwijderen of opslaan."
+      content: "Dit zijn de voorgedefinieerde grafieken. Deze bestaan uit meerdere tijdseries. Als de grafiek van u is, kunt u deze verwijderen."
   });
   tour.addStep({
       element: "#save-collage",
-      title: "Nieuwe collage opslaan",
+      title: "Nieuwe grafiekscherm opslaan",
       placement: "top",
-      content: "Hiermee slaat u een nieuwe collage op."
+      content: "Hiermee slaat u een grafiekscherm op."
   });
   tour.addStep({
       element: "#selectionRegion",
       title: "Tijdreeksen",
       placement: "right",
-      content: "Hier kunt u tijdreeksen uitzoeken om in de grafiek te tekenen. Sleep de gewenste tijdreeks naar de blokken aan de rechterkant. (zodra uw begint te slepen, zullen deze blokken oplichten)"
+      content: "Hier kunt u tijdreeksen uitzoeken om in de grafiek te tekenen. Sleep de gewenste tijdreeks naar de blokken aan de rechterkant."
   });
   tour.addStep({
       element: "#searchTimeseries",

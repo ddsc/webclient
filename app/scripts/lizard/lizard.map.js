@@ -161,25 +161,40 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
         element: "#leafletRegion",
         title: "Kaart",
         placement: "left",
-        content: "Hier ziet u de kaart. Hier ziet u de locaties van de sensoren. Voor meer informatie kunt u hier op klikken."
+        content: "Dit is de kaart. Hier ziet u de locaties van de sensoren. Door de sensor locaties te selecteren" +
+          "krijgt u meer informatie. Via de knop rechtsboven in de kaart kunt u andere achtergrond kaarten " +
+          "selecteren. Met de 'waterkaart' kunt u nog verder inzoomen."
     });
     tour.addStep({
         element: "#workspaceListRegion",
-        title: "Kaartlagen",
+        title: "Kaarten",
         placement: "right",
-        content: "Hier ziet u de beschikbare kaartlagen"
+        content: "Dit zijn voorgedefinieerde kaarten. Door een kaart te selecteren worden er direct een aantal" +
+          "kaartlagen geselecteerd en zoomt de kaart vaak naar het gebied waar de kaart betrekking op heeft."
+    });
+    tour.addStep({
+        element: "#workspaceRegion",
+        title: "Kaarten",
+        placement: "right",
+        content: "Dit zijn de geselecteerde kaartlagen. Door één van de kaartlagen te selecteren kan er extra" +
+          "informatie over de objecten worden opgevraagd door een object van deze kaartlaag te selecteren op de kaart."+
+          "Door rechts op de pijl de drukken kan de doorzicht van de kaartlaag worden gekozen en de " +
+          "kaartlaag worden verwijderd."
+    });
+    tour.addStep({
+        element: "#extramaplayers-button",
+        title: "Kaarten",
+        placement: "right",
+        content: "Met deze knop wordt een overzicht getoond van extra kaartlagen die toegevoegd kunnen worden " +
+          "aan de kaart. Hier zitten ook de kaartlagen voor alarmen en status/storingen bij."
     });
     tour.addStep({
         element: "#ddsc_temp",
-        title: "Statuslagen",
+        title: "DDSC kaartlagen",
         placement: "right",
-        content: "Hier ziet u de statuslagen die iets vertellen over de alarmen/storingen"
-    });
-    tour.addStep({
-        element: ".annotation-layer-toggler",
-        title: "Annotaties",
-        placement: "right",
-        content: "Hier ziet u commentaar op locaties of tijdreeksen"
+        content: "Dit zijn twee specifieke kaartlagen voor het DDSC. De sensor locaties en de annotaties " +
+          "(opmerkingen). Extra opmerkingen kunnen worden toegevoegd met de knop linksboven in de kaart of " +
+          "via de popup bij sensor locaties."
     });
 };
 

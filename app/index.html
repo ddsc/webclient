@@ -822,7 +822,7 @@
         </div>
         <div class="btn-toolbar pull-right">
           <!-- <button type="button" id="reset-collage" class="btn btn-danger">Reset collage</button> -->
-          <button type="button" id="save-collage" class="btn btn-success hidden-print">Kaartenscherm opslaan</button>
+          <button type="button" id="save-collage" class="btn btn-success hidden-print">Grafiekenscherm opslaan</button>
         </div>
       </div>
       <div id="ts-info-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="location-modal-label" aria-hidden="true"></div>
@@ -960,12 +960,12 @@
                     <tr><td>Volledige naam</td><td><%= user.first_name %> <%= user.last_name %></td></tr>
                 </table>
                 <p>
-                    <a href="https://sso.lizard.net/" target="_blank">Pas uw profiel aan op de Open Water ID site.</a>
+                    <a href="https://sso.lizard.net/" target="_blank" id="profile_link">Pas uw profiel aan op de Open Water ID site.</a>
                 </p>
                 <h4>Voorkeuren</h4>
                 <form id="preferences-form" class="form-horizontal" method="post">
                     <div class="control-group">
-                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode</label>
+                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode, afgelopen:</label>
                         <div id="timeperiod-controls" class="controls">
                             <label class="radio">
                                 <input type="radio" name="timeperiod" value="" checked>
@@ -993,7 +993,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="control-group">
+                    <div class="control-group" id="default-location">
                         <label class="control-label" for="intialzoom-controls">Standaard locatie</label>
                         <div id="initialzoom-controls" class="controls">
                             <label class="text">

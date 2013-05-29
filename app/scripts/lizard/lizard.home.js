@@ -143,7 +143,7 @@ Lizard.Home.home = function(){
         end: "Einde uitleg"
     },
     useLocalStorage: false,
-    backdrop: true,
+    backdrop: true
   });
   tour.addStep({
       element: ".map-menu",
