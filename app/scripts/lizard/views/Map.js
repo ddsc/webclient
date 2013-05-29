@@ -177,7 +177,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.initWorkspace();
     this._initialEvents();
 
-    this.mapCanvas.on('click', _.bind(this.onMapClick, this));
+    this.clickcount = 0;
+    var that = this;
+    this.mapCanvas.on('click', this.checkSingleClick, that);
   },
   setInitialZoom: function(lonlatzoom) {
     this.lon = lonlatzoom.split(',')[0];
@@ -194,10 +196,23 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       lonlatzoom.split(',')[2]
     );
   },
+  checkSingleClick: function(event){
+    this.clickcount += 1;
+    var that = this;
+    if (that.clickcount = 1 ){
+      setTimeout(function(){
+        if (that.clickcount = 1){
+          that.onMapClick(event)
+        }
+        that.clickcount = 0;
+      }, 1000);
+    } 
+  }, 
   onMapClick: function(event) {
     var coords = event.latlng;
     var that = this;
     var layers = this.workspace.where({selected:true});
+    this.clickcount = 0;
 
     if (layers.length < 1) {
       // alert('selecteer eerst een kaartlaag');
