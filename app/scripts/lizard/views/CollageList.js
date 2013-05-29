@@ -10,12 +10,21 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
     this.model.bind('change', this.render);
   },
   removeCollage: function(){
-    this.model.destroy();
-    $('.top-right').notify({
-        type: 'alert',
-        message: {
-          text: 'Grafiek samenstelling is succesvol verwijderd'
-        }}).show();
+    this.model.destroy().done(
+      function (){
+        $('.top-right').notify({
+            type: 'alert',
+            message: {
+              text: 'Grafiek samenstelling is succesvol verwijderd'
+            }}).show();    
+      }).error(function(){
+        $('.top-right').notify({
+            type: 'error',
+            message: {
+              text: 'Grafiek is NIET verwijderd.'
+            }}).show(); 
+      });
+    
   },
   saveCollage: function(){
     this.model.save();

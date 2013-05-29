@@ -609,7 +609,7 @@
         </span>
             <span class="content"><%= name %></span>
           <span class="pull-right">
-            <i class="icon-remove remove"></i>
+            <% if (visibility === 'private'){%> <i class="icon-remove remove"></i><% } %>
           </span>
         </div>
     </script>
