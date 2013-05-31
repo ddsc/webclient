@@ -11,7 +11,7 @@ Lizard.Models.Collage = Backbone.AssociatedModel.extend({
     icon: 'icon-globe'
   },
   url: function() {
-    var origUrl = Backbone.Model.prototype.url.call(this);
+    var origUrl = this.get('url');
     return origUrl += _.last(origUrl) === '/' ? '' : '/';
   }
 });
