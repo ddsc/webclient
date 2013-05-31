@@ -151,6 +151,42 @@ Lizard.Home.home = function(){
       placement: "bottom",
       content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
   });
+  tour.addStep({
+      element: "#status-overview",
+      title: "Status overzicht",
+      placement: "right",
+      content: "Overzicht van de actieve alarmen, storingen en nieuwe metingen van gisteren"
+  });
+  tour.addStep({
+      element: "#map-links",
+      title: "Kaarten",
+      placement: "right",
+      content: "Snelkoppelingen naar kaarten"
+  });
+  tour.addStep({
+      element: "#graph-links",
+      title: "Grafieken",
+      placement: "right",
+      content: "Snelkoppelingen naar uw opgeslagen grafiekenschermen"
+  });
+  tour.addStep({
+      element: "#measure-alarm",
+      title: "Alarmen",
+      placement: "right",
+      content: "Totaal aantal alarmen in één oogopslag"
+  });
+  tour.addStep({
+      element: "#measure-new-measurement",
+      title: "Nieuwe metingen",
+      placement: "top",
+      content: "Aantal metingen dat gisteren is binnengekomen"
+  });
+  tour.addStep({
+      element: "#measure-status",
+      title: "Storingen",
+      placement: "left",
+      content: "Aantal tijdseries dat al te lang niet meer is binnengekomen"
+  });
 };
 
 Lizard.App.addInitializer(function(){
