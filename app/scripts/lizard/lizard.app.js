@@ -60,7 +60,11 @@ Lizard.App.on('initialize:before', function() {
   });
 
   Lizard.App.on('initialize:after', function() {
-    $('span#APIVersionNumber').html(settings.api_version);
+    
+
+    $.getJSON('http://api.dijkdata.nl/api/v1/version/', function(json) {
+      $('span#APIVersionNumber').html(json.version);
+    });
     $('span#webclientVersionNumber').html(settings.webclient_version);
   });
 
