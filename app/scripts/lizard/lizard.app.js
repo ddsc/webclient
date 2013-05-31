@@ -51,12 +51,17 @@ Lizard.App.on('initialize:before', function() {
   success: function(model){
       if (!model.get('authenticated')) {
         $('.top-right').notify({
-          type: 'warning', 
+          type: 'warning',
           message: {text: 'U bent niet ingelogd.'},
           fadeOut: {enabled: true, delay: 6000}
         }).show();
       }
     }
+  });
+
+  Lizard.App.on('initialize:after', function() {
+    $('span#APIVersionNumber').html(settings.api_version);
+    $('span#webclientVersionNumber').html(settings.webclient_version);
   });
 
   workspaceCollection = new Lizard.Collections.Workspace();

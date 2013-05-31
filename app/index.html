@@ -1028,10 +1028,6 @@
     <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalHelp">Help</a></li>
     <li><a href="javascript:void(0);" id="startTour">Rondleiding</a></li>
     <li><a href="#" id="logout">Uitloggen</a></li>
-    
-    <li class="divider"></li>
-    <li class="nav-header">Webclient version: <%= settings.webclient_version %></li>
-    <li class="nav-header">API version : <%= settings.api_version %></li>
     </ul>
     <% } else { %>
     <a id="login" href="#">
@@ -1076,6 +1072,14 @@
                     <!-- <li><a href="#" class="talkback">Rapporteer een problem</a></li> -->
                 </ul>
             </p>
+            <p>
+                <h4>Software versies</h4>
+                <ul>
+                  <li class="nav-header">Webclient version: <span id="webclientVersionNumber">--</span></li>
+                  <li class="nav-header">API version : <span id="APIVersionNumber">--</span></li>                
+                </ul>
+            </p>            
+
         </div>
         <div class="modal-footer">
             <a href="javascript:void(0)" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
