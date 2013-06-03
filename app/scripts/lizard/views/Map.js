@@ -149,9 +149,11 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         provider: new L.GeoSearch.Provider.Google()
     }).addTo(mapCanvas);
 
-    var fullScreen = new L.Control.FullScreen();
-    this.mapCanvas.addControl(fullScreen);
-
+    // only enable fullscreen control when not on IE
+    if (navigator.appName.indexOf("Internet Explorer") == -1) {
+        var fullScreen = new L.Control.FullScreen();
+        this.mapCanvas.addControl(fullScreen);
+    }
 
     L.control.scale().addTo(this.mapCanvas);
     //var legend = new Lizard.Views.MapLegend(this.workspace);
