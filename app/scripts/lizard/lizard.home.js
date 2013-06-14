@@ -69,7 +69,7 @@ Lizard.Home.home = function(){
     }
   });
   var summary = new Lizard.Home.Summary();
-  summary.url = 'http://api.dijkdata.nl/api/v1/summary';
+  summary.url = 'http://api.ddsc.nl/api/v1/summary';
   summary.fetch({success: function(model, xhr){
 
     var maxActiveCount = 50;
@@ -149,7 +149,7 @@ Lizard.Home.home = function(){
       element: ".map-menu",
       title: "Kaart",
       placement: "bottom",
-      content: "Welkom op dijkdata.nl - Je kunt naar kaarten en grafieken via dit menu"
+      content: "Welkom op DDSC.nl - Je kunt naar kaarten en grafieken via dit menu"
   });
   tour.addStep({
       element: "#status-overview",

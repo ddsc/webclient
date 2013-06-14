@@ -1,8 +1,8 @@
 var extra = '?page_size=10'; //
 // var extra = '?page_size=1000';
 
-var domain = (domain ? domain : 'http://api.dijkdata.nl/api/v1/');
-var test_domain = (test_domain ? test_domain : 'http://test.api.dijkdata.nl/api/v1/');
+var domain = (domain ? domain : 'http://api.ddsc.nl/api/v1/');
+var test_domain = (test_domain ? test_domain : 'http://test.api.ddsc.nl/api/v1/');
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
@@ -25,7 +25,7 @@ var settings = {
     annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
     collages_create_url: domain + 'collages/create/',
     collageitems_create_url: domain + 'collageitems/create/',
-    management_ui_url: 'http://api.dijkdata.nl/management/',
+    management_ui_url: 'http://api.ddsc.nl/management/',
     summary_url: domain + 'summary/',
     api_version: 'v1',
     webclient_version: '1.0.0'
