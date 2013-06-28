@@ -734,13 +734,15 @@
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:1px;height:1px;border:8px solid <%=color%>; background-color: <%= color %>!important;"></div>
             <div class="pull-left">
                 <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
-                    <%=truncateString(timeseries.get('name'), 10, '', '...')%><br/>
-                    <small><%=timeseries.get('parameter').description%> (<%=timeseries.get('unit').description%>)</small>
+                    <span class="hidden-tablet"><%=truncateString(timeseries.get('name'), 20, '', '...')%></span><br/>
+                    <small class="hidden-tablet"><%= truncateString(timeseries.get('parameter').description, 15, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 10, '', '...') %>)</small>
+                    <span class="hidden-phone hidden-desktop"><%=truncateString(timeseries.get('name'), 10, '', '...')%></span><br/>
+                    <small class="hidden-phone hidden-desktop"><%= truncateString(timeseries.get('parameter').description, 10, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 15, '', '...') %>)</small>                    
                 </h5>
             </div>
         </div>
         </a>
-        <ul class="hide inline">
+        <ul class="hide inline pull-left">
           <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> <span class="hidden-tablet">Annoteer</span></button></li>
           <li><a href="" class="btn btn-mini csv-link"><i class="icon-share-alt"></i> <span class="hidden-tablet">CSV</span></a></li>
