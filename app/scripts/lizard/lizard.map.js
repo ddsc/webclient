@@ -17,8 +17,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
 Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'map': 'map',
-      'map/:lonlatzoom': 'map', // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
-      'map/:lonlatzoom/:workspacekey': 'map' // workspace is a primary key that refers to a specific workspace
+      'map/:lon,:lat,:zoom': 'map', // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
+      'map/:workspacekey': 'map' // workspace is a primary key that refers to a specific workspace
     }
 });
 
@@ -42,16 +42,8 @@ window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(lonlatzoom, workspacekey){
+Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   console.log('Lizard.Map.map()');
-
-  if (!lonlatzoom || lonlatzoom.split(',').length < 2) {
-    if (account.get('initialZoom').split(',').length === 3){
-      lonlatzoom = account.get('initialZoom');
-    } else{
-      lonlatzoom = '5.16082763671875,51.95442214470791,7';
-    }
-  }
 
   // Instantiate Map's default layout
   Lizard.mapView = new Lizard.Map.DefaultLayout();
@@ -70,22 +62,15 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
     workspaceView: Lizard.workspaceView
   });
 
-  var leafletView = new Lizard.Views.Map({
-    lon: lonlatzoom.split(',')[0],
-    lat: lonlatzoom.split(',')[1],
-    zoom: lonlatzoom.split(',')[2],
-    workspace: Lizard.workspaceView.getCollection()
-  });
-
-
-  if (workspacekey){
+  var lon = null;
+  if (lon_or_workspacekey && !lat && !zoom){
     var selectWorkspace = function(collection) {
-      workspace = collection.get(workspacekey);
-      collection.each(function(worksp) {
-        worksp.set('selected', false);
+      var workspaceItem = collection.get(lon_or_workspacekey);
+      collection.each(function(workspaceItem2) {
+        workspaceItem2.set('selected', false);
       });
-      workspace.set('selected', true);
-      workspace.trigger('select_workspace', workspace);
+      workspaceItem.set('selected', true);
+      collection.trigger('select_workspace', workspaceItem);
     };
     if (workspaceCollection.models.length > 0) {
       selectWorkspace(workspaceCollection);
@@ -93,6 +78,24 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       workspaceCollection.once('sync', selectWorkspace);
     }
   }
+  else if (lon_or_workspacekey && lat && zoom) {
+    lon = lon_or_workspacekey;
+  }
+  else {
+      var accountZoom = account.get('initialZoom');
+      if (accountZoom && accountZoom.split(',').length === 3) {
+        lon = accountZoom.split(',')[0];
+        lat = accountZoom.split(',')[1];
+        zoom = accountZoom.split(',')[2];
+      }
+  }
+
+  var leafletView = new Lizard.Views.Map({
+    lon: lon,
+    lat: lat,
+    zoom: zoom,
+    workspace: Lizard.workspaceView.getCollection()
+  });
 
   Lizard.mapView.leafletRegion.show(leafletView.render());
 
@@ -127,26 +130,6 @@ Lizard.Map.map = function(lonlatzoom, workspacekey){
       Lizard.Map.ddsc_layers.removeFromMap();
     }
   });
-
-  // Then tell backbone to set the navigation to #map
-  if(lonlatzoom && workspacekey){
-    Backbone.history.navigate('map/' + lonlatzoom + '/' + workspacekey);
-  } else if (lonlatzoom) {
-    Backbone.history.navigate('map/' + lonlatzoom);
-  } else {
-    Backbone.history.navigate('map');
-  }
-
-  Lizard.App.vent.on('mapPan', function(lonlatzoom){
-      urlfragment = Backbone.history.fragment.split('/');
-      if (urlfragment.length === 3){
-        Backbone.history.navigate('map/' + lonlatzoom + '/' + urlfragment[2]);
-      } else if (lonlatzoom) {
-      Backbone.history.navigate('map/' + lonlatzoom);
-      } else {
-        Backbone.history.navigate('map');
-      }
-    });
 
     tour = new Tour({
       labels: {

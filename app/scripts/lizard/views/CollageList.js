@@ -16,15 +16,15 @@ Lizard.Views.Collage = Backbone.Marionette.ItemView.extend({
             type: 'alert',
             message: {
               text: 'Grafiek samenstelling is succesvol verwijderd'
-            }}).show();    
+            }}).show();
       }).error(function(){
         $('.top-right').notify({
             type: 'error',
             message: {
               text: 'Er gaat iets mis. Grafiek is NIET verwijderd.'
-            }}).show(); 
+            }}).show();
       });
-    
+
   },
   saveCollage: function(){
     this.model.save();
