@@ -96,6 +96,7 @@ Lizard.Views.ActiveWorkspace = Backbone.Marionette.CollectionView.extend({
   setWorkspace: function(workspace) {
     this.model = workspace;
     this.collection.reset(workspace.get('workspaceitems').models);
+    Lizard.App.vent.trigger('workspaceZoom', workspace.get('lon_lat_zoom'));
   },
   removeItem: function(model) {
     this.remove(model);

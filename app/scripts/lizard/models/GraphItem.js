@@ -29,7 +29,8 @@ Lizard.Models.GraphItem = Backbone.Model.extend({
         };
         this.set({
             color: preferredColor
-        });
+        },
+        { silent: true });
     },
     initialize: function (options) {
         this.listenTo(this, 'add', this.determineColor, this);

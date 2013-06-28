@@ -17,11 +17,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     // console.log('LeafletView');
     // (value ? this.series.push(value) : 'nothing');
-    this.lon = options.lon; //= (options.lon ? options.lon : 5.16082763671875);
-    this.lat = options.lat; //= (options.lat ? options.lat : 51.95442214470791);
-    this.zoom = options.zoom; //= (options.zoom ? options.zoom : 7);
+    this.lon = (options.lon ? options.lon : 5.16082763671875);
+    this.lat = (options.lat ? options.lat : 51.95442214470791);
+    this.zoom = (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
-    Lizard.App.vent.on('workspaceZoom', this.setInitialZoom, this);
     this.backgroundLayers = {
       // Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
@@ -59,9 +58,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       zoom: this.zoom
     });
     var mapCanvas = this.mapCanvas;
-
-    Lizard.App.vent.off('workspaceZoom', this.setInitialZoom, this);
-    Lizard.App.vent.on('workspaceZoom', this.zoomTo, this);
+    Lizard.App.vent.on('workspaceZoom', this.workspaceZoom, this);
 
     this.mapCanvas.on('click', function(e) {
         console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
@@ -165,16 +162,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     $('#modal').on('show', this.updateModal); //todo: ref to modal
     $('#map').css('height', $(window).height()- $('.footer').height() - $('.navbar').height() - 100);
 
-
-    var mapMove = function(e) {
-      var c = this.mapCanvas.getCenter();
-      var z = this.mapCanvas.getZoom();
-      this.mapCanvas.setView(new L.LatLng(c.lat, c.lng), z);
-      var lonlatzoom = [c.lng, c.lat, z].join(',');
-      Lizard.App.vent.trigger('mapPan', lonlatzoom);
-    };
-
-    this.mapCanvas.on('moveend', mapMove, this);
+    this.mapCanvas.on('moveend', this.mapMove, this);
 
     this.initWorkspace();
     this._initialEvents();
@@ -189,14 +177,27 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = lonlatzoom.split(',')[1];
     this.zoom = lonlatzoom.split(',')[2];
   },
+  mapMove: function (e) {
+      var c = this.mapCanvas.getCenter();
+      var z = this.mapCanvas.getZoom();
+      var lonlatzoom = [c.lng, c.lat, z].join(',');
+
+      Backbone.history.navigate('map/' + lonlatzoom);
+  },
+  workspaceZoom: function(lonlatzoom){
+    // disable moveend event
+    this.mapCanvas.off('moveend', this.mapMove, this);
+    this.zoomTo(lonlatzoom);
+    this.mapCanvas.on('moveend', this.mapMove, this);
+  },
   zoomTo: function(lonlatzoom){
     if (!lonlatzoom || lonlatzoom.split(',').length < 3) {
-      // console.log('ja')
       lonlatzoom = '5.16082763671875,51.95442214470791,7';
     }
     this.mapCanvas.setView(new L.LatLng(
       lonlatzoom.split(',')[1],lonlatzoom.split(',')[0]),
-      lonlatzoom.split(',')[2]
+      lonlatzoom.split(',')[2],
+      { animate: false }
     );
   },
   clickTimer: null,
@@ -218,7 +219,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       }, 350);
     }
     return;
-  }, 
+  },
   onMapClick: function(event) {
     var coords = event.latlng;
     var that = this;
