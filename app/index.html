@@ -174,6 +174,10 @@
       </div>
     </script>
 
+    <script type="text/template" id="map-legend-template">
+      <table style="padding: 5px;"><tr><td><%if(wms_source.legend_url) {%><img src="<%=wms_source.legend_url%>"/><%}%></td></tr></table>
+    </script>
+
     <script type="text/template" id="homepage-item-graph-template">
         <em class="<%=icon%> icon-white"></em>&nbsp;<a href="#graphs/<%=id%>"><%=name%></a>
     </script>
@@ -1365,6 +1369,7 @@
         <script src="scripts/lizard/layers/custom/DinoLayer.js"></script>
     		<script src="scripts/lizard/collections/Annotation.js"></script>
         <script src="scripts/lizard/collections/Layer.js"></script>
+        <script src="scripts/lizard/collections/MapLegend.js"></script>
         <script src="scripts/lizard/collections/Collage.js"></script>
         <script src="scripts/lizard/collections/Favorite.js"></script>
         <script src="scripts/lizard/collections/Filter.js"></script>
@@ -1378,6 +1383,7 @@
 
         <script src="scripts/lizard/lizard.views.js"></script>
         <script src="scripts/lizard/views/InfoModal.js"></script>
+        <script src="scripts/lizard/views/LegendCollection.js"></script>
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
         <script src="scripts/lizard/views/Geocoder.js"></script>

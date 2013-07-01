@@ -9,6 +9,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'workspaceRegion': '#workspaceRegion',
     'annotationsRegion' : '#annotationsRegion',
     'geocoderRegion' : '#geocoderRegion',
+    'legendRegion': '#legendRegion',
     'extraLayerRegion' : '#extramaplayers'
   }
 });
@@ -62,6 +63,11 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
     workspaceView: Lizard.workspaceView
   });
 
+  var legendListView = new Lizard.Views.LegendCollectionView({
+    workspace: Lizard.workspaceView.getCollection()
+  });
+  window.legendlist = legendListView;
+
   var lon = null;
   if (lon_or_workspacekey && !lat && !zoom){
     var selectWorkspace = function(collection) {
@@ -102,6 +108,8 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   Lizard.mapView.workspaceListRegion.show(workspaceListView.render());
   Lizard.mapView.workspaceRegion.show(Lizard.workspaceView.render());
   Lizard.mapView.extraLayerRegion.show(extraLayersView.render());
+
+  Lizard.mapView.legendRegion.show(legendListView.render());
 
   var annotationsModelInstance = new Lizard.Models.Annotations();
   var annotationsView = new Lizard.Views.AnnotationsView({
