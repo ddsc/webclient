@@ -549,13 +549,15 @@
 
     <script type="text/template" id="annotation-popup">
         <p><%= text %></p>
-        <% if (picture_url) { %><hr/>
+        <% if (/\.(png|jpg|jpeg|gif)$/.test(picture_url)) { %><hr/>
           <div>
             <a href="<%= picture_url %>" title="Attachment" target="_blank" style="max-width: 100% !important">
               <img src="<%= picture_url %>" style="width:280px;overflow:hidden;"/>
             </a>
           </div>
-        <%  } %>
+        <% } else { %>
+          <a href="<%= picture_url %>" title="Attachment" target="_blank">
+        <% }%>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
             <p></p>
