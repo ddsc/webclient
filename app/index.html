@@ -175,7 +175,9 @@
     </script>
 
     <script type="text/template" id="map-legend-template">
-      <table style="padding: 5px;"><tr><td><%if(wms_source.legend_url) {%><img src="<%=wms_source.legend_url%>"/><%}%></td></tr></table>
+      <div style="padding: 5px;">
+        <%if(wms_source.legend_url) {%><img style="max-width:100%;" src="<%=wms_source.legend_url%>"/><%}%>
+      </div>
     </script>
 
     <script type="text/template" id="homepage-item-graph-template">
