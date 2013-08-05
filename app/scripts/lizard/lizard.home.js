@@ -69,7 +69,7 @@ Lizard.Home.home = function(){
     }
   });
   var summary = new Lizard.Home.Summary();
-  summary.url = 'http://api.ddsc.nl/api/v1/summary';
+  summary.url = settings.summary_url;
   summary.fetch({success: function(model, xhr){
 
     var maxActiveCount = 50;
