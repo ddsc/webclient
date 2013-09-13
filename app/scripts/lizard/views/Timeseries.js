@@ -27,11 +27,17 @@ Lizard.Views.Timeseries = Backbone.Marionette.ItemView.extend({
     drawGraph: function(e) {
         // add to first graph in the graphs view
         var url = $(e.target).data('url');
+        if (!url) {
+            url = $(e.target).parents('.add[data-url]').data('url');
+        }
         this.graphCollection.models[0].get('graphItems').addTimeseriesByUrl(url);
     },
     tabletGraph: function(e) {
         // add to first graph in the graphs view
         var url = $(e.target).data('url');
+        if (!url) {
+            url = $(e.target).parents('.add[data-url]').data('url');
+        }
         var index = parseInt($(e.target).html()) - 1
         this.graphCollection.models[index].get('graphItems').addTimeseriesByUrl(url);
     },
