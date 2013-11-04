@@ -38,6 +38,7 @@ Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
     return L.tileLayer.wms(this.attributes.wms_url, {
       zIndex: 100 - this.attributes.order,
       layers: this.attributes.layer_name,
+      styles: this.attributes.styles,
       format: this.attributes.format,
       transparent: this.attributes.transparent,
       opacity: this.attributes.opacity,
