@@ -135,7 +135,7 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
         graphRegion: '.carousel-graph-region'
     },
     initialize: function (options) {
-        this.imageTimeseriesCollection = options.imageTimeseries;
+        this.imageTimeseries = options.imageTimeseries;
     },
     onRender: function (e) {
       var self = this;
@@ -147,7 +147,7 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
         img.attr('src', img.data('img-src'));
       });
 
-      var url = self.imageTimeseriesCollection.where({'value_type': 'image'})[0].get('events');
+      var url = self.imageTimeseries.get('events');
       var eventsCollection = new Lizard.Collections.Events();
       eventsCollection.url = url + '?page_size=0';
       eventsCollection.fetch().done(function (collection, response) {
@@ -231,7 +231,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   },
   openCarouselModal: function(e) {
     var modalView = new Lizard.Views.ImageCarouselModal({
-      imageTimeseries: this.model.collection
+      imageTimeseries: this.model
     });
     Lizard.App.hidden.show(modalView);
     modalView.$el.find('.modal').on('hide', function () {
