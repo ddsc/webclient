@@ -11,7 +11,7 @@ Run the following commands to install yeoman. We prefer to install it in a [Vagr
     sudo apt-get install python-software-properties
     sudo add-apt-repository ppa:chris-lea/node.js
     sudo apt-get update
-    sudo apt-get install nodejs npm
+    sudo apt-get install nodejs  #  As of Node.js v0.10.0, the nodejs package from Chris Lea's repo includes npm.
     sudo npm install -g yeoman
     sudo npm install phantomjs
     sudo gem install compass
