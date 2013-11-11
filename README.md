@@ -1,30 +1,13 @@
-
 # DDSC Webclient
 
 **DDSC Webclient** is a javascript application built with [Backbone](http://backbonejs.org/), [Backbone-Marionette](http://marionettejs.com/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/), [Leaflet](http://leafletjs.com/) and [more](https://github.com/ddsc/webclient/tree/master/app/scripts/vendor)...
 
-## Installation
-
-We use [Yeoman](http://yeoman.io/) and [Grunt.js](http://gruntjs.com/) to facilitate building (minification/concatenation) of the production assets.
-Run the following commands to install yeoman. We prefer to install it in a [Vagrant](http://vagrantup.com/) environment:
-
-    sudo apt-get install python-software-properties
-    sudo add-apt-repository ppa:chris-lea/node.js
-    sudo apt-get update
-    sudo apt-get install nodejs  #  As of Node.js v0.10.0, the nodejs package from Chris Lea's repo includes npm.
-    sudo npm install -g yeoman
-    sudo npm install phantomjs
-    sudo gem install compass
-
-Start the webserver after the installation:
+Start the webserver after checking out the repo. All you need is a simple HTTP server :
 
     cd webclient
-    yeoman server
+    python -m SimpleHTTPServer
 
-And point a browser to localhost 3051.
-The 'yeoman server' step is optional, you can also serve it with nginx, apache or just: 
-    
-    $ python -m SimpleHTTPServer
+A BIG problem however is that you also have to checkout the ddsc-api libraries and run the server to get the client to work locally because of Cross-Origin security on the api. You can of course mock the whole thing (see Mock API below). But that is obviously not a very stable solution.
 
 
 
@@ -36,54 +19,6 @@ The 'yeoman server' step is optional, you can also serve it with nginx, apache o
  * Models and collections should for now be in lizard.models.js and lizard.collections.js (because they're usually small)
  * Templates: single lines/small templates may be used 'inline' in the view-code. Large chunks deserve a place in index.html for the designers merit (or later, external and loaded async).
  
-
-
-
-## Tests
-
-### Front-end testing with Casper.js
-
-[Casper.js](http://casperjs.org/) is a bit like Selenium, but faster, more flexible and scriptable.
-
-First, install [Phantom.js](http://phantomjs.org/) for your platform. (OS X users can brew install phantomjs)
-Then, install Casper from a recent tag:
-
-    $ git clone git://github.com/n1k0/casperjs.git
-    $ cd casperjs && git checkout tags/1.0.1
-    
-Make sure both phantomjs and casperjs are in your PATH (symlink into /usr/local/bin for example)
-When all is right, the following should be possible on your system:
-
-    $ which casperjs && which phantomjs
-    /usr/local/bin/casperjs
-    /usr/local/bin/phantomjs
-
-Change directory to test/ and tell Casper to test using the frontend.js script:
-
-    $ casperjs test frontend.js
-    
-This will test the front-end user interface.
-
-
-### Unit testing with Mocha.js
-
-If you've installed Yeoman, you should be able to run the Mocha test-suite from the commandline as such:
-
-    $ yeoman test
-    Testing index.html...........OK
-    >> 11 assertions passed (0s)
-
-    Done, without errors.    
-
-This is perfect for automated testing or for CI systems like Jenkins or Travis.
-Use this for testing Backbone models, collections, functions, in/out values, stuff like that.
-Mocha can run in BDD or TDD mode. More info at http://visionmedia.github.com/mocha/
-Assuming you're serving the project root using a webserver, you should be able to point your browser to test/index.html.
-This will show the test suite in HTML format. Use this to spot errors.
-
-** Note ** The test/index.html file includes the project's javascript files. It also contains all the template fragments, which is obviously not ideal. 
-Perhaps we should start externalizing these templates so they can be included.
-See http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/
 
 
 
