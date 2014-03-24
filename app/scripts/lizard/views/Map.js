@@ -111,6 +111,67 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         }
     });
 
+    // panner:
+    var panControl = L.Control.extend({
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+
+          var className = 'leaflet-control-zoom leaflet-bar leaflet-bar-panner',
+              container = L.DomUtil.create('div', className);
+
+          this._map = map;
+
+          this._leftButton = this._createButton(
+                  '<i class="icon-arrow-left"></i>', 'Links',  className + '-panner',  container, this._panLeft,  this);
+          this._rightButton = this._createButton(
+                  '<i class="icon-arrow-right"></i>', 'Rechts',  className + '-panner',  container, this._panRight,  this);
+          this._downButton = this._createButton(
+                  '<i class="icon-arrow-down"></i>', 'Naar beneden',  className + '-panner',  container, this._panDown,  this);
+          this._upButton = this._createButton(
+                  '<i class="icon-arrow-up"></i>', 'Omhoog',  className + '-panner',  container, this._panUp,  this);
+
+
+          return container;
+
+        },
+        _panLeft: function () {
+          var moveBy = [-100,0];
+          this._map.panBy(moveBy);
+        },
+        _panRight: function () {
+          var moveBy = [100,0];
+          this._map.panBy(moveBy);
+        },
+        _panDown: function () {
+          var moveBy = [0, 100];
+          this._map.panBy(moveBy);
+        },
+        _panUp: function () {
+          var moveBy = [0, -100];
+          this._map.panBy(moveBy);
+        },
+        _createButton: function (html, title, className, container, fn, context) {
+          var link = L.DomUtil.create('a', className, container);
+          link.innerHTML = html;
+          // link.href = '#';
+          link.title = title;
+
+          var stop = L.DomEvent.stopPropagation;
+
+          L.DomEvent
+              .on(link, 'click', stop)
+              .on(link, 'mousedown', stop)
+              .on(link, 'dblclick', stop)
+              .on(link, 'click', L.DomEvent.preventDefault)
+              .on(link, 'click', fn, context);
+
+          return link;
+        }
+    });
+
     var drawControl = new L.Control.Draw({
       draw: {
         position: 'topleft',
@@ -129,6 +190,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.mapCanvas.addControl(drawControl);
 
     this.mapCanvas.addControl(new geolocateControl());
+    this.mapCanvas.addControl(new panControl());
 
     window.mc.on('draw:created', function (e) {
       var type = e.layerType,
