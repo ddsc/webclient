@@ -134,6 +134,46 @@ leaflet-control-legend-icon {
     margin: 5px -10px 5px -6px;
 }
 
+.leaflet-bar-panner > a.leaflet-bar {
+    width: 15px;
+    height: 15px;
+    /*width: 100%;*/
+    position: absolute;
+    background: none;
+    border-color: rgba(255,255,255,0);
+}
+
+div.leaflet-bar-panner {
+    height: 45px;
+    background: white;
+    width: 36px;
+    left: -5px;
+}
+
+.leaflet-bar {
+    box-shadow: 0 0 0 rgba(255,255,255,0);
+}
+
+.leaflet-bar-panner-left {
+    left: 1px;
+    top: 11px;
+}
+
+.leaflet-bar-panner-right {
+    top: 11px;
+    left: 19px;
+    float:left;
+}
+
+.leaflet-bar-panner-up {
+    margin-left: 11px;
+}
+
+.leaflet-bar-panner-down {
+    top: 23px;
+    margin-left: 11px;
+}
+
 #liveFeed {
     overflow-y: auto;
     height: 282;

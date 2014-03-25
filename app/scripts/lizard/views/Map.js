@@ -124,15 +124,14 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
           this._map = map;
 
-          this._leftButton = this._createButton(
-                  '<i class="icon-arrow-left"></i>', 'Links',  className + '-panner',  container, this._panLeft,  this);
-          this._rightButton = this._createButton(
-                  '<i class="icon-arrow-right"></i>', 'Rechts',  className + '-panner',  container, this._panRight,  this);
-          this._downButton = this._createButton(
-                  '<i class="icon-arrow-down"></i>', 'Naar beneden',  className + '-panner',  container, this._panDown,  this);
           this._upButton = this._createButton(
-                  '<i class="icon-arrow-up"></i>', 'Omhoog',  className + '-panner',  container, this._panUp,  this);
-
+                  '<i class="icon-arrow-up"></i>', 'Omhoog',  className + '-up',  container, this._panUp,  this);
+          this._leftButton = this._createButton(
+                  '<i class="icon-arrow-left"></i>', 'Links',  className + '-left',  container, this._panLeft,  this);
+          this._rightButton = this._createButton(
+                  '<i class="icon-arrow-right"></i>', 'Rechts',  className + '-right',  container, this._panRight,  this);
+          this._downButton = this._createButton(
+                  '<i class="icon-arrow-down"></i>', 'Naar beneden',  className + '-down',  container, this._panDown,  this);
 
           return container;
 
@@ -187,10 +186,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;
+    this.mapCanvas.addControl(new panControl());
     this.mapCanvas.addControl(drawControl);
 
     this.mapCanvas.addControl(new geolocateControl());
-    this.mapCanvas.addControl(new panControl());
 
     window.mc.on('draw:created', function (e) {
       var type = e.layerType,
