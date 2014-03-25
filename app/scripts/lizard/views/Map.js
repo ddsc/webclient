@@ -112,7 +112,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
 
     // panner:
-    var panControl = L.Control.extend({
+    window.LeafletPanControl = L.Control.extend({
         options: {
             position: 'topleft'
         },
@@ -186,9 +186,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;
-    this.mapCanvas.addControl(new panControl());
-    this.mapCanvas.addControl(drawControl);
 
+    this.mapCanvas.addControl(drawControl);
     this.mapCanvas.addControl(new geolocateControl());
 
     window.mc.on('draw:created', function (e) {

@@ -56,6 +56,9 @@ Lizard.App.on('initialize:before', function() {
           fadeOut: {enabled: true, delay: 6000}
         }).show();
       }
+      if (model.get('panner') ===  true) {
+        window.mc.addControl(new window.LeafletPanControl());
+      }
     }
   });
 
