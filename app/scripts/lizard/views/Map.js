@@ -208,10 +208,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }).addTo(mapCanvas);
 
     // only enable fullscreen control when not on IE
-    if (navigator.appName.indexOf("Internet Explorer") == -1) {
+    // if (navigator.appName.indexOf("Internet Explorer") == -1) {
         var fullScreen = new L.Control.FullScreen();
         this.mapCanvas.addControl(fullScreen);
-    }
+    // }
 
     L.control.scale().addTo(this.mapCanvas);
     //var legend = new Lizard.Views.MapLegend(this.workspace);

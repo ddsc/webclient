@@ -70,14 +70,14 @@ $('#extramaplayers-button').live("click", function(e){
 window.toggleFullScreen = function () {
     if (window.mapFullScreen) {
         var fullScreenMap = document.getElementById('full-screen-map');
-        fullScreenMap.remove();
+        fullScreenMap.parentNode.removeChild(fullScreenMap); //remove()
         Lizard.mapView.fullScreenRegion.close();
         var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
         var leafletView = new Lizard.Views.Map({
             lon: lonlatzoom[0],
             lat: lonlatzoom[1],
             zoom: lonlatzoom[2],
-            workspace: Lizard.workspaceView.getCollection(),
+            workspace: Lizard.workspaceView.getCollection()
           });
 
          Lizard.mapView.leafletRegion.show(leafletView.render()); 
