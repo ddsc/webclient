@@ -93,7 +93,7 @@ window.toggleFullScreen = function () {
             var container = document.getElementById('content').parentNode;
             container.parentNode.insertBefore(fullScreenMap, container);
         }
-        fullScreenMap.style.cssText = "position: absolute; width: 100%; height:100%;";
+        fullScreenMap.style.cssText = "position: absolute; width: 100%; height: calc(100% - 40px); top: 40px;";
         Lizard.mapView.leafletRegion.close()
         var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
         var leafletView = new Lizard.Views.Map({

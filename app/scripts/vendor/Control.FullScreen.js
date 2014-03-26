@@ -5,7 +5,6 @@ L.Control.FullScreen = L.Control.extend({
 	},
 	
 	onAdd: function (map) {
-		console.info('this is not even fired');
 		var containerClass = 'leaflet-control-zoom', className, container;
 		
 		if(map.zoomControl) {

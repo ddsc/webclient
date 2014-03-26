@@ -46,7 +46,9 @@ iframe {
 }
 
 #header {
-    height: 40px;
+    height: 40px !important;
+    overflow: hidden;
+    display:block ;
     z-index: 10;
 }
 
