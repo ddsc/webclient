@@ -57,7 +57,9 @@ Lizard.App.on('initialize:before', function() {
         }).show();
       }
       if (model.get('panner') ===  true) {
-        window.mc.addControl(new window.LeafletPanControl());
+        if (window.mc !== undefined) {
+          window.mc.addControl(new window.LeafletPanControl());
+        }
       }
     }
   });

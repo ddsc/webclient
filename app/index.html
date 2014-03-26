@@ -1030,7 +1030,7 @@
                         <label class="control-label" for="panner-controls">Navigatie knoppen (pannen)</label>
                         <div id="panner-controls" class="controls">
                             <label class="text">
-                                <input type="checkbox" name="panner" checked="<%= panner %>">
+                                <input type="checkbox" name="panner" <%if (panner){%>checked<%}%> >
                             </label>
                         </div>
                     </div>

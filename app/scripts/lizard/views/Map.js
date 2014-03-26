@@ -221,7 +221,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal
     $('#map').css('height', $(window).height()- $('.footer').height() - $('.navbar').height() - 100);
-
+    this.mapCanvas.invalidateSize();
     this.mapCanvas.on('moveend', this.mapMove, this);
 
     this.initWorkspace();

@@ -67,6 +67,18 @@ $('#extramaplayers-button').live("click", function(e){
     $('#extramodal').modal();
 });
 
+window.quasiFullScreen = function () {
+    // $('#map').css()
+    // console.info($('#map').css());
+    map.style.position = "absolute"
+    // var map = document.getElementById('map');
+    map.style.cssText = "";
+    map.style.height = screen.height - 80;
+    map.style.width = "100%";
+    map.style.top = "60px";
+    mc.invalidateSize();
+};
+
 Lizard.Utils = {};
 
 Lizard.Utils.Favorites = {
