@@ -155,9 +155,9 @@ leaflet-control-legend-icon {
 }
 
 .leaflet-bar-panner > a.leaflet-bar {
-    width: 15px;
-    height: 15px;
-    /*width: 100%;*/
+    /*width: 15px;*/
+    /*height: 15px;*/
+    width: 0px;
     position: absolute;
     background: none;
     border-color: rgba(255,255,255,0);
@@ -166,7 +166,7 @@ leaflet-control-legend-icon {
 div.leaflet-bar-panner {
     height: 45px;
     background: white;
-    width: 36px;
+    width: 37px;
     left: -5px;
 }
 
@@ -175,23 +175,24 @@ div.leaflet-bar-panner {
 }
 
 .leaflet-bar-panner-left {
-    left: 1px;
-    top: 11px;
+    left: 3px;
+    top: 10px;
 }
 
 .leaflet-bar-panner-right {
-    top: 11px;
-    left: 19px;
+    top: 10px;
+    left: 25px;
     float:left;
 }
 
 .leaflet-bar-panner-up {
-    margin-left: 11px;
+    top: -3px;
+    margin-left: 14px;
 }
 
 .leaflet-bar-panner-down {
     top: 23px;
-    margin-left: 11px;
+    margin-left: 14px;
 }
 
 #liveFeed {

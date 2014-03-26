@@ -207,11 +207,20 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         provider: new L.GeoSearch.Provider.Google()
     }).addTo(mapCanvas);
 
-    // only enable fullscreen control when not on IE
-    // if (navigator.appName.indexOf("Internet Explorer") == -1) {
-        var fullScreen = new L.Control.FullScreen();
-        this.mapCanvas.addControl(fullScreen);
-    // }
+    // revised full screen also works on IE9.  
+    var fullScreen = new L.Control.FullScreen();
+    this.mapCanvas.addControl(fullScreen);
+
+    if (account.get('panner') == true) {
+      this.mapCanvas.addControl(new window.LeafletPanControl());
+    } else {
+      account.on('change:panner', function () {
+        if (account.get('panner') == true) {
+          this.mapCanvas.addControl(new window.LeafletPanControl());
+        }      
+      }, this);        
+    }
+
 
     L.control.scale().addTo(this.mapCanvas);
     //var legend = new Lizard.Views.MapLegend(this.workspace);
