@@ -21,6 +21,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = (options.lat ? options.lat : 51.95442214470791);
     this.zoom = (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
+    this.container = (options.container ? options.container : 'map');
     this.backgroundLayers = {
       // Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
@@ -52,7 +53,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }
   },
   makemapCanvas: function (requestedBackground){
-    this.mapCanvas = L.map('map', {
+    this.mapCanvas = L.map(this.container, {
       layers: [this.backgroundLayers[requestedBackground]],
       center: new L.LatLng(this.lat, this.lon),
       zoom: this.zoom

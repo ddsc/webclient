@@ -67,16 +67,51 @@ $('#extramaplayers-button').live("click", function(e){
     $('#extramodal').modal();
 });
 
-window.quasiFullScreen = function () {
-    // $('#map').css()
-    // console.info($('#map').css());
-    map.style.position = "absolute"
-    // var map = document.getElementById('map');
-    map.style.cssText = "";
-    map.style.height = screen.height - 80;
-    map.style.width = "100%";
-    map.style.top = "60px";
-    mc.invalidateSize();
+window.toggleFullScreen = function () {
+    if (window.mapFullScreen) {
+        var fullScreenMap = document.getElementById('full-screen-map');
+        fullScreenMap.remove();
+        Lizard.mapView.fullScreenRegion.close();
+        var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
+        var leafletView = new Lizard.Views.Map({
+            lon: lonlatzoom[0],
+            lat: lonlatzoom[1],
+            zoom: lonlatzoom[2],
+            workspace: Lizard.workspaceView.getCollection(),
+          });
+
+         Lizard.mapView.leafletRegion.show(leafletView.render()); 
+         Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
+            collection: locationCollection,
+            map: leafletView
+          });
+    } else {
+        var fullScreenMap = document.getElementById('full-screen-map');
+        if (fullScreenMap === null) {
+            fullScreenMap = document.createElement('div');
+            fullScreenMap.id = 'full-screen-map';
+            var container = document.getElementById('content').parentNode;
+            container.parentNode.insertBefore(fullScreenMap, container);
+        }
+        fullScreenMap.style.cssText = "position: absolute; width: 100%; height:100%;";
+        Lizard.mapView.leafletRegion.close()
+        var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
+        var leafletView = new Lizard.Views.Map({
+            lon: lonlatzoom[0],
+            lat: lonlatzoom[1],
+            zoom: lonlatzoom[2],
+            workspace: Lizard.workspaceView.getCollection(),
+            container: 'full-screen-map'
+          });
+        fullScreenMap.style.zIndex = "1000";
+        Lizard.mapView.fullScreenRegion.show(leafletView.render());
+        Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
+            collection: locationCollection,
+            map: leafletView
+        });     
+    }
+    window.mapFullScreen = !window.mapFullScreen;
+
 };
 
 Lizard.Utils = {};

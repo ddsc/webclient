@@ -18,7 +18,7 @@ L.Control.FullScreen = L.Control.extend({
 			className = '-fullscreen';
 		}
 		
-		this._createButton('Full Screen', containerClass + className, container, this.toogleFullScreen, map);
+		this._createButton('Full Screen', containerClass + className, container, window.toggleFullScreen, map);
 
 		return container;
 	},
@@ -47,75 +47,8 @@ L.Control.FullScreen = L.Control.extend({
 	},
 	
 	toogleFullScreen: function () {
-		if (!this.fullScreen) {
-			this.fullScreen = true;
-			this._container.style.cssText = "";
-		    this._container.style.height = "100%";
-		    this._container.style.width = "100%";
-		    this._container.style.top = "60px";
-		    setTimeout(this.invalidateSize, 1000)
-		    debugger
-		    // this.invalidateSize();
-		    this.fire("resize");
-		} else {
-			this._container.style.cssText = "";
-			this._container.style.height = ($(window).height()- $('.footer').height() - 
-						$('.navbar').height() - 100);
-		    this.invalidateSize();
-		}
-
-	    
-
-
-		// var extraFull = window.open(window.location.href, "fritz");
-		// // extraFull.document.onload('onload', evenFuller, false);
-		// var upScaleIt = function () {
-		// 	extraFull.console.info('yoohoo')
-		// 	// debugger
-		// 	extraFull.map.style.height = extraFull.screen.availHeight.toString() + "px";
-		// 	extraFull.map.style.width = extraFull.screen.availWidth.toString() + "px";
-		// }
-
-		// window.setTimeout(upScaleIt,400);
-
-		// var closer = function(event) {
-		//     // Bind to both command (for Mac) and control (for Win/Linux)
-		//     if (event.keyCode == 27) {          
-		//     	extraFull.close();
-		//     }
-		// };
-
-		// var evenFuller = function () {
-		// 	debugger
-		// 	extraFull.console.info('sadfsdjflsad')
-		// 	extraFull.alert('kabam');
-		// 	extraFull.$('.top-right').notify({
-	 //          type: 'warning',
-	 //          message: {text: 'U bent in fullscreen modus.'},
-	 //          fadeOut: {enabled: true, delay: 6000}
-	 //        }).show();
-		// }
-
-		// extraFull.addEventListener('load', evenFuller, false);
-		// extraFull.addEventListener('keydown', closer, false);
-
-
-		// myPopup[myPopup.addEventListener ? 'addEventListener' : 'attachEvent'](
-		//   (myPopup.attachEvent ? 'on' : '') + 'load', myFunction, false
-		// );
-		// this._exitFired = false;
-		// if (fullScreenApi.supportsFullScreen){
-		// 	var container = this._container;
-		// 	if(fullScreenApi.isFullScreen(container)){
-		// 		fullScreenApi.cancelFullScreen(container);
-		// 		this.fire('exitFullscreen');
-		// 		this._exitFired = true;
-		// 	}
-		// 	else {
-		// 		fullScreenApi.requestFullScreen(container);
-		// 		this.fire('enterFullscreen');
-		// 	}
-		// }
+		// this has become obsolete. See utilities.js window.toggleFullScreen
+		// also this is spelled incorrectly :)
 	},
 	
 	_handleEscKey: function () {
