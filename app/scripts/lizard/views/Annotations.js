@@ -31,9 +31,10 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     popupClose: function () {
         this.enableUpdateAnnotations = true;
     },
-    createAnnotationsLayer: function () {
-        var self = this;
-        this.annotationLayer = new L.MarkerClusterGroup({
+    onRender: function () {
+        // listening to event that comes from Map.js
+        Lizard.App.vent.on('mapLoaded', function () {
+            this.annotationLayer = new L.MarkerClusterGroup({
                   spiderfyOnMaxZoom: true,
                   showCoverageOnHover: false,
                   maxClusterRadius: 100,
@@ -42,6 +43,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
                   }
                 });
+                this.mapCanvas.addLayer(self.annotationLayer);
+        }, this);
+    },
+    createAnnotationsLayer: function () {
+        var self = this;
         $('.annotation-layer-toggler').click(function(e) {
             var $icon = $(this).find('i');
             if ($icon.hasClass('icon-check-empty')) {

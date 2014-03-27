@@ -126,6 +126,8 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
     collection: locationCollection,
     map: leafletView
   });
+  // trigger for annotations layer.
+  Lizard.App.vent.trigger('mapLoaded');
 
   $('.sensor-layer-toggler').click(function(e) {
     var $icon = $(this).find('i');
