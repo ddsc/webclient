@@ -581,7 +581,7 @@
     </script>
 
     <script type="text/template" id="timeserie-popup-title-template">
-    <%= title %> <span class="pull-right"><i class="icon-comment clickable"></i></span>
+    <%= title %> <span class="pull-right"><%= annotationCount %> <i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -696,7 +696,10 @@
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%=  truncateString(name, 30, '', '...') %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
-                <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+                <span class="badge badge-info">
+                  <%= annotationCount %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+                </span>
+                
               </span>
             </h5>
         </div>
