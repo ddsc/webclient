@@ -152,7 +152,7 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         this.searchTimeout = window.setTimeout(function () {
             self.timeseriesCollection.reset();
             self.timeseriesCollection.page = 1;
-            self.timeseriesCollection.name = $('#searchTimeseries').val();
+            self.timeseriesCollection.query = $('#searchTimeseries').val();
             self.timeseriesCollection.fetch();
         }, 700);
     }
