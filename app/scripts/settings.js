@@ -10,7 +10,7 @@ var settings = {
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/?page_size=100',
-    timeseries_search_url: domain + 'timeseries/search/?page_size=pageSize&page=pageNo&q=query',
+    timeseries_search_url: domain + 'timeseries/search/?',
     alarms_url: domain + 'alarms/',
     collages_url: domain + 'collages/?page_size=100',
     workspace_url: domain + 'workspaces/?page_size=100',
