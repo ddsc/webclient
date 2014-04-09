@@ -13,8 +13,7 @@ Lizard.Collections.InfiniteTimeseries = Backbone.Collection.extend({
   },
   page: 1,
   pageSize: 20,
-  query: '',
-  next: 1
+  query: ''
 });
 
 Lizard.Collections.Timeseries = Backbone.Collection.extend({

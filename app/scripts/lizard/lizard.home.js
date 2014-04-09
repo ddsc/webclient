@@ -35,10 +35,10 @@ Lizard.Home.home = function(){
 
   // This is lunr.js, see http://lunrjs.com/ for more information
   // Define the search index for timeseries
-  var timeseries_idx = lunr(function () {
-    this.field('name', {boost: 10});
-    this.ref('id');
-  });
+  // var timeseries_idx = lunr(function () {
+  //   this.field('name', {boost: 10});
+  //   this.ref('id');
+  // });
   // Fetch the entire timeseries collection...
   // timeseriesCollection.fetch({
   //   success: function(e) {
@@ -52,8 +52,8 @@ Lizard.Home.home = function(){
   //     });
   //   }
   // });
-  window.timeseries_idx = timeseries_idx; // Attach to the window variable
-  console.log('timeseries_idx:', timeseries_idx);
+  // window.timeseries_idx = timeseries_idx; // Attach to the window variable
+  // console.log('timeseries_idx:', timeseries_idx);
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
