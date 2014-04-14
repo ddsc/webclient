@@ -6,6 +6,47 @@
 // a 'workspaceCollection' on click on a specific object.
 
 
+
+Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
+  tagName: 'li class="search-results"',
+  template: '#location-results-template'
+});
+
+Lizard.Views.MapSearch = Backbone.Marionette.CollectionView.extend({
+  id: 'location-search',
+  render: function() {
+        var tpl = '<input type="text" class="span12 search-query" placeholder="Zoeken" id="search-location" name="search-location">';
+        this.$el.html(tpl);
+        // console.log(this.$el.parent());
+        // window.spelenMet = this.$el;
+        // return this;
+    },
+  events: {
+      'keypress #search-location': 'search'
+  },
+  tagName: 'ul',
+  search: function(e) {
+      var self = this;
+
+      if (this.searchTimeout !== null) {
+          window.clearTimeout(this.searchTimeout);
+          this.searchTimeout = null;
+      }
+
+      this.searchTimeout = window.setTimeout(function () {
+          self.collection.reset();
+          self.collection.page = 1;
+          self.collection.isLoading = true;
+          self.collection.query = $('#searchTimeseries').val();
+          self.collection.fetch({add: false})
+          .always(function () {
+              self.collection.isLoading = false;
+          });
+      }, 700);
+  },
+  itemView: Lizard.Views.MapSearchResult
+});
+
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null,
@@ -142,9 +183,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     // end mock alarm layer
 
-    new L.Control.GeoSearch({
-        provider: new L.GeoSearch.Provider.Google()
-    }).addTo(mapCanvas);
+    // new L.Control.GeoSearch({
+    //     provider: new L.GeoSearch.Provider.Google()
+    // }).addTo(mapCanvas);
 
     // only enable fullscreen control when not on IE
     if (navigator.appName.indexOf("Internet Explorer") == -1) {

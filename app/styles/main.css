@@ -322,6 +322,27 @@ ul.wms_sources h4 {
     font-size: 0.8em;
 }
 
+.geocodesearch{
+    position:relative;
+}
+
+#geocoderRegion{
+    position:absolute;
+    width: 100%;
+    z-index: 2000;
+}
+
+li.search-results{
+    list-style: none;
+    padding: 5px 1em;
+    background: rgba(255,255,255,0.6);
+    float:left;
+    cursor: pointer;
+}
+
+ul#location-search {
+    margin: 0;
+}
 
 #home-search-wrapper {
     margin: 20px 0px 30px 0px;

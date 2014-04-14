@@ -151,7 +151,6 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
 
         this.searchTimeout = window.setTimeout(function () {
             self.timeseriesCollection.reset();
-            // $('#selectionRegion').scrollTop(0); // hack to prevent infinite series to bork request
             self.timeseriesCollection.page = 1;
             self.timeseriesCollection.isLoading = true;
             self.timeseriesCollection.query = $('#searchTimeseries').val();

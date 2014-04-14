@@ -287,6 +287,11 @@
         </div>
         <div class="span9" id="">
             <div class="row-fluid">
+              <div class="span12 geocodesearch">
+                <div id="geocoderRegion"></div>
+              </div>
+            </div>
+            <div class="row-fluid">
                 <div class="span12" id="leafletRegion"></div>
             </div>
         </div>
@@ -417,6 +422,10 @@
 
     <script type="text/template" id="leaflet-template">
         <div id="map"></div>
+    </script>
+
+    <script type="text/template" id="location-results-template">
+        <div class="search-inner"><%= name %></div>
     </script>
 
     <script type="text/template" id="annotation-template">
