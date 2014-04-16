@@ -249,7 +249,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     });
   },
   countAnnotations: function () {
-    if (this.model.get('annotationCount') == null) {
+    if (this.model.get('annotationCount') === null) {
       var self = this;
       this.model.bind('change:annotationCount', this.render, this);
       var countUrl = settings.annotations_count_url + '?model_names_pks=timeseries,' + this.model.get('id');
@@ -278,7 +278,7 @@ Lizard.geo.Popups.DdscTimeseries = {
         });
 
         var popupContent = popupView.render();
-        
+
         region.show(popupContent);
     });
   }

@@ -76,8 +76,6 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     marker.bindPopup(popupLayout.el, {maxHeight: 300, minWidth: 400, maxWidth: 450});
     marker.openPopup();
   }
-  // largePopupContent: Lizard.Views.TimeserieView,
-  // getMouseOverContent: null
 });
 
 Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
@@ -93,7 +91,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
   template: function(model){
         return _.template(
             $('#timeserie-popup-title-template').html(), {
-              title: model.name, 
+              title: model.name,
               annotationCount: model.annotationCount
             });
   },
@@ -101,7 +99,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
     Lizard.Views.CreateAnnotationView(this.model);
   },
   countAnnotations: function () {
-    if (this.model.get('annotationCount') == null) {
+    if (this.model.get('annotationCount') === null) {
       var self = this;
       var countUrl = settings.annotations_count_url + '?model_names_pks=location,' + this.model.get('id');
       $.get(countUrl).success(function (annotation) {
@@ -118,5 +116,3 @@ Lizard.geo.Popups.Layout = Backbone.Marionette.Layout.extend({
       'title' : '#ts-popup-title'
     }
 });
-
-
