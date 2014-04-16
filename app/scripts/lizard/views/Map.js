@@ -21,6 +21,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     this.lat = (options.lat ? options.lat : 51.95442214470791);
     this.zoom = (options.zoom ? options.zoom : 7);
     this.workspace = options.workspace;
+    this.container = (options.container ? options.container : 'map');
     this.backgroundLayers = {
       // Satellite :new L.Google("SATELLITE", {detectRetina: true}),
       Waterkaart: L.tileLayer.wms("http://test.deltaportaal.lizardsystem.nl/service/", {
@@ -52,7 +53,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }
   },
   makemapCanvas: function (requestedBackground){
-    this.mapCanvas = L.map('map', {
+    this.mapCanvas = L.map(this.container, {
       layers: [this.backgroundLayers[requestedBackground]],
       center: new L.LatLng(this.lat, this.lon),
       zoom: this.zoom
@@ -111,6 +112,66 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         }
     });
 
+    // panner:
+    window.LeafletPanControl = L.Control.extend({
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+
+          var className = 'leaflet-control-zoom leaflet-bar leaflet-bar-panner',
+              container = L.DomUtil.create('div', className);
+
+          this._map = map;
+
+          this._upButton = this._createButton(
+                  '<i class="icon-arrow-up"></i>', 'Omhoog',  className + '-up',  container, this._panUp,  this);
+          this._leftButton = this._createButton(
+                  '<i class="icon-arrow-left"></i>', 'Links',  className + '-left',  container, this._panLeft,  this);
+          this._rightButton = this._createButton(
+                  '<i class="icon-arrow-right"></i>', 'Rechts',  className + '-right',  container, this._panRight,  this);
+          this._downButton = this._createButton(
+                  '<i class="icon-arrow-down"></i>', 'Naar beneden',  className + '-down',  container, this._panDown,  this);
+
+          return container;
+
+        },
+        _panLeft: function () {
+          var moveBy = [-100,0];
+          this._map.panBy(moveBy);
+        },
+        _panRight: function () {
+          var moveBy = [100,0];
+          this._map.panBy(moveBy);
+        },
+        _panDown: function () {
+          var moveBy = [0, 100];
+          this._map.panBy(moveBy);
+        },
+        _panUp: function () {
+          var moveBy = [0, -100];
+          this._map.panBy(moveBy);
+        },
+        _createButton: function (html, title, className, container, fn, context) {
+          var link = L.DomUtil.create('a', className, container);
+          link.innerHTML = html;
+          // link.href = '#';
+          link.title = title;
+
+          var stop = L.DomEvent.stopPropagation;
+
+          L.DomEvent
+              .on(link, 'click', stop)
+              .on(link, 'mousedown', stop)
+              .on(link, 'dblclick', stop)
+              .on(link, 'click', L.DomEvent.preventDefault)
+              .on(link, 'click', fn, context);
+
+          return link;
+        }
+    });
+
     var drawControl = new L.Control.Draw({
       draw: {
         position: 'topleft',
@@ -126,8 +187,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     });
     window.mc = this.mapCanvas;
     window.drawnItems = drawnItems;
-    this.mapCanvas.addControl(drawControl);
 
+    this.mapCanvas.addControl(drawControl);
     this.mapCanvas.addControl(new geolocateControl());
 
     window.mc.on('draw:created', function (e) {
@@ -146,11 +207,20 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         provider: new L.GeoSearch.Provider.Google()
     }).addTo(mapCanvas);
 
-    // only enable fullscreen control when not on IE
-    if (navigator.appName.indexOf("Internet Explorer") == -1) {
-        var fullScreen = new L.Control.FullScreen();
-        this.mapCanvas.addControl(fullScreen);
+    // revised full screen also works on IE9.  
+    var fullScreen = new L.Control.FullScreen();
+    this.mapCanvas.addControl(fullScreen);
+
+    if (account.get('panner') == true) {
+      this.mapCanvas.addControl(new window.LeafletPanControl());
+    } else {
+      account.on('change:panner', function () {
+        if (account.get('panner') == true) {
+          this.mapCanvas.addControl(new window.LeafletPanControl());
+        }      
+      }, this);        
     }
+
 
     L.control.scale().addTo(this.mapCanvas);
     //var legend = new Lizard.Views.MapLegend(this.workspace);
@@ -161,7 +231,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     $('#modal').on('show', this.updateModal); //todo: ref to modal
     $('#map').css('height', $(window).height()- $('.footer').height() - $('.navbar').height() - 100);
-
+    this.mapCanvas.invalidateSize();
     this.mapCanvas.on('moveend', this.mapMove, this);
 
     this.initWorkspace();

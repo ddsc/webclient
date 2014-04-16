@@ -10,7 +10,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'annotationsRegion' : '#annotationsRegion',
     'geocoderRegion' : '#geocoderRegion',
     'legendRegion': '#legendRegion',
-    'extraLayerRegion' : '#extramaplayers'
+    'extraLayerRegion' : '#extramaplayers',
+    'fullScreenRegion': '#full-screen-region'
   }
 });
 

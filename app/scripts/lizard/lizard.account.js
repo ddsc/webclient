@@ -23,7 +23,8 @@ Lizard.Account.View = Backbone.Marionette.ItemView.extend({
 
             this.model.set({
                 'initialPeriod': $form.find('[name="timeperiod"]:checked').val(),
-                'initialZoom': $form.find('[name="initialzoom"]').val()
+                'initialZoom': $form.find('[name="initialzoom"]').val(),
+                'panner': $form.find('[name="panner"]')[0].checked
             });
             this.model.save(null)
                 .done(function (model, response) {
