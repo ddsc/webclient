@@ -1,5 +1,13 @@
+html, body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow:hidden;
+}
+
 body {
     /*fallback*/
+    padding-top: 0;
     background-image: url('../images/cardboard_flat_white.png');
     /* image with opacity layer */
     background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
@@ -29,8 +37,19 @@ iframe {
   min-height: 700px; /*prefent lizard-logo on top of page*/
 }
 
+.container.content {
+    padding-top: 20px;
+}
+
 .full-width {
   width: 100%;
+}
+
+#header {
+    height: 40px !important;
+    overflow: hidden;
+    display:block ;
+    z-index: 10;
 }
 
 div#brand {
@@ -58,7 +77,8 @@ div#brand:hover {
 }
 
 #map {
-    height: 960px;
+    min-height: 500px;
+    /*height: 960px;
     min-height: 500px;
     box-shadow: 0 8px 8px -8px #222;
     -moz-box-sizing: border-box;
@@ -66,14 +86,14 @@ div#brand:hover {
     box-sizing: border-box;
     border: 1px solid #E5E5E5;
     border-radius: 6px;
-    margin-top: 1em;
+    margin-top: 1em;*/
 }
 
 /* on selector per rule as explained here : http://www.sitepoint.com/html5-full-screen-api/ */
-#map:-webkit-full-screen { width: 100% !important; height: 100% !important; }
+/*#map:-webkit-full-screen { width: 100% !important; height: 100% !important; }
 #map:-moz-full-screen { width: 100% !important; height: 100% !important; }
 #map:full-screen { width: 100% !important; height: 100% !important; }
-
+*/
 .leaflet-control-legend {
     box-shadow: 0 1px 7px rgba(0,0,0,0.4);
     background: #f8f8f9;
@@ -132,6 +152,47 @@ leaflet-control-legend-icon {
     height: 0;
     border-top: 1px solid #ddd;
     margin: 5px -10px 5px -6px;
+}
+
+.leaflet-bar-panner > a.leaflet-bar {
+    /*width: 15px;*/
+    /*height: 15px;*/
+    width: 0px;
+    position: absolute;
+    background: none;
+    border-color: rgba(255,255,255,0);
+}
+
+div.leaflet-bar-panner {
+    height: 45px;
+    background: white;
+    width: 37px;
+    left: -5px;
+}
+
+.leaflet-bar {
+    box-shadow: 0 0 0 rgba(255,255,255,0);
+}
+
+.leaflet-bar-panner-left {
+    left: 3px;
+    top: 10px;
+}
+
+.leaflet-bar-panner-right {
+    top: 10px;
+    left: 25px;
+    float:left;
+}
+
+.leaflet-bar-panner-up {
+    top: -3px;
+    margin-left: 14px;
+}
+
+.leaflet-bar-panner-down {
+    top: 23px;
+    margin-left: 14px;
 }
 
 #liveFeed {

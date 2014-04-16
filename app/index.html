@@ -81,16 +81,6 @@
       <header class="subhead hidden-phone hidden-tablet">
         <img src="images/hero-big.png"/>
       </header>
-      <!-- <div class="row-fluid hidden-phone hidden-tablet" id="home-search-wrapper">
-        <div class="span12">
-          <div class="visual_search hidden-tablet hidden-phone"></div>
-          <div class="textual_search hidden-desktop">
-            <form class="form-search">
-              <input type="text" class="input-medium search-query" autocomplete="off" placeholder="Doorzoek het DDSC" x-webkit-speech="">
-            </form>
-          </div>
-        </div>
-      </div> -->
 
       <div class="row-fluid" id="homepage-search-results">
       </div>
@@ -272,7 +262,7 @@
                       </div>
                   </li><li>
                       <div class="ddsc-item noselect annotation" >
-                      <h5><span class=" annotation-layer-toggler"><i class="icon-check-empty"></i>Annotaties</span>
+                      <h5><span class=" annotation-layer-toggler"><i class="icon-check"></i>Annotaties</span>
                        <span class="pull-right">
                          <span class="badge badge-default">0</span>
                        </span></h5>
@@ -456,7 +446,7 @@
                      <span class="add-on"><i class="icon-comment"></i></span>
                       <textarea rows="4" class="annotation-textarea" name="text" placeholder="Uw annotatie hier" style="resize:none;" required></textarea>
                      </div>
-                     <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span> 
+                     <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
                      <div class="input-prepend">
                        <span class="add-on"><i class="icon-picture"></i></span>
                        <input type="text" name="picture_url" placeholder="Url naar bijlage" />
@@ -524,7 +514,7 @@
                      <span class="add-on"><i class="icon-comment"></i></span>
                       <textarea rows="4" class="annotation-textarea" name="text" placeholder="Uw annotatie hier" style="resize:none;" required><%if (annotation.text){%><%= annotation.text %><%}%> </textarea>
                      </div>
-                     <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span> 
+                     <span class="help-block"><small>Voeg een afbeelding toe op basis van een externe URL.</small></span>
                      <div class="input-prepend">
                        <span class="add-on"><i class="icon-picture"></i></span>
                          <input type="text" class="span4" name="picture_url" placeholder="Url naar bijlage" <%if (annotation.picture_url){%> value="<%= annotation.picture_url %>" <%}%>/>
@@ -540,7 +530,7 @@
                     <div class="input-prepend">
                        <span class="add-on"><i class="icon-eye-open"></i></span>
                         <label class="radio inline spacing">
-                          <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar                        
+                          <input type="radio" name="visibility" value="public" <%if (annotation.visibility === 'public'){%>checked<%}%> required> Openbaar
                         </label>
                         <label class="radio inline controls-row">
                           <input type="radio" name="visibility" value="private" <%if (annotation.visibility === 'private'){%>checked<%}%> required> Persoonlijk
@@ -599,7 +589,7 @@
     </script>
 
     <script type="text/template" id="timeserie-popup-title-template">
-    <%= title %> <span class="pull-right"><i class="icon-comment clickable"></i></span>
+    <%= title %> <span class="pull-right"><%= annotationCount %> <i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -714,7 +704,10 @@
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%=  truncateString(name, 30, '', '...') %></span>
               <span class="pull-right">
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
-                <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+                <span class="badge badge-info">
+                  <%= annotationCount %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+                </span>
+                
               </span>
             </h5>
         </div>
@@ -778,7 +771,7 @@
                     <span class="hidden-tablet"><%=truncateString(timeseries.get('name'), 20, '', '...')%></span><br/>
                     <small class="hidden-tablet"><%= truncateString(timeseries.get('parameter').description, 15, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 10, '', '...') %>)</small>
                     <span class="hidden-phone hidden-desktop"><%=truncateString(timeseries.get('name'), 10, '', '...')%></span><br/>
-                    <small class="hidden-phone hidden-desktop"><%= truncateString(timeseries.get('parameter').description, 10, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 15, '', '...') %>)</small>                    
+                    <small class="hidden-phone hidden-desktop"><%= truncateString(timeseries.get('parameter').description, 10, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 15, '', '...') %>)</small>
                 </h5>
             </div>
         </div>
@@ -1044,6 +1037,14 @@
                             </label>
                         </div>
                     </div>
+                    <div class="control-group" id="panner-buttons">
+                        <label class="control-label" for="panner-controls">Navigatie knoppen (pannen)</label>
+                        <div id="panner-controls" class="controls">
+                            <label class="text">
+                                <input type="checkbox" name="panner" <%if (panner){%>checked<%}%> >
+                            </label>
+                        </div>
+                    </div>
                     <div class="control-group">
                         <div class="controls">
                             <button class="btn btn-primary" type="submit">Opslaan</button>
@@ -1120,9 +1121,9 @@
                 <h4>Software versies</h4>
                 <ul>
                   <li class="nav-header">Webclient version: <span id="webclientVersionNumber">--</span></li>
-                  <li class="nav-header">API version : <span id="APIVersionNumber">--</span></li>                
+                  <li class="nav-header">API version : <span id="APIVersionNumber">--</span></li>
                 </ul>
-            </p>            
+            </p>
 
         </div>
         <div class="modal-footer">
@@ -1131,7 +1132,7 @@
     </div>
 
     <div id="header">
-      <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
+      <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
           <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -1159,7 +1160,7 @@
     </div>
 
 
-      <div class="container">
+      <div class="container content">
         <div class='notifications top-right'></div>
         <div id="content">
           <!--[if lte IE 8]>

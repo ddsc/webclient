@@ -33,27 +33,6 @@ Lizard.Home.home = function(){
 
   Lizard.App.content.show(Lizard.homeView);
 
-  // This is lunr.js, see http://lunrjs.com/ for more information
-  // Define the search index for timeseries
-  // var timeseries_idx = lunr(function () {
-  //   this.field('name', {boost: 10});
-  //   this.ref('id');
-  // });
-  // Fetch the entire timeseries collection...
-  // timeseriesCollection.fetch({
-  //   success: function(e) {
-  //     // ...and on success, loop over every model in the collection
-  //     _.each(e.models, function(ts) {
-  //       // Then, add each model to the timeseries index.
-  //       timeseries_idx.add({
-  //         'name': ts.attributes.name,
-  //         'id': ts.id
-  //       });
-  //     });
-  //   }
-  // });
-  // window.timeseries_idx = timeseries_idx; // Attach to the window variable
-  // console.log('timeseries_idx:', timeseries_idx);
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
@@ -64,7 +43,7 @@ Lizard.Home.home = function(){
   Lizard.Home.Summary = Backbone.Model.extend({
     defaults: {
       alarms: {active: 0},
-      events: {new: 0},
+      events: {"new": 0},
       timeseries: {disrupted:0}
     }
   });
@@ -76,7 +55,7 @@ Lizard.Home.home = function(){
     var activeCount = model.get('alarms').active;
 
     var maxNewMeasurementCount = 200000;
-    var newMeasurementCount = model.get('events').new;
+      var newMeasurementCount = model.get('events')["new"];
 
     var maxDisruptedTimeseriesCount = 20;
     var disruptedTimeseriesCount = model.get('timeseries').disrupted;
@@ -100,20 +79,6 @@ Lizard.Home.home = function(){
     }
   });
 
-
-  // var liveFeedView = new Marionette.CollectionView({
-  //   collection: liveFeedCollection,
-  //   tagName: 'div',
-  //   className: '',
-  //   itemView: Marionette.ItemView.extend({
-  //     template: '#homepage-livefeed-template',
-  //     tagName: 'div',
-  //     className: 'row-fluid'
-  //   })
-  // });
-  // Lizard.homeView.liveFeed.show(liveFeedView);
-
-
   Lizard.homeView.status.show(statusOverview);
 
   var workspaceSelectionView = new Lizard.Views.HomePageMapList({
@@ -133,8 +98,6 @@ Lizard.Home.home = function(){
   Lizard.homeView.graph_links.show(collageSelectionView);
 
   Backbone.history.navigate('home');
-
-
 
   tour = new Tour({
     labels: {

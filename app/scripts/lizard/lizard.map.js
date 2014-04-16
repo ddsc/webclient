@@ -10,7 +10,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'annotationsRegion' : '#annotationsRegion',
     'geocoderRegion' : '#geocoderRegion',
     'legendRegion': '#legendRegion',
-    'extraLayerRegion' : '#extramaplayers'
+    'extraLayerRegion' : '#extramaplayers',
+    'fullScreenRegion': '#full-screen-region'
   }
 });
 
@@ -128,6 +129,8 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
     collection: locationCollection,
     map: leafletView
   });
+  // trigger for annotations layer.
+  Lizard.App.vent.trigger('mapLoaded');
 
   $('.sensor-layer-toggler').click(function(e) {
     var $icon = $(this).find('i');

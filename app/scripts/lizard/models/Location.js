@@ -7,6 +7,7 @@ Lizard.Models.Location = Backbone.Model.extend({
     }
   },
   defaults: {
-    'selected':  false
+    'selected':  false,
+    'annotationCount': null
   }
 });
