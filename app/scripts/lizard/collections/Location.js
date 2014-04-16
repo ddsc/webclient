@@ -8,11 +8,14 @@ Lizard.Collections.Location = Backbone.Collection.extend({
 
 
 Lizard.Collections.LocationSearch = Backbone.Collection.extend({
-  initialize: function() {
-    // console.log('Location collection initializing');
+  parse: function(resp, xhr) {
+    // if (resp.next == null) {
+    //   this.page -=1;
+    // }
+    return resp;
   },
   url: function () {
-    return settings.locations_search_url + 'q=' + this.query
+    return settings.locations_search_url + 'q=' + this.query + '&page_size=10';
   },
   query: '',
   model: Lizard.Models.Location

@@ -118,9 +118,9 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
-
+  var locationSearchCollection = new Lizard.Collections.LocationSearch;
   Lizard.mapView.geocoderRegion.show(new Lizard.Views.MapSearch({
-    collection: new Lizard.Collections.LocationSearch
+    collection: locationSearchCollection
   }));
 
   // Correct place for this?

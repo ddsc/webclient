@@ -424,8 +424,17 @@
         <div id="map"></div>
     </script>
 
+    <script type="text/template" id="location-search-collection-template">
+        <input type="text" class="span12 search-query" placeholder="Zoeken" id="search-location" name="search-location">
+        <ul id="location-search-collection">
+        </ul>
+    </script>
+
     <script type="text/template" id="location-results-template">
-        <div class="search-inner"><%= name %></div>
+        <div class="search-inner">
+        <span class="location-result">
+        <% if (geocode == true) { %><i class="icon-map-marker"></i> - <% }%>
+        <%= name %></span></div>
     </script>
 
     <script type="text/template" id="annotation-template">

@@ -9,22 +9,24 @@
 
 Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
   tagName: 'li class="search-results"',
-  template: '#location-results-template'
+  template: '#location-results-template',
+  events: {
+    'click .location-result': 'zoomTo'
+  },
+  zoomTo: function () {
+    var point = this.model.get('point_geometry');
+    var leafPoint = new L.LatLng(point[1], point[0]);
+    mc.setView(leafPoint, 13);
+  }
 });
 
-Lizard.Views.MapSearch = Backbone.Marionette.CollectionView.extend({
-  id: 'location-search',
-  render: function() {
-        var tpl = '<input type="text" class="span12 search-query" placeholder="Zoeken" id="search-location" name="search-location">';
-        this.$el.html(tpl);
-        // console.log(this.$el.parent());
-        // window.spelenMet = this.$el;
-        // return this;
-    },
+Lizard.Views.MapSearch = Backbone.Marionette.CompositeView.extend({
+  // id: 'location-search',
+  itemViewContainer: '#location-search-collection',
+  template: '#location-search-collection-template',
   events: {
       'keypress #search-location': 'search'
   },
-  tagName: 'ul',
   search: function(e) {
       var self = this;
 
@@ -35,10 +37,10 @@ Lizard.Views.MapSearch = Backbone.Marionette.CollectionView.extend({
 
       this.searchTimeout = window.setTimeout(function () {
           self.collection.reset();
-          self.collection.page = 1;
+          // self.collection.page = 1;
           self.collection.isLoading = true;
-          self.collection.query = $('#searchTimeseries').val();
-          self.collection.fetch({add: false})
+          self.collection.query = $('#search-location').val();
+          self.collection.fetch()
           .always(function () {
               self.collection.isLoading = false;
           });
