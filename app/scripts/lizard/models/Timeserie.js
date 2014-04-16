@@ -6,7 +6,8 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
   },
   defaults: {
     selected: false,
-    favorite: false
+    favorite: false,
+    annotationCount: null
   }
 });
 
