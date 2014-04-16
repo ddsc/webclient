@@ -138,7 +138,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         .done(function (data, textStatus, jqXHR) {
             self.model.set({
                 annotationsCount: data.count,
-                annotations: data.results.length != 0 ? data.results : null
+                annotations: data.results.length !== 0 ? data.results : null
             });
             // hack: update the toggler as well
             $('.annotation .badge').text(data.count);
@@ -155,7 +155,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             }
             self.setIsLoading(false);
 
-            if (self.model.get('annotations') != null){
+            if (self.model.get('annotations') !== null) {
                 var annotationCollection = new Lizard.Collections.Annotation();
                 var annotations = _.each(self.model.get('annotations'), function(annotation){
                     var model = new Backbone.Model(annotation);
@@ -201,7 +201,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         }
         var annotationPopup = new Lizard.Views.AnnotationPopupView({model: annoModel});
         var html = annotationPopup.render().el;
-        return html
+        return html;
     }
 });
 
@@ -214,8 +214,8 @@ $('.datepick-annotate').live('focus', function(e) {
 
 Lizard.Views.AnnotationPopupView = Backbone.Marionette.ItemView.extend({
     template: '#annotation-popup',
-    initialize: function(options){
-        this.model = options.model
+    initialize: function(options) {
+        this.model = options.model;
     },
     events: {
         'click .annotation-delete' : 'destroyAnnotation',
@@ -251,14 +251,14 @@ Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
     template: function(model){
         return _.template(
             '<span > <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
-    },
+    }
 });
 
 Lizard.Views.AnnotationBoxCollectionView = Backbone.Marionette.CollectionView.extend({
     collection: null,
     tagName: 'ol',
     initialize: function(options){
-        this.collection = new Backbone.Collection(options.collection.first(10))
+        this.collection = new Backbone.Collection(options.collection.first(10));
     },
     itemView: Lizard.Views.AnnotationBoxItem
 });
