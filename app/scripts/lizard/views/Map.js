@@ -53,11 +53,14 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }
   },
   makemapCanvas: function (requestedBackground){
-    this.mapCanvas = L.map(this.container, {
+    this.mapCanvas = new L.Map(this.container, {
       layers: [this.backgroundLayers[requestedBackground]],
       center: new L.LatLng(this.lat, this.lon),
       zoom: this.zoom
     });
+    this.mapCanvas.on('load', function () {
+      console.log('henkie')
+    })
     var mapCanvas = this.mapCanvas;
     Lizard.App.vent.on('workspaceZoom', this.workspaceZoom, this);
 
@@ -308,7 +311,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
         var content = layer.getPopupContent(data);
         if (content) {
-          var popup = L.popup({maxWidth: 525}).setContent(content).setLatLng(coords);
+          var popup = new L.Rrose({
+            maxWidth: 525,
+            autoPan: false,
+          }).setContent(content).setLatLng(coords);
           that.mapCanvas.openPopup(popup);
         }
       });
