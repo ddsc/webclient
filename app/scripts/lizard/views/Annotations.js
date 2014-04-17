@@ -43,7 +43,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
                   }
                 });
-                this.mapCanvas.addLayer(self.annotationLayer);
+                this.mapCanvas.addLayer(this.annotationLayer);
         }, this);
     },
     createAnnotationsLayer: function () {
@@ -64,6 +64,10 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     updateAnnotationsLayer: function (annotations) {
         var self = this;
+        if (this.annotationLayer ===  null) {
+            return;
+        }
+
         this.annotationLayer.clearLayers();
 
         for (var i=0; i<annotations.length; i++) {

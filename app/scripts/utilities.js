@@ -108,8 +108,16 @@ window.toggleFullScreen = function () {
         Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
             collection: locationCollection,
             map: leafletView
-        });     
+        });
     }
+    var annotationsModelInstance = new Lizard.Models.Annotations();
+    var annotationsView = new Lizard.Views.AnnotationsView({
+        model: annotationsModelInstance,
+        mapView: leafletView
+    });
+    Lizard.mapView.annotationsRegion.show(annotationsView.render());
+    Lizard.App.vent.trigger('mapLoaded');
+
     window.mapFullScreen = !window.mapFullScreen;
 
 };
