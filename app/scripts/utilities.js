@@ -72,7 +72,12 @@ window.toggleFullScreen = function () {
         var fullScreenMap = document.getElementById('full-screen-map');
         fullScreenMap.parentNode.removeChild(fullScreenMap); //remove()
         Lizard.mapView.fullScreenRegion.close();
-        var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
+        var lonlatzoom = window.location.hash.split('#map/')[1];
+        if (lonlatzoom !== undefined) {
+            lonlatzoom = lonlatzoom.split(',');
+        } else {
+            lonlatzoom = '5.16082763671875,51.95442214470791,7'.split(','); 
+        }
         var leafletView = new Lizard.Views.Map({
             lon: lonlatzoom[0],
             lat: lonlatzoom[1],
@@ -95,7 +100,12 @@ window.toggleFullScreen = function () {
         }
         fullScreenMap.style.cssText = "position: absolute; width: 100%; height: calc(100% - 40px); top: 40px;";
         Lizard.mapView.leafletRegion.close()
-        var lonlatzoom = window.location.hash.split('#map/')[1].split(',');
+        var lonlatzoom = window.location.hash.split('#map/')[1];
+        if (lonlatzoom !== undefined) {
+            lonlatzoom = lonlatzoom.split(',');
+        } else {
+            lonlatzoom = '5.16082763671875,51.95442214470791,7'.split(','); 
+        }
         var leafletView = new Lizard.Views.Map({
             lon: lonlatzoom[0],
             lat: lonlatzoom[1],
