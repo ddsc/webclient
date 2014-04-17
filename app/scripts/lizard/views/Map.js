@@ -58,9 +58,6 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       center: new L.LatLng(this.lat, this.lon),
       zoom: this.zoom
     });
-    this.mapCanvas.on('load', function () {
-      console.log('henkie')
-    })
     var mapCanvas = this.mapCanvas;
     Lizard.App.vent.on('workspaceZoom', this.workspaceZoom, this);
 
