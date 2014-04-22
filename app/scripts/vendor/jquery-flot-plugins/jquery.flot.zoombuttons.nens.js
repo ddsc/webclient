@@ -36,6 +36,8 @@
             $buttons.append($bwd);
             var $fwd = $('<button title="Schuif naar rechts" class="btn btn-mini" type="button"><i class="icon-forward"></i></button>');
             $buttons.append($fwd);
+            var $print = $('<button title="Print" class="btn btn-mini" type="button"><i class="icon-print"></i></button>');
+            $buttons.append($print);
 
             // $trash.click(function () {
                 // plot.removeAllDataUrls();
@@ -84,6 +86,23 @@
             });
             $fwd.click(function () {
                 plot.pan({ left: plot.width() / 3 });
+            });
+            $print.click(function () {
+                if (Modernizr.canvas) {
+                    // Copy the canvas, so we can set a white background.
+                    // Then, open the graph as png in a new window, so
+                    // it can be printed or copied to the clipboard.
+                    var srcCanvas = $('canvas.flot-base', $(this).closest('div.graph-region'))[0];
+                    var dstCanvas = document.createElement("canvas");
+                    dstCanvas.width = srcCanvas.width;
+                    dstCanvas.height = srcCanvas.height;
+                    var dstCtx = dstCanvas.getContext('2d');
+                    dstCtx.fillStyle = "#FFFFFF";
+                    dstCtx.fillRect(0, 0, srcCanvas.width, srcCanvas.height);
+                    dstCtx.drawImage(srcCanvas, 0, 0);
+                    var dataURL = dstCanvas.toDataURL("image/png");
+                    window.open(dataURL);
+                }
             });
 
             // position under the drag/zoom overlay div
