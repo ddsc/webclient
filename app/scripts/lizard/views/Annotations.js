@@ -102,7 +102,8 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 autoPan: false,
                 zoomAnimation: false
             });
-            marker.bindPopup(html, popup);
+            popup.setContent(html)
+            marker.bindPopup(popup);
             marker.openPopup();
         });
     },
