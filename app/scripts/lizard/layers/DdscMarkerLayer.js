@@ -53,10 +53,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
             code: attributes.code
           });
 
-        //marker.on('mouseover', this.updateInfo);
-        marker.on('click', that.showPopup);
-        // marker.on('click ' that.showPopup);
         this.markers.addLayer(marker);
+        marker.on('click', that.showPopup);
       } catch (e) {
         console.log('Location has no geometry. Error: ' + e);
       }
@@ -67,6 +65,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     var marker = e.target;
     if (marker._popup !== undefined) {
       // marker.togglePopup();
+      Lizard.App.vent.off('ResizePopup');
       marker.unbindPopup();
     } 
     var model = marker.valueOf().options.bbModel;
@@ -86,6 +85,13 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     popup.setContent(popupLayout.el);
     marker.bindPopup(popup);
     marker.openPopup();
+    popup._updatePosition();
+    Lizard.App.vent.on('ResizePopup', function () {
+      popup._updatePosition.bind(popup);
+      popup._map = marker._map;
+      popup._updatePosition();
+    }, popup);
+
   }
 });
 

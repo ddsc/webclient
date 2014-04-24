@@ -1302,7 +1302,8 @@ html.busy, html.busy * {
     overflow:auto;
 }
 
-.leaflet-popup-content ul{
+.leaflet-popup-content ul,
+.leaflet-rrose-content ul{
     list-style: none;
 
 }
