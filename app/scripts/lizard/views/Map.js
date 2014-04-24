@@ -17,6 +17,7 @@ Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
     var point = this.model.get('point_geometry');
     var leafPoint = new L.LatLng(point[1], point[0]);
     mc.setView(leafPoint, 13);
+    this.model.collection.reset();
   }
 });
 

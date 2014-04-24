@@ -390,7 +390,7 @@ ul.wms_sources h4 {
 #geocoderRegion{
     position:absolute;
     width: 100%;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 li.search-results{
