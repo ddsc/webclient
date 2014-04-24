@@ -105,19 +105,18 @@
                     var legends = $(this).closest('.graph-and-legend').find('.graph-legend');
                     for (var idx=0; idx < legends.length; idx++) {
                         var legend = legends[idx];
-                        var color = $(legend).find('.legendcolor')  [0].style.borderColor;
+                        var color = $(legend).find('.legendcolor')[0].style.borderColor;
                         var title = $(legend).find('h5')[0].title;
                         var position = {
                             x: srcCanvas.width,
-                            y: 20 + (20 * idx)
+                            y: 30 + (20 * idx)
                         };
-                        dstCtx.rect(position.x - 20, position.y, 20, 20);
                         dstCtx.fillStyle = color;
-                        dstCtx.fill();
+                        dstCtx.fillRect(position.x - 5, position.y, 20, 20);
                         dstCtx.fillStyle = 'black';
                         dstCtx.strokeStyle = 'black';
                         dstCtx.font = '10pt sans';
-                        dstCtx.fillText(title, position.x + 5, position.y + 14);
+                        dstCtx.fillText(title, position.x + 20, position.y + 14);
                     }
 
                     var dataURL = dstCanvas.toDataURL("image/png");
