@@ -38,12 +38,12 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     for (var i in models){
       var model = models[i];
       var attributes = model.attributes;
-      var point = model.attributes.point_geometry;
+      var point = attributes.point_geometry;
       try {
           var leaflet_point = new L.LatLng(point[1], point[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({
-              iconUrl: 'images/marker-dam-3.png',
+              iconUrl: attributes.icon_url,
               iconAnchor: [16,35],
               popupAnchor: [0, -30]
             }),
