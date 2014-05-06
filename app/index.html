@@ -278,6 +278,11 @@
         </div>
         <div class="span9" id="">
             <div class="row-fluid">
+              <div class="span12 geocodesearch">
+                <div id="geocoderRegion"></div>
+              </div>
+            </div>
+            <div class="row-fluid">
                 <div class="span12" id="leafletRegion"></div>
             </div>
         </div>
@@ -408,6 +413,19 @@
 
     <script type="text/template" id="leaflet-template">
         <div id="map"></div>
+    </script>
+
+    <script type="text/template" id="location-search-collection-template">
+        <input type="text" class="span12 search-query" placeholder="Zoeken" id="search-location" name="search-location">
+        <ul id="location-search-collection">
+        </ul>
+    </script>
+
+    <script type="text/template" id="location-results-template">
+        <div class="search-inner">
+        <span class="location-result">
+        <% if (geocode == true) { %><i class="icon-map-marker"></i> - <% }%>
+        <%= name %></span></div>
     </script>
 
     <script type="text/template" id="annotation-template">
@@ -1256,7 +1274,7 @@
       <!-- for modal screens -->
       <div id="hidden"></div>
 
-        <!-- build:js scripts/jquery.js -->
+        <!-- build:js scripts/vendor/jquery.js -->
         <script src="scripts/vendor/jquery-1.8.3.js"></script>
         <script src="scripts/vendor/jquery.xml2json.js"></script>
         <script src="scripts/vendor/jquery.cookie.js"></script>
@@ -1272,7 +1290,7 @@
         <script src="scripts/vendor/jquery-file-upload/jquery.fileupload.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js scripts/leaflet.js -->
+        <!-- build:js scripts/vendor/leaflet.js -->
         <script src="scripts/vendor/leaflet.js"></script>
         <script src="scripts/vendor/rrose-src.js"></script>
         <script src="scripts/vendor/leaflet.markercluster-src.js"></script>
@@ -1284,7 +1302,7 @@
         <script src="scripts/vendor/l.geosearch.provider.google.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js scripts/extras.js -->
+        <!-- build:js scripts/vendor/extras.js -->
         <script src="scripts/vendor/raphael.js"></script>
         <script src="scripts/vendor/colorbrewer.js"></script>
         <script src="scripts/vendor/justgage.1.0.1.js"></script>
@@ -1306,30 +1324,30 @@
         <script src="scripts/vendor/jspath.min.js"></script>
         <script src="scripts/vendor/jquery.gridster.js"></script>
         <script src="scripts/vendor/viewport.js"></script>
-        <script src="scripts/vendor/lunr.js"></script>
         <script src="scripts/vendor/moment.js"></script>
         <script src="scripts/vendor/jquery.lazyload.min.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js scripts/backbone.js -->
-        <script src="scripts/vendor/backbone-0.9.10.js"></script>
+
+        <!-- build:js scripts/vendor/backbone.js -->
+        <script src="scripts/vendor/backbone-min-1.1.2.js"></script>
         <script src="scripts/vendor/backbone-associations-min.js"></script>
         <script src="scripts/vendor/backbone.fetch-cache.js"></script>
         <script src="scripts/vendor/backbone-localstorage.js"></script>
-        <script src="scripts/vendor/backbone.marionette.1.0.2.js"></script>
+        <script src="scripts/vendor/backbone.marionette.min-1.6.4.js"></script>
         <script src="scripts/vendor/backbone.modelbinder.js"></script>
         <script src="scripts/vendor/backbone.collectionbinder.js"></script>
         <script src="scripts/vendor/visualsearch.js" type="text/javascript"></script>
         <!-- endbuild -->
 
-        <!-- build:js scripts/bootstrap.js -->
+        <!-- build:js scripts/vendor/bootstrap.js -->
         <script src="scripts/vendor/bootstrap.min.js"></script>
         <script src="scripts/vendor/bootstrap-tour.js"></script>
         <script src="scripts/vendor/bootstrap-notify.js"></script>
         <script src="scripts/vendor/daterangepicker.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js scripts/flot.js -->
+        <!-- build:js scripts/vendor/flot.js -->
         <script src="scripts/lizard/lizard.layerbubble.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-dev/jquery.flot.js"></script>
         <script type="text/javascript" src="scripts/vendor/jquery-flot-dev/jquery.flot.navigate.js"></script>

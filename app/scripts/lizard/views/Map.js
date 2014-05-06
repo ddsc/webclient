@@ -6,6 +6,50 @@
 // a 'workspaceCollection' on click on a specific object.
 
 
+
+Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
+  tagName: 'li class="search-results"',
+  template: '#location-results-template',
+  events: {
+    'click .location-result': 'zoomTo'
+  },
+  zoomTo: function () {
+    var point = this.model.get('point_geometry');
+    var leafPoint = new L.LatLng(point[1], point[0]);
+    mc.setView(leafPoint, 13);
+    this.model.collection.reset();
+  }
+});
+
+Lizard.Views.MapSearch = Backbone.Marionette.CompositeView.extend({
+  // id: 'location-search',
+  itemViewContainer: '#location-search-collection',
+  template: '#location-search-collection-template',
+  events: {
+      'keypress #search-location': 'search'
+  },
+  search: function(e) {
+      var self = this;
+
+      if (this.searchTimeout !== null) {
+          window.clearTimeout(this.searchTimeout);
+          this.searchTimeout = null;
+      }
+
+      this.searchTimeout = window.setTimeout(function () {
+          self.collection.reset();
+          // self.collection.page = 1;
+          self.collection.isLoading = true;
+          self.collection.query = $('#search-location').val();
+          self.collection.fetch()
+          .always(function () {
+              self.collection.isLoading = false;
+          });
+      }, 700);
+  },
+  itemView: Lizard.Views.MapSearchResult
+});
+
 Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   template: '#leaflet-template',
   workspace: null,
@@ -203,9 +247,9 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
 
     // end mock alarm layer
 
-    new L.Control.GeoSearch({
-        provider: new L.GeoSearch.Provider.Google()
-    }).addTo(mapCanvas);
+    // new L.Control.GeoSearch({
+    //     provider: new L.GeoSearch.Provider.Google()
+    // }).addTo(mapCanvas);
 
     // revised full screen also works on IE9.  
     var fullScreen = new L.Control.FullScreen();

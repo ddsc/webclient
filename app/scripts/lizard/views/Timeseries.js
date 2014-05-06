@@ -112,12 +112,12 @@ Lizard.Views.InfiniteTimeseries = Backbone.Marionette.CollectionView.extend({
         // console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
         // console.log('this.el.clientHeight', this.el.clientHeight);
         // console.log('triggerPoint', triggerPoint);
-        if (!this.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight) {
+        if (!this.collection.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight) {
             $('.loading-indicator').show();
-            this.isLoading = true;
+            this.collection.isLoading = true;
             this.collection.page += 1;
             // Load next page
-            this.collection.fetch()
+            this.collection.fetch({add: true})
             .always(function () {
                 $('.loading-indicator').hide();
                 setTimeout(function () {
@@ -152,8 +152,12 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         this.searchTimeout = window.setTimeout(function () {
             self.timeseriesCollection.reset();
             self.timeseriesCollection.page = 1;
-            self.timeseriesCollection.name = $('#searchTimeseries').val();
-            self.timeseriesCollection.fetch();
+            self.timeseriesCollection.isLoading = true;
+            self.timeseriesCollection.query = $('#searchTimeseries').val();
+            self.timeseriesCollection.fetch({add: false})
+            .always(function () {
+                self.timeseriesCollection.isLoading = false;
+            });
         }, 700);
     }
 });

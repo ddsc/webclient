@@ -7,9 +7,11 @@ var test_domain = (test_domain ? test_domain : 'http://test.api.ddsc.nl/api/v1/'
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
     locations_url: domain + 'locations/?has_geometry=true&for_map=true&page_size=5000',
+    locations_url: domain + 'locations/search/?',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/?page_size=100',
+    timeseries_search_url: domain + 'timeseries/search/?',
     alarms_url: domain + 'alarms/',
     collages_url: domain + 'collages/?page_size=100',
     workspace_url: domain + 'workspaces/?page_size=100',

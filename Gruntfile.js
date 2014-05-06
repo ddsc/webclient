@@ -50,7 +50,7 @@ module.exports = function (grunt) {
             options: {
                 port: 9000,
                 // change this to '0.0.0.0' to access the server from outside
-                hostname: '127.0.0.1'
+                hostname: '0.0.0.0'
             },
             livereload: {
                 options: {
@@ -83,11 +83,11 @@ module.exports = function (grunt) {
                 }
             }
         },
-        open: {
-            server: {
-                path: 'http://127.0.0.1:<%= connect.options.port %>'
-            }
-        },
+        // open: {
+        //     server: {
+        //         path: 'http://127.0.0.1:<%= connect.options.port %>'
+        //     }
+        // },
         clean: {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
             server: '.tmp'
@@ -236,6 +236,15 @@ module.exports = function (grunt) {
                 },
                 {
                     expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>/scripts/vendor/images',
+                    dest: '<%= yeoman.dist %>/scripts/vendor/images',
+                    src: [
+                        '*.{gif,cur,svg,jpg,png}'
+                    ]
+                },
+                {
+                    expand: true,
                     cwd: '<%= yeoman.app%>/font',
                     dest: '<%= yeoman.dist %>/font',
                     src: [
@@ -255,16 +264,19 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+            return grunt.task.run([
+                'build', 
+                // 'open', 
+                'connect:dist:keepalive']);
         }
 
         grunt.task.run([
             'clean:server',
-            'coffee:dist',
+            // 'coffee:dist',
             'compass:server',
             'livereload-start',
             'connect:livereload',
-            'open',
+            // 'open',
             'watch'
         ]);
     });

@@ -119,8 +119,10 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
-
-  // Lizard.mapView.geocoderRegion.show(new Lizard.Views.GeocoderView());
+  var locationSearchCollection = new Lizard.Collections.LocationSearch;
+  Lizard.mapView.geocoderRegion.show(new Lizard.Views.MapSearch({
+    collection: locationSearchCollection
+  }));
 
   // Correct place for this?
   Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
