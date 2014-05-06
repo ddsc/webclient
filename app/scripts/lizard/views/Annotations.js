@@ -98,11 +98,12 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         model.fetch()
         .done(function (model) {
             var html = self.annotation2html(model);
-            var popup = L.popup({
+            var popup = new L.Rrose({
                 autoPan: false,
                 zoomAnimation: false
             });
-            marker.bindPopup(html, popup);
+            popup.setContent(html)
+            marker.bindPopup(popup);
             marker.openPopup();
         });
     },

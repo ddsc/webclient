@@ -276,10 +276,10 @@ Lizard.geo.Popups.DdscTimeseries = {
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });
-
         var popupContent = popupView.render();
-
         region.show(popupContent);
+        Lizard.App.vent.trigger('ResizePopup');
+        
     });
   }
 };

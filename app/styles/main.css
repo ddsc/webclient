@@ -1296,12 +1296,14 @@ html.busy, html.busy * {
 **/
 
 
-.leaflet-popup-content{
-    max-height: 420px;
+.leaflet-popup-content,
+.leaflet-rrose-content {
+    max-height: 300px;
     overflow:auto;
 }
 
-.leaflet-popup-content ul{
+.leaflet-popup-content ul,
+.leaflet-rrose-content ul{
     list-style: none;
 
 }

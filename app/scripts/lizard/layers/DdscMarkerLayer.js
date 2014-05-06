@@ -53,10 +53,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
             code: attributes.code
           });
 
-        //marker.on('mouseover', this.updateInfo);
-        marker.on('click', that.showPopup);
-        // marker.on('click ' that.showPopup);
         this.markers.addLayer(marker);
+        marker.on('click', that.showPopup);
       } catch (e) {
         console.log('Location has no geometry. Error: ' + e);
       }
@@ -65,6 +63,11 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   showPopup: function(e) {
     var marker = e.target;
+    if (marker._popup !== undefined) {
+      // marker.togglePopup();
+      Lizard.App.vent.off('ResizePopup');
+      marker.unbindPopup();
+    } 
     var model = marker.valueOf().options.bbModel;
     var name = marker.valueOf().options.name;
     var popupLayout = new Lizard.geo.Popups.Layout();
@@ -73,8 +76,22 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
       model: model, name: name
     }));
     var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(model, popupLayout.content);
-    marker.bindPopup(popupLayout.el, {maxHeight: 300, minWidth: 400, maxWidth: 450});
+    var popup = new L.Rrose({
+      maxHeight: 300, 
+      minWidth: 400, 
+      maxWidth: 450,
+      autoPan: false
+    });
+    popup.setContent(popupLayout.el);
+    marker.bindPopup(popup);
     marker.openPopup();
+    popup._updatePosition();
+    Lizard.App.vent.on('ResizePopup', function () {
+      popup._updatePosition.bind(popup);
+      popup._map = marker._map;
+      popup._updatePosition();
+    }, popup);
+
   }
 });
 
