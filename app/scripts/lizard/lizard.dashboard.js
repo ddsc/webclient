@@ -26,9 +26,17 @@ Lizard.Dashboard.dashboard = function(){
 
   var widgetcollectionview = new Lizard.Views.WidgetCollection();
 
+  var timeseries = [
+    "https://api.ddsc.nl/api/v1/timeseries/9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",
+    "https://api.ddsc.nl/api/v1/timeseries/49108710-6C58-4E31-AC2D-3C4933040439",
+    // "https://api.ddsc.nl/api/v1/events/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",
+    // "https://api.ddsc.nl/api/v1/events/D856946F-FEB6-4536-A878-AF55C32CD96C",
+    "https://api.ddsc.nl/api/v1/timeseries/03073703-3509-40F2-BA89-D85361C4021B",
+    "https://api.ddsc.nl/api/v1/timeseries/29119285-2428-4863-B630-9B5AA095DE13"
+  ];
 
   var dmcCollection = Backbone.Collection.extend({
-    url: "https://api.ddsc.nl/api/v1/timeseries/?name=omzd_dmc", // deze duurt lang vervangen met search ofzo?
+    url: "https://api.ddsc.nl/api/v1/timeseries/?name=omzd_dmc",
     model: Lizard.Models.Timeserie
   });
 
