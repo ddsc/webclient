@@ -100,7 +100,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
     this.model = options.model;
     this.model.set({pk: this.model.get('id')});
     Lizard.App.vent.on('changedestroyAnnotation', function () {
-      this.countAnnotations('changedestroyAnnotation')
+      this.countAnnotations()
     }, this);
   },
   events:{
@@ -118,10 +118,14 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
   },
   countAnnotations: function () {
     var self = this;
+    this.model.bind('change:annotations', this.render, this);
     var countUrl = settings.annotations_count_url + '?model_names_pks=location,' + this.model.get('id');
     $.get(countUrl).success(function (annotation) {
       self.model.set({annotations: annotation.count});
     });
+  },
+  onClose: function () {
+    Lizard.App.vent.off('changedestroyAnnotation')
   }
 });
 

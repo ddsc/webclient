@@ -260,9 +260,6 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
       self.model.set({annotations: annotation.count});
     });
   },
-  onClose: function () {
-    Lizard.App.vent.off('changedestroyAnnotation')
-  }
 });
 
 // Modal view that opens when clicking on a location
