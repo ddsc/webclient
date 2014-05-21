@@ -99,30 +99,29 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
   initialize: function (options){
     this.model = options.model;
     this.model.set({pk: this.model.get('id')});
-    this.model.bind('change:annotationCount', this.render, this);
+    Lizard.App.vent.on('changedestroyAnnotation', function () {
+      this.countAnnotations('changedestroyAnnotation')
+    }, this);
   },
   events:{
-    'mouseover' : 'countAnnotations',
     'click .icon-comment': 'createAnnotation'
   },
   template: function(model){
         return _.template(
             $('#timeserie-popup-title-template').html(), {
               title: model.name,
-              annotationCount: model.annotationCount
+              annotations: model.annotations
             });
   },
   createAnnotation: function(){
     Lizard.Views.CreateAnnotationView(this.model);
   },
   countAnnotations: function () {
-    if (this.model.get('annotationCount') === null) {
-      var self = this;
-      var countUrl = settings.annotations_count_url + '?model_names_pks=location,' + this.model.get('id');
-      $.get(countUrl).success(function (annotation) {
-        self.model.set({annotationCount: annotation.count});
-      });
-    }
+    var self = this;
+    var countUrl = settings.annotations_count_url + '?model_names_pks=location,' + this.model.get('id');
+    $.get(countUrl).success(function (annotation) {
+      self.model.set({annotations: annotation.count});
+    });
   }
 });
 

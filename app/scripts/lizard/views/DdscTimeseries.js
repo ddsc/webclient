@@ -215,7 +215,11 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     'click .image-popup-toggle' : 'openCarouselModal',
     'click .image-popup-text': 'openTextModal',
     'click .icon-comment' : 'openAnnotation',
-    'hover' : 'countAnnotations'
+  },
+  initialize: function () {
+    Lizard.App.vent.on('changedestroyAnnotation', function () {
+      this.countAnnotations('changedestroyAnnotation')
+    }, this);
   },
   openAnnotation: function(){
     Lizard.App.vent.trigger('makeAnnotation', this.model);
@@ -249,14 +253,15 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     });
   },
   countAnnotations: function () {
-    if (this.model.get('annotationCount') === null) {
-      var self = this;
-      this.model.bind('change:annotationCount', this.render, this);
-      var countUrl = settings.annotations_count_url + '?model_names_pks=timeseries,' + this.model.get('id');
-      $.get(countUrl).success(function (annotation) {
-        self.model.set({annotationCount: annotation.count});
-      });
-    }
+    var self = this;
+    this.model.bind('change:annotations', this.render, this);
+    var countUrl = settings.annotations_count_url + '?model_names_pks=timeseries,' + this.model.get('id');
+    $.get(countUrl).success(function (annotation) {
+      self.model.set({annotations: annotation.count});
+    });
+  },
+  onClose: function () {
+    Lizard.App.vent.off('changedestroyAnnotation')
   }
 });
 
