@@ -109,9 +109,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.Marionette.CollectionView.extend({
     checkScroll: function() {
         var self = this;
         var triggerPoint = 200;
-        // console.log('this.el.scrollTop', this.el.parentNode.scrollTop);
-        // console.log('this.el.clientHeight', this.el.clientHeight);
-        // console.log('triggerPoint', triggerPoint);
+
         if (!this.collection.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight) {
             $('.loading-indicator').show();
             this.collection.isLoading = true;
@@ -150,7 +148,6 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         }
 
         this.searchTimeout = window.setTimeout(function () {
-            self.timeseriesCollection.reset();
             self.timeseriesCollection.page = 1;
             self.timeseriesCollection.isLoading = true;
             self.timeseriesCollection.query = $('#searchTimeseries').val();
