@@ -401,6 +401,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
         that.removeLayer(layerModel);
       }
     });
+      // debugger 
 
     this.workspace.each(function(layerModel){
       that.addLayer(layerModel);

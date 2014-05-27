@@ -13,6 +13,7 @@ Lizard.Views.Workspace = Marionette.ItemView.extend({
     this.model.collection.each(function(workspace) {
       workspace.set('selected', false);
     });
+    // debugger
     this.model.set('selected', true);
     this.model.trigger('select_workspace', this.model);
   }
@@ -33,7 +34,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   className: 'wms_sources drawer-group',
   itemView: Lizard.Views.Workspace,
   selectWorkspace: function(selectedModel) {
-    this.workspaceView.setWorkspace(selectedModel);
+    Lizard.workspaceView.setWorkspace(selectedModel);
     Backbone.history.navigate('map/' + selectedModel.id);
   },
   onShow: function () {

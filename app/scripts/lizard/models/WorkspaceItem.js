@@ -25,6 +25,6 @@ Lizard.Models.WorkspaceItem = Backbone.AssociatedModel.extend({
     order: 0,
     opacity: 100,
     visibility: true,
-    selected: false
+    selected: false,
   }
 });
