@@ -256,6 +256,15 @@
                 <br class="hidden-phone">
 
                 <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
+                  <li class="metrics-dropdown mappage hidden-phone">
+                      <a href="javascript:void(0);"><i class="icon-globe"></i> GeoTiffs <br></a>
+                  </li>
+                  <div class="geo-tiff-nav hidden-phone" data-group="" id="geo-tiff-region">
+                  </div>
+                </ul>
+                <br class="hidden-phone">
+
+                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
                     <div data-group="ddsc_layers" class="" id="ddsc_temp">
                     <ul><li>
                       <div class="ddsc-item noselect sensor-layer-toggler">
@@ -332,6 +341,10 @@
 
     <script type="text/template" id="timeserie-text-itemview">
       <%=value%>
+    </script>
+
+    <script type="text/template" id="geotiff-template">
+      <a href="javascript:void(0)" class="next">next</a><a href="javascript:void(0)" class="previous">previous</a>
     </script>
 
     <script type="text/template" id="textmodal-popup">
