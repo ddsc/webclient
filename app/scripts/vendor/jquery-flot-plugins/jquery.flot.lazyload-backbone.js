@@ -115,6 +115,25 @@
             var dataset = this.datasets[i];
             if (updateAll === true || dataset.needsUpdate) {
                 dataset.fetch(function () {
+                    var response = arguments[0];
+                    console.info(response);
+                    var dataEnd = new Date(response.data[response.data.length - 1][0]);
+                    var dateRangeStart = self.graphModel.get('dateRange').get('start');
+                    var dateDelta = self.graphModel.get('dateRange').get('end') - dateRangeStart;
+                    if (dataEnd < dateRangeStart) {
+                        if (response.data.length < 2) {
+                            var dataStart = new Date(dataEnd - dateDelta);
+                        } else {
+                            var dataStart = new Date(arguments[0].data[0][0]);
+                        }
+                        var xAxis = self.plot.getXAxes()[0];
+                        var xAxisOptions = xAxis.options;
+                            xAxisOptions.min = dataStart
+                            xAxisOptions.max = dataEnd
+                            xAxis.min = dataStart
+                            xAxis.max = dataEnd
+                    }
+
                     self.redraw();
                 });
             }
