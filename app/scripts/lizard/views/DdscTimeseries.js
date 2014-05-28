@@ -231,7 +231,6 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       // get the index and use to get next item in eventslist, if there is a 'next item'
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
-      console.log(active_idx, this.eventsCollection.models.length);
       if (self.eventsCollection.models.length > active_idx + 1) {
         var active_event = self.eventsCollection.models[active_idx + 1];
         self.gTiff.set('active_event', active_event);
@@ -241,7 +240,6 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
     previousTiff: function () {
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
-      console.log(active_idx);
       if (active_idx - 1 >= 0) {
         var active_event = self.eventsCollection.models[active_idx + 1];
         this.gTiff.set('active_event', active_event);
