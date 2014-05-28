@@ -199,8 +199,23 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.eventsCollection = new Lizard.Collections.Events();
       this.eventsCollection.url = this.gTiff.get('events') + '?page_size=0';
       this.eventsCollection.fetch().done(function (collection, response) {
-        self.gTiff.set('active_event', collection.models[0]);
+        var active_event = collection.models[0];
+        self.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+        // self.populateDatePicker(active_event);
       });
+      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
+
+    },
+    populateDatePicker: function () {
+      // debugger
+      // // for (var i = 0; )
+      // this.$el.find('#geotiff-datepicker').datepicker({
+      //   beforeShowDay: function(date){
+      //     var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+      //     return [ array.indexOf(string) == -1 ]
+      //   }
+      // });
     },
     switchLayer: function (newModel, oldRef) {
       if (newModel !== oldRef) {
@@ -218,7 +233,9 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       console.log(active_idx, this.eventsCollection.models.length);
       if (self.eventsCollection.models.length > active_idx + 1) {
-        self.gTiff.set('active_event', self.eventsCollection.models[active_idx + 1]);      
+        var active_event = self.eventsCollection.models[active_idx + 1];
+        self.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
       }
     },
     previousTiff: function () {
@@ -226,12 +243,15 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       console.log(active_idx);
       if (active_idx - 1 >= 0) {
-        this.gTiff.set('active_event', self.eventsCollection.models[active_idx - 1]);      
+        var active_event = self.eventsCollection.models[active_idx + 1];
+        this.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
       }
       //
     },
     onClose: function () {
       mc.removeLayer(this.mapLayer);
+      Lizard.mapView.geoTiffRegion.$el.parent().addClass('hidden');
     }
 });
 
@@ -310,6 +330,9 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
       gTiffTimeseries: this.model
     });
     Lizard.mapView.geoTiffRegion.show(geoTiffView);
+    $('.leaflet-rrose-close-button').on('click', function() {
+      Lizard.mapView.geoTiffRegion.close();
+    })
     // modalView.$el.find('.modal').on('hide', function () {
     //     Lizard.App.hidden.close();
     // });

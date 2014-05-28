@@ -255,8 +255,8 @@
                 </ul>
                 <br class="hidden-phone">
 
-                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                  <li class="metrics-dropdown mappage hidden-phone">
+                <ul class="nav nav-list sidenav hidden" >
+                  <li class="mappage hidden-phone">
                       <a href="javascript:void(0);"><i class="icon-globe"></i> GeoTiffs <br></a>
                   </li>
                   <div class="geo-tiff-nav hidden-phone" data-group="" id="geo-tiff-region">
@@ -342,9 +342,10 @@
     <script type="text/template" id="timeserie-text-itemview">
       <%=value%>
     </script>
-
     <script type="text/template" id="geotiff-template">
-      <a href="javascript:void(0)" class="next">next</a><a href="javascript:void(0)" class="previous">previous</a>
+      <a href="javascript:void(0)" class="previous"><i class="icon-arrow-left"></i></a>
+      <input type="text" id="geotiff-datepicker"><a href="javascript:void(0)" class="next">
+      <i class="icon-arrow-right"></i></a>
     </script>
 
     <script type="text/template" id="textmodal-popup">
