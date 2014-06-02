@@ -286,7 +286,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
   events: {
     // NOTE: FIX THIS
-    'click .popup-toggle' : 'openGeoTiff',
+    'click .popup-toggle' : 'openModal',
     'click .image-popup-toggle' : 'openCarouselModal',
     'click .image-popup-text': 'openTextModal',
     'click .icon-comment' : 'openAnnotation',
