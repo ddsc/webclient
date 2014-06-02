@@ -432,19 +432,26 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
     collectionEvents: {
         'change reset remove add' : 'render'
     },
-    zoomTo: function(){
+    zoomTo: function (){
+      related_type = this.model.get('related_type');
+      if (related_type == 'location') {
+        var related_uuid = this.model.get('related_uuid');
+        var related_location = locationCollection.get(related_uuid);
+        debugger
+        Lizard.Map.ddsc_layers
+      }
             // Lizard.App.vent.trigger("makeAnnotation", this.model);
     },
-    template: function(model){
+    template: function (model){
         return _.template(
-            '<span > <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
+            '<span > <%= alarm.message %></span>', model, {variable: 'alarm'});
     }
 });
 
 Lizard.Views.AlarmStatusView = Backbone.Marionette.CollectionView.extend({
     collection: null,
     tagName: 'ul',
-    initialize: function(options){
+    initialize: function (options){
         this.collection = options.collection;
     },
     itemView: Lizard.Views.AlarmStatusItem

@@ -28,9 +28,11 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   addToMap: function() {
     this.map.mapCanvas.addLayer(this.markers);
+    this.set('addedToMap', true);
   },
   removeFromMap: function() {
     this.map.mapCanvas.removeLayer(this.markers);
+    this.set('addedToMap', false);
   },
   drawOnMap: function(collection, objects){
     var models = collection.models;
@@ -52,8 +54,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
             bbModel: model,
             code: attributes.code
           });
-
         this.markers.addLayer(marker);
+        model.set('leaflet_id', marker._leaflet_id);
         marker.on('click', that.showPopup);
       } catch (e) {
         console.log('Location has no geometry. Error: ' + e);

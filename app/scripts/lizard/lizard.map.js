@@ -7,12 +7,14 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
-    'annotationsRegion' : '#annotationsRegion',
+    'annotationsRegion' : '#annotations-region',
     'geocoderRegion' : '#geocoderRegion',
     'legendRegion': '#legendRegion',
     'extraLayerRegion' : '#extramaplayers',
     'fullScreenRegion': '#full-screen-region',
-    'geoTiffRegion': '#geo-tiff-region'
+    'geoTiffRegion': '#geo-tiff-region',
+    'alarmsRegion': '#alarms-region',
+    'statusRegion': '#status-region'
   }
 });
 
@@ -119,6 +121,15 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
     mapView: leafletView
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
+
+  var alarmsView = new Lizard.Views.AlarmStatusView({
+    collection: new Backbone.Collection()
+  });
+  alarmsView.collection.url = settings.alarms_url;
+  alarmsView.collection.fetch();
+  Lizard.mapView.alarmsRegion.show(alarmsView.render());
+  // Lizard.mapView.statusRegion.show(statusView.render());
+
 
   var locationSearchCollection = new Lizard.Collections.LocationSearch;
   Lizard.mapView.geocoderRegion.show(new Lizard.Views.MapSearch({
