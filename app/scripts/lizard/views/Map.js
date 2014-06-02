@@ -421,3 +421,31 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }
   }
 });
+
+Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
+    related_object: null,
+    tagName: 'li',
+    className: 'annotation-open',
+    events:{
+        'click': 'openAnnotation'
+    },
+    collectionEvents: {
+        'change reset remove add' : 'render'
+    },
+    openAnnotation: function(){
+            Lizard.App.vent.trigger("makeAnnotation", this.model);
+    },
+    template: function(model){
+        return _.template(
+            '<span > <%= annotation.text %></span>', {text: model.text}, {variable: 'annotation'});
+    }
+});
+
+Lizard.Views.AlarmStatusView = Backbone.Marionette.CollectionView.extend({
+    collection: null,
+    tagName: 'ul',
+    initialize: function(options){
+        this.collection = options.collection;
+    },
+    itemView: Lizard.Views.AlarmStatusItem
+});

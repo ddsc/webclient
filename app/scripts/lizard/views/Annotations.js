@@ -59,6 +59,8 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             else {
                 $icon.addClass('icon-check-empty').removeClass('icon-check');
                 self.mapCanvas.removeLayer(self.annotationLayer);
+
+                Lizard.Map.annotationCollectionView.collection.reset();
             }
         });
     },
@@ -166,10 +168,17 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                     var model = new Backbone.Model(annotation);
                     annotationCollection.add(model);
                 });
-                var annotationCollectionView = new Lizard.Views.AnnotationBoxCollectionView({
-                    collection: annotationCollection
-                });
-                self.$el.find('#annotation-overview').append(annotationCollectionView.render().el);
+                if ((Lizard.Map.annotationCollectionView) &&
+                    $('.annotation-layer-toggler').find('i').hasClass('icon-check')) {
+                    Lizard.Map.annotationCollectionView.collection
+                        .reset(annotationCollection.first(10));                
+                } else if (!Lizard.Map.annotationCollectionView) {
+                    Lizard.Map.annotationCollectionView = new Lizard.Views.AnnotationBoxCollectionView({
+                        collection: annotationCollection
+                    });
+                }
+                    self.$el.find('#annotation-overview').append(Lizard.Map.annotationCollectionView.render().el);                
+
             }
         });
     },
@@ -262,8 +271,16 @@ Lizard.Views.AnnotationBoxItem = Backbone.Marionette.ItemView.extend({
 Lizard.Views.AnnotationBoxCollectionView = Backbone.Marionette.CollectionView.extend({
     collection: null,
     tagName: 'ol',
+    events: {
+        'change add remove': 'limit'
+    },
     initialize: function(options){
-        this.collection = new Backbone.Collection(options.collection.first(10));
+        this.collection = options.collection;
+        this.limit();
+    },
+    limit: function () {
+        var self = this;
+        this.collection = new Backbone.Collection(self.collection.first(10));
     },
     itemView: Lizard.Views.AnnotationBoxItem
 });
