@@ -45,7 +45,7 @@ window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
+Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout

@@ -427,13 +427,13 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
     tagName: 'li',
     className: 'annotation-open',
     events:{
-        'click': 'openAnnotation'
+        'click': 'zoomTo'
     },
     collectionEvents: {
         'change reset remove add' : 'render'
     },
-    openAnnotation: function(){
-            Lizard.App.vent.trigger("makeAnnotation", this.model);
+    zoomTo: function(){
+            // Lizard.App.vent.trigger("makeAnnotation", this.model);
     },
     template: function(model){
         return _.template(

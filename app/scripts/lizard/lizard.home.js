@@ -7,6 +7,13 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   onDomRefresh: function() {
     console.log('onDomRefresh');
   },
+  events: {
+    'click #measure-alarm': 'openAlarmStatus',
+    'click #measure-status': 'openAlarmStatus'
+  },
+  openAlarmStatus: function () {
+    Lizard.Map.map(14);
+  },
   regions: {
     'measureAlarm': '#measure-alarm',
     'measureNewMeasurement': '#measure-new-measurement',
