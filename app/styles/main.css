@@ -645,7 +645,7 @@ span.lazy {
 }
 
 .gridster {
-    width: 940px;
+    /*width: 940px;*/
     margin: 0 auto;
 
     opacity: .8;
@@ -1441,7 +1441,7 @@ div#dateRangeRegion{
     border: 1px dashed #0084b4 !important;
 }
 
-.graph-widget {
+.graph-widget > .flot-base {
     height: 200px;
 }
 .overlayer {
