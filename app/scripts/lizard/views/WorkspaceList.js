@@ -33,7 +33,7 @@ Lizard.Views.WorkspaceCollection = Backbone.Marionette.CollectionView.extend({
   className: 'wms_sources drawer-group',
   itemView: Lizard.Views.Workspace,
   selectWorkspace: function(selectedModel) {
-    this.workspaceView.setWorkspace(selectedModel);
+    Lizard.workspaceView.setWorkspace(selectedModel);
     Backbone.history.navigate('map/' + selectedModel.id);
   },
   onShow: function () {
