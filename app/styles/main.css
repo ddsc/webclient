@@ -1048,6 +1048,10 @@ ul.timeserie-actions li {
     width: 100%;
 }
 
+i.alarm-color {
+    color: #D9534F;
+}
+
 ul.add-map-item {
     list-style: none;
     padding-left: 15px;
@@ -1113,9 +1117,9 @@ ul.add-map-item > li {
     float: none;
 }
 
-.annotation .badge{
+/*.annotation .badge{
     margin-right: 0.5em;
-}
+}*/
 
 
 /************ BOOTSTRAP OVERRIDES ************/

@@ -445,6 +445,8 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
         var that = this;
         newTs.fetch().done(function (model) {
           var related_uuid = model.get('location').uuid;
+          that.model.set('related_type', 'location');
+          that.model.set('related_uuid', related_uuid);
           that.getLocationPopup(related_uuid);
         });
       }
@@ -455,6 +457,7 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
         var point = new L.LatLng(point_geom[1], point_geom[0]);
         var marker = Lizard.Map.ddsc_layers.markers.getLayer(related_location.get('leaflet_id'));
         var visPar = Lizard.Map.ddsc_layers.markers.getVisibleParent(marker);
+        if (Lizard.Map.ddsc_layers.get('addedToMap') ===  false) {return;}
         if (visPar.__proto__.hasOwnProperty('spiderfy')) {
           visPar.spiderfy();
         }

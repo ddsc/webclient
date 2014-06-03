@@ -281,7 +281,7 @@
                         </span>
                       </a>
                   </li>
-                  <div class="hidden-phone hidden" data-group="" id="annotations-region">
+                  <div class="hidden-phone" data-group="" id="annotations-region">
                   </div>
                   <li class="mappage hidden-phone alarms">
                       <a href="javascript:void(0);">
@@ -295,7 +295,7 @@
                   </div>
                   <li class="mappage hidden-phone status">
                       <a href="javascript:void(0);">
-                        <span class="alarm-layer-toggler">
+                        <span class="status-toggler">
                         <i class="icon-check-empty"></i>Storingen
                          <em class="pull-right badge badge-default">0</em>
                         </span>
@@ -627,7 +627,10 @@
     </script>
 
     <script type="text/template" id="timeserie-popup-title-template">
-    <%= title %> <span class="pull-right"><%= annotationCount %> <i class="icon-comment clickable"></i></span>
+    <%= title %> <% if (alarms == true) {%>
+      <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
+      <%}%>
+    <span class="pull-right"><%= annotationCount %> <i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">

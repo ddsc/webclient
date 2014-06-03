@@ -99,19 +99,28 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
 });
 
 Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
-  initialize: function (options){
+  initialize: function (options) {
     this.model = options.model;
     this.model.set({pk: this.model.get('id')});
     this.model.bind('change:annotationCount', this.render, this);
+    this.model.set('alarms', false);
+    if (Lizard.hasOwnProperty('alarmsCollection')) {
+      for (var i = 0; Lizard.alarmsCollection.models.length > i; i++) {
+        if (Lizard.alarmsCollection.models[i].get('related_uuid') === this.model.get('uuid')){
+          this.model.set('alarms', true);
+        }
+      }
+    }
   },
   events:{
     'mouseover' : 'countAnnotations',
     'click .icon-comment': 'createAnnotation'
   },
-  template: function(model){
+  template: function (model) {
         return _.template(
             $('#timeserie-popup-title-template').html(), {
               title: model.name,
+              alarms: model.alarms,
               annotationCount: model.annotationCount
             });
   },

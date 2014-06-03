@@ -3,7 +3,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
   events: {
     'click .sensor-layer-toggler': 'sensorsToggle',
-    'click .alarm-toggler': 'alarmToggle'
+    'click .alarm-toggler': 'alarmToggle',
+    'click .status-toggler': 'statusToggle',
   },
   sensorsToggle: function (e) {
     var $icon = $(e.target).find('i');
@@ -20,17 +21,35 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     var $icon = $(e.target).find('i');
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
-      $('#alarms-region').removeClass('hidden');
-      var alarmsView = new Lizard.Views.AlarmStatusView({
-        collection: new Backbone.Collection()
+      $('#status-region').removeClass('hidden');
+      Lizard.alarmsCollection = new Backbone.Collection;
+      alarmsView = new Lizard.Views.AlarmStatusView({
+        collection: Lizard.alarmsCollection
       });
       alarmsView.collection.url = settings.alarms_url;
       alarmsView.collection.fetch();
       Lizard.mapView.alarmsRegion.show(alarmsView.render());
     } else {
-      alarmsView = null;
       Lizard.mapView.alarmsRegion.close();
-      $('#alarms-region').addClass('hidden');
+      $('#status-region').addClass('hidden');
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+    }
+  },
+  statusToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      $('#status-region').removeClass('hidden');
+      Lizard.statusCollection = new Backbone.Collection;
+      var statusView = new Lizard.Views.AlarmStatusView({
+        collection: Lizard.statusCollection
+      });
+      statusView.collection.url = settings.status_url;
+      statusView.collection.fetch();
+      Lizard.mapView.statusRegion.show(statusView.render());
+    } else {
+      Lizard.mapView.statusRegion.close();
+      $('#status-region').addClass('hidden');
       $icon.addClass('icon-check-empty').removeClass('icon-check');
     }
   },
