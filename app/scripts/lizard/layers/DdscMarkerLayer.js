@@ -69,7 +69,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
       // marker.togglePopup();
       Lizard.App.vent.off('ResizePopup');
       marker.unbindPopup();
-    } 
+    }
     var model = marker.valueOf().options.bbModel;
     var name = marker.valueOf().options.name;
     var popupLayout = new Lizard.geo.Popups.Layout();
@@ -77,7 +77,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     popupLayout.title.show(new Lizard.geo.Popups.LocationPopupTitle({
       model: model, name: name
     }));
-    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(model, popupLayout.content);
+    var innerStuff = Lizard.geo.Popups.DdscTimeseries
+      .getPopupContent(model, popupLayout.content);
     var popup = new L.Rrose({
       maxHeight: 300, 
       minWidth: 400, 

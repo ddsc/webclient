@@ -1040,6 +1040,23 @@ ul.timeserie-actions li {
     display:inline;
 }
 
+/* Alarm Status stuff*/
+
+.alarm-open{
+    color: #0084B4;
+    cursor: pointer;
+    width: 100%;
+}
+
+ul.add-map-item {
+    list-style: none;
+    padding-left: 15px;
+}
+
+ul.add-map-item > li {
+    line-height: 12px;
+}
+
 
 /* Annotation Stuff*/
 

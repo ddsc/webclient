@@ -1,6 +1,39 @@
 // Create default layout, including regions
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
+  events: {
+    'click .sensor-layer-toggler': 'sensorsToggle',
+    'click .alarm-toggler': 'alarmToggle'
+  },
+  sensorsToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      Lizard.Map.ddsc_layers.addToMap();
+    }
+    else {
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+      Lizard.Map.ddsc_layers.removeFromMap();
+    }
+  },
+  alarmToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      $('#alarms-region').removeClass('hidden');
+      var alarmsView = new Lizard.Views.AlarmStatusView({
+        collection: new Backbone.Collection()
+      });
+      alarmsView.collection.url = settings.alarms_url;
+      alarmsView.collection.fetch();
+      Lizard.mapView.alarmsRegion.show(alarmsView.render());
+    } else {
+      alarmsView = null;
+      Lizard.mapView.alarmsRegion.close();
+      $('#alarms-region').addClass('hidden');
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+    }
+  },
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
@@ -122,12 +155,6 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
-  var alarmsView = new Lizard.Views.AlarmStatusView({
-    collection: new Backbone.Collection()
-  });
-  alarmsView.collection.url = settings.alarms_url;
-  alarmsView.collection.fetch();
-  Lizard.mapView.alarmsRegion.show(alarmsView.render());
   // Lizard.mapView.statusRegion.show(statusView.render());
 
 
@@ -144,17 +171,6 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   // trigger for annotations layer.
   Lizard.App.vent.trigger('mapLoaded');
 
-  $('.sensor-layer-toggler').click(function(e) {
-    var $icon = $(this).find('i');
-    if ($icon.hasClass('icon-check-empty')) {
-      $icon.addClass('icon-check').removeClass('icon-check-empty');
-      Lizard.Map.ddsc_layers.addToMap();
-    }
-    else {
-      $icon.addClass('icon-check-empty').removeClass('icon-check');
-      Lizard.Map.ddsc_layers.removeFromMap();
-    }
-  });
 
     tour = new Tour({
       labels: {
