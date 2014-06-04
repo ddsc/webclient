@@ -48,7 +48,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     },
     createAnnotationsLayer: function () {
         var self = this;
-        $('.annotation-layer-toggler').click(function(e) {
+        $('.annotation').click(function(e) {
             var $icon = $(this).find('i');
             if ($icon.hasClass('icon-check-empty')) {
                 $icon.addClass('icon-check').removeClass('icon-check-empty');
@@ -59,8 +59,9 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             else {
                 $icon.addClass('icon-check-empty').removeClass('icon-check');
                 self.mapCanvas.removeLayer(self.annotationLayer);
-
-                Lizard.Map.annotationCollectionView.collection.reset();
+                if (Lizard.Map.hasOwnProperty('annotationCollectionView')) {
+                    Lizard.Map.annotationCollectionView.collection.reset();
+                }
             }
         });
     },
@@ -221,7 +222,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
 
 
 // Fixes the z-index of the datepicker which appeared behind the modal
-$('.datepick-annotate').live('focus', function(e) {
+$('.datepick-annotate').on('focus', function(e) {
     $('#ui-datepicker-div').css('z-index', 10000);
 });
 

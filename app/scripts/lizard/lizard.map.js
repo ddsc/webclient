@@ -2,9 +2,41 @@
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
   events: {
-    'click .sensor-layer-toggler': 'sensorsToggle',
-    'click .alarm-toggler': 'alarmToggle',
-    'click .status-toggler': 'statusToggle',
+    'click .sensor': 'sensorsToggle',
+    'click .alarms': 'alarmToggle',
+    'click .status': 'statusToggle',
+    'click .metrics-dropdown': 'toggleChevron',
+    'click #extramaplayers-button': 'toggleExtraLayers'
+  },
+  onRender: function () {
+
+    $('input[type=checkbox]').on('click', function(e) {
+      var el = $(this);
+      if(el.is(':checked')) {
+        el.parent().css('font-weight', 'bold');
+      } else {
+        el.parent().css('font-weight', 'normal');
+      }
+      return true;
+    });
+
+  },
+  toggleChevron: function (e) {
+    // Click handlers for toggling the filter/location/parameter UI
+      e.preventDefault();
+      $(e.target).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
+      var el = $(e.currentTarget).next();
+      if(el.is(':visible')) {
+        el.addClass('hide');
+      } else {
+        el.removeClass('hide');
+      }
+  },
+  toggleExtraLayers: function (e) {
+    $('#extramaplayers-button').on("click", function(e){
+        e.preventDefault();
+        $('#extramodal').modal();
+    });
   },
   sensorsToggle: function (e) {
     var $icon = $(e.target).find('i');
@@ -19,36 +51,46 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   },
   alarmToggle: function (e) {
     var $icon = $(e.target).find('i');
+    var $badge = $(e.target).find('.badge');
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
-      $('#status-region').removeClass('hidden');
+      $badge.removeClass('hidden');
+      $('#alarms-region').removeClass('hidden');
       Lizard.alarmsCollection = new Backbone.Collection;
       alarmsView = new Lizard.Views.AlarmStatusView({
         collection: Lizard.alarmsCollection
       });
       alarmsView.collection.url = settings.alarms_url;
-      alarmsView.collection.fetch();
+      alarmsView.collection.fetch().done(function (collection){
+        $badge.html(collection.models.length);
+      });
       Lizard.mapView.alarmsRegion.show(alarmsView.render());
     } else {
       Lizard.mapView.alarmsRegion.close();
-      $('#status-region').addClass('hidden');
+      $('#alarms-region').addClass('hidden');
+      $badge.addClass('hidden');
       $icon.addClass('icon-check-empty').removeClass('icon-check');
     }
   },
   statusToggle: function (e) {
     var $icon = $(e.target).find('i');
+    var $badge = $(e.target).find('.badge');
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
+      $badge.removeClass('hidden');
       $('#status-region').removeClass('hidden');
       Lizard.statusCollection = new Backbone.Collection;
       var statusView = new Lizard.Views.AlarmStatusView({
         collection: Lizard.statusCollection
       });
       statusView.collection.url = settings.status_url;
-      statusView.collection.fetch();
+      statusView.collection.fetch().done(function (collection){
+        $badge.html(collection.models.length);
+      });
       Lizard.mapView.statusRegion.show(statusView.render());
     } else {
       Lizard.mapView.statusRegion.close();
+      $badge.addClass('hidden');
       $('#status-region').addClass('hidden');
       $icon.addClass('icon-check-empty').removeClass('icon-check');
     }

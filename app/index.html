@@ -266,7 +266,7 @@
                 </ul>
 
                 <ul class="nav nav-list sidenav " >
-                  <li class="mappage hidden-phone">
+                  <li class="mappage hidden-phone sensor">
                     <a href="javascript:void(0);">
                       <span class="sensor-layer-toggler">
                         <i class="icon-check"></i>&nbsp;Sensoren
@@ -287,7 +287,7 @@
                       <a href="javascript:void(0);">
                         <span class="alarm-toggler">
                         <i class="icon-check-empty"></i>Alarmen
-                         <em class="pull-right badge badge-default">0</em>
+                         <em class="pull-right badge badge-default hidden">0</em>
                         </span>
                       </a>
                   </li>
@@ -297,7 +297,7 @@
                       <a href="javascript:void(0);">
                         <span class="status-toggler">
                         <i class="icon-check-empty"></i>Storingen
-                         <em class="pull-right badge badge-default">0</em>
+                         <em class="pull-right badge badge-default hidden">0</em>
                         </span>
                       </a>
                   </li>
@@ -739,11 +739,18 @@
         </div>
     </script> -->
 
+    <script type="text/template" id="alarm-status-item-template">
+      <span data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm Bericht: <%= alarm.message %>"> <%= alarm.alarm.name %></span>
+    </script>
+
     <script type="text/template" id="location-popup-item">
         <div class="timeserie-item noselect">
             <h5 data-url="<%= events %>"><i class="<% if(value_type === 'float') { %>icon-bar-chart<% } else if(value_type === 'image') { %>icon-picture<% } else { %>icon-align-left<% } %>"></i>
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else { %>image-popup-text<%} %>"> &nbsp;<%=  truncateString(name, 30, '', '...') %></span>
               <span class="pull-right">
+                <% if (alarms == true) {%>
+                <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
+                <%}%>
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <span class="badge badge-info">
                   <%= annotations %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
@@ -1311,7 +1318,7 @@
       <div id="hidden"></div>
 
         <!-- build:js scripts/vendor/jquery.js -->
-        <script src="scripts/vendor/jquery-1.8.3.js"></script>
+        <script src="scripts/vendor/jquery-2.1.1.js"></script>
         <script src="scripts/vendor/jquery.xml2json.js"></script>
         <script src="scripts/vendor/jquery.cookie.js"></script>
         <script src="scripts/settings.js"></script>

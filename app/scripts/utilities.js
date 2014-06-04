@@ -13,7 +13,7 @@ $(window).on('resize', function(e) {
 });
 
 
-$('#startTour').live('click', function() {
+$('#startTour').on('click', function() {
     tour.start(true);
 });
 
@@ -34,38 +34,6 @@ $.fn.serializeObject = function()
    return o;
 };
 
-$('input[type=checkbox]').live('click', function(e) {
-  var el = $(this);
-  if(el.is(':checked')) {
-    el.parent().css('font-weight', 'bold');
-  } else {
-    el.parent().css('font-weight', 'normal');
-  }
-  return true;
-});
-
-
-$('.VS-interface').live('focus', function(){
-    console.log('hs');
-});
-
-
-// Click handlers for toggling the filter/location/parameter UI
-$('li.metrics-dropdown').live("click", function(e){
-  e.preventDefault();
-  $(this).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
-  var el = $(this).next();
-  if(el.is(':visible')) {
-    el.addClass('hide');
-  } else {
-    el.removeClass('hide');
-  }
-});
-
-$('#extramaplayers-button').live("click", function(e){
-    e.preventDefault();
-    $('#extramodal').modal();
-});
 
 window.toggleFullScreen = function () {
     if (window.mapFullScreen) {
