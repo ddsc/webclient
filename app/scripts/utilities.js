@@ -34,33 +34,6 @@ $.fn.serializeObject = function()
    return o;
 };
 
-$('input[type=checkbox]').on('click', function(e) {
-  var el = $(this);
-  if(el.is(':checked')) {
-    el.parent().css('font-weight', 'bold');
-  } else {
-    el.parent().css('font-weight', 'normal');
-  }
-  return true;
-});
-
-
-// Click handlers for toggling the filter/location/parameter UI
-$('li.metrics-dropdown').on("click", function(e){
-  e.preventDefault();
-  $(this).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
-  var el = $(this).next();
-  if(el.is(':visible')) {
-    el.addClass('hide');
-  } else {
-    el.removeClass('hide');
-  }
-});
-
-$('#extramaplayers-button').on("click", function(e){
-    e.preventDefault();
-    $('#extramodal').modal();
-});
 
 window.toggleFullScreen = function () {
     if (window.mapFullScreen) {

@@ -5,6 +5,38 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'click .sensor': 'sensorsToggle',
     'click .alarms': 'alarmToggle',
     'click .status': 'statusToggle',
+    'click .metrics-dropdown': 'toggleChevron',
+    'click #extramaplayers-button': 'toggleExtraLayers'
+  },
+  onRender: function () {
+
+    $('input[type=checkbox]').on('click', function(e) {
+      var el = $(this);
+      if(el.is(':checked')) {
+        el.parent().css('font-weight', 'bold');
+      } else {
+        el.parent().css('font-weight', 'normal');
+      }
+      return true;
+    });
+
+  },
+  toggleChevron: function (e) {
+    // Click handlers for toggling the filter/location/parameter UI
+      e.preventDefault();
+      $(e.target).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
+      var el = $(e.currentTarget).next();
+      if(el.is(':visible')) {
+        el.addClass('hide');
+      } else {
+        el.removeClass('hide');
+      }
+  },
+  toggleExtraLayers: function (e) {
+    $('#extramaplayers-button').on("click", function(e){
+        e.preventDefault();
+        $('#extramodal').modal();
+    });
   },
   sensorsToggle: function (e) {
     var $icon = $(e.target).find('i');
