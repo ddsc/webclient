@@ -102,6 +102,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
     Lizard.App.vent.on('changedestroyAnnotation', function () {
       this.countAnnotations()
     }, this);
+    this.countAnnotations()
   },
   events:{
     'click .icon-comment': 'createAnnotation'
