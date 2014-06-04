@@ -122,7 +122,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
         return _.template(
             $('#timeserie-popup-title-template').html(), {
               title: model.name,
-              annotations: model.annotations
+              annotations: model.annotations,
               alarms: model.alarms,
             });
   },
