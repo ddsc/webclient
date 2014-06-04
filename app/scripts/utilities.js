@@ -13,7 +13,7 @@ $(window).on('resize', function(e) {
 });
 
 
-$('#startTour').live('click', function() {
+$('#startTour').on('click', function() {
     tour.start(true);
 });
 
@@ -34,7 +34,7 @@ $.fn.serializeObject = function()
    return o;
 };
 
-$('input[type=checkbox]').live('click', function(e) {
+$('input[type=checkbox]').on('click', function(e) {
   var el = $(this);
   if(el.is(':checked')) {
     el.parent().css('font-weight', 'bold');
@@ -45,13 +45,8 @@ $('input[type=checkbox]').live('click', function(e) {
 });
 
 
-$('.VS-interface').live('focus', function(){
-    console.log('hs');
-});
-
-
 // Click handlers for toggling the filter/location/parameter UI
-$('li.metrics-dropdown').live("click", function(e){
+$('li.metrics-dropdown').on("click", function(e){
   e.preventDefault();
   $(this).find('.icon-chevron-down').toggleClass('chevron-oneeighty');
   var el = $(this).next();
@@ -62,7 +57,7 @@ $('li.metrics-dropdown').live("click", function(e){
   }
 });
 
-$('#extramaplayers-button').live("click", function(e){
+$('#extramaplayers-button').on("click", function(e){
     e.preventDefault();
     $('#extramodal').modal();
 });

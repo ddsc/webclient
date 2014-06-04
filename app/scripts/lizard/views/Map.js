@@ -445,14 +445,15 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
         var that = this;
         newTs.fetch().done(function (model) {
           var related_uuid = model.get('location').uuid;
-          that.model.set('related_type', 'location');
-          that.model.set('related_uuid', related_uuid);
+          // that.model.set('related_type', 'location');
+          // that.model.set('related_uuid', related_uuid);
           that.getLocationPopup(related_uuid);
         });
       }
     },
     getLocationPopup: function (related_uuid) {
         var related_location = locationCollection.get(related_uuid);
+        if (related_location === undefined) { return ;}
         var point_geom = related_location.get('point_geometry');
         var point = new L.LatLng(point_geom[1], point_geom[0]);
         var marker = Lizard.Map.ddsc_layers.markers.getLayer(related_location.get('leaflet_id'));
@@ -470,7 +471,12 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
     },
     template: function (model){
         return _.template(
-            '<span > <%= alarm.alarm.name %></span>', model, {variable: 'alarm'});
+            $('#alarm-status-item-template').html(), 
+            model, 
+            {variable: 'alarm'});
+    },
+    onRender: function () {
+      this.$el.find('span').popover({trigger: 'hover'});
     }
 });
 
