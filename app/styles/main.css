@@ -10,10 +10,10 @@ body {
     padding-top: 0;
     background-image: url('../images/cardboard_flat_white.png');
     /* image with opacity layer */
-    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
-    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
-    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
-    background-image: linear-gradient(top, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('../images/cardboard_flat_white.png');
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
 }
 
 /* Media selectors */
@@ -771,7 +771,7 @@ div.widget li.theader {
 
 
 .sidenav {
-    padding: 5px 15px;
+    padding: 0px 0px;
     background-color: white;
     border-radius: 6px;
     box-shadow: 0 8px 10px -8px #222;
@@ -873,7 +873,7 @@ i.chevron-open{
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
     font-size: 0.9em;
-    box-shadow: inset 0 8px 8px -6px  #000000;
+    box-shadow: inset 0px 2px 7px -8px  #000000;
     background: whitesmoke;
 }
 
@@ -990,6 +990,11 @@ div#selectionRegion{
     border-bottom: 1px solid #ddd;
 }
 
+div#ddsc_temp{
+    border: 1px solid #E5E5E5;
+    border-radius: 6px;
+}
+
 .favorite-item h5,
 .timeserie-item h5,
 .ddsc-item h5 {
@@ -1035,6 +1040,27 @@ ul.timeserie-actions li {
     display:inline;
 }
 
+/* Alarm Status stuff*/
+
+.alarm-open{
+    color: #0084B4;
+    cursor: pointer;
+    width: 100%;
+}
+
+i.alarm-color {
+    color: #D9534F;
+}
+
+ul.add-map-item {
+    list-style: none;
+    padding-left: 15px;
+}
+
+ul.add-map-item > li {
+    line-height: 12px;
+}
+
 
 /* Annotation Stuff*/
 
@@ -1063,7 +1089,7 @@ ul.timeserie-actions li {
 }
 
 #annotation-overview{
-    padding: 2px;
+    padding: 0px;
 }
 
 #annotation-overview ol li{
@@ -1091,9 +1117,9 @@ ul.timeserie-actions li {
     float: none;
 }
 
-.annotation .badge{
+/*.annotation .badge{
     margin-right: 0.5em;
-}
+}*/
 
 
 /************ BOOTSTRAP OVERRIDES ************/

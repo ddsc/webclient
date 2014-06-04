@@ -421,3 +421,65 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     }
   }
 });
+
+Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
+    related_object: null,
+    tagName: 'li',
+    className: 'alarm-open',
+    events:{
+        'click': 'zoomTo'
+    },
+    collectionEvents: {
+        'change reset remove add' : 'render'
+    },
+    zoomTo: function (){
+      related_type = this.model.get('related_type');
+      if (related_type == 'location') {
+        var related_uuid = this.model.get('related_uuid');
+        this.getLocationPopup(related_uuid);
+      } else if (related_type == 'timeseries') {
+        var ts_uuid = this.model.get('related_uuid');
+        var newTs = new Lizard.Models.Timeserie({
+          url: settings.timeseries_url.split('?')[0] + ts_uuid
+        });
+        var that = this;
+        newTs.fetch().done(function (model) {
+          var related_uuid = model.get('location').uuid;
+          that.model.set('related_type', 'location');
+          that.model.set('related_uuid', related_uuid);
+          that.getLocationPopup(related_uuid);
+        });
+      }
+    },
+    getLocationPopup: function (related_uuid) {
+        var related_location = locationCollection.get(related_uuid);
+        var point_geom = related_location.get('point_geometry');
+        var point = new L.LatLng(point_geom[1], point_geom[0]);
+        var marker = Lizard.Map.ddsc_layers.markers.getLayer(related_location.get('leaflet_id'));
+        var visPar = Lizard.Map.ddsc_layers.markers.getVisibleParent(marker);
+        if (Lizard.Map.ddsc_layers.get('addedToMap') ===  false) {return;}
+        if (visPar.__proto__.hasOwnProperty('spiderfy')) {
+          visPar.spiderfy();
+        }
+        marker._map = mc;
+        marker.fireEvent('click', {
+          latlng: point,
+          layerPoint: mc.latLngToLayerPoint(point),
+          containerPoint: mc.latLngToContainerPoint(point)
+        });
+    },
+    template: function (model){
+        return _.template(
+            '<span > <%= alarm.alarm.name %></span>', model, {variable: 'alarm'});
+    }
+});
+
+Lizard.Views.AlarmStatusView = Backbone.Marionette.CollectionView.extend({
+    collection: null,
+    tagName: 'ul',
+    className: 'add-map-item ',
+    initialize: function (options){
+        this.collection = options.collection;
+    },
+    itemView: Lizard.Views.AlarmStatusItem
+});

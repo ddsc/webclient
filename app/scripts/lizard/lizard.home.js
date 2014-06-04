@@ -7,6 +7,24 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   onDomRefresh: function() {
     console.log('onDomRefresh');
   },
+  events: {
+    'click #measure-alarm': 'openAlarmStatus',
+    'click #measure-status': 'openAlarmStatus'
+  },
+  openAlarmStatus: function (e) {
+    var alarms = workspaceCollection.filter(function (model) {
+      var checkAlarm = model.get('name').split('Alarm'); 
+      if (checkAlarm.length > 1) {
+        return model;
+      }
+    });
+    if (alarms.length > 0) {
+      var workSp = alarms[0].get('id')
+      Lizard.Map.map(workSp);
+    } else {
+      Lizard.Map.map();
+    }
+  },
   regions: {
     'measureAlarm': '#measure-alarm',
     'measureNewMeasurement': '#measure-new-measurement',

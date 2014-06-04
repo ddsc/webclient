@@ -1,17 +1,72 @@
 // Create default layout, including regions
 Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
   template: '#map-template',
+  events: {
+    'click .sensor-layer-toggler': 'sensorsToggle',
+    'click .alarm-toggler': 'alarmToggle',
+    'click .status-toggler': 'statusToggle',
+  },
+  sensorsToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      Lizard.Map.ddsc_layers.addToMap();
+    }
+    else {
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+      Lizard.Map.ddsc_layers.removeFromMap();
+    }
+  },
+  alarmToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      $('#status-region').removeClass('hidden');
+      Lizard.alarmsCollection = new Backbone.Collection;
+      alarmsView = new Lizard.Views.AlarmStatusView({
+        collection: Lizard.alarmsCollection
+      });
+      alarmsView.collection.url = settings.alarms_url;
+      alarmsView.collection.fetch();
+      Lizard.mapView.alarmsRegion.show(alarmsView.render());
+    } else {
+      Lizard.mapView.alarmsRegion.close();
+      $('#status-region').addClass('hidden');
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+    }
+  },
+  statusToggle: function (e) {
+    var $icon = $(e.target).find('i');
+    if ($icon.hasClass('icon-check-empty')) {
+      $icon.addClass('icon-check').removeClass('icon-check-empty');
+      $('#status-region').removeClass('hidden');
+      Lizard.statusCollection = new Backbone.Collection;
+      var statusView = new Lizard.Views.AlarmStatusView({
+        collection: Lizard.statusCollection
+      });
+      statusView.collection.url = settings.status_url;
+      statusView.collection.fetch();
+      Lizard.mapView.statusRegion.show(statusView.render());
+    } else {
+      Lizard.mapView.statusRegion.close();
+      $('#status-region').addClass('hidden');
+      $icon.addClass('icon-check-empty').removeClass('icon-check');
+    }
+  },
   regions: {
     'sidebarRegion': '#sidebarRegion',
     'leafletRegion': '#leafletRegion',
     'modalitems' : '#location-modal-collapsables',
     'workspaceListRegion': '#workspaceListRegion',
     'workspaceRegion': '#workspaceRegion',
-    'annotationsRegion' : '#annotationsRegion',
+    'annotationsRegion' : '#annotations-region',
     'geocoderRegion' : '#geocoderRegion',
     'legendRegion': '#legendRegion',
     'extraLayerRegion' : '#extramaplayers',
-    'fullScreenRegion': '#full-screen-region'
+    'fullScreenRegion': '#full-screen-region',
+    'geoTiffRegion': '#geo-tiff-region',
+    'alarmsRegion': '#alarms-region',
+    'statusRegion': '#status-region'
   }
 });
 
@@ -44,7 +99,7 @@ window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
-Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
+Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
@@ -119,6 +174,9 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
+  // Lizard.mapView.statusRegion.show(statusView.render());
+
+
   var locationSearchCollection = new Lizard.Collections.LocationSearch;
   Lizard.mapView.geocoderRegion.show(new Lizard.Views.MapSearch({
     collection: locationSearchCollection
@@ -132,17 +190,6 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom){
   // trigger for annotations layer.
   Lizard.App.vent.trigger('mapLoaded');
 
-  $('.sensor-layer-toggler').click(function(e) {
-    var $icon = $(this).find('i');
-    if ($icon.hasClass('icon-check-empty')) {
-      $icon.addClass('icon-check').removeClass('icon-check-empty');
-      Lizard.Map.ddsc_layers.addToMap();
-    }
-    else {
-      $icon.addClass('icon-check-empty').removeClass('icon-check');
-      Lizard.Map.ddsc_layers.removeFromMap();
-    }
-  });
 
     tour = new Tour({
       labels: {

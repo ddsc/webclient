@@ -28,9 +28,11 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   },
   addToMap: function() {
     this.map.mapCanvas.addLayer(this.markers);
+    this.set('addedToMap', true);
   },
   removeFromMap: function() {
     this.map.mapCanvas.removeLayer(this.markers);
+    this.set('addedToMap', false);
   },
   drawOnMap: function(collection, objects){
     var models = collection.models;
@@ -52,8 +54,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
             bbModel: model,
             code: attributes.code
           });
-
         this.markers.addLayer(marker);
+        model.set('leaflet_id', marker._leaflet_id);
         marker.on('click', that.showPopup);
       } catch (e) {
         console.log('Location has no geometry. Error: ' + e);
@@ -67,7 +69,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
       // marker.togglePopup();
       Lizard.App.vent.off('ResizePopup');
       marker.unbindPopup();
-    } 
+    }
     var model = marker.valueOf().options.bbModel;
     var name = marker.valueOf().options.name;
     var popupLayout = new Lizard.geo.Popups.Layout();
@@ -75,7 +77,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     popupLayout.title.show(new Lizard.geo.Popups.LocationPopupTitle({
       model: model, name: name
     }));
-    var innerStuff = Lizard.geo.Popups.DdscTimeseries.getPopupContent(model, popupLayout.content);
+    var innerStuff = Lizard.geo.Popups.DdscTimeseries
+      .getPopupContent(model, popupLayout.content);
     var popup = new L.Rrose({
       maxHeight: 300, 
       minWidth: 400, 
@@ -96,22 +99,31 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
 });
 
 Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
-  initialize: function (options){
+  initialize: function (options) {
     this.model = options.model;
     this.model.set({pk: this.model.get('id')});
     Lizard.App.vent.on('changedestroyAnnotation', function () {
       this.countAnnotations()
     }, this);
     this.countAnnotations()
+    this.model.set('alarms', false);
+    if (Lizard.hasOwnProperty('alarmsCollection')) {
+      for (var i = 0; Lizard.alarmsCollection.models.length > i; i++) {
+        if (Lizard.alarmsCollection.models[i].get('related_uuid') === this.model.get('uuid')){
+          this.model.set('alarms', true);
+        }
+      }
+    }
   },
   events:{
     'click .icon-comment': 'createAnnotation'
   },
-  template: function(model){
+  template: function (model) {
         return _.template(
             $('#timeserie-popup-title-template').html(), {
               title: model.name,
               annotations: model.annotations
+              alarms: model.alarms,
             });
   },
   createAnnotation: function(){

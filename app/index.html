@@ -147,19 +147,19 @@
               <div class="span1 hidden-phone hide-tablet"><em class="icon-white"></em></div>
               <div class="span6">
               <p>Welkom op het Dijkdata Service Center. Hier krijgt u een overzicht van allerlei data die uit sensoren komt. Hiervoor dient u wel ingelogd te zijn.</p>
-              <p>Voor een overzicht van wat u kunt doen, klikt rechts bovenin op <a href="javascript:tour.start({star:true})"><i>"Rondleiding"</i></a>. Dit geeft een kort overzicht van de mogelijkheden per pagina.</p>
+              <p>Voor een overzicht van wat u kunt doen, klikt rechts bovenin op <a href="javascript:tour.start({start:true})"><i>"Rondleiding"</i></a>. Dit geeft een kort overzicht van de mogelijkheden per pagina.</p>
               </div>
               <div class="span3 text-right pull-right"><small class="muted"></small></div>
             </div>
           </div>
         </div>
-      <div class="span3 measure-details" id="measure-alarm">
+      <div class="span3 measure-details clickable" id="measure-alarm">
       </div>
 
       <div class="span3 measure-details" id="measure-new-measurement">
       </div>
 
-      <div class="span3 measure-details" id="measure-status">
+      <div class="span3 measure-details clickable" id="measure-status">
       </div>
 
       </div>
@@ -255,24 +255,55 @@
                 </ul>
                 <br class="hidden-phone">
 
-                <ul class="nav nav-list sidenav transition" rel="popover" data-content="Use the sidebar to choose dimensions and variables." data-original-title="Sidebar" data-placement="right" data-trigger="manual">
-                    <div data-group="ddsc_layers" class="" id="ddsc_temp">
-                    <ul><li>
-                      <div class="ddsc-item noselect sensor-layer-toggler">
-                      <h5><i class="icon-check"></i>&nbsp;Sensoren <!-- <span class="pull-right badge badge-info">192</span>--></h5>
-                      </div>
-                  </li><li>
-                      <div class="ddsc-item noselect annotation" >
-                      <h5><span class=" annotation-layer-toggler"><i class="icon-check"></i>Annotaties</span>
-                       <span class="pull-right">
-                         <span class="badge badge-default">0</span>
-                       </span></h5>
-                      </div>
+                <ul class="nav nav-list sidenav hidden" >
+                  <li class="mappage hidden-phone">
+                      <a href="javascript:void(0);"><i class="icon-globe"></i> GeoTiffs <br></a>
                   </li>
-                  <div id="annotationsRegion" class=""></div>
-                  </ul></div>
+                  <div class="geo-tiff-nav hidden-phone" data-group="" id="geo-tiff-region">
+                  </div>
+                <br class="hidden-phone">
+                  
                 </ul>
-                <br>
+
+                <ul class="nav nav-list sidenav " >
+                  <li class="mappage hidden-phone">
+                    <a href="javascript:void(0);">
+                      <span class="sensor-layer-toggler">
+                        <i class="icon-check"></i>&nbsp;Sensoren
+                      </span>
+                    </a>
+                  </li>
+                  <li class="mappage hidden-phone annotation">
+                      <a href="javascript:void(0);">
+                        <span class="annotation-layer-toggler">
+                        <i class="icon-check"></i>Annotaties
+                         <em class="pull-right badge badge-default">0</em>
+                        </span>
+                      </a>
+                  </li>
+                  <div class="hidden-phone" data-group="" id="annotations-region">
+                  </div>
+                  <li class="mappage hidden-phone alarms">
+                      <a href="javascript:void(0);">
+                        <span class="alarm-toggler">
+                        <i class="icon-check-empty"></i>Alarmen
+                         <em class="pull-right badge badge-default">0</em>
+                        </span>
+                      </a>
+                  </li>
+                  <div class=" hidden-phone" data-group="" id="alarms-region">
+                  </div>
+                  <li class="mappage hidden-phone status">
+                      <a href="javascript:void(0);">
+                        <span class="status-toggler">
+                        <i class="icon-check-empty"></i>Storingen
+                         <em class="pull-right badge badge-default">0</em>
+                        </span>
+                      </a>
+                  </li>
+                  <div class=" hidden-phone" data-group="" id="status-region">
+                  </div>
+                </ul>
             </div>
             <div class="" id="collageRegion"></div>
         </div>
@@ -332,6 +363,11 @@
 
     <script type="text/template" id="timeserie-text-itemview">
       <%=value%>
+    </script>
+    <script type="text/template" id="geotiff-template">
+      <a href="javascript:void(0)" class="previous"><i class="icon-arrow-left"></i></a>
+      <input type="text" id="geotiff-datepicker"><a href="javascript:void(0)" class="next">
+      <i class="icon-arrow-right"></i></a>
     </script>
 
     <script type="text/template" id="textmodal-popup">
@@ -591,7 +627,10 @@
     </script>
 
     <script type="text/template" id="timeserie-popup-title-template">
-    <%= title %> <span class="pull-right"><%= annotations %> <i class="icon-comment clickable"></i></span>
+    <%= title %> <% if (alarms == true) {%>
+      <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
+      <%}%>
+    <span class="pull-right"><%= annotations %> <i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">

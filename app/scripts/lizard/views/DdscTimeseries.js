@@ -151,8 +151,6 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
       var eventsCollection = new Lizard.Collections.Events();
       eventsCollection.url = url + '?page_size=0';
       eventsCollection.fetch().done(function (collection, response) {
-        console.log(collection);
-        console.log(response);
         collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
         var carouselView = new ImageCarouselCollectionView({
           collection: collection,
@@ -180,6 +178,82 @@ TextTimeserieCollectionView = Backbone.Marionette.CollectionView.extend({
   tagName: 'div',
   className: 'text-timeserie-collection'
 });
+
+
+Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
+    template: '#geotiff-template',
+    regions: {
+        widgetRegion: '.widget-region',
+    },
+    events: {
+      'click .next': 'nextTiff',
+      'click .previous': 'previousTiff'
+    },
+    initialize: function (options) {
+      this.gTiff = options.gTiffTimeseries;
+      this.gTiff.bind('change:active_event', this.switchLayer, this);
+      this.mapLayer = new L.TileLayer('https://a.tiles.mapbox.com/v3/examples.map-i86nkdio/{z}/{x}/{y}.png');
+    },
+    onRender: function () {
+      var self = this;
+      this.eventsCollection = new Lizard.Collections.Events();
+      this.eventsCollection.url = this.gTiff.get('events') + '?page_size=0';
+      this.eventsCollection.fetch().done(function (collection, response) {
+        var active_event = collection.models[0];
+        self.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+        // self.populateDatePicker(active_event);
+      });
+      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
+
+    },
+    populateDatePicker: function () {
+      // debugger
+      // // for (var i = 0; )
+      // this.$el.find('#geotiff-datepicker').datepicker({
+      //   beforeShowDay: function(date){
+      //     var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+      //     return [ array.indexOf(string) == -1 ]
+      //   }
+      // });
+    },
+    switchLayer: function (newModel, oldRef) {
+      if (newModel !== oldRef) {
+        if (!mc.hasLayer(this.mapLayer)) {
+          mc.addLayer(this.mapLayer);
+          this.mapLayer.bringToFront();
+        }
+        var active_event = this.gTiff.get('active_event');
+        this.mapLayer.setUrl('https://a.tiles.mapbox.com/v3/examples.map-i86nkdio/{z}/{x}/{y}.png');
+      }
+    },
+    nextTiff: function () {
+      // get the index and use to get next item in eventslist, if there is a 'next item'
+      var self = this;
+      var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
+      if (self.eventsCollection.models.length > active_idx + 1) {
+        var active_event = self.eventsCollection.models[active_idx + 1];
+        self.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
+      }
+    },
+    previousTiff: function () {
+      var self = this;
+      var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
+      if (active_idx - 1 >= 0) {
+        var active_event = self.eventsCollection.models[active_idx + 1];
+        this.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
+      }
+      //
+    },
+    onClose: function () {
+      mc.removeLayer(this.mapLayer);
+      Lizard.mapView.geoTiffRegion.$el.parent().addClass('hidden');
+    }
+});
+
+
 Lizard.Views.TextModal = Backbone.Marionette.Layout.extend({
     template: '#textmodal-popup',
     regions: {
@@ -211,6 +285,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   template: '#location-popup-item',
   tagName: 'li',
   events: {
+    // NOTE: FIX THIS
     'click .popup-toggle' : 'openModal',
     'click .image-popup-toggle' : 'openCarouselModal',
     'click .image-popup-text': 'openTextModal',
@@ -251,6 +326,18 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     modalView.$el.find('.modal').on('hide', function () {
         Lizard.App.hidden.close();
     });
+  },
+  openGeoTiff: function(e) {
+    var geoTiffView = new Lizard.Views.GeoTiffTimeseries({
+      gTiffTimeseries: this.model
+    });
+    Lizard.mapView.geoTiffRegion.show(geoTiffView);
+    $('.leaflet-rrose-close-button').on('click', function() {
+      Lizard.mapView.geoTiffRegion.close();
+    })
+    // modalView.$el.find('.modal').on('hide', function () {
+    //     Lizard.App.hidden.close();
+    // });
   },
   countAnnotations: function () {
     var self = this;
