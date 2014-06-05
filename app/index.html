@@ -971,9 +971,9 @@
 
     <script type="text/template" id="dashboard-list">
       <h4>Dashboards:</h4>
-      <b><a href="#">DMC systeem</a></b><br>
-      <a href="#">DAM</a><br>
-      <a href="#">Grechtdijk</a>
+      <b><a href="#dashboard">DMC-systeem</a></b><br>
+      <!--<a href="#">DAM</a><br>-->
+      <!--<a href="#">Grechtdijk</a>-->
     </script>
 
     <script type="text/template" id="graph-widget">
@@ -981,8 +981,8 @@
         </div>
     </script>
 
-          <!--<li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span>liter</span></li>-->
-        <!-- <li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>liter</span></li> -->
+    <!--<li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span>liter</span></li>-->
+    <!--<li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>liter</span></li>-->
     <script type="text/template" id="dmc-overview">
       <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:left">
         <h4>Linker buis</h4>
@@ -992,8 +992,9 @@
           <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_l.toFixed(2) %></span><span>&degC</span></li>
           <br>
           <li class='theader'>Pomp</li>
-          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
+          <li><span class='tlabel'>Debiet</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span><span>l/uur</span></li>
           <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
+          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
 
         </lu>
       </div>
@@ -1005,15 +1006,16 @@
         <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_r.toFixed(2) %></span><span>&degC</span></li>
         <br>
         <li class='theader'>Pomp</li>
-        <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
+        <li><span class='tlabel'>Debiet</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>l/uur</span></li>
         <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
+        <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
 
         </lu>
       </div>
     </script>
 
     <script type="text/template" id="dmc-status">
-      <h4>Status DMC</h4>
+      <h4>Status DMC:</h4>
       <lu>
         <li><span class="badge badge-success">Geen Storing</span></li>
         <li><span class="badge badge-warning">Run test</span></li>
@@ -1023,9 +1025,8 @@
     </script>
 
     <script type="text/template" id="settings-button">
-      <button style="margin:10px" class="btn" type="button">Instellingen</button>
+      <a href="https://62.133.120.13/">Inloggen op het DMC-systeem</a>
     </script>
-
 
     <script type="text/template" id="image-dmc">
       <img style="margin:10px;width:570px;height:310px" src="images/DMC.png"></img>
