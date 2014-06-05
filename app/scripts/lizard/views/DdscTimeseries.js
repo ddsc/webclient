@@ -345,9 +345,6 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     $('.leaflet-rrose-close-button').on('click', function() {
       Lizard.mapView.geoTiffRegion.close();
     })
-    // modalView.$el.find('.modal').on('hide', function () {
-    //     Lizard.App.hidden.close();
-    // });
   },
   countAnnotations: function () {
     var self = this;

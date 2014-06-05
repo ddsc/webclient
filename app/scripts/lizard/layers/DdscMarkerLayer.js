@@ -103,7 +103,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
     this.model = options.model;
     this.model.set({pk: this.model.get('id')});
     Lizard.App.vent.on('changedestroyAnnotation', function () {
-      this.countAnnotations()
+      this.countAnnotations();
     }, this);
     this.countAnnotations()
     this.model.set('alarms', false);
