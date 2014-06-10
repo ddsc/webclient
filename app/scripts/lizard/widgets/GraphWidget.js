@@ -14,9 +14,20 @@ Lizard.ui.Widgets.GraphWidget = Backbone.Marionette.Layout.extend({
     graphView.$el.height(300);
   },
   onShow: function () {
+    if (!account.get('authenticated')) {
+      return;
+    }
     var dateRange = new Lizard.Models.DateRange({
       accountModel: account // pass the global account instance
     });
+    // in the case of DMC we don't want an empty 
+    // set to return AAAALLLLL of the things
+    if (!dateRange.get('start')) {
+      var max = moment();
+      dateRange.set('end', max.toDate());
+      min = moment(max).subtract('weeks', 1);
+      dateRange.set('start', min.toDate());
+    }
     this.graphModel = new Lizard.Models.Graph({
         dateRange: dateRange
     });

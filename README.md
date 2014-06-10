@@ -8,6 +8,7 @@ Start the webserver after checking out the repo. All you need is a simple HTTP s
     python -m SimpleHTTPServer
 
 A BIG problem however is that you also have to checkout the ddsc-api libraries and run the server to get the client to work locally because of Cross-Origin security on the api. You can of course mock the whole thing (see Mock API below). But that is obviously not a very stable solution.
+Another solution, if you solely need to fix some frontend bugs (without API changes that is), configure your localhost to point to the API URL to prevent CORS problems.
 
 
 
