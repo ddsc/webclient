@@ -459,7 +459,7 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
         var marker = Lizard.Map.ddsc_layers.markers.getLayer(related_location.get('leaflet_id'));
         var visPar = Lizard.Map.ddsc_layers.markers.getVisibleParent(marker);
         if (Lizard.Map.ddsc_layers.get('addedToMap') ===  false) {return;}
-        if (visPar.__proto__.hasOwnProperty('spiderfy')) {
+        if (Object.getPrototypeOf(visPar).hasOwnProperty('spiderfy')) {
           visPar.spiderfy();
         }
         marker._map = mc;
