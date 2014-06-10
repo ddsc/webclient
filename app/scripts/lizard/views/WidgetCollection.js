@@ -18,12 +18,6 @@ Lizard.Views.WidgetCollection = Backbone.Marionette.CollectionView.extend({
       min_rows: 6,
       max_rows: 12,
       max_size_x: 8,
-      draggable: {
-        stop: function(event, ui) {
-          console.log('Syncing dashboard: ', gridster.serialize());
-          $('.top-right').notify({message: {text: 'Saving your dashboard layout!'}}).show();
-        }
-      }
-    }).data('gridster');
+    }).data('gridster').disable();
   }
 });
