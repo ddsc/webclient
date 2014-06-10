@@ -103,6 +103,9 @@
 
                     // do get legend and draw on same canvas
                     var legends = $(this).closest('.graph-and-legend').find('.graph-legend');
+                    if (legends.length == 0) {
+                        legends = $('.graph-legend');
+                    }
                     for (var idx=0; idx < legends.length; idx++) {
                         var legend = legends[idx];
                         var color = $(legend).find('.legendcolor')[0].style.borderColor;
