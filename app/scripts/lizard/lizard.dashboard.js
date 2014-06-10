@@ -17,7 +17,7 @@ Lizard.Dashboard.Router = Backbone.Marionette.AppRouter.extend({
 
 
 
-Lizard.Dashboard.dashboard = function(){
+Lizard.Dashboard.dashboard = function() {
   console.log('Lizard.Dashboard.overview()');
 
   // Instantiate Dashboard's default layout
@@ -76,13 +76,8 @@ Lizard.Dashboard.dashboard = function(){
         
         dashboardView.dashboardRegion.show(widgetcollectionview.render());
       }
-    } else {
-      // dashboardView.dashboardRegion.show('login');
-
-    }
-
-  });
-
+    });
+  }
 
 
 
