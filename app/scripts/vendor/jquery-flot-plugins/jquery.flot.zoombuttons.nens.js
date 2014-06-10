@@ -118,7 +118,7 @@
                         dstCtx.fillRect(position.x - 5, position.y, 20, 20);
                         dstCtx.fillStyle = 'black';
                         dstCtx.strokeStyle = 'black';
-                        dstCtx.font = '10pt sans';
+                        dstCtx.font = '10px sans';
                         dstCtx.fillText(title, position.x + 20, position.y + 14);
                     }
 

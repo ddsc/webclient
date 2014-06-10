@@ -41,7 +41,7 @@ Lizard.ui.Widgets.GraphWidget = Backbone.Marionette.Layout.extend({
           var graphItem = new Lizard.Models.GraphItem({timeseries: model});
           Lizard.Dashboard.graphModel.get('graphItems').add(graphItem);
           Lizard.App.vent.trigger('drawWidgetLegend');
-          
+
       });
     });
     this.drawGraph();
@@ -60,7 +60,9 @@ Lizard.ui.Widgets.LegendWidget = Backbone.Marionette.Layout.extend({
     Lizard.App.vent.on('drawWidgetLegend', this.drawLegend, this);
   },
   drawLegend: function () {
-    this.legendRegion.close();
+    if (this.legendRegion) {
+      this.legendRegion.close();
+    }
     var legendView = new Lizard.Views.GraphLegendCollection({
       collection: Lizard.Dashboard.graphModel.get('graphItems')
     });
@@ -70,9 +72,9 @@ Lizard.ui.Widgets.LegendWidget = Backbone.Marionette.Layout.extend({
   onShow: function () {
     Lizard.App.vent.on('drawWidgetLegend', this.drawLegend, this);
   },
-  // onClose: function () {
-  //   Lizard.App.vent.off('drawWidgetLegend');
-  // }
+  onClose: function () {
+    Lizard.App.vent.off('drawWidgetLegend');
+  }
 });
 
 WIDGET_CLASSES['legend'] = Lizard.ui.Widgets.LegendWidget;
