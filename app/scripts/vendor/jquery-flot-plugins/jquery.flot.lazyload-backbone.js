@@ -116,10 +116,20 @@
             if (updateAll === true || dataset.needsUpdate) {
                 dataset.fetch(function () {
                     var response = arguments[0];
-                    console.info(response);
-                    var dataEnd = new Date(response.data[response.data.length - 1][0]);
-                    var dateRangeStart = self.graphModel.get('dateRange').get('start');
-                    var dateDelta = self.graphModel.get('dateRange').get('end') - dateRangeStart;
+                    var dataEnd;
+                    if (response.data.length > 0 ) {
+                        dataEnd = new Date(response.data[response.data.length - 1][0]);                    
+                    } else {
+                        dataEnd = moment();
+                    }
+                    var dateRangeStart;
+                    try {
+                        dateRangeStart = self.graphModel.get('dateRange').get('start');
+                    } catch (e) {
+                        console.log(e);
+                        dateRangeStart = dataEnd.day(-1);
+                    } 
+                    var dateDelta = dataEnd - dateRangeStart;
                     if (dataEnd < dateRangeStart) {
                         if (response.data.length < 2) {
                             var dataStart = new Date(dataEnd - dateDelta);

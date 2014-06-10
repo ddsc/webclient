@@ -8,7 +8,7 @@ html, body{
 body {
     /*fallback*/
     padding-top: 0;
-    background-image: url('../images/cardboard_flat_white.png');
+    background-image: url('../images/cardboard_flat_extra_white.png');
     /* image with opacity layer */
     background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
     background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('../images/cardboard_flat_white.png');
