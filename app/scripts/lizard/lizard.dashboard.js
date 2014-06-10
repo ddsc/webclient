@@ -31,8 +31,8 @@ Lizard.Dashboard.dashboard = function() {
     "https://api.ddsc.nl/api/v1/timeseries/49108710-6C58-4E31-AC2D-3C4933040439",  // Waterkolom dijk links in mNAP
     "https://api.ddsc.nl/api/v1/timeseries/03073703-3509-40F2-BA89-D85361C4021B",  // Temperatuur Dijk Rechts
     "https://api.ddsc.nl/api/v1/timeseries/29119285-2428-4863-B630-9B5AA095DE13",  // Temperatuur Dijk Links
-    "https://api.ddsc.nl/api/v1/timeseries/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",  // Actueel Debiet Dijk Rechts
-    "https://api.ddsc.nl/api/v1/timeseries/D856946F-FEB6-4536-A878-AF55C32CD96C",  // Actueel Debiet Dijk Links
+    // "https://api.ddsc.nl/api/v1/timeseries/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",  // Actueel Debiet Dijk Rechts
+    // "https://api.ddsc.nl/api/v1/timeseries/D856946F-FEB6-4536-A878-AF55C32CD96C",  // Actueel Debiet Dijk Links
     "https://api.ddsc.nl/api/v1/timeseries/5C8D7780-14C8-4237-9BCA-73849E7990B7"   // Buitendruk in kPa
   ];
 
@@ -61,17 +61,18 @@ Lizard.Dashboard.dashboard = function() {
         widgetcollectionview.collection.reset();
         widgetcollectionview.collection.add([
           new Lizard.Models.Widget({col:1,row:1,size_x:2,size_y:4,gaugeId:4,type:'template', template:'#dashboard-list'}),
-          new Lizard.Models.Widget({col:1,row:5,size_x:2,size_y:3,gaugeId:6,type:'template', template:'#dmc-status'}),
+          new Lizard.Models.Widget({col:1,row:5,size_x:2,size_y:4,gaugeId:6,type:'template', template:'#dmc-status'}),
           new Lizard.Models.Widget({col:2,row:1,size_x:7,size_y:4,gaugeId:3,type:'graph', timeseries: timeseries}),
           new Lizard.Models.Widget(_.extend({col:2,row:3,size_x:7,size_y:3,gaugeId:2,type:'template', template:'#dmc-overview'},values.attributes)),
 
-          new Lizard.Models.Widget({col:3,row:1,size_x:3,size_y:2,gaugeId:4,type:'template', template:'#dashboard-logo'}),
-          new Lizard.Models.Widget({col:3,row:3,size_x:3,size_y:2,gaugeId:5,title:'Debiet links',label:'liter',
+          new Lizard.Models.Widget({col:1,row:3,size_x:3,size_y:4,gaugeId:4,type:'legend'}),
+          new Lizard.Models.Widget({col:3,row:4,size_x:3,size_y:2,gaugeId:4,type:'template', template:'#dashboard-logo'}),
+          new Lizard.Models.Widget({col:3,row:5,size_x:3,size_y:1,gaugeId:8,type:'template', template:'#settings-button'}),
+          new Lizard.Models.Widget({col:2,row:6,size_x:7,size_y:4,gaugeId:9,type:'template', template:'#image-dmc'}),
+          new Lizard.Models.Widget({col:3,row:6,size_x:3,size_y:2,gaugeId:5,title:'Debiet links',label:'liter',
             value: values.get('debiet_l') , max: 5000}),
-          new Lizard.Models.Widget({col:3,row:5,size_x:3,size_y:2,gaugeId:7,title:'Debiet rechts',label:'liter',
-            value: values.get('debiet_r'), max: 5000}),
-          new Lizard.Models.Widget({col:3,row:7,size_x:3,size_y:1,gaugeId:8,type:'template', template:'#settings-button'}),
-          new Lizard.Models.Widget({col:3,row:8,size_x:7,size_y:4,gaugeId:9,type:'template', template:'#image-dmc'})
+          new Lizard.Models.Widget({col:3,row:8,size_x:3,size_y:2,gaugeId:7,title:'Debiet rechts',label:'liter',
+            value: values.get('debiet_r'), max: 5000})
         ]);
         
         dashboardView.dashboardRegion.show(widgetcollectionview.render());

@@ -3,11 +3,10 @@ Lizard.ui.Widgets.GraphWidget = Backbone.Marionette.Layout.extend({
   regions: {
     graphRegion: '.graph-region'
   },
-  graphModel: null,
   drawGraph: function () {
     this.graphRegion.close();
     var graphView = new Lizard.Views.Graph({
-      model: this.graphModel,
+      model: Lizard.Dashboard.graphModel,
       account: account
     });
     this.graphRegion.show(graphView);
@@ -28,7 +27,7 @@ Lizard.ui.Widgets.GraphWidget = Backbone.Marionette.Layout.extend({
       min = moment(max).subtract('weeks', 1);
       dateRange.set('start', min.toDate());
     }
-    this.graphModel = new Lizard.Models.Graph({
+    Lizard.Dashboard.graphModel = new Lizard.Models.Graph({
         dateRange: dateRange
     });
 
@@ -40,13 +39,40 @@ Lizard.ui.Widgets.GraphWidget = Backbone.Marionette.Layout.extend({
       .done(function (model) {
           model.set({pk: model.id});
           var graphItem = new Lizard.Models.GraphItem({timeseries: model});
-          that.graphModel.get('graphItems').add(graphItem);
+          Lizard.Dashboard.graphModel.get('graphItems').add(graphItem);
+          Lizard.App.vent.trigger('drawWidgetLegend');
+          
       });
     });
-   
     this.drawGraph();
   }
 });
 
 
 WIDGET_CLASSES['graph'] = Lizard.ui.Widgets.GraphWidget;
+
+Lizard.ui.Widgets.LegendWidget = Backbone.Marionette.Layout.extend({
+  template: '#legend-widget',
+  regions: {
+    legendRegion: '.legend-region'
+  },
+  initialize: function () {
+    Lizard.App.vent.on('drawWidgetLegend', this.drawLegend, this);
+  },
+  drawLegend: function () {
+    this.legendRegion.close();
+    var legendView = new Lizard.Views.GraphLegendCollection({
+      collection: Lizard.Dashboard.graphModel.get('graphItems')
+    });
+    this.legendRegion.show(legendView);
+    legendView.$el.height(300);
+  },
+  onShow: function () {
+    Lizard.App.vent.on('drawWidgetLegend', this.drawLegend, this);
+  },
+  // onClose: function () {
+  //   Lizard.App.vent.off('drawWidgetLegend');
+  // }
+});
+
+WIDGET_CLASSES['legend'] = Lizard.ui.Widgets.LegendWidget;

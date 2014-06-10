@@ -20,9 +20,9 @@ Lizard.ui.Widgets.Widget = Backbone.Marionette.Layout.extend({
   regions: {
     'content': '.widget'
   },
-  events: {
-    'click .icon-cog': 'configureWidget'
-  },
+  // events: {
+  //   'click .icon-cog': 'configureWidget'
+  // },
   configureWidget: function(e) {
     e.preventDefault();
     var template = _.template( $("#widget-configuration").html(), {} );

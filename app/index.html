@@ -981,6 +981,21 @@
         </div>
     </script>
 
+    <script type="text/template" id="legend-widget">
+        <div id="widget-legend" class="legend-region" style="padding: 0; height: 400px">
+        </div>
+
+                <div class="legend span3">
+            <div class="legend-items"></div>
+            <form class="scatter-plot-form hide">
+                <label class="checkbox">
+                <input type="checkbox" name="do-scatter-plot">
+                Scatterplot
+                </label>
+            </form>
+        </div>
+    </script>
+
     <!--<li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span>liter</span></li>-->
     <!--<li><span class='tlabel'>Debiet vandaag</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>liter</span></li>-->
     <script type="text/template" id="dmc-overview">
@@ -1025,7 +1040,7 @@
     </script>
 
     <script type="text/template" id="settings-button">
-      <a href="https://62.133.120.13/">Inloggen op het DMC-systeem</a>
+      <a class="btn btn-primary" href="https://62.133.120.13/">Inloggen op het DMC-systeem</a>
     </script>
 
     <script type="text/template" id="image-dmc">
