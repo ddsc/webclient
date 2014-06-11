@@ -476,7 +476,7 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
             {variable: 'alarm'});
     },
     onRender: function () {
-      this.$el.find('span').popover({trigger: 'hover'});
+      this.$el.find('span.alarm-popover').popover({trigger: 'hover'});
     }
 });
 

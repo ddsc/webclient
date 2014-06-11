@@ -723,24 +723,10 @@
     <script type="text/template" id="timeseries-modal">
     </script>
 
-    <!-- wordt volgens mij niet meer gebruikt?
-    <script type="text/template" id="timeseries-modal-item">
-        <div class="timeserie-item noselect">
-            <h5 class="modaltimeserie">
-            <i class="icon-star-empty fav"></i> &nbsp;
-              <span class="graph-this" data-url="<%= url %>">
-                <i class="icon-bar-chart"></i>&nbsp;<%= name %>
-              </span>
-              <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
-                <i class="icon-comment"></i>
-              </span>
-            </h5>
-        </div>
-    </script> -->
+
 
     <script type="text/template" id="alarm-status-item-template">
-      <span data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm Bericht: <%= alarm.message %>"> <%= alarm.alarm.name %></span>
+      <span class="alarm-popover" data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm Bericht: <%= alarm.message %>"> <%= alarm.alarm.name %></span>
     </script>
 
     <script type="text/template" id="location-popup-item">
