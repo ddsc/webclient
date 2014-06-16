@@ -1061,6 +1061,13 @@ ul.add-map-item > li {
     line-height: 12px;
 }
 
+div#alarms-region,
+div#status-region{
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: none;
+}
+
 
 /* Annotation Stuff*/
 

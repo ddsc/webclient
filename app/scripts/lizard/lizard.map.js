@@ -39,19 +39,30 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     });
   },
   sensorsToggle: function (e) {
-    var $icon = $(e.target).find('i');
+    if (e.target.nodeName == "I") {
+      var $icon = $(e.target);
+    } else {
+      var $icon = $(e.target).find('i');
+    }
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
       Lizard.Map.ddsc_layers.addToMap();
-    }
-    else {
+    } else {
       $icon.addClass('icon-check-empty').removeClass('icon-check');
       Lizard.Map.ddsc_layers.removeFromMap();
     }
   },
   alarmToggle: function (e) {
-    var $icon = $(e.target).find('i');
-    var $badge = $(e.target).find('.badge');
+    if (e.target.nodeName == "I") {
+      var $icon = $(e.target);
+    } else {
+      var $icon = $(e.target).find('i');
+    }
+    if (e.target.nodeName == "EM") {
+      var $badge = $(e.target);
+    } else {
+      var $badge = $(e.target).find('.badge');
+    }
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
       $badge.removeClass('hidden');
@@ -73,8 +84,16 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     }
   },
   statusToggle: function (e) {
-    var $icon = $(e.target).find('i');
-    var $badge = $(e.target).find('.badge');
+    if (e.target.nodeName == "I") {
+      var $icon = $(e.target);
+    } else {
+      var $icon = $(e.target).find('i');
+    }
+    if (e.target.nodeName == "EM") {
+      var $badge = $(e.target);
+    } else {
+      var $badge = $(e.target).find('.badge');
+    }
     if ($icon.hasClass('icon-check-empty')) {
       $icon.addClass('icon-check').removeClass('icon-check-empty');
       $badge.removeClass('hidden');
