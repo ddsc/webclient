@@ -11,6 +11,17 @@ A BIG problem however is that you also have to checkout the ddsc-api libraries a
 Another solution, if you solely need to fix some frontend bugs (without API changes that is), configure your localhost to point to the API URL to prevent CORS problems.
 
 
+## Deployment
+Add Chris Lea's node.js ppa and install node and grunt::
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs rubygems
+    sudo gem install compass # needed for css concatenation and minification
+    sudo npm install -g grunt-cli
+    npm install # installs local dependencies
+    grunt build
+
 
 ## Coding hints / tips
 
@@ -65,55 +76,4 @@ This API was hacked together using node.js/PostGIS and lives here: https://githu
  * Specific functionality, such as the map code, should be wrapped as much as possible in JS modules.
 
  * Underscore templates (could be Handlebars.js or something else in the future) are hardcoded in index.html for now.
-
-
-## Documentation
-
-### Marionette
-
- * [Marionette documentation index](https://github.com/marionettejs/backbone.marionette/tree/master/docs)
-
- * [Marionette Application](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.application.md)
-
- * [Marionette Application Module](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.application.module.md)
-
- * [Marionette AppRouter](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.approuter.md)
-
- * [Marionette Callbacks](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.callbacks.md)
-
- * [Marionette CollectionView](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.collectionview.md)
-
- * [Marionette Commands](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.commands.md)
-
- * [Marionette CompositeView](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.compositeview.md)
-
- * [Marionette Controller](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.controller.md)
-
- * [Marionette EventAggregator](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.eventaggregator.md)
-
- * [Marionette EventBinder](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.eventbinder.md)
-
- * [Marionette functions](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.functions.md)
-
- * [Marionette ItemView](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.itemview.md)
-
- * [Marionette Layout](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.layout.md)
-
- * [Marionette Region](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md)
-
- * [Marionette Renderer](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.renderer.md)
-
- * [Marionette Request and Reponse](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.requestresponse.md)
-
- * [Marionette TemplateCache](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.templatecache.md)
-
- * [Marionette View](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.view.md)
-
- * [Managing layouts and nested views with Backbone-marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
-
- * [The relationship between regions and layouts](https://github.com/marionettejs/backbone.marionette/wiki/The-relationship-between-regions-and-layouts)
-
- * [What's the difference between a Marionette Layout and a Region?](http://stackoverflow.com/questions/10521266/whats-the-difference-between-a-marionette-layout-and-a-region)
-
- * [Loads of Backbone.js plugins](https://github.com/documentcloud/backbone/wiki/Extensions,-Plugins,-Resources)
 
