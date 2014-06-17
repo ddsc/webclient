@@ -30,5 +30,5 @@ def build_js_dist():
 
 @task
 def update():
-    build_js_dist()
     detail.switch_and_buildout()
+    build_js_dist()
