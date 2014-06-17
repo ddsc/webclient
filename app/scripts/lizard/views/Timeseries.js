@@ -137,7 +137,7 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
         return this;
     },
     events: {
-        'keypress #searchTimeseries': 'search'
+        'keydown #searchTimeseries': 'search'
     },
     search: function(e) {
         var self = this;
@@ -151,7 +151,7 @@ Lizard.Views.TimeseriesSearch = Backbone.Marionette.View.extend({
             self.timeseriesCollection.page = 1;
             self.timeseriesCollection.isLoading = true;
             self.timeseriesCollection.query = $('#searchTimeseries').val();
-            self.timeseriesCollection.fetch({add: false})
+            self.timeseriesCollection.fetch({reset: true})
             .always(function () {
                 self.timeseriesCollection.isLoading = false;
             });
