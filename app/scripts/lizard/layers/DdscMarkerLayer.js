@@ -1,6 +1,7 @@
 //  Class for locations of DDSC timeseries
 //
 //
+
 Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
   markers: null,
   collection: null, //locationCollection,

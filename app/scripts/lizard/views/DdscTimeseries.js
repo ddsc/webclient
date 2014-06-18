@@ -192,18 +192,39 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
     initialize: function (options) {
       this.gTiff = options.gTiffTimeseries;
       this.gTiff.bind('change:active_event', this.switchLayer, this);
-      this.mapLayer = new L.TileLayer('https://a.tiles.mapbox.com/v3/examples.map-i86nkdio/{z}/{x}/{y}.png');
+      this.mapLayer = L.tileLayer.wms('http://maps.ddsc.nl/geoserver/ddsc/wms?service=WMS&version=1.1.0&request=GetMap&',
+        {
+          service: "WMS",
+          version: "1.1.0",
+          layers: "ddsc:landsat_2015-04-04T115233Z",
+          srs: "EPSG:3857",
+          format: "image/png",
+          transparent: true
+        });
     },
     onRender: function () {
       var self = this;
       this.eventsCollection = new Lizard.Collections.Events();
       this.eventsCollection.url = this.gTiff.get('events') + '?page_size=0';
-      this.eventsCollection.fetch().done(function (collection, response) {
-        var active_event = collection.models[0];
-        self.gTiff.set('active_event', active_event);
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
-        // self.populateDatePicker(active_event);
-      });
+      // this.eventsCollection.fetch().done(function (collection, response) {
+      //   var active_event = collection.models[0];
+      //   self.gTiff.set('active_event', active_event);
+      //   self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+      //   // self.populateDatePicker(active_event);
+      // });
+
+      this.eventsCollection.add([{
+            "flag": null,
+            "wms_url": "ddsc:landsat_2015-04-04T115233Z",
+            "datetime": "2013-02-21T16:13:00.000000Z"
+        },
+        {
+            "flag": null,
+            "wms_url": "ddsc:landsat_2015-04-04T115233Z",
+            "datetime": "2013-02-21T16:15:00.000000Z"
+        }]);
+      this.gTiff.set('active_event', this.eventsCollection.models[0]);
+      self.$el.find('#geotiff-datepicker').val(self.gTiff.get('active_event').get('datetime'));
       Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
 
     },
@@ -224,7 +245,9 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
           this.mapLayer.bringToFront();
         }
         var active_event = this.gTiff.get('active_event');
-        this.mapLayer.setUrl('https://a.tiles.mapbox.com/v3/examples.map-i86nkdio/{z}/{x}/{y}.png');
+        this.mapLayer.setParams({
+          layers: active_event.get('wms_url')
+        });
       }
     },
     nextTiff: function () {
@@ -241,7 +264,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       if (active_idx - 1 >= 0) {
-        var active_event = self.eventsCollection.models[active_idx + 1];
+        var active_event = self.eventsCollection.models[active_idx - 1];
         this.gTiff.set('active_event', active_event);
         self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
       }
@@ -287,6 +310,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   events: {
     // NOTE: FIX THIS
     'click .popup-toggle' : 'openModal',
+    'click .open-geotiff' : 'openGeoTiff',
     'click .image-popup-toggle' : 'openCarouselModal',
     'click .image-popup-text': 'openTextModal',
     'click .icon-comment' : 'openAnnotation',
@@ -362,6 +386,51 @@ Lizard.Views.LocationPopup = Backbone.Marionette.CollectionView.extend({
   tagName: 'ul'
 });
 
+var mockingjay = {
+    "id": 13, 
+    "url": "http://localhost:9000/api/v1/timeseries/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
+    "location": {
+        "uuid": "7183a79e-6460-42c1-a0eb-8fc8e8f5800c", 
+        "name": "Rubidium"
+    }, 
+    "events": "http://localhost:9000/api/v1/events/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
+    "opendap": "/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0.ascii", 
+    "latest_value": 0.0, 
+    "uuid": "64cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
+    "name": "Landsat", 
+    "description": "", 
+    "value_type": "geotiff", 
+    "annotations": 2, 
+    "source": {
+        "uuid": "58d1e1a1-0a1b-404b-bea2-d0d812a2e6c8", 
+        "name": "DDSC Aanpassingen"
+    }, 
+    "owner": null, 
+    "first_value_timestamp": "2013-02-21T16:13:00.000000Z", 
+    "latest_value_timestamp": "2013-07-28T11:57:00.000000Z", 
+    "parameter": {
+        "code": "T", 
+        "id": 1785, 
+        "description": "Temperatuur"
+    }, 
+    "unit": {
+        "code": "oC", 
+        "id": 138, 
+        "description": "graad Celsius"
+    }, 
+    "reference_frame": null, 
+    "compartment": null, 
+    "measuring_device": null, 
+    "measuring_method": null, 
+    "processing_method": null, 
+    "validate_max_hard": null, 
+    "validate_min_hard": null, 
+    "validate_max_soft": null, 
+    "validate_min_soft": null, 
+    "validate_diff_hard": null, 
+    "validate_diff_soft": null
+};
+
 Lizard.geo.Popups.DdscTimeseries = {
   getPopupContent: function (location, region) {
     var url = settings.timeseries_url + '&location=' + location.get('uuid');
@@ -369,6 +438,7 @@ Lizard.geo.Popups.DdscTimeseries = {
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
       // console.log(collection.models[0].attributes);
+        collection.add(new Lizard.Models.Timeserie(mockingjay));
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });
