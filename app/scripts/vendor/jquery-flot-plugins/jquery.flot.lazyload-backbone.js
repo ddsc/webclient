@@ -4,10 +4,11 @@
 
     /* *************************************************** */
 
-    function DataSet (lazyLoad, events_url, color, uuid) {
+    function DataSet (lazyLoad, events_url, color, uuid, primary) {
         this.lazyLoad = lazyLoad;
         this.url = events_url;
         this.color = color;
+        this.primary = (primary) ? true : false;
         this.uuid = uuid;
         this.needsUpdate = true;
         this.data = [];
@@ -115,7 +116,7 @@
             var dataset = this.datasets[i];
             if (updateAll === true || dataset.needsUpdate) {
                 dataset.fetch(function () {
-                    if (parseInt(i) == 0) {
+                    if (dataset.primary) {
                         var response = arguments[0];
                         var dataEnd;
                         if (response.data.length > 0 ) {
@@ -131,14 +132,17 @@
                             dateRangeStart = dataEnd.day(-1);
                         } 
                         var dateDelta = dataEnd - dateRangeStart;
-                        self.graphModel.get('dateRange').set('end', dataEnd);
+                        if (self.graphModel !== null) {
+                            self.graphModel.get('dateRange').set('end', dataEnd, {silent: true});
+                        }
                         if (dataEnd < dateRangeStart) {
                             if (response.data.length < 2) {
                                 var dataStart = new Date(dataEnd - dateDelta);
                             } else {
                                 var dataStart = new Date(arguments[0].data[0][0]);
                             }
-                            self.graphModel.get('dateRange').set('start', dataStart);
+                            self.graphModel.get('dateRange').set('start', dataStart, {silent: true});
+                            Lizard.App.vent.trigger('daterangermanger');
                             var xAxis = self.plot.getXAxes()[0];
                             var xAxisOptions = xAxis.options;
                                 xAxisOptions.min = dataStart
@@ -146,10 +150,10 @@
                                 xAxis.min = dataStart
                                 xAxis.max = dataEnd
                         }
-                        this.preventUpdates = true;
-                    }
 
-                    self.redraw();
+                        self.redraw();
+                    }
+                    
                 });
             }
         }
@@ -256,14 +260,14 @@
         // use global start and end, instead of axes viewpoint
         if (this.scatterplot) {
             start = this.graphModel.get('dateRange').get('start');
-            end = this.graphModel.get('dateRange').get('end');
+            end = this.graphModel.get('dateRange').get('end');  
         }
 
         if (start && end) {
             // convert to iso 8601 and append to parameters
             $.extend(params, {
-                start: start.toJSON(),
-                end: end.toJSON()
+                start: new Date(start).toJSON(),
+                end: new Date(end).toJSON()
             });
         }
 
@@ -302,7 +306,8 @@
             }
         }
 
-        var dataset = new DataSet(this, eventsUrl, color, timeseries.get('uuid'));
+        var primary = (this.datasets.length > 0) ? false : true;
+        var dataset = new DataSet(this, eventsUrl, color, timeseries.get('uuid'), primary);
         this.datasets.push(dataset);
         this.fetchData();
     };

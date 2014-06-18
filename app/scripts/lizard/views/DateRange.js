@@ -2,6 +2,7 @@ Lizard.Views.DateRange = Backbone.Marionette.View.extend({
     tagName: 'div',
     model: Lizard.Models.DateRange,
     initialize: function (options) {
+        Lizard.App.vent.on('daterangermanger', this.render);
     },
     modelEvents: {
         'change': 'render'
