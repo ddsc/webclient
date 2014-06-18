@@ -70,7 +70,7 @@ window.toggleFullScreen = function () {
         }
         fullScreenMap.style.cssText = "position: absolute; width: 100%; height: calc(100% - 40px); top: 40px;";
         var locationSearch = document.getElementById('geocoderRegion');
-        locationSearch.style.cssText = "margin-top: calc(88%);"
+        locationSearch.style.cssText = "margin-top: calc(75%);"
         Lizard.mapView.leafletRegion.close()
         var lonlatzoom = window.location.hash.split('#map/')[1];
         if (lonlatzoom !== undefined) {

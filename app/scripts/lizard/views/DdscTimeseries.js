@@ -215,7 +215,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
 
       this.eventsCollection.add([{
             "flag": null,
-            "wms_url": "ddsc:landsat_2015-04-04T115233Z",
+            "wms_url": "ddsc:landsat_2015-04-02T115233Z",
             "datetime": "2013-02-21T16:13:00.000000Z"
         },
         {

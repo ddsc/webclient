@@ -115,33 +115,38 @@
             var dataset = this.datasets[i];
             if (updateAll === true || dataset.needsUpdate) {
                 dataset.fetch(function () {
-                    var response = arguments[0];
-                    var dataEnd;
-                    if (response.data.length > 0 ) {
-                        dataEnd = new Date(response.data[response.data.length - 1][0]);                    
-                    } else {
-                        dataEnd = moment();
-                    }
-                    var dateRangeStart;
-                    try {
-                        dateRangeStart = self.graphModel.get('dateRange').get('start');
-                    } catch (e) {
-                        console.log(e);
-                        dateRangeStart = dataEnd.day(-1);
-                    } 
-                    var dateDelta = dataEnd - dateRangeStart;
-                    if (dataEnd < dateRangeStart) {
-                        if (response.data.length < 2) {
-                            var dataStart = new Date(dataEnd - dateDelta);
+                    if (parseInt(i) == 0) {
+                        var response = arguments[0];
+                        var dataEnd;
+                        if (response.data.length > 0 ) {
+                            dataEnd = new Date(response.data[response.data.length - 1][0]);                    
                         } else {
-                            var dataStart = new Date(arguments[0].data[0][0]);
+                            dataEnd = moment();
                         }
-                        var xAxis = self.plot.getXAxes()[0];
-                        var xAxisOptions = xAxis.options;
-                            xAxisOptions.min = dataStart
-                            xAxisOptions.max = dataEnd
-                            xAxis.min = dataStart
-                            xAxis.max = dataEnd
+                        var dateRangeStart;
+                        try {
+                            dateRangeStart = self.graphModel.get('dateRange').get('start');
+                        } catch (e) {
+                            console.log(e);
+                            dateRangeStart = dataEnd.day(-1);
+                        } 
+                        var dateDelta = dataEnd - dateRangeStart;
+                        self.graphModel.get('dateRange').set('end', dataEnd);
+                        if (dataEnd < dateRangeStart) {
+                            if (response.data.length < 2) {
+                                var dataStart = new Date(dataEnd - dateDelta);
+                            } else {
+                                var dataStart = new Date(arguments[0].data[0][0]);
+                            }
+                            self.graphModel.get('dateRange').set('start', dataStart);
+                            var xAxis = self.plot.getXAxes()[0];
+                            var xAxisOptions = xAxis.options;
+                                xAxisOptions.min = dataStart
+                                xAxisOptions.max = dataEnd
+                                xAxis.min = dataStart
+                                xAxis.max = dataEnd
+                        }
+                        this.preventUpdates = true;
                     }
 
                     self.redraw();

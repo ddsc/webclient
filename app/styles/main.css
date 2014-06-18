@@ -52,7 +52,7 @@ iframe {
     z-index: 10;
 }
 
-div#brand {
+span#brand {
     display: block;
     float: left;
     margin: 10px 23px 10px;
@@ -67,7 +67,7 @@ div#brand {
     -webkit-transition: background 0.2s ease-out;
     transition: background 0.2s ease-out;
 }
-div#brand:hover {
+span#brand:hover {
     background-position: 0 5px;
     -o-transition: background 0.2s ease-in;
     -ms-transition: background 0.2s ease-in;

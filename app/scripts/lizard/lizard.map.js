@@ -128,6 +128,14 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'geoTiffRegion': '#geo-tiff-region',
     'alarmsRegion': '#alarms-region',
     'statusRegion': '#status-region'
+  },
+  onClose: function () {
+    if (window.mapFullScreen) {
+      var fullScreenMap = document.getElementById('full-screen-map');
+      if (fullScreenMap) {
+        fullScreenMap.parentNode.removeChild(fullScreenMap);
+      }
+    }
   }
 });
 
