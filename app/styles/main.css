@@ -45,7 +45,7 @@ iframe {
   width: 100%;
 }
 
-#header {
+#header.fullscreen {
     height: 40px !important;
     overflow: hidden;
     display:block ;

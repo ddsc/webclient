@@ -41,6 +41,10 @@ window.toggleFullScreen = function () {
         fullScreenMap.parentNode.removeChild(fullScreenMap); //remove()
         var locationSearch = document.getElementById('geocoderRegion');
         locationSearch.style.cssText = "";
+
+        var header = document.getElementById('header');
+        header.classList.add('fullscreen');
+
         Lizard.mapView.fullScreenRegion.close();
         var lonlatzoom = window.location.hash.split('#map/')[1];
         if (lonlatzoom !== undefined) {
@@ -68,6 +72,9 @@ window.toggleFullScreen = function () {
             var container = document.getElementById('content').parentNode;
             container.parentNode.insertBefore(fullScreenMap, container);
         }
+
+        var header = document.getElementById('header');
+        header.classList.remove('fullscreen');
         fullScreenMap.style.cssText = "position: absolute; width: 100%; height: calc(100% - 40px); top: 40px;";
         var locationSearch = document.getElementById('geocoderRegion');
         locationSearch.style.cssText = "margin-top: calc(75%);"
