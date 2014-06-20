@@ -737,7 +737,7 @@
                 <% if (alarms == true) {%>
                 <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
                 <%}%>
-                <% if (value_type === 'float') {%>
+                <% if (value_type === 'float' || value_type === 'integer') {%>
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit.code %></span>
                 <%}%>
                 <span class="badge badge-info">
