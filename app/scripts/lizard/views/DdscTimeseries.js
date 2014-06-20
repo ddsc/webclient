@@ -397,7 +397,7 @@ var mockingjay = {
     "opendap": "/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0.ascii", 
     "latest_value": 0.0, 
     "uuid": "64cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
-    "name": "Landsat", 
+    "name": "Landsat (mocked)", 
     "description": "", 
     "value_type": "geotiff", 
     "annotations": 2, 
