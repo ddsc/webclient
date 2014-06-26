@@ -384,17 +384,18 @@
         </div>
     </script>
 
-
-
     <script type="text/template" id="location-modal-popup-item">
+        <% if (value_type === 'float' || value_type === 'integer') {%>
         <div class="timeserie-item noselect">
-            <h5 data-url="<%= events %>"><i class="icon-bar-chart">
-            </i><span class="add-graph-item"> &nbsp;<%= name %></span>
-              <span class="pull-right">
-                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
-              </span>
+            <h5 data-url="<%= events %>">
+                <i class="icon-bar-chart"></i>
+                <span class="add-graph-item">&nbsp;<%= name %></span>
+                <span class="pull-right">
+                    <span class="badge badge-info"><%= format_value(latest_value) %>&nbsp;<%= unit %></span>
+                </span>
             </h5>
         </div>
+        <%}%>
     </script>
 
     <script type="text/template" id="template-layout-active-workspace">
@@ -743,7 +744,6 @@
                 <span class="badge badge-info">
                   <%= annotations %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
                 </span>
-                
               </span>
             </h5>
         </div>
