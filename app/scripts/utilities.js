@@ -37,13 +37,15 @@ $.fn.serializeObject = function()
 
 window.toggleFullScreen = function () {
     if (window.mapFullScreen) {
+        // full screen -> normal screen
         var fullScreenMap = document.getElementById('full-screen-map');
         fullScreenMap.parentNode.removeChild(fullScreenMap); //remove()
         var locationSearch = document.getElementById('geocoderRegion');
         locationSearch.style.cssText = "";
 
-        var header = document.getElementById('header');
-        header.classList.add('fullscreen');
+        // Is a different styling needed in normal mode?
+        //var header = document.getElementById('header');
+        //header.classList.remove('fullscreen');
 
         Lizard.mapView.fullScreenRegion.close();
         var lonlatzoom = window.location.hash.split('#map/')[1];
@@ -65,6 +67,7 @@ window.toggleFullScreen = function () {
             map: leafletView
           });
     } else {
+        // normal screen -> full screen
         var fullScreenMap = document.getElementById('full-screen-map');
         if (fullScreenMap === null) {
             fullScreenMap = document.createElement('div');
@@ -73,8 +76,9 @@ window.toggleFullScreen = function () {
             container.parentNode.insertBefore(fullScreenMap, container);
         }
 
-        var header = document.getElementById('header');
-        header.classList.remove('fullscreen');
+        // Is a different styling needed in full-screen mode?
+        //var header = document.getElementById('header');
+        //header.classList.add('fullscreen');
         fullScreenMap.style.cssText = "position: absolute; width: 100%; height: calc(100% - 40px); top: 40px;";
         var locationSearch = document.getElementById('geocoderRegion');
         locationSearch.style.cssText = "margin-top: calc(75%);"

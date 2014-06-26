@@ -45,11 +45,15 @@ iframe {
   width: 100%;
 }
 
-#header.fullscreen {
+#header {
     height: 40px !important;
     overflow: hidden;
     display:block ;
     z-index: 10;
+}
+
+#header.fullscreen {
+    /* Is a different styling needed in full-screen mode? */
 }
 
 span#brand {

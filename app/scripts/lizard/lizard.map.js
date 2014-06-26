@@ -134,6 +134,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
       var fullScreenMap = document.getElementById('full-screen-map');
       if (fullScreenMap) {
         fullScreenMap.parentNode.removeChild(fullScreenMap);
+        window.mapFullScreen = false;
       }
     }
   }
