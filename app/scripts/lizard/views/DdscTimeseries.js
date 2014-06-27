@@ -180,6 +180,9 @@ TextTimeserieCollectionView = Backbone.Marionette.CollectionView.extend({
 });
 
 
+/**
+ * TODO: make datetime field editable. At the moment, only the arrows can be used.
+ */
 Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
     template: '#geotiff-template',
     regions: {
@@ -206,27 +209,29 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       var self = this;
       this.eventsCollection = new Lizard.Collections.Events();
       this.eventsCollection.url = this.gTiff.get('events') + '?page_size=0';
-      // this.eventsCollection.fetch().done(function (collection, response) {
-      //   var active_event = collection.models[0];
-      //   self.gTiff.set('active_event', active_event);
-      //   self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
-      //   // self.populateDatePicker(active_event);
-      // });
+      this.eventsCollection.fetch().done(function (collection, response) {
+        var active_event = collection.models.slice(-1)[0]; // most recent
+        self.gTiff.set('active_event', active_event);
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+        self.populateDatePicker(active_event);
+      });
 
+      /*
       this.eventsCollection.add([{
             "flag": null,
-            "wms_url": "ddsc:landsat_2015-04-02T115233Z",
+            "layer": "ddsc:landsat_2015-04-02T115233Z",
             "datetime": "2013-02-21T16:13:00.000000Z"
         },
         {
             "flag": null,
-            "wms_url": "ddsc:landsat_2015-04-04T115233Z",
+            "layer": "ddsc:landsat_2015-04-04T115233Z",
             "datetime": "2013-02-21T16:15:00.000000Z"
         }]);
       this.gTiff.set('active_event', this.eventsCollection.models[0]);
       self.$el.find('#geotiff-datepicker').val(self.gTiff.get('active_event').get('datetime'));
-      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
+      */
 
+      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
     },
     populateDatePicker: function () {
       // debugger
@@ -246,29 +251,29 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
         }
         var active_event = this.gTiff.get('active_event');
         this.mapLayer.setParams({
-          layers: active_event.get('wms_url')
+          layers: active_event.get('layer')
         });
       }
     },
     nextTiff: function () {
-      // get the index and use to get next item in eventslist, if there is a 'next item'
+      // get next item in eventslist, if there is a 'next item'
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       if (self.eventsCollection.models.length > active_idx + 1) {
         var active_event = self.eventsCollection.models[active_idx + 1];
         self.gTiff.set('active_event', active_event);
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
       }
     },
     previousTiff: function () {
+      // get previous item in eventslist, if there is a 'previous item'
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       if (active_idx - 1 >= 0) {
         var active_event = self.eventsCollection.models[active_idx - 1];
         this.gTiff.set('active_event', active_event);
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));        
+        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
       }
-      //
     },
     onClose: function () {
       mc.removeLayer(this.mapLayer);
@@ -437,8 +442,8 @@ Lizard.geo.Popups.DdscTimeseries = {
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
-      // console.log(collection.models[0].attributes);
-        collection.add(new Lizard.Models.Timeserie(mockingjay));
+        //console.log(collection.models[0].attributes);
+        //collection.add(new Lizard.Models.Timeserie(mockingjay));
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });
