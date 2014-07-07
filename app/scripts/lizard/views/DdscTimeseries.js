@@ -334,6 +334,13 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
         }
       }
     }
+    if (Lizard.hasOwnProperty('statusCollection')) {
+      for (var i = 0; Lizard.statusCollection.models.length > i; i++) {
+        if (Lizard.statusCollection.models[i].get('uuid') === this.model.get('uuid')){
+          this.model.set('status', true);
+        }
+      }
+    }
   },
   openAnnotation: function(){
     Lizard.App.vent.trigger('makeAnnotation', this.model);

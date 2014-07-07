@@ -68,7 +68,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
       $badge.removeClass('hidden');
       $('#alarms-region').removeClass('hidden');
       Lizard.alarmsCollection = new Backbone.Collection;
-      alarmsView = new Lizard.Views.AlarmStatusView({
+      alarmsView = new Lizard.Views.AlarmView({
         collection: Lizard.alarmsCollection
       });
       alarmsView.collection.url = settings.alarms_url;
@@ -99,10 +99,10 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
       $badge.removeClass('hidden');
       $('#status-region').removeClass('hidden');
       Lizard.statusCollection = new Backbone.Collection;
-      var statusView = new Lizard.Views.AlarmStatusView({
+      var statusView = new Lizard.Views.StatusView({
         collection: Lizard.statusCollection
       });
-      statusView.collection.url = settings.status_url;
+      statusView.collection.url = settings.timeseries_url;
       statusView.collection.fetch().done(function (collection){
         $badge.html(collection.models.length);
       });

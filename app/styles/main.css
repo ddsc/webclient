@@ -1056,6 +1056,10 @@ i.alarm-color {
     color: #D9534F;
 }
 
+i.warning-color {
+    color: #F0AD4E;
+}
+
 ul.add-map-item {
     list-style: none;
     padding-left: 15px;

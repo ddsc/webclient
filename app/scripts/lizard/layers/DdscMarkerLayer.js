@@ -115,6 +115,13 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
         }
       }
     }
+    if (Lizard.hasOwnProperty('statusCollection')) {
+      for (var i = 0; Lizard.statusCollection.models.length > i; i++) {
+        if (Lizard.statusCollection.models[i].get('uuid') === this.model.get('uuid')){
+          this.model.set('status', true);
+        }
+      }
+    }
   },
   events:{
     'click .icon-comment': 'createAnnotation'

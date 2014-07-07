@@ -422,7 +422,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
   }
 });
 
-Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
+Lizard.Views.AlarmItem = Backbone.Marionette.ItemView.extend({
     related_object: null,
     tagName: 'li',
     className: 'alarm-open',
@@ -449,6 +449,10 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
           // that.model.set('related_uuid', related_uuid);
           that.getLocationPopup(related_uuid);
         });
+      } else {
+        var that = this;
+        var location_uuid = this.model.get('location')['uuid'];
+        that.getLocationPopup(location_uuid);
       }
     },
     getLocationPopup: function (related_uuid) {
@@ -471,7 +475,7 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
     },
     template: function (model){
         return _.template(
-            $('#alarm-status-item-template').html(), 
+            $('#alarm-item-template').html(), 
             model, 
             {variable: 'alarm'});
     },
@@ -480,12 +484,26 @@ Lizard.Views.AlarmStatusItem = Backbone.Marionette.ItemView.extend({
     }
 });
 
-Lizard.Views.AlarmStatusView = Backbone.Marionette.CollectionView.extend({
+Lizard.Views.AlarmView = Backbone.Marionette.CollectionView.extend({
     collection: null,
     tagName: 'ul',
     className: 'add-map-item ',
     initialize: function (options){
         this.collection = options.collection;
     },
-    itemView: Lizard.Views.AlarmStatusItem
+    itemView: Lizard.Views.AlarmItem
+});
+
+Lizard.Views.StatusItem = Lizard.Views.AlarmItem.extend({
+  className: 'alarm-open',
+  template: function (model){
+      return _.template(
+          $('#status-item-template').html(), 
+          model, 
+          {variable: 'status'});
+  },
+});
+
+Lizard.Views.StatusView = Lizard.Views.AlarmView.extend({
+  itemView: Lizard.Views.StatusItem
 });
