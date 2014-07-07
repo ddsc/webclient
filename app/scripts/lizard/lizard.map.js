@@ -197,17 +197,18 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   var lon = null;
   if (lon_or_workspacekey && !lat && !zoom){
     var selectWorkspace = function(collection) {
-      var workspaceItem = collection.get(lon_or_workspacekey);
-      var name = workspaceItem.get('name');
-      if (name.split('Alarm').length > 1){
-        $('.alarms').click();
-        $('.status').click();
-      }
-      collection.each(function(workspaceItem2) {
-        workspaceItem2.set('selected', false);
-      });
-      workspaceItem.set('selected', true);
-      collection.trigger('select_workspace', workspaceItem);
+      if (lon_or_workspacekey == 'alarm') {
+        $('.alarms').click();      
+      } else if (lon_or_workspacekey == 'status') {
+        $('.status').click();      
+      } else {
+        var workspaceItem = collection.get(lon_or_workspacekey);
+        collection.each(function(workspaceItem2) {
+          workspaceItem2.set('selected', false);
+        });
+        workspaceItem.set('selected', true);
+        collection.trigger('select_workspace', workspaceItem);
+      };
     };
     if (workspaceCollection.models.length > 0) {
       selectWorkspace(workspaceCollection);
