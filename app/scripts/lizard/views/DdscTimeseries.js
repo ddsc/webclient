@@ -5,13 +5,23 @@
 // Modal view that opens when clicking on a location
 
 
-function format_value(value) {
+function format_value (value) {
   if (typeof(value) === 'undefined') {
     return '-';
   } else if (typeof(value) === "number") {
     return value.toFixed(2);
+  } else if (parseInt(value) !== NaN) {
+    return parseInt(value).toFixed(2);
   } else {
-    return value;
+    return '-';
+  }
+}
+
+function format_unit (unit) {
+  if (typeof(unit) === "string") {
+    return unit;
+  } else if (unit.hasOwnProperty('code')) {
+    return unit.code;
   }
 }
 
@@ -104,6 +114,7 @@ Lizard.Views.LocationModalPopup = Backbone.Marionette.Layout.extend({
             graphModel: graphModel
         });
         this.timeseriesRegion.show(timeseriesView);
+        this.$el.find('#location-modal-label').html(self.primaryTimeseries.get('location')['name']);
     }
 });
 
@@ -324,8 +335,6 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     Lizard.App.vent.on('changedestroyAnnotation', function () {
       this.countAnnotations('changedestroyAnnotation')
     }, this);
-  },
-  initialize: function () {
     this.model.set('alarms', false);
     if (Lizard.hasOwnProperty('alarmsCollection')) {
       for (var i = 0; Lizard.alarmsCollection.models.length > i; i++) {
@@ -389,7 +398,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     $.get(countUrl).success(function (annotation) {
       self.model.set({annotations: annotation.count});
     });
-  },
+  }
 });
 
 // Modal view that opens when clicking on a location
