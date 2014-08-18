@@ -43,7 +43,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                         cluster.getChildCount() + '<i class="icon-comment"></i></span>' });
                   }
                 });
-                this.mapCanvas.addLayer(this.annotationLayer);
+                if (location.hash.split('/')[1] != 'alarm' &&
+                    location.hash.split('/')[1] != 'status') {
+                    console.log(location)
+                    this.mapCanvas.addLayer(this.annotationLayer);
+                }
         }, this);
     },
     createAnnotationsLayer: function () {
@@ -58,7 +62,9 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             }
             else {
                 $icon.addClass('icon-check-empty').removeClass('icon-check');
-                self.mapCanvas.removeLayer(self.annotationLayer);
+                if (self.mapCanvas.hasLayer(self.annotationLayer)) {
+                    self.mapCanvas.removeLayer(self.annotationLayer);
+                }
                 if (Lizard.Map.hasOwnProperty('annotationCollectionView')) {
                     Lizard.Map.annotationCollectionView.collection.reset();
                 }

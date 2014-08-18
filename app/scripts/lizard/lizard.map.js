@@ -145,7 +145,9 @@ Lizard.Map.Router = Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       'map': 'map',
       'map/:lon,:lat,:zoom': 'map', // lonlatzoom is a commaseparated longitude/latitude/zoomlevel combination
-      'map/:workspacekey': 'map' // workspace is a primary key that refers to a specific workspace
+      'map/:workspacekey': 'map', // workspace is a primary key that refers to a specific workspace
+      'map/alarm': 'alarm', 
+      'map/status': 'status' 
     }
 });
 
@@ -164,13 +166,20 @@ Lizard.Map.IconItemView = Backbone.Marionette.ItemView.extend({
 layerCollection = new Lizard.Collections.Layer();
 window.mapCanvas = ((window.mapCanvas === undefined) ? null : window.mapCanvas);
 
+Lizard.Map.status = function () {
+  Lizard.Map.map('status');
+};
+
+Lizard.Map.alarm = function () {
+  Lizard.Map.map('alarm');
+};
+
 // Instantiate the Leaflet Marionnette View.
 // This way you can talk with Leaflet after initializing the map.
 // To talk with the Leaflet instance talk to -->
 // Lizard.Map.Leaflet.mapCanvas
 
 Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
-  console.log('Lizard.Map.map()');
 
   // Instantiate Map's default layout
   Lizard.mapView = new Lizard.Map.DefaultLayout();
@@ -244,12 +253,16 @@ Lizard.Map.map = function(lon_or_workspacekey, lat, zoom) {
   Lizard.mapView.legendRegion.show(legendListView.render());
 
   var annotationsModelInstance = new Lizard.Models.Annotations();
+
   var annotationsView = new Lizard.Views.AnnotationsView({
     model: annotationsModelInstance,
     mapView: leafletView
   });
   Lizard.mapView.annotationsRegion.show(annotationsView.render());
 
+  if (lon_or_workspacekey == 'alarm' || lon_or_workspacekey == 'status') {
+    $('li.annotation').click();
+  } 
   // Lizard.mapView.statusRegion.show(statusView.render());
 
 

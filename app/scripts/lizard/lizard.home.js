@@ -12,10 +12,10 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'click #measure-status': 'openStatus'
   },
   openAlarm: function () {
-      Lizard.Map.map('alarm');
+    location.hash = "map/alarm";
   },
-  openStatus: function () { 
-    Lizard.Map.map('status');
+  openStatus: function () {
+    location.hash = "map/status";
   },
   regions: {
     'measureAlarm': '#measure-alarm',
