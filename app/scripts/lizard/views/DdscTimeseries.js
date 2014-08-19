@@ -280,7 +280,8 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       });
     },
     fakeRender: function (active_event) {
-      this.$el.find('#geotiff-datepicker').val(new Date(active_event.get('datetime')).toLocaleString());
+      this.$el.find('#geotiff-datepicker').val(new Date(active_event.get('datetime'))
+        .toLocaleString('nl'));
     },
     onRender: function () {
       Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
@@ -506,7 +507,7 @@ Lizard.geo.Popups.DdscTimeseries = {
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
         //console.log(collection.models[0].attributes);
-        collection.add(new Lizard.Models.Timeserie(mockingjay));
+        // collection.add(new Lizard.Models.Timeserie(mockingjay));
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });
