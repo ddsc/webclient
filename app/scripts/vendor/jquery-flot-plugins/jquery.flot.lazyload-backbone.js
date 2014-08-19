@@ -151,8 +151,8 @@
                                 xAxis.max = dataEnd
                         }
 
-                        self.redraw();
                     }
+                    self.redraw();
                     
                 });
             }
