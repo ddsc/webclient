@@ -63,8 +63,10 @@ Lizard.ui.Widgets.LegendWidget = Backbone.Marionette.Layout.extend({
     if (this.legendRegion) {
       this.legendRegion.close();
     }
+    var collection = Lizard.Dashboard.graphModel.get('graphItems');
+    collection.draggable = false;
     var legendView = new Lizard.Views.GraphLegendCollection({
-      collection: Lizard.Dashboard.graphModel.get('graphItems')
+      collection: collection
     });
     this.legendRegion.show(legendView);
     legendView.$el.height(300);

@@ -75,8 +75,10 @@ Lizard.Views.GraphAndLegendView = Backbone.Marionette.Layout.extend({
         this.showNormalGraph();
 
         // show the legend
+        var collection = this.model.get('graphItems');
+        collection.draggable = true;
         var legendView = new Lizard.Views.GraphLegendCollection({
-            collection: this.model.get('graphItems')
+            collection: collection
         });
 
         this.legendItems.show(legendView);

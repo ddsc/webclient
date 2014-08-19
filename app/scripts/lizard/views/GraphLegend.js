@@ -4,6 +4,9 @@ Lizard.Views.GraphLegendNoItems = Backbone.Marionette.ItemView.extend({
 
 Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     template: '#graphs-legend-template',
+    initialize: function () {
+        this.model.set('draggable', this.model.collection.draggable);
+    },
     events: {
         'dragend': 'onDragEnd',
         'click': 'onClick',

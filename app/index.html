@@ -821,7 +821,7 @@
     </script>
 
     <script type="text/template" id="graphs-legend-template">
-      <div class="graph-legend" draggable="true" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
+      <div class="graph-legend" draggable="<%= draggable %>" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <a href="javascript:void(null)" class="nohover" ondragstart="Lizard.Utils.DragDrop.copyData(event)" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:1px;height:1px;border:8px solid <%=color%>; background-color: <%= color %>!important;"></div>
@@ -836,7 +836,7 @@
         </div>
         </a>
         <ul class="hide inline pull-left">
-          <li><button class="btn btn-danger btn-mini delete"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
+          <li><button class="btn btn-danger btn-mini delete <% if (!draggable) {%> hidden <%}%>"><i class="icon-remove"></i> <span class="hidden-tablet">Wis</span></button></li>
           <li><button class="btn btn-primary btn-mini annotate"><i class="icon-comment"></i> <span class="hidden-tablet">Annoteer</span></button></li>
           <li><a href="" class="btn btn-mini csv-link"><i class="icon-share-alt"></i> <span class="hidden-tablet">CSV</span></a></li>
         </ul>
