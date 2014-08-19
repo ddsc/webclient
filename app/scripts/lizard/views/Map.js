@@ -5,8 +5,6 @@
 // * The items and their cid's (a Backbone identifier) are added to
 // a 'workspaceCollection' on click on a specific object.
 
-
-
 Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
   tagName: 'li class="search-results"',
   template: '#location-results-template',

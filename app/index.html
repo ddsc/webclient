@@ -464,8 +464,8 @@
     <script type="text/template" id="location-results-template">
         <div class="search-inner">
         <span class="location-result">
-        <% if (geocode == true) { %><i class="icon-map-marker"></i> - <% } else {%>
-        <i class="icon-flag"></i>  <% } %>
+        <% if (geocode == true) { %><i class="icon-map-marker"></i> - Geolocation - <% } else {%>
+        <i class="icon-flag"></i> - Sensor - <% } %>
         <%= name %></span></div>
     </script>
 
@@ -1480,7 +1480,6 @@
         <script src="scripts/lizard/views/LegendCollection.js"></script>
         <script src="scripts/lizard/views/MapLegend.js"></script>
         <script src="scripts/lizard/views/Map.js"></script>
-        <script src="scripts/lizard/views/Geocoder.js"></script>
         <script src="scripts/lizard/views/Graph.js"></script>
         <script src="scripts/lizard/views/DateRange.js"></script>
         <script src="scripts/lizard/views/ScatterPlot.js"></script>
