@@ -13,6 +13,7 @@ var settings = {
     timeseries_url: domain + 'timeseries/?page_size=100',
     timeseries_search_url: domain + 'timeseries/search/?',
     alarms_url: domain + 'alarms/',
+    status_url: domain + 'timeseries/behind/?page_size=100',
     collages_url: domain + 'collages/?page_size=100',
     workspace_url: domain + 'workspaces/?page_size=100',
     layers_url: domain + 'layers/?page_size=100',

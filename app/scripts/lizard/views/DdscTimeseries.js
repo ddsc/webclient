@@ -190,6 +190,52 @@ TextTimeserieCollectionView = Backbone.Marionette.CollectionView.extend({
   className: 'text-timeserie-collection'
 });
 
+Lizard.Views.GeoTiff = Marionette.ItemView.extend({
+  initialize: function () {
+    this.model.set('selected', false);
+    this.model.on('change:selected', this.render, this);
+  },
+  template: '#geotiff-item-template',
+  tagName: 'li',
+  className: 'drawer-item',
+  // initialize: function () {
+  //   this.model.bind('change', this.render);
+  // },
+  events: {
+    'click .layer-item': 'select'
+  },
+  //create a radio button (one workspace selected at a time)
+  select: function(e) {
+    this.model.collection.each(function (geotiff) {
+      geotiff.set('selected', false);
+    });
+    this.model.set('selected', true);
+    Lizard.Map.geoTiffView.gTiff.set('active_event', this.model);
+  }
+});
+
+Lizard.Views.GeoTiffCollection = Backbone.Marionette.CollectionView.extend({
+  tagName: 'ul',
+  className: 'wms_sources drawer-group',
+  itemView: Lizard.Views.GeoTiff,
+  onShow: function () {
+    this.$el.parent().on('scroll.geotiff', this.checkScroll.bind(this));
+  },
+  onClose: function () {
+    this.$el.parent().off('scroll.geotiff');
+  },
+  checkScroll: function () {
+    var self = this;
+    var triggerPoint = 100;
+    if (!this.collection.isLoading && this.el.parentNode.scrollTop + this.el.parentNode.clientHeight + triggerPoint > this.el.scrollHeight) {
+      this.collection.isLoading = true;
+      this.collection.url = this.collection.next;
+      this.collection.fetch({remove: false})
+      .always(function () {self.collection.isLoading = false;});
+    }
+
+  }
+});
 
 /**
  * TODO: make datetime field editable. At the moment, only the arrows can be used.
@@ -197,7 +243,8 @@ TextTimeserieCollectionView = Backbone.Marionette.CollectionView.extend({
 Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
     template: '#geotiff-template',
     regions: {
-        widgetRegion: '.widget-region',
+        // widgetRegion: '.widget-region',
+        listRegion: '.list-region'
     },
     events: {
       'click .next': 'nextTiff',
@@ -209,50 +256,34 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.mapLayer = L.tileLayer.wms('http://maps.ddsc.nl/geoserver/ddsc/wms?service=WMS&version=1.1.0&request=GetMap&',
         {
           service: "WMS",
+          type: 'geoTiffTimeseries',
           version: "1.1.0",
           layers: "ddsc:landsat_2015-04-04T115233Z",
           srs: "EPSG:3857",
           format: "image/png",
           transparent: true
         });
-    },
-    onRender: function () {
-      var self = this;
+
       this.eventsCollection = new Lizard.Collections.Events();
-      this.eventsCollection.url = this.gTiff.get('events') + '?page_size=0';
+      var self = this;
+      this.eventsCollection.parse = function (response) { 
+        self.eventsCollection.next = response.next;
+        return response.results; 
+      };
+      this.eventsCollection.url = this.gTiff.get('events') + '?page_size=10';
       this.eventsCollection.fetch().done(function (collection, response) {
         var active_event = collection.models.slice(-1)[0]; // most recent
+        active_event.set('selected', true);
         self.gTiff.set('active_event', active_event);
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
-        self.populateDatePicker(active_event);
+        self.fakeRender(active_event);
+        // self.populateDatePicker(active_event);
       });
-
-      /*
-      this.eventsCollection.add([{
-            "flag": null,
-            "layer": "ddsc:landsat_2015-04-02T115233Z",
-            "datetime": "2013-02-21T16:13:00.000000Z"
-        },
-        {
-            "flag": null,
-            "layer": "ddsc:landsat_2015-04-04T115233Z",
-            "datetime": "2013-02-21T16:15:00.000000Z"
-        }]);
-      this.gTiff.set('active_event', this.eventsCollection.models[0]);
-      self.$el.find('#geotiff-datepicker').val(self.gTiff.get('active_event').get('datetime'));
-      */
-
-      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
     },
-    populateDatePicker: function () {
-      // debugger
-      // // for (var i = 0; )
-      // this.$el.find('#geotiff-datepicker').datepicker({
-      //   beforeShowDay: function(date){
-      //     var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-      //     return [ array.indexOf(string) == -1 ]
-      //   }
-      // });
+    fakeRender: function (active_event) {
+      this.$el.find('#geotiff-datepicker').val(new Date(active_event.get('datetime')).toLocaleString());
+    },
+    onRender: function () {
+      Lizard.mapView.geoTiffRegion.$el.parent().removeClass('hidden');
     },
     switchLayer: function (newModel, oldRef) {
       if (newModel !== oldRef) {
@@ -265,6 +296,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
           layers: active_event.get('layer')
         });
       }
+      this.fakeRender(active_event);
     },
     nextTiff: function () {
       // get next item in eventslist, if there is a 'next item'
@@ -273,7 +305,11 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       if (self.eventsCollection.models.length > active_idx + 1) {
         var active_event = self.eventsCollection.models[active_idx + 1];
         self.gTiff.set('active_event', active_event);
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+        self.fakeRender(active_event);
+        self.eventsCollection.each(function (geotiff) {
+          geotiff.set('selected', false);
+        });
+        active_event.set('selected', true);
       }
     },
     previousTiff: function () {
@@ -285,9 +321,19 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
         this.gTiff.set('active_event', active_event);
         self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
       }
+      self.fakeRender(active_event);
     },
     onClose: function () {
       mc.removeLayer(this.mapLayer);
+      _.each(mc._layers, function (layer) {
+        if (!layer.hasOwnProperty('options')) {return;}
+        if (layer.options.hasOwnProperty('type')) {
+          if (layer.options.type == 'geoTiffTimeseries' &&
+              mc.hasLayer(layer)) {
+            mc.removeLayer(layer);
+            }
+        }
+      });
       Lizard.mapView.geoTiffRegion.$el.parent().addClass('hidden');
     }
 });
@@ -383,13 +429,14 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     });
   },
   openGeoTiff: function(e) {
-    var geoTiffView = new Lizard.Views.GeoTiffTimeseries({
+    Lizard.Map.geoTiffView = new Lizard.Views.GeoTiffTimeseries({
       gTiffTimeseries: this.model
     });
-    Lizard.mapView.geoTiffRegion.show(geoTiffView);
-    $('.leaflet-rrose-close-button').on('click', function() {
-      Lizard.mapView.geoTiffRegion.close();
-    })
+    Lizard.mapView.geoTiffRegion.show(Lizard.Map.geoTiffView);
+
+    Lizard.Map.geoTiffView.listRegion.show(new Lizard.Views.GeoTiffCollection({
+      collection: Lizard.Map.geoTiffView.eventsCollection
+    }))
   },
   countAnnotations: function () {
     var self = this;
@@ -459,7 +506,7 @@ Lizard.geo.Popups.DdscTimeseries = {
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
         //console.log(collection.models[0].attributes);
-        //collection.add(new Lizard.Models.Timeserie(mockingjay));
+        collection.add(new Lizard.Models.Timeserie(mockingjay));
         var popupView = new Lizard.Views.LocationPopup({
             collection: collection
         });

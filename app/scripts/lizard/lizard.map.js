@@ -6,7 +6,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     'click .alarms': 'alarmToggle',
     'click .status': 'statusToggle',
     'click .metrics-dropdown': 'toggleChevron',
-    'click #extramaplayers-button': 'toggleExtraLayers'
+    'click #extramaplayers-button': 'toggleExtraLayers',
+    'click .icon-remove': 'closeGeoTiff'
   },
   onRender: function () {
 
@@ -21,6 +22,9 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
     });
 
   },
+  closeGeoTiff: function () {
+    Lizard.mapView.geoTiffRegion.close(); 
+ },
   toggleChevron: function (e) {
     // Click handlers for toggling the filter/location/parameter UI
       e.preventDefault();
@@ -102,7 +106,7 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
       var statusView = new Lizard.Views.StatusView({
         collection: Lizard.statusCollection
       });
-      statusView.collection.url = settings.timeseries_url;
+      statusView.collection.url = settings.status_url;
       statusView.collection.fetch().done(function (collection){
         $badge.html(collection.models.length);
       });

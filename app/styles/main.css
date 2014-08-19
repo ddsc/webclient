@@ -796,7 +796,8 @@ div.widget li.theader {
 }
 
 .sidenav .icon-chevron-down,
-.sidenav .icon-chevron-up {
+.sidenav .icon-chevron-up,
+.sidenav .icon-remove {
     float: right;
     margin-top: 2px;
     margin-right: -6px;
@@ -963,11 +964,23 @@ i.chevron-open{
     padding: 0;
 }
 
+.geotiff-navigation {
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    padding-left: 6px;
+}
+
+.geotiff-navigation > input {
+    border: none;
+    margin-bottom: 0;
+}
+
 div#workspaceListRegion,
 div#filtersRegion,
 div#locationsRegion,
 div#parametersRegion,
-div#extraLayersRegion{
+div#extraLayersRegion,
+div.list-region {
     height: 150px;
     overflow-y: auto;
     overflow-x: none;

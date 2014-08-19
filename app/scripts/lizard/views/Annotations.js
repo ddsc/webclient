@@ -45,7 +45,6 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 });
                 if (location.hash.split('/')[1] != 'alarm' &&
                     location.hash.split('/')[1] != 'status') {
-                    console.log(location)
                     this.mapCanvas.addLayer(this.annotationLayer);
                 }
         }, this);

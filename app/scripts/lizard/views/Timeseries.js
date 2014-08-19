@@ -115,7 +115,7 @@ Lizard.Views.InfiniteTimeseries = Backbone.Marionette.CollectionView.extend({
             this.collection.isLoading = true;
             this.collection.page += 1;
             // Load next page
-            this.collection.fetch({add: true})
+            this.collection.fetch({remove: true})
             .always(function () {
                 $('.loading-indicator').hide();
                 setTimeout(function () {

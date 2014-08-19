@@ -257,7 +257,7 @@
 
                 <ul class="nav nav-list sidenav hidden" >
                   <li class="mappage hidden-phone">
-                      <a href="javascript:void(0);"><i class="icon-globe"></i> GeoTIFFs <br></a>
+                      <a href="javascript:void(0);"><em class="icon-remove toggle"></em> <i class="icon-globe"></i> GeoTIFFs <br></a>
                   </li>
                   <div class="geo-tiff-nav hidden-phone" data-group="" id="geo-tiff-region">
                   </div>
@@ -365,9 +365,12 @@
       <%=value%>
     </script>
     <script type="text/template" id="geotiff-template">
-      <a href="javascript:void(0)" class="previous"><i class="icon-arrow-left"></i></a>
-      <input type="text" id="geotiff-datepicker">
-      <a href="javascript:void(0)" class="next"><i class="icon-arrow-right"></i></a>
+      <div class="geotiff-navigation">
+        <a href="javascript:void(0)" class="previous"><i class="icon-arrow-left"></i></a>
+        <input type="text" id="geotiff-datepicker">
+        <a href="javascript:void(0)" class="next"><i class="icon-arrow-right"></i></a>
+      </div>
+      <div class="list-region measurement-items"></div>
     </script>
 
     <script type="text/template" id="textmodal-popup">
@@ -672,6 +675,17 @@
             <i class="icon-list"></i>
         </span>
         <span class="content"><%= name %></span>
+          <span class="indicator"></span>
+
+      </div>
+    </script>
+
+    <script type="text/template" id="geotiff-item-template">
+      <div class="layer-item <% if(selected) { %>selected<% } %>">
+        <span class="action handle">
+            <i class="icon-list"></i>
+        </span>
+        <span class="content"><%= new Date(datetime).toLocaleString() %></span>
           <span class="indicator"></span>
 
       </div>
