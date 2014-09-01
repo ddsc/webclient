@@ -449,8 +449,15 @@ Lizard.Views.AlarmItem = Backbone.Marionette.ItemView.extend({
         });
       } else {
         var that = this;
-        var location_uuid = this.model.get('location')['uuid'];
-        that.getLocationPopup(location_uuid);
+        var location = that.model.get('location');
+        if (location) {
+          that.getLocationPopup(location['uuid']);
+        } else {
+          $('.top-right').notify({
+            type:'warning', message: {
+              text: 'Er lijkt geen Locatie gekoppeld te zijn'}
+            }).show()
+        }
       }
     },
     getLocationPopup: function (related_uuid) {
