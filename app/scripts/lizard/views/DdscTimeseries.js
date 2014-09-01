@@ -319,10 +319,14 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
       if (active_idx - 1 >= 0) {
         var active_event = self.eventsCollection.models[active_idx - 1];
-        this.gTiff.set('active_event', active_event);
         self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+        self.eventsCollection.each(function (geotiff) {
+          geotiff.set('selected', false);
+        });
+        active_event.set('selected', true);
+        this.gTiff.set('active_event', active_event);
+        self.fakeRender(active_event);
       }
-      self.fakeRender(active_event);
     },
     onClose: function () {
       mc.removeLayer(this.mapLayer);
