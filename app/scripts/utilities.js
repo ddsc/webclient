@@ -49,7 +49,8 @@ window.toggleFullScreen = function () {
 
         Lizard.mapView.fullScreenRegion.close();
         var lonlatzoom = window.location.hash.split('#map/')[1];
-        if (lonlatzoom !== undefined) {
+        if (lonlatzoom && lonlatzoom !== 'alarm' &&
+            lonlatzoom !== 'status') {
             lonlatzoom = lonlatzoom.split(',');
         } else {
             lonlatzoom = '5.16082763671875,51.95442214470791,7'.split(','); 
@@ -84,7 +85,9 @@ window.toggleFullScreen = function () {
         locationSearch.style.cssText = "margin-top: calc(75%);"
         Lizard.mapView.leafletRegion.close()
         var lonlatzoom = window.location.hash.split('#map/')[1];
-        if (lonlatzoom !== undefined) {
+        console.log('lonlatzoom', lonlatzoom)
+        if (lonlatzoom && lonlatzoom !== 'alarm' &&
+            lonlatzoom !== 'status') {
             lonlatzoom = lonlatzoom.split(',');
         } else {
             lonlatzoom = '5.16082763671875,51.95442214470791,7'.split(','); 
@@ -96,6 +99,7 @@ window.toggleFullScreen = function () {
             workspace: Lizard.workspaceView.getCollection(),
             container: 'full-screen-map'
           });
+
         fullScreenMap.style.zIndex = "1000";
         Lizard.mapView.fullScreenRegion.show(leafletView.render());
         Lizard.Map.ddsc_layers = new Lizard.geo.Layers.DdscMarkerLayer({
