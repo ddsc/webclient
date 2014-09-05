@@ -1012,42 +1012,42 @@
     <script type="text/template" id="dmc-overview">
       <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:left">
         <h4>Linker buis</h4>
-        <lu>
-          <li class='theader'>Dijk</lu>
+        <br>
+        <ul>
+          <li class='theader'>Dijk</li>
           <li><span class='tlabel'>Waterniveau</span><span class='tvalue'><%= waterst_l.toFixed(2) %></span><span>mNAP</span></li>
           <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_l.toFixed(2) %></span><span>&degC</span></li>
           <br>
           <li class='theader'>Pomp</li>
           <li><span class='tlabel'>Debiet</span><span class='tvalue'><%= debiet_l.toFixed(0) %></span><span>l/uur</span></li>
-          <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
-          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
-
-        </lu>
+          <!--<li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
+          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>-->
+        </ul>
       </div>
       <div class="widget-overview" style="width:50%;height:100%;overflow:hidden;float:right">
         <h4>Rechter buis</h4>
-        <lu>
-          <li class='theader'>Dijk</lu>
-        <li><span class='tlabel'>Waterniveau</span><span class='tvalue'><%= waterst_r.toFixed(2) %></span><span>mNAP</span></li>
-        <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_r.toFixed(2) %></span><span>&degC</span></li>
         <br>
-        <li class='theader'>Pomp</li>
-        <li><span class='tlabel'>Debiet</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>l/uur</span></li>
-        <li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
-        <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>
-
-        </lu>
+        <ul>
+          <li class='theader'>Dijk</li>
+          <li><span class='tlabel'>Waterniveau</span><span class='tvalue'><%= waterst_r.toFixed(2) %></span><span>mNAP</span></li>
+          <li><span class='tlabel'>Temperatuur</span><span class='tvalue'><%= temp_r.toFixed(2) %></span><span>&degC</span></li>
+          <br>
+          <li class='theader'>Pomp</li>
+          <li><span class='tlabel'>Debiet</span><span class='tvalue'><%= debiet_r.toFixed(0) %></span><span>l/uur</span></li>
+          <!--<li><span class='tlabel'>Persdruk</span><span class='tvalue'> - </span><span>bar</span></li>
+          <li><span class='tlabel'>Status</span><td><span class="label"> - </span></li>-->
+        </ul>
       </div>
     </script>
 
     <script type="text/template" id="dmc-status">
       <h4>Status DMC:</h4>
-      <lu>
+      <ul>
         <li><span class="badge badge-success">Geen Storing</span></li>
         <li><span class="badge badge-warning">Run test</span></li>
         <li><span class="badge badge-warning">Kastdeur open</span></li>
         <li><span class="badge badge-warning">2 meldingen</span></li>
-      </lu>
+      </ul>
     </script>
 
     <script type="text/template" id="settings-button">
