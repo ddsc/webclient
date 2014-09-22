@@ -258,7 +258,6 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
           service: "WMS",
           type: 'geoTiffTimeseries',
           version: "1.1.0",
-          layers: "ddsc:landsat_2015-04-04T115233Z",
           srs: "EPSG:3857",
           format: "image/png",
           transparent: true
@@ -274,6 +273,9 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.eventsCollection.fetch().done(function (collection, response) {
         var active_event = collection.models.slice(-1)[0]; // most recent
         active_event.set('selected', true);
+        self.mapLayer.setParams({
+          layers: active_event.get('layer')
+        });
         self.gTiff.set('active_event', active_event);
         self.fakeRender(active_event);
         // self.populateDatePicker(active_event);
@@ -300,33 +302,33 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.fakeRender(active_event);
     },
     nextTiff: function () {
-      // get next item in eventslist, if there is a 'next item'
+      // get next item in eventslist
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
-      if (self.eventsCollection.models.length > active_idx + 1) {
-        var active_event = self.eventsCollection.models[active_idx + 1];
-        self.gTiff.set('active_event', active_event);
-        self.fakeRender(active_event);
-        self.eventsCollection.each(function (geotiff) {
-          geotiff.set('selected', false);
-        });
-        active_event.set('selected', true);
-      }
+      var length = self.eventsCollection.models.length;
+      var next_idx = (active_idx + 1) % length;
+      var active_event = self.eventsCollection.models[next_idx];
+      self.gTiff.set('active_event', active_event);
+      self.fakeRender(active_event);
+      self.eventsCollection.each(function (geotiff) {
+        geotiff.set('selected', false);
+      });
+      active_event.set('selected', true);
     },
     previousTiff: function () {
-      // get previous item in eventslist, if there is a 'previous item'
+      // get previous item in eventslist
       var self = this;
       var active_idx = this.eventsCollection.indexOf(self.gTiff.get('active_event'));
-      if (active_idx - 1 >= 0) {
-        var active_event = self.eventsCollection.models[active_idx - 1];
-        self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
-        self.eventsCollection.each(function (geotiff) {
-          geotiff.set('selected', false);
-        });
-        active_event.set('selected', true);
-        this.gTiff.set('active_event', active_event);
-        self.fakeRender(active_event);
-      }
+      var length = self.eventsCollection.models.length;
+      var previous_idx = (length + active_idx - 1) % length;
+      var active_event = self.eventsCollection.models[previous_idx];
+      self.$el.find('#geotiff-datepicker').val(active_event.get('datetime'));
+      self.eventsCollection.each(function (geotiff) {
+        geotiff.set('selected', false);
+      });
+      active_event.set('selected', true);
+      this.gTiff.set('active_event', active_event);
+      self.fakeRender(active_event);
     },
     onClose: function () {
       mc.removeLayer(this.mapLayer);
