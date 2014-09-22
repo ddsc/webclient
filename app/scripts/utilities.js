@@ -484,7 +484,7 @@ function bindPanZoomEvents($graph) {
 
 /**
  * Turn mouse cursor in a spinner on Ajax requests.
- */
+
 $(document).ajaxStart(function () {
     $('html').addClass('busy');
 });
@@ -492,6 +492,7 @@ $(document).ajaxStart(function () {
 $(document).ajaxStop(function () {
     $('html').removeClass('busy');
 });
+*/
 
 $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
     // Aborted request are not an error.
