@@ -1153,6 +1153,7 @@ div#status-region{
 /************ BOOTSTRAP OVERRIDES ************/
 .navbar {
     z-index: 1500;
+    position: absolute;
 }
 .navbar-inner{
     background: rgb(23,127,140); /* Old browsers */
