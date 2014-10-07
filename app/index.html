@@ -1072,7 +1072,7 @@
                 <h4>Voorkeuren</h4>
                 <form id="preferences-form" class="form-horizontal" method="post">
                     <div class="control-group">
-                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode, afgelopen:</label>
+                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode:</label>
                         <div id="timeperiod-controls" class="controls">
                             <label class="radio">
                                 <input type="radio" name="timeperiod" value="" checked>
@@ -1101,19 +1101,16 @@
                         </div>
                     </div>
                     <div class="control-group" id="default-location">
-                        <label class="control-label" for="intialzoom-controls">Standaard locatie</label>
+                        <label class="control-label" for="intialzoom-controls">Standaard locatie:</label>
                         <div id="initialzoom-controls" class="controls">
-                            <label class="text">
-                                <input type="text" name="initialzoom" value="<%= initialZoom %>" placeholder="lon,lat,zoom">
-                            </label>
+                            <input type="text" name="initialzoom" value="<%= initialZoom %>" placeholder="lon,lat,zoom">
                         </div>
                     </div>
                     <div class="control-group" id="panner-buttons">
-                        <label class="control-label" for="panner-controls">Navigatie knoppen  op de kaart (pannen/pijltes).</label>
+                        <label class="control-label" for="panner-controls">Toon navigatieknoppen op de kaart (pannen):</label>
                         <div id="panner-controls" class="controls">
-                            <label class="text">
-                                <input type="checkbox" name="panner" <%if (panner){%>checked<%}%> >
-                            </label>
+                            <input type="checkbox" name="panner" <% if (panner) {%>checked<%}%> >
+                            <img src="images/pan.png" width="34" height="38" style="margin: 4px 0 0 15px;"/>
                         </div>
                     </div>
                     <div class="control-group">
