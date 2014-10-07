@@ -632,9 +632,9 @@
 
     <script type="text/template" id="timeserie-popup-title-template">
     <%= title %> <% if (alarms == true) {%>
-      <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
+      <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i><a>
       <%} else if (status == true) {%>
-      <a href="#management" title="Er is een een tijdreeks vertraagd"><i class="icon-warning-sign warning-color"></i> <a>
+      <a href="#management" title="Er is een een tijdreeks vertraagd"><i class="icon-warning-sign warning-color"></i><a>
       <%}%>
     <span class="pull-right"><%= annotations %> <i class="icon-comment clickable"></i></span>
     </script>
@@ -743,12 +743,12 @@
 
 
     <script type="text/template" id="alarm-item-template">
-      <span class="alarm-popover" data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm Bericht: <%= alarm.message %>"> <%= alarm.alarm.name %></span>
+      <span class="alarm-popover" data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm: <%= alarm.message %>"><%= alarm.alarm.name %></span>
     </script>
 
 
     <script type="text/template" id="status-item-template">
-      <span class="alarm-popover" data-toggle="popover" data-container="body" data-placement="right" data-content="Alarm Bericht: <%= status.name%>"> <%= status.name %></span>
+      <span class="alarm-popover" data-toggle="popover" data-container="body" data-placement="right" data-content="Status: waiting"><%= status.name %></span>
     </script>
 
     <script type="text/template" id="location-popup-item">
@@ -757,9 +757,9 @@
               <span class="<% if(value_type === 'float') { %>popup-toggle<% } else if (value_type === 'image') { %>image-popup-toggle<% } else if (value_type === 'geotiff' || value_type == 'georeferenced remote sensing') { %>open-geotiff<% } else { %>image-popup-text<%} %>"> &nbsp;<%=  truncateString(name, 30, '', '...') %></span>
               <span class="pull-right">
                 <% if (alarms == true) {%>
-                <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i> <a>
+                <a href="#management" title="Er is een alarmering op deze locatie"><i class="icon-exclamation-sign alarm-color"></i><a>
                 <%} else if (status == true) {%>
-                <a href="#management" title="Er is een vertraagde meting"><i class="icon-warning-sign warning-color"></i> <a>
+                <a href="#management" title="Er is een vertraagde meting"><i class="icon-warning-sign warning-color"></i><a>
                 <%}%>
                 <% if (value_type === 'float' || value_type === 'integer') {%>
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
