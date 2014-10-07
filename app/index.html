@@ -636,7 +636,7 @@
       <%} else if (status == true) {%>
       <a href="#management" title="Er is een een tijdreeks vertraagd"><i class="icon-warning-sign warning-color"></i><a>
       <%}%>
-    <span class="pull-right"><%= annotations %> <i class="icon-comment clickable"></i></span>
+    <span class="pull-right"><%= annotations || "&ndash;" %> <i class="icon-comment clickable"></i></span>
     </script>
 
     <script type="text/template" id="layeritem-template">
@@ -765,7 +765,7 @@
                 <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
                 <%}%>
                 <span class="badge badge-info">
-                  <%= annotations %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
+                  <%= annotations || "&ndash;" %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
                 </span>
               </span>
             </h5>
