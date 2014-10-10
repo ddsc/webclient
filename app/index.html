@@ -597,8 +597,8 @@
               <img src="<%= picture_url %>" style="width:280px;overflow:hidden;"/>
             </a>
           </div>
-        <% } else { %>
-          <a href="<%= picture_url %>" title="Attachment" target="_blank">
+        <% } else if (picture_url) { %>
+          <a href="<%= picture_url %>" title="Attachment" target="_blank">Attachment</a>
         <% }%>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
