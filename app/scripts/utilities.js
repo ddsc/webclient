@@ -38,6 +38,7 @@ $.fn.serializeObject = function()
 window.toggleFullScreen = function () {
     if (window.mapFullScreen) {
         // full screen -> normal screen
+        $('#sidebar').css('display', 'initial');
         var fullScreenMap = document.getElementById('full-screen-map');
         fullScreenMap.parentNode.removeChild(fullScreenMap); //remove()
         var locationSearch = document.getElementById('geocoderRegion');
@@ -69,6 +70,13 @@ window.toggleFullScreen = function () {
           });
     } else {
         // normal screen -> full screen
+
+        // Do not display the sidebar in full-screen mode. On small screens,
+        // the sidebar will show up when scrolling, which is rather ugly.
+        // NB: scrolling is needed to have access to search results, so
+        // we can't use 'overflow: hidden'.
+        $('#sidebar').css('display', 'none');
+
         var fullScreenMap = document.getElementById('full-screen-map');
         if (fullScreenMap === null) {
             fullScreenMap = document.createElement('div');
