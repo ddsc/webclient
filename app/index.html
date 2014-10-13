@@ -501,16 +501,6 @@
                      <div class="uploaded-file" style="margin-left:28px;"></div>
                    </div>
                    <div class="span6">
-                    <div class="input-prepend">
-                       <span class="add-on"><i class="icon-eye-open"></i></span>
-                        <label class="radio inline spacing">
-                          <input type="radio" name="visibility" value="public" required> Openbaar
-                        </label>
-                        <label class="radio inline controls-row">
-                          <input type="radio" name="visibility" value="private" required CHECKED> Persoonlijk
-                        </label>
-                    </div>
-
                      <div class="input-prepend">
                        <span class="add-on"><i class="icon-calendar"></i></span>
                        <input type="text" class="datepick-annotate" name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
@@ -523,9 +513,9 @@
                        <span class="add-on"><i class="icon-tag"></i></span>
                       <input type="text" name="tags" placeholder="Tags scheiden met spaties" />
                     </div>
-                      <button type="submit" class="btn spacer btn-primary pull-right hidden-phone">Opslaan</button>
-                      <button type="submit" class="btn spacer btn-primary visible-phone">Opslaan</button>
-                      <input type="hidden" name="attachment_pk" value="">
+                    <button type="submit" class="btn spacer btn-primary pull-right hidden-phone">Opslaan</button>
+                    <button type="submit" class="btn spacer btn-primary visible-phone">Opslaan</button>
+                    <input type="hidden" name="attachment_pk" value="">
                    </div>
                   </div>
              </fieldset>
@@ -607,8 +597,8 @@
               <img src="<%= picture_url %>" style="width:280px;overflow:hidden;"/>
             </a>
           </div>
-        <% } else { %>
-          <a href="<%= picture_url %>" title="Attachment" target="_blank">
+        <% } else if (picture_url) { %>
+          <a href="<%= picture_url %>" title="Attachment" target="_blank">Attachment</a>
         <% }%>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
@@ -1072,7 +1062,7 @@
                 <h4>Voorkeuren</h4>
                 <form id="preferences-form" class="form-horizontal" method="post">
                     <div class="control-group">
-                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode, afgelopen:</label>
+                        <label class="control-label" for="timeperiod-controls">Standaard tijdsperiode:</label>
                         <div id="timeperiod-controls" class="controls">
                             <label class="radio">
                                 <input type="radio" name="timeperiod" value="" checked>
@@ -1101,19 +1091,16 @@
                         </div>
                     </div>
                     <div class="control-group" id="default-location">
-                        <label class="control-label" for="intialzoom-controls">Standaard locatie</label>
+                        <label class="control-label" for="intialzoom-controls">Standaard locatie:</label>
                         <div id="initialzoom-controls" class="controls">
-                            <label class="text">
-                                <input type="text" name="initialzoom" value="<%= initialZoom %>" placeholder="lon,lat,zoom">
-                            </label>
+                            <input type="text" name="initialzoom" value="<%= initialZoom %>" placeholder="lon,lat,zoom">
                         </div>
                     </div>
                     <div class="control-group" id="panner-buttons">
-                        <label class="control-label" for="panner-controls">Navigatie knoppen  op de kaart (pannen/pijltes).</label>
+                        <label class="control-label" for="panner-controls">Toon navigatieknoppen op de kaart (pannen):</label>
                         <div id="panner-controls" class="controls">
-                            <label class="text">
-                                <input type="checkbox" name="panner" <%if (panner){%>checked<%}%> >
-                            </label>
+                            <input type="checkbox" name="panner" <% if (panner) {%>checked<%}%> >
+                            <img src="images/pan.png" width="34" height="38" style="margin: 4px 0 0 15px;"/>
                         </div>
                     </div>
                     <div class="control-group">
