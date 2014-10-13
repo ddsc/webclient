@@ -501,16 +501,6 @@
                      <div class="uploaded-file" style="margin-left:28px;"></div>
                    </div>
                    <div class="span6">
-                    <div class="input-prepend">
-                       <span class="add-on"><i class="icon-eye-open"></i></span>
-                        <label class="radio inline spacing">
-                          <input type="radio" name="visibility" value="public" required> Openbaar
-                        </label>
-                        <label class="radio inline controls-row">
-                          <input type="radio" name="visibility" value="private" required CHECKED> Persoonlijk
-                        </label>
-                    </div>
-
                      <div class="input-prepend">
                        <span class="add-on"><i class="icon-calendar"></i></span>
                        <input type="text" class="datepick-annotate" name="datetime_from" placeholder="Geldig vanaf (bijv. 2013-04-10) " value=""/>
@@ -523,9 +513,9 @@
                        <span class="add-on"><i class="icon-tag"></i></span>
                       <input type="text" name="tags" placeholder="Tags scheiden met spaties" />
                     </div>
-                      <button type="submit" class="btn spacer btn-primary pull-right hidden-phone">Opslaan</button>
-                      <button type="submit" class="btn spacer btn-primary visible-phone">Opslaan</button>
-                      <input type="hidden" name="attachment_pk" value="">
+                    <button type="submit" class="btn spacer btn-primary pull-right hidden-phone">Opslaan</button>
+                    <button type="submit" class="btn spacer btn-primary visible-phone">Opslaan</button>
+                    <input type="hidden" name="attachment_pk" value="">
                    </div>
                   </div>
              </fieldset>
@@ -607,8 +597,8 @@
               <img src="<%= picture_url %>" style="width:280px;overflow:hidden;"/>
             </a>
           </div>
-        <% } else { %>
-          <a href="<%= picture_url %>" title="Attachment" target="_blank">
+        <% } else if (picture_url) { %>
+          <a href="<%= picture_url %>" title="Attachment" target="_blank">Attachment</a>
         <% }%>
         <hr/>
         <div class="author">Aangemaakt door <%= username %> op <%= created_at %></div>
