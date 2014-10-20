@@ -12,7 +12,7 @@ server {
     gzip_types       text/plain application/xml application/x-javascript;
 
     location / {
-       alias ${buildout:directory}/dist/;
+       alias ${buildout:directory}/app/;
        expires 1h;
     }
 
