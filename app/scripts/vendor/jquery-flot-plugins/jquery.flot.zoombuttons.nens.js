@@ -123,7 +123,9 @@
                     }
 
                     var dataURL = dstCanvas.toDataURL("image/png");
-                    window.open(dataURL);
+                    var html = "<img src='" + dataURL + "'/>";
+                    var tab = window.open();
+                    tab.document.write(html);
                 }
             });
 
