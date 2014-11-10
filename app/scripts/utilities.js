@@ -68,6 +68,10 @@ window.toggleFullScreen = function () {
             collection: locationCollection,
             map: leafletView
           });
+         if (Lizard.Map.geoTiffView) {
+           Lizard.Map.geoTiffView.map = leafletView.mapCanvas;
+           Lizard.Map.geoTiffView.switchLayer(0,1);
+         }
     } else {
         // normal screen -> full screen
 
@@ -93,7 +97,7 @@ window.toggleFullScreen = function () {
         locationSearch.style.cssText = "margin-top: calc(75%);"
         Lizard.mapView.leafletRegion.close()
         var lonlatzoom = window.location.hash.split('#map/')[1];
-        console.log('lonlatzoom', lonlatzoom)
+        //console.log('lonlatzoom', lonlatzoom)
         if (lonlatzoom && lonlatzoom !== 'alarm' &&
             lonlatzoom !== 'status') {
             lonlatzoom = lonlatzoom.split(',');
@@ -114,6 +118,10 @@ window.toggleFullScreen = function () {
             collection: locationCollection,
             map: leafletView
         });
+          if (Lizard.Map.geoTiffView) {
+           Lizard.Map.geoTiffView.map = leafletView.mapCanvas;
+           Lizard.Map.geoTiffView.switchLayer(0,1);
+         }
     }
     var annotationsModelInstance = new Lizard.Models.Annotations();
     var annotationsView = new Lizard.Views.AnnotationsView({
