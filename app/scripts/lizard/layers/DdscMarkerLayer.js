@@ -20,6 +20,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     // drawonMap function.
     var that = this;
     this.collection.fetch({
+      reset: true,
       success: _.bind(that.drawOnMap, that),
       error:function(data, response){
         console.log('Error this'+ response.responseText);
