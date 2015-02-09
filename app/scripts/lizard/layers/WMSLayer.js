@@ -35,7 +35,7 @@ Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
     return this.leafletLayer;
   },
   _getNewLeafletLayer: function() {
-    return L.tileLayer.wms(this.attributes.wms_url, {
+    var wms = L.tileLayer.wms(this.attributes.wms_url, {
       zIndex: 100 - this.attributes.order,
       layers: this.attributes.layer_name,
       styles: this.attributes.styles,
@@ -44,6 +44,11 @@ Lizard.geo.Layers.WMSLayer = Lizard.geo.Layers.MapLayer.extend({
       opacity: this.attributes.opacity,
       attribution: 'DDSC'
     });
+    // Set Lizard WMS options (minZoom, maxZoom, etc).
+    for (var option in this.attributes.options) {
+      wms.options[option] = this.attributes.options[option]
+    }
+    return wms;
   },
   //Function for getting featureInfo of this layer
   //event: leaflet click event
