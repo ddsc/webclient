@@ -350,8 +350,10 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       layer.getFeatureInfo(event, this.mapCanvas, {}, function(data) {
         var content = layer.getPopupContent(data);
         if (content) {
-          var popup = new L.Rrose({
-            maxWidth: 525,
+          //Rrose is not always positioned correctly.
+          //The default popup works and suffices?
+          //var popup = new L.Rrose({
+          var popup = new L.popup({
             autoPan: false,
           }).setContent(content).setLatLng(coords);
           that.mapCanvas.openPopup(popup);
