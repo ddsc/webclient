@@ -354,7 +354,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
           //The default popup works and suffices?
           //var popup = new L.Rrose({
           var popup = new L.popup({
-            autoPan: false,
+            autoPan: true,
+            minWidth: 300,
           }).setContent(content).setLatLng(coords);
           that.mapCanvas.openPopup(popup);
         }

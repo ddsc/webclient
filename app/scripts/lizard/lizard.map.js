@@ -37,10 +37,8 @@ Lizard.Map.DefaultLayout = Backbone.Marionette.Layout.extend({
       }
   },
   toggleExtraLayers: function (e) {
-    $('#extramaplayers-button').on("click", function(e){
         e.preventDefault();
         $('#extramodal').modal();
-    });
   },
   sensorsToggle: function (e) {
     if (e.target.nodeName == "I") {
