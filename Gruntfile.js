@@ -13,13 +13,18 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function (grunt) {
     // load all grunt tasks
+    var modRewrite = require('connect-modrewrite');
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    grunt.loadNpmTasks('grunt-connect-proxy');
+
 
     // configurable paths
     var yeomanConfig = {
         app: 'app',
         dist: 'dist'
     };
+
+
 
     grunt.initConfig({
         yeoman: yeomanConfig,
@@ -54,13 +59,22 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    middleware: function (connect) {
-                        return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'app')
-                        ];
-                    }
+                  middleware: function (connect, options) {
+                    return [
+                      modRewrite([
+                        '!\\api|\\accounts|\\lizard-bs\.js|\\\/scripts\/|\\.html|\\.js|\\.svg|\\.css|\\.woff|\\.png$ /index.html [L]',
+                        '^/api/ http://localhost:8000/api/ [P]',
+                        '^/accounts/ http://localhost:8000/accounts/ [P]',
+                        '^/lizard-bs.js http://localhost:8000/lizard-bs.js [P]',
+                        ]),
+                      connect.static('.tmp'),
+                      connect().use(
+                        '/vendor',
+                        connect.static('./vendor')
+                      ),
+                      connect.static(yeomanConfig.app)
+                    ];
+                  }
                 }
             },
             test: {
@@ -154,7 +168,7 @@ module.exports = function (grunt) {
         /*concat: {
             dist: {}
         },*/
-        
+
         uglify: {
             dist: {
                 // files: {
@@ -265,15 +279,15 @@ module.exports = function (grunt) {
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
             return grunt.task.run([
-                'build', 
-                // 'open', 
+                'build',
+                // 'open',
                 'connect:dist:keepalive']);
         }
 
         grunt.task.run([
             'clean:server',
             // 'coffee:dist',
-            'compass:server',
+            // 'compass:server',
             'livereload-start',
             'connect:livereload',
             // 'open',

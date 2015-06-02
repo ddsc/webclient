@@ -1,7 +1,7 @@
 var extra = '?page_size=10'; //
 // var extra = '?page_size=1000';
 
-var domain = (domain ? domain : 'https://api.ddsc.nl/api/v1/');
+var domain = (domain ? domain : 'api/v1/');
 var test_domain = (test_domain ? test_domain : 'http://test.api.ddsc.nl/api/v1/');
 
 var settings = {
