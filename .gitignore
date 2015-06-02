@@ -9,6 +9,7 @@ flot/
 .editorconfig
 .mr.developer.cfg
 .installed.cfg
+.npm-debug.log
 
 var/log
 var
