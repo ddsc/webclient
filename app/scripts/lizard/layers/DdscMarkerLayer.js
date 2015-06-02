@@ -42,9 +42,9 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     for (var i in models){
       var model = models[i];
       var attributes = model.attributes;
-      var point = attributes.point_geometry;
+      var point = attributes.geometry;
       try {
-          var leaflet_point = new L.LatLng(point[1], point[0]);
+          var leaflet_point = new L.LatLng(point.coordinates[1], point.coordinates[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({
               iconUrl: attributes.icon_url,
@@ -82,8 +82,8 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
     var innerStuff = Lizard.geo.Popups.DdscTimeseries
       .getPopupContent(model, popupLayout.content);
     var popup = new L.Rrose({
-      maxHeight: 300, 
-      minWidth: 400, 
+      maxHeight: 300,
+      minWidth: 400,
       maxWidth: 450,
       autoPan: false
     });
