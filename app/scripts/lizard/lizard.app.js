@@ -44,23 +44,9 @@ Lizard.App.addRegions({
 
 Lizard.App.on('initialize:before', function() {
   account = new Lizard.Models.Account();
-  account.fetch({
-    error: function(){
-    $('#iecrossdomain').modal();
-  },
-  success: function(model){
-      if (!model.get('authenticated')) {
-        $('.top-right').notify({
-          type: 'warning',
-          message: {text: 'U bent niet ingelogd.'},
-          fadeOut: {enabled: true, delay: 6000}
-        }).show();
-      }
-    }
-  });
 
   Lizard.App.on('initialize:after', function() {
-    
+
 
     $.getJSON(settings.version_url, function(json) {
       $('span#APIVersionNumber').html(json.version);

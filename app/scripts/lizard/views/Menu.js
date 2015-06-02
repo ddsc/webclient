@@ -9,7 +9,18 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	},
 
 	initialize: function(){
-        this.model.on('change', this.render);
+		// User information is gained through a script that puts this info on
+		// the
+		this.model.set('user', {
+			first_name: window.user.firstName,
+			last_name: '',
+			username: window.user.userName
+		});
+
+		this.model.set('authenticated', window.user.authenticated);
+
+		this.model.on('change', this.render);
+		this.render();
 	},
 
 	doLogin: function(e){
