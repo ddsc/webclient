@@ -16,7 +16,7 @@ var settings = {
     status_url: domain + 'timeseries/behind/?page_size=100',
     collages_url: domain + 'collages/?page_size=100',
     workspace_url: domain + 'workspaces/?page_size=100',
-    layers_url: domain + 'layers/?page_size=100',
+    layers_url: domain + 'layers/',
     account_url: domain + 'account/',
     events_url: domain + 'events/',
     annotations_count_url: domain + 'annotations/count/',
