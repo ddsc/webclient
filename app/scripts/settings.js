@@ -18,8 +18,6 @@ var settings = {
     workspace_url: domain + 'workspaces/?page_size=100',
     layers_url: domain + 'layers/?page_size=100',
     account_url: domain + 'account/',
-    login_token_url: domain + 'account/login-url/',
-    logout_token_url: domain + 'account/logout-url/',
     events_url: domain + 'events/',
     annotations_count_url: domain + 'annotations/count/',
     annotations_search_url: domain + 'annotations/search/',
