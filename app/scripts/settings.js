@@ -6,7 +6,7 @@ var test_domain = (test_domain ? test_domain : 'http://test.api.ddsc.nl/api/v1/'
 
 var settings = {
     parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/?has_geometry=true&for_map=true&page_size=5000',
+    locations_url: domain + 'locations/?ddsc_show_on_map=True&page_size=5000',
     locations_search_url: domain + 'locations/search/?',
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
