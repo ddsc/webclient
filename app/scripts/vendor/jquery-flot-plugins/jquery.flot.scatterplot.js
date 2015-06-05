@@ -19,7 +19,7 @@
 
     ScatterPlot.prototype.getExtraParams = function () {
         return {
-            eventsformat: 'flot',
+            data_format: 'flot',
             combine_with: this.combineWith
         };
     };

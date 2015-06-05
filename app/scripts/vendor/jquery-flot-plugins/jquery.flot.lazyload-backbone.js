@@ -120,7 +120,7 @@
                         var response = arguments[0];
                         var dataEnd;
                         if (response.data.length > 0 ) {
-                            dataEnd = new Date(response.data[response.data.length - 1][0]);                    
+                            dataEnd = new Date(response.data[response.data.length - 1][0]);
                         } else {
                             dataEnd = moment();
                         }
@@ -130,7 +130,7 @@
                         } catch (e) {
                             console.log(e);
                             dateRangeStart = dataEnd.day(-1);
-                        } 
+                        }
                         var dateDelta = dataEnd - dateRangeStart;
                         if (self.graphModel !== null) {
                             self.graphModel.get('dateRange').set('end', dataEnd, {silent: true});
@@ -153,7 +153,7 @@
 
                     }
                     self.redraw();
-                    
+
                 });
             }
         }
@@ -232,7 +232,7 @@
         var minX = xaxis.min;
         var maxX = xaxis.max;
         var params = {
-            eventsformat: 'flot',
+            data_format: 'flot',
             ignore_rejected: 'true'
         };
 
@@ -260,7 +260,7 @@
         // use global start and end, instead of axes viewpoint
         if (this.scatterplot) {
             start = this.graphModel.get('dateRange').get('start');
-            end = this.graphModel.get('dateRange').get('end');  
+            end = this.graphModel.get('dateRange').get('end');
         }
 
         if (start && end) {

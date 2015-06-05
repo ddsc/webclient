@@ -174,7 +174,7 @@
         var minX = xAxes[0].min;
         var maxX = xAxes[0].max;
         var params = {
-            eventsformat: 'flot'
+            data_format: 'flot'
         };
 
         if (minX !== -1 && maxX !== 1 && minX < maxX) {
