@@ -19,6 +19,8 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 
 		this.model.set('authenticated', window.user.authenticated);
 
+		this.model.set('initialPeriod', '1m');
+
 		this.model.on('change', this.render);
 		this.render();
 	},
