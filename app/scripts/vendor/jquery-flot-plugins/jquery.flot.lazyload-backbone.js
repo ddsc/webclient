@@ -295,7 +295,7 @@
 
     LazyLoadBackbone.prototype.addGraphItem = function (model) {
         var timeseries = model.get('timeseries');
-        var eventsUrl = timeseries.get('events');
+        var eventsUrl = timeseries.get('url') + 'data/';
         var color = model.get('color');
 
         for (var i in this.datasets) {
