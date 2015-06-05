@@ -820,9 +820,9 @@
             <div class="pull-left">
                 <h5 data-toggle="tooltip" rel="tooltip" title="<%=timeseries.get('name')%>">
                     <span class="hidden-tablet"><%=truncateString(timeseries.get('name'), 20, '', '...')%></span><br/>
-                    <small class="hidden-tablet"><%= truncateString(timeseries.get('parameter').description, 15, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 10, '', '...') %>)</small>
+                    <small class="hidden-tablet"><%= truncateString(timeseries.get('parameter_referenced_unit').description, 15, '', '...') %> (<%= truncateString(timeseries.get('parameter_referenced_unit').description, 10, '', '...') %>)</small>
                     <span class="hidden-phone hidden-desktop"><%=truncateString(timeseries.get('name'), 10, '', '...')%></span><br/>
-                    <small class="hidden-phone hidden-desktop"><%= truncateString(timeseries.get('parameter').description, 10, '', '...') %> (<%= truncateString(timeseries.get('unit').description, 15, '', '...') %>)</small>
+                    <small class="hidden-phone hidden-desktop"><%= truncateString(timeseries.get('parameter_referenced_unit').description, 10, '', '...') %> (<%= truncateString(timeseries.get('parameter_referenced_unit').description, 15, '', '...') %>)</small>
                 </h5>
             </div>
         </div>
