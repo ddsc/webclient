@@ -273,15 +273,11 @@
 
         // these are used on the server to determine Douglas-Peucker tolerance
         var width = this.plot.getPlaceholder().width();
-        var height = this.plot.getPlaceholder().height();
 
-        if (width && height) {
-            // append to parameters
-            $.extend(params, {
-                width: width,
-                height: height
-            });
-        }
+        // append to parameters
+        $.extend(params, {
+            min_width: width,
+        });
 
         if (this.scatterplot) {
             var secondDataset = this.datasets[1];
