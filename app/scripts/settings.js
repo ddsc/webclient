@@ -24,8 +24,8 @@ var settings = {
     annotations_detail_url: domain + 'annotations/detail/',
     annotations_create_url: domain + 'annotations/create/',
     annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
-    collages_create_url: domain + 'collages/create/',
-    collageitems_create_url: domain + 'collageitems/create/',
+    collages_create_url: domain + 'collages/',
+    collageitems_create_url: domain + 'collageitems/',
     management_ui_url: 'https://api.ddsc.nl/management/',
     summary_url: domain + 'summary/',
     version_url: domain + 'version/',
