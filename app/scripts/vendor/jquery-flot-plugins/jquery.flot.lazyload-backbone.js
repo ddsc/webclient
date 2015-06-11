@@ -276,7 +276,7 @@
 
         // append to parameters
         $.extend(params, {
-            min_width: width,
+            min_points: width,
         });
 
         if (this.scatterplot) {
@@ -291,7 +291,7 @@
 
     LazyLoadBackbone.prototype.addGraphItem = function (model) {
         var timeseries = model.get('timeseries');
-        var eventsUrl = timeseries.get('events');
+        var eventsUrl = timeseries.get('url');
         var color = model.get('color');
 
         for (var i in this.datasets) {
