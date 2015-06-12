@@ -8,6 +8,9 @@ Lizard.Models.Collage = Backbone.Model.extend({
     var collageitems = [];
     for (var i = 0; i < model.collageitems.length; i++) {
       var collageitem = new Lizard.Models.CollageItem(model.collageitems[i]);
+
+      // deduct one from graph_index, ddsc starts at 0, lizard at 1.
+      collageitem.set('graph_index', collageitem.get('graph_index') - 1);
       collageitems.push(collageitem);
     }
     var newCollection = new Backbone.Collection(collageitems);
