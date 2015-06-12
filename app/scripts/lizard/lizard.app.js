@@ -47,10 +47,8 @@ Lizard.App.on('initialize:before', function() {
 
   Lizard.App.on('initialize:after', function() {
 
-
-    $.getJSON(settings.version_url, function(json) {
-      $('span#APIVersionNumber').html(json.version);
-    });
+    // Version is present on lizard-bs.js
+    $('span#APIVersionNumber').html(window.versioning.version);
     $('span#webclientVersionNumber').html(settings.webclient_version);
   });
 

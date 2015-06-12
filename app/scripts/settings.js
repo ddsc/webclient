@@ -28,7 +28,6 @@ var settings = {
     collageitems_create_url: domain + 'collageitems/',
     management_ui_url: 'https://api.ddsc.nl/management/',
     summary_url: domain + 'summary/',
-    version_url: domain + 'version/',
     api_version: 'v1',
     webclient_version: '1.0.0'
 };
