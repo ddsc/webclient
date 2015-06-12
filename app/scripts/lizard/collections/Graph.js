@@ -25,12 +25,14 @@ Lizard.Collections.Graph = Backbone.Collection.extend({
             var allSaves = [];
             // Iterate trough all graphs.
             self.each(function (model, idx, collection) {
+                idx++; // index of graphs start at 1.
                 var graphItems = model.get('graphItems');
                 // Grab all URLs of the underlying timeseries.
                 var timeseriesUrls = [];
                 graphItems.each(function (graphItem) {
                     timeseriesUrls.push(graphItem.get('timeseries').get('url'));
                 });
+                if (!timeseriesUrls.length) { return; }
                 // Instantiate something to .save().
                 var collageItem = new CollageItem(
                     {
