@@ -47,7 +47,7 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
           var leaflet_point = new L.LatLng(point.coordinates[1], point.coordinates[0]);
           var marker = new L.Marker(leaflet_point,{
             icon: L.icon({
-              iconUrl: attributes.icon_url,
+              iconUrl: attributes.icon_url || '/images/marker-icon.png',
               iconAnchor: [16,35],
               popupAnchor: [0, -30]
             }),
