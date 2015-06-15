@@ -396,7 +396,7 @@
                 <i class="icon-bar-chart"></i>
                 <span class="add-graph-item">&nbsp;<%= name %></span>
                 <span class="pull-right">
-                    <span class="badge badge-info"><%= format_value(latest_value) %>&nbsp;<%= format_unit(unit) %></span>
+                    <span class="badge badge-info"><%= format_value(last_value) %>&nbsp;<%= format_unit(parameter_referenced_unit.referenced_unit_short_display_name) %></span>
                 </span>
             </h5>
         </div>
@@ -754,7 +754,7 @@
                 <a href="#management" title="Er is een vertraagde meting"><i class="icon-warning-sign warning-color"></i><a>
                 <%}%>
                 <% if (value_type === 'float' || value_type === 'integer') {%>
-                <span class="badge badge-info"><%= format_value(latest_value) %> <%= unit %></span>
+                <span class="badge badge-info"><%= format_value(last_value) %> <%= parameter_referenced_unit.referenced_unit_short_display_name %></span>
                 <%}%>
                 <span class="badge badge-info">
                   <%= annotations || "&ndash;" %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
