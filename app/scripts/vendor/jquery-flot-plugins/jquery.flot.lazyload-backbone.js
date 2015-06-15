@@ -276,7 +276,7 @@
 
         // append to parameters
         $.extend(params, {
-            min_points: width,
+            min_points: width || 500,
         });
 
         if (this.scatterplot) {
