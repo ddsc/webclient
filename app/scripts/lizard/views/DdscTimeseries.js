@@ -352,7 +352,7 @@ var mockingjay = {
 
 Lizard.geo.Popups.DdscTimeseries = {
   getPopupContent: function (location, region) {
-    var url = settings.timeseries_url + '&location__uuid=' + location.get('uuid');
+    var url = settings.timeseries_url + '?page_size=100&location__uuid=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {

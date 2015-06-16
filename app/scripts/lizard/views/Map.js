@@ -249,7 +249,7 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
     //     provider: new L.GeoSearch.Provider.Google()
     // }).addTo(mapCanvas);
 
-    // revised full screen also works on IE9.  
+    // revised full screen also works on IE9.
     var fullScreen = new L.Control.FullScreen();
     this.mapCanvas.addControl(fullScreen);
 
@@ -259,8 +259,8 @@ Lizard.Views.Map = Backbone.Marionette.ItemView.extend({
       account.on('change:panner', function () {
         if (account.get('panner') == true) {
           this.mapCanvas.addControl(new window.LeafletPanControl());
-        }      
-      }, this);        
+        }
+      }, this);
     }
 
 
@@ -441,7 +441,7 @@ Lizard.Views.AlarmItem = Backbone.Marionette.ItemView.extend({
       } else if (related_type == 'timeseries') {
         var ts_uuid = this.model.get('related_uuid');
         var newTs = new Lizard.Models.Timeserie({
-          url: settings.timeseries_url.split('?')[0] + ts_uuid
+          url: settings.timeseries_url + ts_uuid
         });
         var that = this;
         newTs.fetch().done(function (model) {
@@ -483,8 +483,8 @@ Lizard.Views.AlarmItem = Backbone.Marionette.ItemView.extend({
     },
     template: function (model){
         return _.template(
-            $('#alarm-item-template').html(), 
-            model, 
+            $('#alarm-item-template').html(),
+            model,
             {variable: 'alarm'});
     },
     onRender: function () {
@@ -506,8 +506,8 @@ Lizard.Views.StatusItem = Lizard.Views.AlarmItem.extend({
   className: 'alarm-open',
   template: function (model){
       return _.template(
-          $('#status-item-template').html(), 
-          model, 
+          $('#status-item-template').html(),
+          model,
           {variable: 'status'});
   },
 });
