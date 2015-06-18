@@ -12,7 +12,7 @@ Lizard.Views.MapSearchResult = Backbone.Marionette.ItemView.extend({
     'click .location-result': 'zoomTo'
   },
   zoomTo: function () {
-    var point = this.model.get('point_geometry');
+    var point = this.model.get('geometry').coordinates;
     var leafPoint = new L.LatLng(point[1], point[0]);
     mc.setView(leafPoint, 13);
     this.model.collection.reset();

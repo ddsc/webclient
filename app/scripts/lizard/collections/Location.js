@@ -12,7 +12,7 @@ Lizard.Collections.LocationSearch = Backbone.Collection.extend({
     // if (resp.next == null) {
     //   this.page -=1;
     // }
-    return resp;
+    return resp.results;
   },
   url: function () {
     return settings.locations_url + '?name__icontains=' + this.query + '&page_size=10';
