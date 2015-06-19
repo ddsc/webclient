@@ -84,6 +84,11 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 try {
                     var coords = a.location.coordinates;
                     var marker = L.marker([coords[1], coords[0]], {
+                        icon: L.icon({
+                          iconUrl: '/images/marker-icon@2x.png',
+                          iconAnchor: [16,35],
+                          popupAnchor: [0, -30]
+                        })  ,
                         clickable: true,
                         url: a.url
                     });
