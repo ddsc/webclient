@@ -82,7 +82,8 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             var a = annotations[i];
             if (a.location) {
                 try {
-                    var marker = L.marker(a.location, {
+                    var coords = a.location.coordinates;
+                    var marker = L.marker([coords[1], coords[0]], {
                         clickable: true,
                         url: a.url
                     });
@@ -118,8 +119,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     buildQueryUrlParams: function () {
         var bbox = this.mapCanvas ? this.mapCanvas.getBounds().toBBoxString() : null;
         return {
-            category: 'ddsc',
-            bbox: bbox
+            in_bbox: bbox
         };
     },
     updateAnnotations: function (e) {
@@ -130,7 +130,7 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             return;
         }
 
-        var url = settings.annotations_search_url;
+        var url = settings.annotations_url;
         var urlParams = this.buildQueryUrlParams();
 
         // abort previous XHR
@@ -148,16 +148,14 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
             data: urlParams,
             dataType: 'json'
         })
-        .done(function (data, textStatus, jqXHR) {
+        .done(function (response, textStatus, jqXHR) {
             self.model.set({
-                annotationsCount: data.count,
-                annotations: data.results.length !== 0 ? data.results : null
+                annotationsCount: response.count,
+                annotations: response.results.length !== 0 ? response.results : null
             });
             // hack: update the toggler as well
-            $('.annotation .badge').text(data.count !== 0 ? data.count : '–');
-            if (data.results) {
-                self.updateAnnotationsLayer(data.results);
-            }
+            $('.annotation .badge').text(response.count !== 0 ? response.count : '–');
+            self.updateAnnotationsLayer(response.results);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Error while retrieving annotations.');
@@ -177,13 +175,13 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
                 if ((Lizard.Map.annotationCollectionView) &&
                     $('.annotation-layer-toggler').find('i').hasClass('icon-check')) {
                     Lizard.Map.annotationCollectionView.collection
-                        .reset(annotationCollection.first(10));                
+                        .reset(annotationCollection.first(10));
                 } else if (!Lizard.Map.annotationCollectionView) {
                     Lizard.Map.annotationCollectionView = new Lizard.Views.AnnotationBoxCollectionView({
                         collection: annotationCollection
                     });
                 }
-                    self.$el.find('#annotation-overview').append(Lizard.Map.annotationCollectionView.render().el);                
+                    self.$el.find('#annotation-overview').append(Lizard.Map.annotationCollectionView.render().el);
 
             }
         });
