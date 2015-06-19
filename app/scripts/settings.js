@@ -18,7 +18,6 @@ var settings = {
     account_url: domain + 'account/',
     events_url: domain + 'events/',
     annotations_url: domain + 'annotations/',
-    annotations_count_url: domain + 'annotations/count/',
     annotations_detail_url: domain + 'annotations/detail/',
     annotations_create_url: domain + 'annotations/create/',
     annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
