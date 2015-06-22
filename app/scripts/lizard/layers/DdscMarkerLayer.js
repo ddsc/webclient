@@ -141,12 +141,10 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
   countAnnotations: function () {
     var self = this;
     this.model.bind('change:annotations', this.render, this);
-    var coords = this.model.get('geometry').coordinates;
+    var pk = this.model.get('id');
     var countUrl = settings.annotations_url
-      + '?point='
-      + coords[1]
-      + ','
-      + coords[0];
+      + '?the_model_name__model=location&model_pk='
+      + pk;
     $.get(countUrl).success(function (response) {
       self.model.set({annotations: response.count});
     });
