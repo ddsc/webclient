@@ -1,6 +1,5 @@
 // Note: this "View" isn't actually a Backbone / Marionette View for some reason
 Lizard.Views.CreateAnnotationView = function(relation){
-    console.log('new annotation');
     var annotationLayout = new Lizard.Views.AnnotationLayout();
     // show in app.
     var related_object = null;
@@ -10,16 +9,18 @@ Lizard.Views.CreateAnnotationView = function(relation){
     annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
         marker = relation;
-    } else if (relation.get('events')){
+    }
+    else if (relation.get('location')){
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'timeseries'
+            'model' : 'timeseries',
         };
-    } else if (relation.get('point_geometry')){
+
+    } else if (relation.get('geometry')){
         related_object = {
             'primary': relation.get('pk').toString(),
             'model' : 'location',
-            'location': relation.get('point_geometry')
+            'location': relation.get('geometry')
         };
     }
     // // initiate datepickers on the div's
@@ -82,19 +83,27 @@ Lizard.Views.CreateAnnotationView = function(relation){
         data.datetime_until = new Date(data.datetime_until).toISOString();
       }
       if (marker){
-          data.location = marker._latlng.lat.toString() + ',' + marker._latlng.lng.toString();
+          data.location = '{"type":"Point","coordinates":['
+            + marker._latlng.lng.toString()
+            + ','
+            + marker._latlng.lat.toString()
+            + ']}';
       }
       if (related_object){
         data.the_model_name = related_object.model;
         data.the_model_pk = related_object.primary;
         if (related_object.location) {
-            data.location = related_object.location;
+            var coords = related_object.location.coordinates;
+            data.location = '{"type":"Point","coordinates":['
+            + coords[0].toString()
+            + ','
+            + coords[1].toString()
+            + ']}';
         }
       }
-      data.category = 'ddsc';
       $.ajax({
         type: "POST",
-        url: settings.annotations_create_url,
+        url: settings.annotations_url,
         data: $.param(data),
         success: function(data){
           $('.top-right').notify({
@@ -250,16 +259,13 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         }
     },
     buildQueryUrlParams: function () {
-        var params = {
-            category: 'ddsc'
-        };
+        var params = {};
         if (this.relation._leaflet_id) {
             // random leaflet marker
             $.extend(params, {
-                north: this.relation.getLatLng().lat,
-                south: this.relation.getLatLng().lat,
-                west: this.relation.getLatLng().lng,
-                east: this.relation.getLatLng().lng
+                point: this.relation.getLatLng().lat.toString()
+                    + ','
+                    + this.relation.getLatLng().lng.toString()
             });
         }
         else {
@@ -267,15 +273,16 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
             if (/(.*)timeseries(.*)/.test(this.relation.url)) {
                 // timeseries
                 $.extend(params, {
-                    model_pk: this.relation.get('pk').toString(),
-                    model_name: 'timeseries'
+                    the_model_pk: this.relation.get('pk').toString(),
+                    the_model_name__model: 'timeseries'
                 });
             }
             else if (/(.*)locations(.*)/.test(this.relation.url)) {
                 // locations
                 $.extend(params, {
-                    model_pk: this.relation.get('pk').toString(),
-                    model_name: 'location'
+                    // point: point
+                    the_model_pk: this.relation.get('pk').toString(),
+                    the_model_name__model: 'location'
                 });
             }
             else if (this.relation.has('location')) {
@@ -299,7 +306,7 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         this.collection = new Lizard.Collections.Annotation();
         if (this.relation !== null) {
             this.collection.fetch({
-                url: settings.annotations_search_url + '?' + $.param(this.buildQueryUrlParams())
+                url: settings.annotations_url + '?' + $.param(this.buildQueryUrlParams())
             });
         }
     }

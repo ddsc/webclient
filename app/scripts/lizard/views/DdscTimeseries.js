@@ -292,7 +292,10 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   countAnnotations: function () {
     var self = this;
     this.model.bind('change:annotations', this.render, this);
-    var countUrl = settings.annotations_count_url + '?model_names_pks=timeseries,' + this.model.get('id');
+    var countUrl = settings.annotations_url
+      + '?the_model_name__model=timeseries,'
+      + '&model_pk='
+      + this.model.get('id');
     $.get(countUrl).success(function (annotation) {
       self.model.set({annotations: annotation.count});
     });
