@@ -10,7 +10,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     if (relation._leaflet_id){
         marker = relation;
     }
-    else if (relation.get('location')){
+    else if (/(.*)timeseries(.*)/.test(relation.get('location'))) {
         related_object = {
             'primary': relation.get('pk').toString(),
             'model' : 'Timeseries',
@@ -281,16 +281,12 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
                 });
             }
             else if (this.relation.has('location')) {
-                // annotation
-                var location = this.relation.get('location');
-                if (location.length === 2) {
-                    $.extend(params, {
-                        north: location[0],
-                        south: location[0],
-                        west: location[1],
-                        east: location[1]
-                    });
-                }
+              // annotation
+
+              var coords = this.relation.get('location').coordinates;
+              params.point = coords[0].toString()
+                + ','
+                + coords[1].toString();
             }
         }
 
