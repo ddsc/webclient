@@ -247,6 +247,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
         }
       }
     }
+    this.countAnnotations();
   },
   openAnnotation: function(){
     Lizard.App.vent.trigger('makeAnnotation', this.model);
@@ -293,7 +294,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
     var self = this;
     this.model.bind('change:annotations', this.render, this);
     var countUrl = settings.annotations_url
-      + '?the_model_name__model=timeseries,'
+      + '?the_model_name__model=timeseries'
       + '&model_pk='
       + this.model.get('id');
     $.get(countUrl).success(function (annotation) {

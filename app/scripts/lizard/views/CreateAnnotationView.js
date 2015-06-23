@@ -13,7 +13,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     else if (relation.get('location')){
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'timeseries',
+            'model' : 'Timeseries',
         };
 
     } else if (relation.get('geometry')){
