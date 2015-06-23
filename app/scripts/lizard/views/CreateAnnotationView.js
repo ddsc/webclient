@@ -49,29 +49,6 @@ Lizard.Views.CreateAnnotationView = function(relation){
         }
     });
 
-    // initialize file upload form
-    $('form.annotation input[name="attachment"]').fileupload({
-        dataType: 'json',
-        url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
-        done: function (e, data) {
-            if (data.result.success === true) {
-                var $a = $('<a>')
-                .attr({
-                    href: data.result.url,
-                    target: '_blank'
-                })
-                .text('Bekijk ' + data.result.filename);
-                var $form = $(this).parents('form').first();
-                $form.find('.uploaded-file').empty().append($a);
-                $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
-                $form.find('input[name="picture_url"]').val(data.result.url);
-            }
-            else {
-                $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
-            }
-        }
-    });
-
     // override of the submit function
     $('form.annotation').submit(function(e) {
       e.preventDefault();
@@ -101,37 +78,55 @@ Lizard.Views.CreateAnnotationView = function(relation){
             + ']}';
         }
       }
-      $.ajax({
-        type: "POST",
-        url: settings.annotations_url,
-        data: $.param(data),
-        success: function(data){
-          $('.top-right').notify({
-            message:{text: 'Annotatie geplaatst'},
-            type: 'success'}).show();
+
+      // The above is legacy jquery stuff. From here in it is all HTML5 FormData
+      // object. It puts the data from above on the the object and includes an
+      // optional attachment.
+      var formData = new FormData();
+
+      $.each(data, function (k, v) { formData.append(k, v); });
+      formData.append(
+        'attachment',
+        $('form.annotation input[name="attachment"]')[0].files[0]
+      );
+
+      var xhr = new XMLHttpRequest();
+
+      var success = function(data){
+        $('.top-right').notify({
+          message:{text: 'Annotatie geplaatst'},
+          type: 'success'}).show();
         // Close and unbind the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
-          if (marker){
-              window.drawnItems.removeLayer(marker);
-          }
-          $('#annotation-modal').modal('toggle');
-          Lizard.App.hidden.close();
-          Lizard.App.vent.trigger('changedestroyAnnotation');
-        },
-        error: function(){
-          if (marker){
-              window.drawnItems.removeLayer(marker);
-          }
-          $('#annotation-modal').modal('toggle');
-          Lizard.App.hidden.close();
-          $('.top-right').notify({message:{
-            text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
-                }, type: 'danger'
-            }).show();
+        if (marker){
+            window.drawnItems.removeLayer(marker);
         }
-      });
+        $('#annotation-modal').modal('toggle');
+        Lizard.App.hidden.close();
+        Lizard.App.vent.trigger('changedestroyAnnotation');
+      };
+
+      var error = function(){
+        if (marker){
+            window.drawnItems.removeLayer(marker);
+        }
+        $('#annotation-modal').modal('toggle');
+        Lizard.App.hidden.close();
+        $('.top-right').notify({message:{
+          text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
+              }, type: 'danger'
+          }).show();
+      };
+
+      xhr.addEventListener("load", success, false);
+      xhr.addEventListener("error", error, false);
+
+      xhr.open('POST', settings.annotations_url, true);
+
+      xhr.send(formData);
+
     });
-}
+};
 
 Lizard.Views.AnnotationLayout = Backbone.Marionette.Layout.extend({
     template: '#annotation-template',
