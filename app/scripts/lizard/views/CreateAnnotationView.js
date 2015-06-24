@@ -79,19 +79,6 @@ Lizard.Views.CreateAnnotationView = function(relation){
         }
       }
 
-      // The above is legacy jquery stuff. From here in it is all HTML5 FormData
-      // object. It puts the data from above on the the object and includes an
-      // optional attachment.
-      var formData = new FormData();
-
-      $.each(data, function (k, v) { formData.append(k, v); });
-      formData.append(
-        'attachment',
-        $('form.annotation input[name="attachment"]')[0].files[0]
-      );
-
-      var xhr = new XMLHttpRequest();
-
       var success = function(data){
         $('.top-right').notify({
           message:{text: 'Annotatie geplaatst'},
@@ -117,6 +104,20 @@ Lizard.Views.CreateAnnotationView = function(relation){
               }, type: 'danger'
           }).show();
       };
+
+      // The above is legacy jquery stuff. From here in it is all HTML5 FormData
+      // object. It puts the data from above on the the object and includes an
+      // optional attachment.
+      var formData = new FormData();
+
+      $.each(data, function (k, v) { formData.append(k, v); });
+
+      var file = $('form.annotation input[name="attachment"]')[0].files[0];
+      if (file) {
+        formData.append('attachment', file);
+      }
+
+      var xhr = new XMLHttpRequest();
 
       xhr.addEventListener("load", success, false);
       xhr.addEventListener("error", error, false);
@@ -171,29 +172,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     edit: function(){
         this.$el.find('.collapse').toggleClass('in');
         // override of the submit function
-
-        // initialize file upload form
-        $('form.annotation input[name="attachment"]').fileupload({
-            dataType: 'json',
-            url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
-            done: function (e, data) {
-                if (data.result.success === true) {
-                    var $a = $('<a>')
-                    .attr({
-                        href: data.result.url,
-                        target: '_blank'
-                    })
-                    .text('Bekijk ' + data.result.filename);
-                    var $form = $(this).parents('form').first();
-                    $form.find('.uploaded-file').empty().append($a);
-                    $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
-                    $form.find('input[name="picture_url"]').val(data.result.url);
-                }
-                else {
-                    $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
-                }
-            }
-        });
     },
     submitChange: function(e){
         e.preventDefault();
@@ -204,18 +182,25 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         if (data.datetime_until){
         data.datetime_until = new Date(data.datetime_until).toISOString();
         }
-        this.model.set(data);
         if (this.model.get('location')){
-          var location = this.model.get('location')
-          this.model.set({
-            location: [parseFloat(location[0]), parseFloat(location[1])]
-          })
+          var location = this.model.get('location');
+          data.location = '{"type": "Point", "coordinates": ['
+            + location.coordinates[0]
+            + ', '
+            + location.coordinates[1]
+            + ']}';
         }
-        this.model.save({
+        this.model.save(data, {
             success: function(model, response, that){
                 $('.top-right').notify({
                 message:{text: 'Annotatie gewijzigd'},
                 type: 'success'}).show();
+
+                patchAttachment(response.id);
+
+                $('#annotation-modal').modal('toggle');
+                Lizard.App.hidden.close();
+                Lizard.App.vent.trigger('changedestroyAnnotation');
             },
             error: function(){
                 $('.top-right').notify({
@@ -224,10 +209,60 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
                 this.$el.find('.collapse').toggleClass('in');
             }
         });
+
         this.$el.find('.collapse').toggleClass('in');
-        $('#annotation-modal').modal('toggle');
-        Lizard.App.hidden.close();
-        Lizard.App.vent.trigger('changedestroyAnnotation');
+
+        var patchAttachment = function (id) {
+          var file = $('form.annotation input[name="attachment"]')[0].files[0];
+
+          if (!file) { return; }
+
+          var success = function(data){
+            $('.top-right').notify({
+              message:{text: 'Annotatie bijlage gewijzigd'},
+              type: 'success'}).show();
+            // Close and unbind the popup when clicking the "Save" button.
+            // Need to use Leaflet internals because the public API doesn't offer this.
+            if (marker){
+                window.drawnItems.removeLayer(marker);
+            }
+            $('#annotation-modal').modal('toggle');
+            Lizard.App.hidden.close();
+            Lizard.App.vent.trigger('changedestroyAnnotation');
+          };
+
+          var error = function(){
+            if (marker){
+                window.drawnItems.removeLayer(marker);
+            }
+            $('#annotation-modal').modal('toggle');
+            Lizard.App.hidden.close();
+            $('.top-right').notify({message:{
+              text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
+                  }, type: 'danger'
+              }).show();
+          };
+
+          // The above is legacy jquery stuff. From here in it is all HTML5 FormData
+          // object.
+          var formData = new FormData();
+
+          formData.append(
+            'attachment',
+            $('form.annotation input[name="attachment"]')[0].files[0]
+          );
+
+          var xhr = new XMLHttpRequest();
+
+          xhr.addEventListener("load", success, false);
+          xhr.addEventListener("error", error, false);
+
+          xhr.open('PATCH', settings.annotations_url + id + '/', true);
+
+          xhr.send(formData);
+
+        };
+
     },
     'delete': function(){
         this.model.destroy().done(function(){
