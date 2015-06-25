@@ -295,7 +295,7 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
                 // timeseries
                 $.extend(params, {
                     object_id: this.relation.get('pk').toString(),
-                    object_type__model: 'Timeseries'
+                    object_type__model: 'timeseries'
                 });
             }
             else if (/(.*)locations(.*)/.test(this.relation.url)) {
