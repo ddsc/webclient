@@ -10,7 +10,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     if (relation._leaflet_id){
         marker = relation;
     }
-    else if (/(.*)timeseries(.*)/.test(relation.get('location'))) {
+    else if (/(.*)timeseries(.*)/.test(relation.get('url'))) {
         related_object = {
             'primary': relation.get('pk').toString(),
             'model' : 'Timeseries',
@@ -19,8 +19,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
     } else if (relation.get('geometry')){
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'location',
-            'location': relation.get('geometry')
+            'model' : 'location'
         };
     }
     // // initiate datepickers on the div's
@@ -67,16 +66,8 @@ Lizard.Views.CreateAnnotationView = function(relation){
             + ']}';
       }
       if (related_object){
-        data.the_model_name = related_object.model;
-        data.the_model_pk = related_object.primary;
-        if (related_object.location) {
-            var coords = related_object.location.coordinates;
-            data.location = '{"type":"Point","coordinates":['
-            + coords[0].toString()
-            + ','
-            + coords[1].toString()
-            + ']}';
-        }
+        data.object_type = related_object.model;
+        data.object_id = related_object.primary;
       }
 
       var success = function(data){
@@ -303,16 +294,16 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
             if (/(.*)timeseries(.*)/.test(this.relation.url)) {
                 // timeseries
                 $.extend(params, {
-                    the_model_pk: this.relation.get('pk').toString(),
-                    the_model_name__model: 'timeseries'
+                    object_id: this.relation.get('pk').toString(),
+                    object_type__model: 'Timeseries'
                 });
             }
             else if (/(.*)locations(.*)/.test(this.relation.url)) {
                 // locations
                 $.extend(params, {
                     // point: point
-                    the_model_pk: this.relation.get('pk').toString(),
-                    the_model_name__model: 'location'
+                    object_id: this.relation.get('pk').toString(),
+                    object_type__model: 'location'
                 });
             }
             else if (this.relation.has('location')) {

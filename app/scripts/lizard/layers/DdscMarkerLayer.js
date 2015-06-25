@@ -143,7 +143,7 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
     this.model.bind('change:annotations', this.render, this);
     var pk = this.model.get('id');
     var countUrl = settings.annotations_url
-      + '?the_model_name__model=location&model_pk='
+      + '?object_type__model=location&object_id='
       + pk;
     $.get(countUrl).success(function (response) {
       self.model.set({annotations: response.count});
