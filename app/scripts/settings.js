@@ -17,7 +17,6 @@ var settings = {
     layers_url: domain + 'layers/',
     account_url: domain + 'account/',
     annotations_url: domain + 'annotations/',
-    annotations_files_upload_url: domain + 'annotations/files/', // Note: this endpoint needs to return text/plain for IE9!
     collages_create_url: domain + 'collages/',
     collageitems_create_url: domain + 'collageitems/',
     management_ui_url: 'https://api.ddsc.nl/management/',
