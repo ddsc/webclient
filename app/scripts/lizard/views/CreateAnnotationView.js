@@ -1,6 +1,5 @@
 // Note: this "View" isn't actually a Backbone / Marionette View for some reason
 Lizard.Views.CreateAnnotationView = function(relation){
-    console.log('new annotation');
     var annotationLayout = new Lizard.Views.AnnotationLayout();
     // show in app.
     var related_object = null;
@@ -10,16 +9,17 @@ Lizard.Views.CreateAnnotationView = function(relation){
     annotationLayout.body.show(new Lizard.Views.AnnotationCollectionView({relation: relation}));
     if (relation._leaflet_id){
         marker = relation;
-    } else if (relation.get('events')){
+    }
+    else if (/(.*)timeseries(.*)/.test(relation.get('url'))) {
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'timeseries'
+            'model' : 'Timeseries',
         };
-    } else if (relation.get('point_geometry')){
+
+    } else if (relation.get('geometry')){
         related_object = {
             'primary': relation.get('pk').toString(),
-            'model' : 'location',
-            'location': relation.get('point_geometry')
+            'model' : 'location'
         };
     }
     // // initiate datepickers on the div's
@@ -48,29 +48,6 @@ Lizard.Views.CreateAnnotationView = function(relation){
         }
     });
 
-    // initialize file upload form
-    $('form.annotation input[name="attachment"]').fileupload({
-        dataType: 'json',
-        url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
-        done: function (e, data) {
-            if (data.result.success === true) {
-                var $a = $('<a>')
-                .attr({
-                    href: data.result.url,
-                    target: '_blank'
-                })
-                .text('Bekijk ' + data.result.filename);
-                var $form = $(this).parents('form').first();
-                $form.find('.uploaded-file').empty().append($a);
-                $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
-                $form.find('input[name="picture_url"]').val(data.result.url);
-            }
-            else {
-                $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
-            }
-        }
-    });
-
     // override of the submit function
     $('form.annotation').submit(function(e) {
       e.preventDefault();
@@ -82,47 +59,66 @@ Lizard.Views.CreateAnnotationView = function(relation){
         data.datetime_until = new Date(data.datetime_until).toISOString();
       }
       if (marker){
-          data.location = marker._latlng.lat.toString() + ',' + marker._latlng.lng.toString();
+          data.location = '{"type":"Point","coordinates":['
+            + marker._latlng.lng.toString()
+            + ','
+            + marker._latlng.lat.toString()
+            + ']}';
       }
       if (related_object){
-        data.the_model_name = related_object.model;
-        data.the_model_pk = related_object.primary;
-        if (related_object.location) {
-            data.location = related_object.location;
-        }
+        data.object_type = related_object.model;
+        data.object_id = related_object.primary;
       }
-      data.category = 'ddsc';
-      $.ajax({
-        type: "POST",
-        url: settings.annotations_create_url,
-        data: $.param(data),
-        success: function(data){
-          $('.top-right').notify({
-            message:{text: 'Annotatie geplaatst'},
-            type: 'success'}).show();
+
+      var success = function(data){
+        $('.top-right').notify({
+          message:{text: 'Annotatie geplaatst'},
+          type: 'success'}).show();
         // Close and unbind the popup when clicking the "Save" button.
         // Need to use Leaflet internals because the public API doesn't offer this.
-          if (marker){
-              window.drawnItems.removeLayer(marker);
-          }
-          $('#annotation-modal').modal('toggle');
-          Lizard.App.hidden.close();
-          Lizard.App.vent.trigger('changedestroyAnnotation');
-        },
-        error: function(){
-          if (marker){
-              window.drawnItems.removeLayer(marker);
-          }
-          $('#annotation-modal').modal('toggle');
-          Lizard.App.hidden.close();
-          $('.top-right').notify({message:{
-            text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
-                }, type: 'danger'
-            }).show();
+        if (marker){
+            window.drawnItems.removeLayer(marker);
         }
-      });
+        $('#annotation-modal').modal('toggle');
+        Lizard.App.hidden.close();
+        Lizard.App.vent.trigger('changedestroyAnnotation');
+      };
+
+      var error = function(){
+        if (marker){
+            window.drawnItems.removeLayer(marker);
+        }
+        $('#annotation-modal').modal('toggle');
+        Lizard.App.hidden.close();
+        $('.top-right').notify({message:{
+          text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
+              }, type: 'danger'
+          }).show();
+      };
+
+      // The above is legacy jquery stuff. From here in it is all HTML5 FormData
+      // object. It puts the data from above on the the object and includes an
+      // optional attachment.
+      var formData = new FormData();
+
+      $.each(data, function (k, v) { formData.append(k, v); });
+
+      var file = $('form.annotation input[name="attachment"]')[0].files[0];
+      if (file) {
+        formData.append('attachment', file);
+      }
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.addEventListener("load", success, false);
+      xhr.addEventListener("error", error, false);
+
+      xhr.open('POST', settings.annotations_url, true);
+
+      xhr.send(formData);
+
     });
-}
+};
 
 Lizard.Views.AnnotationLayout = Backbone.Marionette.Layout.extend({
     template: '#annotation-template',
@@ -167,29 +163,6 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
     edit: function(){
         this.$el.find('.collapse').toggleClass('in');
         // override of the submit function
-
-        // initialize file upload form
-        $('form.annotation input[name="attachment"]').fileupload({
-            dataType: 'json',
-            url: settings.annotations_files_upload_url, // Note: this endpoint needs to return text/plain for IE9!
-            done: function (e, data) {
-                if (data.result.success === true) {
-                    var $a = $('<a>')
-                    .attr({
-                        href: data.result.url,
-                        target: '_blank'
-                    })
-                    .text('Bekijk ' + data.result.filename);
-                    var $form = $(this).parents('form').first();
-                    $form.find('.uploaded-file').empty().append($a);
-                    $form.find('input[name="attachment_pk"]').val(data.result.attachment_pk);
-                    $form.find('input[name="picture_url"]').val(data.result.url);
-                }
-                else {
-                    $('.top-right').notify({type: 'warning', message: {text: 'Fout bij het uploaden: ' + JSON.stringify(data.result.errors)}}).show();
-                }
-            }
-        });
     },
     submitChange: function(e){
         e.preventDefault();
@@ -200,18 +173,25 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
         if (data.datetime_until){
         data.datetime_until = new Date(data.datetime_until).toISOString();
         }
-        this.model.set(data);
         if (this.model.get('location')){
-          var location = this.model.get('location')
-          this.model.set({
-            location: [parseFloat(location[0]), parseFloat(location[1])]
-          })
+          var location = this.model.get('location');
+          data.location = '{"type": "Point", "coordinates": ['
+            + location.coordinates[0]
+            + ', '
+            + location.coordinates[1]
+            + ']}';
         }
-        this.model.save({
+        this.model.save(data, {
             success: function(model, response, that){
                 $('.top-right').notify({
                 message:{text: 'Annotatie gewijzigd'},
                 type: 'success'}).show();
+
+                patchAttachment(response.id);
+
+                $('#annotation-modal').modal('toggle');
+                Lizard.App.hidden.close();
+                Lizard.App.vent.trigger('changedestroyAnnotation');
             },
             error: function(){
                 $('.top-right').notify({
@@ -220,10 +200,60 @@ Lizard.Views.Annotations = Backbone.Marionette.ItemView.extend({
                 this.$el.find('.collapse').toggleClass('in');
             }
         });
+
         this.$el.find('.collapse').toggleClass('in');
-        $('#annotation-modal').modal('toggle');
-        Lizard.App.hidden.close();
-        Lizard.App.vent.trigger('changedestroyAnnotation');
+
+        var patchAttachment = function (id) {
+          var file = $('form.annotation input[name="attachment"]')[0].files[0];
+
+          if (!file) { return; }
+
+          var success = function(data){
+            $('.top-right').notify({
+              message:{text: 'Annotatie bijlage gewijzigd'},
+              type: 'success'}).show();
+            // Close and unbind the popup when clicking the "Save" button.
+            // Need to use Leaflet internals because the public API doesn't offer this.
+            if (marker){
+                window.drawnItems.removeLayer(marker);
+            }
+            $('#annotation-modal').modal('toggle');
+            Lizard.App.hidden.close();
+            Lizard.App.vent.trigger('changedestroyAnnotation');
+          };
+
+          var error = function(){
+            if (marker){
+                window.drawnItems.removeLayer(marker);
+            }
+            $('#annotation-modal').modal('toggle');
+            Lizard.App.hidden.close();
+            $('.top-right').notify({message:{
+              text: 'Daar ging iets mis, de annotatie is niet opgeslagen!'
+                  }, type: 'danger'
+              }).show();
+          };
+
+          // The above is legacy jquery stuff. From here in it is all HTML5 FormData
+          // object.
+          var formData = new FormData();
+
+          formData.append(
+            'attachment',
+            $('form.annotation input[name="attachment"]')[0].files[0]
+          );
+
+          var xhr = new XMLHttpRequest();
+
+          xhr.addEventListener("load", success, false);
+          xhr.addEventListener("error", error, false);
+
+          xhr.open('PATCH', settings.annotations_url + id + '/', true);
+
+          xhr.send(formData);
+
+        };
+
     },
     'delete': function(){
         this.model.destroy().done(function(){
@@ -250,16 +280,13 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         }
     },
     buildQueryUrlParams: function () {
-        var params = {
-            category: 'ddsc'
-        };
+        var params = {};
         if (this.relation._leaflet_id) {
             // random leaflet marker
             $.extend(params, {
-                north: this.relation.getLatLng().lat,
-                south: this.relation.getLatLng().lat,
-                west: this.relation.getLatLng().lng,
-                east: this.relation.getLatLng().lng
+                point: this.relation.getLatLng().lat.toString()
+                    + ','
+                    + this.relation.getLatLng().lng.toString()
             });
         }
         else {
@@ -267,28 +294,25 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
             if (/(.*)timeseries(.*)/.test(this.relation.url)) {
                 // timeseries
                 $.extend(params, {
-                    model_pk: this.relation.get('pk').toString(),
-                    model_name: 'timeseries'
+                    object_id: this.relation.get('pk').toString(),
+                    object_type__model: 'timeseries'
                 });
             }
             else if (/(.*)locations(.*)/.test(this.relation.url)) {
                 // locations
                 $.extend(params, {
-                    model_pk: this.relation.get('pk').toString(),
-                    model_name: 'location'
+                    // point: point
+                    object_id: this.relation.get('pk').toString(),
+                    object_type__model: 'location'
                 });
             }
             else if (this.relation.has('location')) {
-                // annotation
-                var location = this.relation.get('location');
-                if (location.length === 2) {
-                    $.extend(params, {
-                        north: location[0],
-                        south: location[0],
-                        west: location[1],
-                        east: location[1]
-                    });
-                }
+              // annotation
+
+              var coords = this.relation.get('location').coordinates;
+              params.point = coords[0].toString()
+                + ','
+                + coords[1].toString();
             }
         }
 
@@ -299,7 +323,7 @@ Lizard.Views.AnnotationCollectionView = Backbone.Marionette.CollectionView.exten
         this.collection = new Lizard.Collections.Annotation();
         if (this.relation !== null) {
             this.collection.fetch({
-                url: settings.annotations_search_url + '?' + $.param(this.buildQueryUrlParams())
+                url: settings.annotations_url + '?' + $.param(this.buildQueryUrlParams())
             });
         }
     }

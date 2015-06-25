@@ -247,6 +247,7 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
         }
       }
     }
+    this.countAnnotations();
   },
   openAnnotation: function(){
     Lizard.App.vent.trigger('makeAnnotation', this.model);
@@ -292,7 +293,10 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   countAnnotations: function () {
     var self = this;
     this.model.bind('change:annotations', this.render, this);
-    var countUrl = settings.annotations_count_url + '?model_names_pks=timeseries,' + this.model.get('id');
+    var countUrl = settings.annotations_url
+      + '?object_type__model=timeseries'
+      + '&object_id='
+      + this.model.get('id');
     $.get(countUrl).success(function (annotation) {
       self.model.set({annotations: annotation.count});
     });
@@ -306,53 +310,53 @@ Lizard.Views.LocationPopup = Backbone.Marionette.CollectionView.extend({
 });
 
 var mockingjay = {
-    "id": 13, 
-    "url": "http://localhost:9000/api/v1/timeseries/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
+    "id": 13,
+    "url": "http://localhost:9000/api/v1/timeseries/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0",
     "location": {
-        "uuid": "7183a79e-6460-42c1-a0eb-8fc8e8f5800c", 
+        "uuid": "7183a79e-6460-42c1-a0eb-8fc8e8f5800c",
         "name": "Rubidium"
-    }, 
-    "events": "http://localhost:9000/api/v1/events/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
-    "opendap": "/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0.ascii", 
-    "latest_value": 0.0, 
-    "uuid": "64cd04fe-0d29-48d2-9f0c-49f2f3b7aba0", 
-    "name": "Landsat (mocked)", 
-    "description": "", 
-    "value_type": "geotiff", 
-    "annotations": 2, 
+    },
+    "events": "http://localhost:9000/api/v1/events/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0",
+    "opendap": "/80cd04fe-0d29-48d2-9f0c-49f2f3b7aba0.ascii",
+    "latest_value": 0.0,
+    "uuid": "64cd04fe-0d29-48d2-9f0c-49f2f3b7aba0",
+    "name": "Landsat (mocked)",
+    "description": "",
+    "value_type": "geotiff",
+    "annotations": 2,
     "source": {
-        "uuid": "58d1e1a1-0a1b-404b-bea2-d0d812a2e6c8", 
+        "uuid": "58d1e1a1-0a1b-404b-bea2-d0d812a2e6c8",
         "name": "DDSC Aanpassingen"
-    }, 
-    "owner": null, 
-    "first_value_timestamp": "2013-02-21T16:13:00.000000Z", 
-    "latest_value_timestamp": "2013-07-28T11:57:00.000000Z", 
+    },
+    "owner": null,
+    "first_value_timestamp": "2013-02-21T16:13:00.000000Z",
+    "latest_value_timestamp": "2013-07-28T11:57:00.000000Z",
     "parameter": {
-        "code": "T", 
-        "id": 1785, 
+        "code": "T",
+        "id": 1785,
         "description": "Temperatuur"
-    }, 
+    },
     "unit": {
-        "code": "oC", 
-        "id": 138, 
+        "code": "oC",
+        "id": 138,
         "description": "graad Celsius"
-    }, 
-    "reference_frame": null, 
-    "compartment": null, 
-    "measuring_device": null, 
-    "measuring_method": null, 
-    "processing_method": null, 
-    "validate_max_hard": null, 
-    "validate_min_hard": null, 
-    "validate_max_soft": null, 
-    "validate_min_soft": null, 
-    "validate_diff_hard": null, 
+    },
+    "reference_frame": null,
+    "compartment": null,
+    "measuring_device": null,
+    "measuring_method": null,
+    "processing_method": null,
+    "validate_max_hard": null,
+    "validate_min_hard": null,
+    "validate_max_soft": null,
+    "validate_min_soft": null,
+    "validate_diff_hard": null,
     "validate_diff_soft": null
 };
 
 Lizard.geo.Popups.DdscTimeseries = {
   getPopupContent: function (location, region) {
-    var url = settings.timeseries_url + '&location=' + location.get('uuid');
+    var url = settings.timeseries_url + '?page_size=100&location__uuid=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
     tsCollection.fetch().done(function (collection, response) {
@@ -364,7 +368,7 @@ Lizard.geo.Popups.DdscTimeseries = {
         var popupContent = popupView.render();
         region.show(popupContent);
         Lizard.App.vent.trigger('ResizePopup');
-        
+
     });
   }
 };

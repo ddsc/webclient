@@ -45,9 +45,9 @@ Lizard.geo.Layers.DdscMarkerLayer = Lizard.geo.Layers.MapLayer.extend({
       var point = attributes.geometry;
       try {
           var leaflet_point = new L.LatLng(point.coordinates[1], point.coordinates[0]);
-          var marker = new L.Marker(leaflet_point,{
+          var marker = new L.Marker(leaflet_point, {
             icon: L.icon({
-              iconUrl: attributes.icon_url,
+              iconUrl: attributes.icon_url || '/images/marker-icon.png',
               iconAnchor: [16,35],
               popupAnchor: [0, -30]
             }),
@@ -141,9 +141,12 @@ Lizard.geo.Popups.LocationPopupTitle = Backbone.Marionette.ItemView.extend({
   countAnnotations: function () {
     var self = this;
     this.model.bind('change:annotations', this.render, this);
-    var countUrl = settings.annotations_count_url + '?model_names_pks=location,' + this.model.get('id');
-    $.get(countUrl).success(function (annotation) {
-      self.model.set({annotations: annotation.count});
+    var pk = this.model.get('id');
+    var countUrl = settings.annotations_url
+      + '?object_type__model=location&object_id='
+      + pk;
+    $.get(countUrl).success(function (response) {
+      self.model.set({annotations: response.count});
     });
   },
   onClose: function () {
