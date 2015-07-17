@@ -22,6 +22,8 @@ function format_unit (unit) {
     return unit;
   } else if (unit.hasOwnProperty('code')) {
     return unit.code;
+  } else {
+    return '';
   }
 }
 
@@ -247,7 +249,9 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
         }
       }
     }
-    this.countAnnotations();
+    if (this.model.get('value_type') !== 'georeferenced remote sensing') {
+      this.countAnnotations();
+    }
   },
   openAnnotation: function(){
     Lizard.App.vent.trigger('makeAnnotation', this.model);
@@ -356,19 +360,42 @@ var mockingjay = {
 
 Lizard.geo.Popups.DdscTimeseries = {
   getPopupContent: function (location, region) {
+
+    var doneCb = function () {
+      var popupView = new Lizard.Views.LocationPopup({
+        collection: tsCollection
+      });
+      var popupContent = popupView.render();
+      region.show(popupContent);
+      Lizard.App.vent.trigger('ResizePopup');
+    };
+
+    var tsDone = false,
+        rasterDone = false;
+
     var url = settings.timeseries_url + '?page_size=100&location__uuid=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
-    tsCollection.fetch().done(function (collection, response) {
-        //console.log(collection.models[0].attributes);
-        // collection.add(new Lizard.Models.Timeserie(mockingjay));
-        var popupView = new Lizard.Views.LocationPopup({
-            collection: collection
-        });
-        var popupContent = popupView.render();
-        region.show(popupContent);
-        Lizard.App.vent.trigger('ResizePopup');
 
+    tsCollection.fetch().done(function (collection, response) {
+      console.log(collection, tsCollection, response);
+      if (rasterDone) {
+        doneCb();
+      } else {
+        tsDone = true;
+      }
     });
+
+    $.get(settings.rasters_url + '?page_size=100').success(function (response) {
+      var rasters = response.results;
+      for (var i = rasters.length - 1; i >= 0; i--) {
+        tsCollection.add(new Lizard.Models.Raster(rasters[i]));
+      }
+      if (tsDone) {
+        doneCb();
+      } else {
+        rasterDone = true;
+      }
+    }); 
   }
 };

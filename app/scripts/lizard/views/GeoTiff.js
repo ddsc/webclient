@@ -65,33 +65,45 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.map = options.map || mc;
       this.gTiff = options.gTiffTimeseries;
       this.gTiff.bind('change:active_event', this.switchLayer, this);
-      this.mapLayer = L.tileLayer.wms('http://maps.ddsc.nl/geoserver/ddsc/wms?service=WMS&version=1.1.0&request=GetMap&',
+      this.mapLayer = L.tileLayer.wms('https://raster.staging.lizard.net/wms?',
         {
           service: "WMS",
-          type: 'geoTiffTimeseries',
-          version: "1.1.0",
+          version: "1.1.1",
           srs: "EPSG:3857",
+          styles: 'jet',
           format: "image/png",
           transparent: true
         });
 
       this.eventsCollection = new Lizard.Collections.Events();
       var self = this;
-      this.eventsCollection.parse = function (response) { 
-        self.eventsCollection.next = response.next;
-        return response.results; 
-      };
-      this.eventsCollection.url = this.gTiff.get('events') + '?page_size=10';
-      this.eventsCollection.fetch().done(function (collection, response) {
-        var active_event = collection.models.slice(-1)[0]; // most recent
-        active_event.set('selected', true);
-        self.mapLayer.setParams({
-          layers: active_event.get('layer')
+
+      $.get(this.gTiff.get('events') + 'timesteps').success(function (time) {
+        self.eventsCollection.parse = function (response) {
+          var result = [];
+          for (var i = time.steps.length - 1; i >= 0; i--) {
+            result.push({
+              layer: response.wms_info.layer,
+              datetime: time.steps[i]
+            });
+          };
+          self.eventsCollection.next = response.next;
+          return result; 
+        };
+
+        self.eventsCollection.url = self.gTiff.get('events') + '?page_size=10';
+        self.eventsCollection.fetch().done(function (collection, response) {
+          var active_event = collection.models.slice(-1)[0]; // most recent
+          active_event.set('selected', true);
+          self.mapLayer.setParams({
+            layers: active_event.get('layer'),
+            time: active_event.get('datetime')
+          });
+          self.gTiff.set('active_event', active_event);
+          self.fakeRender(active_event);
+          // self.populateDatePicker(active_event);
         });
-        self.gTiff.set('active_event', active_event);
-        self.fakeRender(active_event);
-        // self.populateDatePicker(active_event);
-      });
+      })
     },
     fakeRender: function (active_event) {
       this.$el.find('#geotiff-datepicker').val(new Date(active_event.get('datetime'))
@@ -108,7 +120,8 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
         }
         var active_event = this.gTiff.get('active_event');
         this.mapLayer.setParams({
-          layers: active_event.get('layer')
+          layers: active_event.get('layer'),
+          time: active_event.get('datetime')
         });
       }
       this.fakeRender(active_event);

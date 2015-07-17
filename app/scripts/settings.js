@@ -10,6 +10,7 @@ var settings = {
     wms_proxy_base_url: domain + 'proxy/?',
     filters_url: domain +'logicalgroups/' + extra,
     timeseries_url: domain + 'timeseries/',
+    rasters_url: domain + 'rasters/',
     alarms_url: domain + 'alarms/',
     status_url: domain + 'timeseries/behind/?page_size=100',
     collages_url: domain + 'collages/?page_size=100',

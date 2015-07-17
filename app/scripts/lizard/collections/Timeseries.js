@@ -27,6 +27,7 @@ Lizard.Collections.Timeseries = Backbone.Collection.extend({
 Lizard.Collections.Events = Backbone.Collection.extend({
   url: settings.timeseries_url,
   model: Lizard.Models.Event,
+  // Overwritten for geotiffs in geotiff.js
   parse: function(resp, xhr) {
     return resp;
   }
