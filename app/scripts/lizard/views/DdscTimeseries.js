@@ -378,7 +378,6 @@ Lizard.geo.Popups.DdscTimeseries = {
     tsCollection.url = url;
 
     tsCollection.fetch().done(function (collection, response) {
-      console.log(collection, tsCollection, response);
       if (rasterDone) {
         doneCb();
       } else {
