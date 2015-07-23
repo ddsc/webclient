@@ -2,6 +2,7 @@ Lizard.Models.Timeserie = Backbone.Model.extend({
   initialize: function(response) {
     this.url = response.url;
     this.attributes.pk = response.id;
+    this.attributes.parameter_referenced_unit = response.parameter_referenced_unit || {};
     this.id = response.uuid;
   },
   defaults: {
