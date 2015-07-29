@@ -28,14 +28,13 @@ Lizard.Views.Menu = Backbone.Marionette.ItemView.extend({
 	doLogin: function(e){
 		// Redirect to the Single Sign On server.
 		e.preventDefault();
-		// Lizard-bs.js puts a logIn function on the window.
-		window.logIn();
+		window.location = lizardDomain + 'accounts/login/?next=' + window.location;
 	},
 
 	doLogout: function(e){
 		// Redirect to the Single Sign On server.
 		e.preventDefault();
 		// Lizard-bs.js puts a logOUt function on the window.
-		window.logOut();
+		window.location = lizardDomain + 'accounts/logout/?next=' + window.location;
 	}
 });
