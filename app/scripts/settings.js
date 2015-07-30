@@ -8,7 +8,7 @@ var test_api = (test_api ? test_api : 'http://test.api.ddsc.nl/api/v1/');
 var settings = {
     parameters_url: api + 'parameters/' + extra,
     locations_url: api + 'locations/',
-    wms_proxy_base_url: api + 'proxy/?',
+    wms_proxy_base_url: lizardDomain + 'proxy/?',
     filters_url: api +'logicalgroups/' + extra,
     timeseries_url: api + 'timeseries/',
     rasters_url: api + 'rasters/',
