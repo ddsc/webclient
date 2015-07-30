@@ -317,7 +317,7 @@
 
         for (var i in this.datasets) {
             var dataset = this.datasets[i];
-            if (dataset.url == timeseries.get('events')) {
+            if (dataset.url == timeseries.get('url')) {
                 delete this.datasets[i];
             }
         }
