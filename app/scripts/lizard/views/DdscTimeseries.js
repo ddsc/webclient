@@ -232,7 +232,9 @@ Lizard.Views.LocationPopupItem = Backbone.Marionette.ItemView.extend({
   },
   initialize: function () {
     Lizard.App.vent.on('changedestroyAnnotation', function () {
-      this.countAnnotations('changedestroyAnnotation')
+      if (this.model.get('value_type') !== 'georeferenced remote sensing') {
+        this.countAnnotations();
+      }
     }, this);
     this.model.set('alarms', false);
     if (Lizard.hasOwnProperty('alarmsCollection')) {
@@ -395,6 +397,6 @@ Lizard.geo.Popups.DdscTimeseries = {
       } else {
         rasterDone = true;
       }
-    }); 
+    });
   }
 };
