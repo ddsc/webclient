@@ -78,7 +78,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.eventsCollection = new Lizard.Collections.Events();
       var self = this;
 
-      $.get(this.gTiff.get('events') + 'timesteps').success(function (time) {
+      $.get(this.gTiff.get('events') + 'timesteps/').success(function (time) {
         self.eventsCollection.parse = function (response) {
           var result = [];
           for (var i = time.steps.length - 1; i >= 0; i--) {
@@ -88,7 +88,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
             });
           };
           self.eventsCollection.next = response.next;
-          return result; 
+          return result;
         };
 
         self.eventsCollection.url = self.gTiff.get('events') + '?page_size=10';
