@@ -21,8 +21,7 @@ var settings = {
     annotations_url: api + 'annotations/',
     collages_create_url: api + 'collages/',
     collageitems_create_url: api + 'collageitems/',
-    management_ui_url: 'https://api.ddsc.nl/management/',
-    summary_url: api + 'summary/',
+    management_ui_url: lizardDomain + 'management/',
     api_version: 'v1',
     webclient_version: '1.0.0'
 };
@@ -43,7 +42,7 @@ $.ajaxSetup({
     beforeSend: function(xhr, settings) {
       function getCookie(name) {
         var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
+        if (document.cookie && document.cookie !== '') {
           var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
               var cookie = jQuery.trim(cookies[i]);
