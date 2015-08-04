@@ -803,9 +803,10 @@
         </label>
     </script>
 
+
     <script type="text/template" id="graphs-legend-template">
       <div class="graph-legend" draggable="<%= draggable %>" ondragstart="<% if (draggable) { %> Lizard.Utils.DragDrop.copyData(event)<% } %>" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
-        <a href="javascript:void(null)" class="nohover" ondragstart="<% if (draggable) { %> Lizard.Utils.DragDrop.copyData(event)<% } %>" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
+        <a href="" class="nohover" ondragstart="<% if (draggable) { %> Lizard.Utils.DragDrop.copyData(event)<% } %>" data-url="<%= timeseries.get('url')%>" data-uuid="<%=timeseries.get('uuid')%>">
         <div style="height: 60px;">
             <div class="legendcolor pull-left" style="margin:14px 2px 0px 0px;width:1px;height:1px;border:8px solid <%=color%>; background-color: <%= color %>!important;"></div>
             <div class="pull-left">
@@ -1120,8 +1121,8 @@
     <li class="divider"></li>
     <li class="nav-header">DDSC</li>
 
-    <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalHelp">Help</a></li>
-    <li><a href="javascript:void(0);" id="startTour">Rondleiding</a></li>
+    <li><a href="" data-toggle="modal" data-target="#modalHelp">Help</a></li>
+    <li><a href="" id="startTour">Rondleiding</a></li>
     <li><a href="#" id="logout">Uitloggen</a></li>
     </ul>
     <% } else { %>

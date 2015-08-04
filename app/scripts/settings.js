@@ -1,27 +1,28 @@
 var extra = '?page_size=10'; //
 // var extra = '?page_size=1000';
 
-var domain = (domain ? domain : 'https://nxt.staging.lizard.net/api/v1/');
-var test_domain = (test_domain ? test_domain : 'http://test.api.ddsc.nl/api/v1/');
+var lizardDomain = 'https://nxt.staging.lizard.net/';
+var api = lizardDomain + 'api/v1/';
+var test_api = (test_api ? test_api : 'http://test.api.ddsc.nl/api/v1/');
 
 var settings = {
-    parameters_url: domain + 'parameters/' + extra,
-    locations_url: domain + 'locations/',
-    wms_proxy_base_url: domain + 'proxy/?',
-    filters_url: domain +'logicalgroups/' + extra,
-    timeseries_url: domain + 'timeseries/',
-    rasters_url: domain + 'rasters/',
-    alarms_url: domain + 'alarms/',
-    status_url: domain + 'timeseries/late/?page_size=100',
-    collages_url: domain + 'collages/?page_size=100',
-    workspace_url: domain + 'workspaces/?page_size=100',
-    layers_url: domain + 'layers/',
-    account_url: domain + 'account/',
-    annotations_url: domain + 'annotations/',
-    collages_create_url: domain + 'collages/',
-    collageitems_create_url: domain + 'collageitems/',
+    parameters_url: api + 'parameters/' + extra,
+    locations_url: api + 'locations/',
+    wms_proxy_base_url: lizardDomain + 'proxy/?',
+    filters_url: api +'logicalgroups/' + extra,
+    timeseries_url: api + 'timeseries/',
+    rasters_url: api + 'rasters/',
+    alarms_url: api + 'alarms/',
+    status_url: api + 'timeseries/late/?page_size=100',
+    collages_url: api + 'collages/?page_size=100',
+    workspace_url: api + 'workspaces/?page_size=100',
+    layers_url: api + 'layers/',
+    account_url: api + 'account/',
+    annotations_url: api + 'annotations/',
+    collages_create_url: api + 'collages/',
+    collageitems_create_url: api + 'collageitems/',
     management_ui_url: 'https://api.ddsc.nl/management/',
-    summary_url: domain + 'summary/',
+    summary_url: api + 'summary/',
     api_version: 'v1',
     webclient_version: '1.0.0'
 };
@@ -55,14 +56,14 @@ $.ajaxSetup({
         }
         return cookieValue;
       }
-      if (!(/^http:.*/.test(domain) || /^https:.*/.test(domain))) {
+      if (!(/^http:.*/.test(api) || /^https:.*/.test(api))) {
         // Only send the token to relative URLs i.e. locally.
         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
      },
     timeout: 60 * 1000,
-    // The docs say: default: false for same-domain requests, true for cross-domain requests.
-    // So the default is good enough for us.
+    // The docs say: default: false for same-domain requests, true for
+    // cross-domain requests. So the default is good enough for us.
     // crossDomain: true,
     xhrFields: {
         // withCredentials:

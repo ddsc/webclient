@@ -30,7 +30,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
     },
     redirectToCsv: function (e) {
         e.preventDefault();
-        var url = this.model.get('timeseries').get('events');
+        var url = this.model.get('timeseries').get('url') + 'data/';
         var params = {
             format: 'csv'
         };
@@ -41,6 +41,7 @@ Lizard.Views.GraphLegendItem = Backbone.Marionette.ItemView.extend({
             params.start = start.toJSON();
         }
         if (end) {
+            if (moment.isMoment(end)) { end = end.toDate(); }
             params.end = end.toJSON();
         }
         url += '?' +$.param(params);
