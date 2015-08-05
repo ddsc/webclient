@@ -74,7 +74,7 @@
     <link href="styles/main.css" rel="stylesheet" >
     <!-- endbuild -->
 
-    <script type="text/javascript" src="https://nxt.staging.lizard.net/lizard-bs.js"></script>
+    <script type="text/javascript" src="lizard-bs.js"></script>
 
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="scripts/vendor/modernizr.min.js"></script>
@@ -745,9 +745,11 @@
                 <% if (value_type === 'float' || value_type === 'integer') {%>
                 <span class="badge badge-info"><%= format_value(last_value) %> <%= parameter_referenced_unit.referenced_unit_short_display_name %></span>
                 <%}%>
+                <% if (value_type === 'float' || value_type === 'integer') {%>
                 <span class="badge badge-info">
                   <%= annotations || "&ndash;" %> <i class="icon-comment" title="Maak of wijzig een Annotatie"></i>
                 </span>
+                <%}%>
               </span>
             </h5>
         </div>

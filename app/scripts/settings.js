@@ -21,8 +21,7 @@ var settings = {
     annotations_url: api + 'annotations/',
     collages_create_url: api + 'collages/',
     collageitems_create_url: api + 'collageitems/',
-    management_ui_url: lizardDomain + 'management',
-    summary_url: api + 'summary/',
+    management_ui_url: lizardDomain + 'management/',
     api_version: 'v1',
     webclient_version: '1.0.0'
 };
@@ -43,12 +42,12 @@ $.ajaxSetup({
     beforeSend: function(xhr, settings) {
       function getCookie(name) {
         var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
+        if (document.cookie && document.cookie !== '') {
           var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
               var cookie = jQuery.trim(cookies[i]);
               // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
               break;
             }

@@ -58,17 +58,14 @@ Lizard.Home.home = function(){
     }
   });
   var summary = new Lizard.Home.Summary();
-  summary.url = settings.summary_url;
+  summary.url = settings.alarms_url;
   summary.fetch({success: function(model, xhr){
-
     var maxActiveCount = 50;
-    var activeCount = model.get('alarms').active;
+    var activeCount = model.get('count');
 
     var maxNewMeasurementCount = 200000;
-      var newMeasurementCount = model.get('events')["new"];
-
-    var maxDisruptedTimeseriesCount = 20;
-    var disruptedTimeseriesCount = model.get('timeseries').disrupted;
+    var newMeasurementCount =
+    Math.round(Math.random() * maxNewMeasurementCount) + maxNewMeasurementCount;
 
     addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:maxActiveCount, value: activeCount,
           levelColors:['FFFF00','FF0000']},
@@ -76,9 +73,14 @@ Lizard.Home.home = function(){
     addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Gisteren', max:maxNewMeasurementCount, value: newMeasurementCount,
           levelColors:['FFFF00','00CC00']},
           Lizard.homeView.measureNewMeasurement);
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
-          levelColors:['FFFF00','FF0000']},
-          Lizard.homeView.measureStatus);
+
+    $.get(settings.timeseries_url + 'late/').success(function (resp) {
+      var maxDisruptedTimeseriesCount = 20;
+      var disruptedTimeseriesCount = resp.count;
+      addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
+            levelColors:['FFFF00','FF0000']},
+            Lizard.homeView.measureStatus);
+    });
   }});
 
   var statusOverview = new Backbone.Marionette.ItemView({
