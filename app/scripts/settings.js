@@ -21,7 +21,7 @@ var settings = {
     annotations_url: api + 'annotations/',
     collages_create_url: api + 'collages/',
     collageitems_create_url: api + 'collageitems/',
-    management_ui_url: 'https://api.ddsc.nl/management/',
+    management_ui_url: lizardDomain + 'management',
     summary_url: api + 'summary/',
     api_version: 'v1',
     webclient_version: '1.0.0'

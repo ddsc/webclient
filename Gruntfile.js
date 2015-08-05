@@ -62,8 +62,11 @@ module.exports = function (grunt) {
                   middleware: function (connect, options) {
                     return [
                       modRewrite([
-                        '!\\api|\\accounts|\\lizard-bs\.js|\\\/scripts\/|\\.html|\\.js|\\.svg|\\.css|\\.woff|\\.gif|\\.png$ /index.html [L]',
+                        '!\\management|\\static|\\csv-upload|\\api|\\accounts|\\lizard-bs\.js|\\\/scripts\/|\\.html|\\.js|\\.svg|\\.css|\\.woff|\\.gif|\\.png$ /index.html [L]',
                         '^/api/ http://localhost:8000/api/ [P]',
+                        '^/management http://localhost:8000/management/ [P]',
+                        '^/static/ http://localhost:8000/static/ [P]',
+                        '^/csv-upload/ http://localhost:8000/csv-upload/ [P]',
                         '^/accounts/ http://localhost:8000/accounts/ [P]',
                         '^/lizard-bs.js http://localhost:8000/lizard-bs.js [P]',
                         ]),
