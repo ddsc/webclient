@@ -2,7 +2,7 @@ var extra = '?page_size=10'; //
 // var extra = '?page_size=1000';
 
 var lizardDomain = 'https://nxt.staging.lizard.net/';
-var api = lizardDomain + 'api/v1/';
+var api = lizardDomain + 'api/v2/';
 var test_api = (test_api ? test_api : 'http://test.api.ddsc.nl/api/v1/');
 
 var settings = {
@@ -21,8 +21,8 @@ var settings = {
     annotations_url: api + 'annotations/',
     collages_create_url: api + 'collages/',
     collageitems_create_url: api + 'collageitems/',
-    management_ui_url: lizardDomain + 'management/',
-    api_version: 'v1',
+    management_ui_url: lizardDomain + 'management',
+    api_version: 'v2',
     webclient_version: '1.0.0'
 };
 
