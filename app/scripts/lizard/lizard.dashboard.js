@@ -36,7 +36,7 @@ Lizard.Dashboard.dashboard = function() {
   ];
 
   var dmcCollection = Backbone.Collection.extend({
-    url: settings.timeseries_url + "?name=omzd_dmc",
+    url: settings.timeseries_url + "?name__contains=omzd_dmc",
     model: Lizard.Models.Timeserie
   });
 
