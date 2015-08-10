@@ -65,7 +65,7 @@ Lizard.Views.GeoTiffTimeseries = Backbone.Marionette.Layout.extend({
       this.map = options.map || mc;
       this.gTiff = options.gTiffTimeseries;
       this.gTiff.bind('change:active_event', this.switchLayer, this);
-      this.mapLayer = L.tileLayer.wms('https://raster.staging.lizard.net/wms?',
+      this.mapLayer = L.tileLayer.wms('https://raster.lizard.net/wms?',
         {
           service: "WMS",
           version: "1.1.1",
