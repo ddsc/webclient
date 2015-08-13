@@ -2,7 +2,7 @@ Lizard.Collections.Location = Backbone.Collection.extend({
   initialize: function() {
     // console.log('Location collection initializing');
   },
-  url: settings.locations_url + '?ddsc_show_on_map=True&page_size=5000',
+  url: settings.locations_url + '?ddsc_show_on_map=True&geom_isnull=False&page_size=5000',
   model: Lizard.Models.Location
 });
 
