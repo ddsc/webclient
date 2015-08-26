@@ -372,31 +372,13 @@ Lizard.geo.Popups.DdscTimeseries = {
       Lizard.App.vent.trigger('ResizePopup');
     };
 
-    var tsDone = false,
-        rasterDone = false;
-
     var url = settings.timeseries_url + '?page_size=100&location__uuid=' + location.get('uuid');
     var tsCollection = new Lizard.Collections.Timeseries();
     tsCollection.url = url;
 
     tsCollection.fetch().done(function (collection, response) {
-      if (rasterDone) {
-        doneCb();
-      } else {
-        tsDone = true;
-      }
+      doneCb();
     });
 
-    $.get(settings.rasters_url + '?page_size=100').success(function (response) {
-      var rasters = response.results;
-      for (var i = rasters.length - 1; i >= 0; i--) {
-        tsCollection.add(new Lizard.Models.Raster(rasters[i]));
-      }
-      if (tsDone) {
-        doneCb();
-      } else {
-        rasterDone = true;
-      }
-    });
   }
 };
