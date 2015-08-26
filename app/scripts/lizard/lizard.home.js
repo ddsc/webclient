@@ -3,7 +3,6 @@ Lizard.Home = {};
 Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
   template: '#home-template',
   className: 'home',
-  //onShow: Lizard.Visualsearch.init,
   onDomRefresh: function() {
     console.log('onDomRefresh');
   },
@@ -25,7 +24,6 @@ Lizard.Home.DefaultView = Backbone.Marionette.Layout.extend({
     'graph_links': '#graph-links',
     'dashboard_links': '#dashboard-links',
     'status': '#status-overview'
-    // 'liveFeed': '#liveFeed'
   }
 });
 
@@ -36,13 +34,11 @@ Lizard.Home.Router = Backbone.Marionette.AppRouter.extend({
     }
 });
 
-Lizard.Home.home = function(){
+Lizard.Home.home = function() {
+
   console.log('Lizard.Home.home()');
-
   Lizard.homeView = new Lizard.Home.DefaultView();
-
   Lizard.App.content.show(Lizard.homeView);
-
 
   function addWidgetToView(settings, view) {
     var model = new Lizard.Models.Widget(settings);
@@ -57,30 +53,64 @@ Lizard.Home.home = function(){
       timeseries: {disrupted:0}
     }
   });
+
   var summary = new Lizard.Home.Summary();
   summary.url = settings.alarms_url;
-  summary.fetch({success: function(model, xhr){
+  summary.fetch({success: function(model, xhr) {
+
     var maxActiveCount = 50;
     var activeCount = model.get('count');
-
-    var maxNewMeasurementCount = 200000;
-    var newMeasurementCount =
-    Math.round(Math.random() * maxNewMeasurementCount) + maxNewMeasurementCount;
 
     addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetAlarmGauge',title:'Alarmen',label:'Actief', max:maxActiveCount, value: activeCount,
           levelColors:['FFFF00','FF0000']},
           Lizard.homeView.measureAlarm);
-    addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetNewMeasurment',title:'Nieuwe metingen',label:'Gisteren', max:maxNewMeasurementCount, value: newMeasurementCount,
-          levelColors:['FFFF00','00CC00']},
-          Lizard.homeView.measureNewMeasurement);
 
-    $.get(settings.timeseries_url + 'late/').success(function (resp) {
-      var maxDisruptedTimeseriesCount = 20;
-      var disruptedTimeseriesCount = resp.count;
-      addWidgetToView({col:3,row:3,size_x:2,size_y:2,gaugeId:'widgetMeasureStatus',title:'Storingen',label:'Sensoren', max:maxDisruptedTimeseriesCount, value: disruptedTimeseriesCount,
-            levelColors:['FFFF00','FF0000']},
-            Lizard.homeView.measureStatus);
+    var numSeries, numSeriesLate;
+    $.when(
+      $.getJSON(settings.timeseries_url + '?page_size=1', function(data) {
+        numSeries = data.count;
+      }),
+      $.getJSON(settings.timeseries_url + 'late?page_size=1', function(data) {
+        numSeriesLate = data.count;
+      })
+    ).then(function() {
+      addWidgetToView({
+        col: 3,
+        row: 3,
+        size_x: 2,
+        size_y: 2,
+        gaugeId: 'widgetNewMeasurment',
+        title: 'Tijdreeksen',
+        label: 'Up-to-date',
+        max: numSeries,
+        value: numSeries - numSeriesLate,
+        levelColors: ['FFFF00','00CC00']
+      }, Lizard.homeView.measureNewMeasurement);
     });
+
+    var numLocations, numLocationsVisible;
+    $.when(
+      $.getJSON(settings.locations_url + '?page_size=1', function(data) {
+        numLocations = data.count;
+      }),
+      $.getJSON(settings.locations_url + '?page_size=1&geom_isnull=False&ddsc_show_on_map=True', function(data) {
+        numLocationsVisible = data.count;
+      })
+    ).then(function() {
+      addWidgetToView({
+        col: 3,
+        row: 3,
+        size_x: 2,
+        size_y: 2,
+        gaugeId: 'widgetMeasureStatus',
+        title: 'Locaties',
+        label: 'Op de kaart',
+        max: numLocations,
+        value: numLocationsVisible,
+        levelColors: ['FFFF00','FF0000']
+      }, Lizard.homeView.measureStatus);
+    });
+
   }});
 
   var statusOverview = new Backbone.Marionette.ItemView({
@@ -162,6 +192,7 @@ Lizard.Home.home = function(){
       placement: "left",
       content: "Aantal tijdseries dat al te lang niet meer is binnengekomen"
   });
+
 };
 
 Lizard.App.addInitializer(function(){
