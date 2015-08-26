@@ -36,7 +36,13 @@ Lizard.Dashboard.dashboard = function() {
   ];
 
   var dmcCollection = Backbone.Collection.extend({
-    url: settings.timeseries_url + "?name__contains=omzd_dmc",
+    //url: settings.timeseries_url + "?page_size=20&name__icontains=omzd_dmc",
+    url: settings.timeseries_url + "?uuid=D856946F-FEB6-4536-A878-AF55C32CD96C," +
+                                         "DD7A4DB5-4261-4AC4-9583-0572E7F39F66," +
+                                         "29119285-2428-4863-B630-9B5AA095DE13," +
+                                         "03073703-3509-40F2-BA89-D85361C4021B," +
+                                         "49108710-6C58-4E31-AC2D-3C4933040439," +
+                                         "9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",
     model: Lizard.Models.Timeserie
   });
 
@@ -49,12 +55,12 @@ Lizard.Dashboard.dashboard = function() {
       cache: false,
       success: function(collection) {
         var values = new Backbone.Model({
-          debiet_l: collection.get('D856946F-FEB6-4536-A878-AF55C32CD96C').get('latest_value'),
-          debiet_r: collection.get('DD7A4DB5-4261-4AC4-9583-0572E7F39F66').get('latest_value'),
-          temp_l: collection.get('29119285-2428-4863-B630-9B5AA095DE13').get('latest_value'),
-          temp_r: collection.get('03073703-3509-40F2-BA89-D85361C4021B').get('latest_value'),
-          waterst_l: collection.get('49108710-6C58-4E31-AC2D-3C4933040439').get('latest_value'),
-          waterst_r: collection.get('9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A').get('latest_value')
+          debiet_l: collection.get('D856946F-FEB6-4536-A878-AF55C32CD96C').get('last_value'),
+          debiet_r: collection.get('DD7A4DB5-4261-4AC4-9583-0572E7F39F66').get('last_value'),
+          temp_l: collection.get('29119285-2428-4863-B630-9B5AA095DE13').get('last_value'),
+          temp_r: collection.get('03073703-3509-40F2-BA89-D85361C4021B').get('last_value'),
+          waterst_l: collection.get('49108710-6C58-4E31-AC2D-3C4933040439').get('last_value'),
+          waterst_r: collection.get('9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A').get('last_value')
         });
 
         widgetcollectionview.collection.reset();
@@ -87,12 +93,3 @@ Lizard.App.addInitializer(function(){
     controller: Lizard.Dashboard
   });
 });
-
-
-
-
-
-
-
-
-
