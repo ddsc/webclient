@@ -160,11 +160,18 @@ Lizard.Views.ImageCarouselModal = Backbone.Marionette.Layout.extend({
         img.attr('src', img.data('img-src'));
       });
 
-      var url = self.imageTimeseries.get('events');
       var eventsCollection = new Lizard.Collections.Events();
-      eventsCollection.url = url + '?page_size=0';
+      // In API v2, a period must be specified.
+      eventsCollection.url = self.imageTimeseries.url + 'data/?start=0&end=3155760000000&page_size=0';
       eventsCollection.fetch().done(function (collection, response) {
-        collection.models[0].set({'first': true}); // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this
+        collection.models.forEach(function (model) {
+          // API v1 uses 'value' instead of 'url'.
+          model.set({'value': model.attributes.url});
+        });
+        if (collection.models.length > 0) {
+          // Set 'first' attribute on first model b/c Bootstrap Carousel needs to know this.
+          collection.models[0].set({'first': true});
+        }
         var carouselView = new ImageCarouselCollectionView({
           collection: collection,
           itemView: ImageCarouselItemView,
