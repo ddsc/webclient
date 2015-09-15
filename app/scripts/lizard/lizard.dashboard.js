@@ -26,23 +26,23 @@ Lizard.Dashboard.dashboard = function() {
   var widgetcollectionview = new Lizard.Views.WidgetCollection();
 
   var timeseries = [
-    settings.timeseries_url + "9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",  // Waterkolom dijk rechts in mNAP
-    settings.timeseries_url + "49108710-6C58-4E31-AC2D-3C4933040439",  // Waterkolom dijk links in mNAP
-    settings.timeseries_url + "03073703-3509-40F2-BA89-D85361C4021B",  // Temperatuur Dijk Rechts
-    settings.timeseries_url + "29119285-2428-4863-B630-9B5AA095DE13",  // Temperatuur Dijk Links
-    // "https://api.ddsc.nl/api/v1/timeseries/DD7A4DB5-4261-4AC4-9583-0572E7F39F66",  // Actueel Debiet Dijk Rechts
-    // "https://api.ddsc.nl/api/v1/timeseries/D856946F-FEB6-4536-A878-AF55C32CD96C",  // Actueel Debiet Dijk Links
-    settings.timeseries_url + "5C8D7780-14C8-4237-9BCA-73849E7990B7"   // Buitendruk in kPa
+    settings.timeseries_url + "9dfdc3f7-88f7-4ff0-a671-b4094ac12b7a",  // Waterkolom dijk rechts in mNAP
+    settings.timeseries_url + "49108710-6c58-4e31-ac2d-3c4933040439",  // Waterkolom dijk links in mNAP
+    settings.timeseries_url + "03073703-3509-40f2-ba89-d85361c4021b",  // Temperatuur Dijk Rechts
+    settings.timeseries_url + "29119285-2428-4863-b630-9b5aa095de13",  // Temperatuur Dijk Links
+    // "https://api.ddsc.nl/api/v1/timeseries/dd7a4db5-4261-4ac4-9583-0572e7f39f66",  // Actueel Debiet Dijk Rechts
+    // "https://api.ddsc.nl/api/v1/timeseries/d856946f-feb6-4536-a878-af55c32cd96c",  // Actueel Debiet Dijk Links
+    settings.timeseries_url + "5c8d7780-14c8-4237-9bca-73849e7990b7"   // Buitendruk in kPa
   ];
 
   var dmcCollection = Backbone.Collection.extend({
     //url: settings.timeseries_url + "?page_size=20&name__icontains=omzd_dmc",
-    url: settings.timeseries_url + "?uuid=D856946F-FEB6-4536-A878-AF55C32CD96C," +
-                                         "DD7A4DB5-4261-4AC4-9583-0572E7F39F66," +
-                                         "29119285-2428-4863-B630-9B5AA095DE13," +
-                                         "03073703-3509-40F2-BA89-D85361C4021B," +
-                                         "49108710-6C58-4E31-AC2D-3C4933040439," +
-                                         "9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A",
+    url: settings.timeseries_url + "?uuid=d856946f-feb6-4536-a878-af55c32cd96c," +
+                                         "dd7a4db5-4261-4ac4-9583-0572e7f39f66," +
+                                         "29119285-2428-4863-b630-9b5aa095de13," +
+                                         "03073703-3509-40f2-ba89-d85361c4021b," +
+                                         "49108710-6c58-4e31-ac2d-3c4933040439," +
+                                         "9dfdc3f7-88f7-4ff0-a671-b4094ac12b7a",
     model: Lizard.Models.Timeserie
   });
 
@@ -55,12 +55,12 @@ Lizard.Dashboard.dashboard = function() {
       cache: false,
       success: function(collection) {
         var values = new Backbone.Model({
-          debiet_l: collection.get('D856946F-FEB6-4536-A878-AF55C32CD96C').get('last_value'),
-          debiet_r: collection.get('DD7A4DB5-4261-4AC4-9583-0572E7F39F66').get('last_value'),
-          temp_l: collection.get('29119285-2428-4863-B630-9B5AA095DE13').get('last_value'),
-          temp_r: collection.get('03073703-3509-40F2-BA89-D85361C4021B').get('last_value'),
-          waterst_l: collection.get('49108710-6C58-4E31-AC2D-3C4933040439').get('last_value'),
-          waterst_r: collection.get('9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A').get('last_value')
+          debiet_l: collection.get('d856946f-feb6-4536-a878-af55c32cd96c').get('last_value'),
+          debiet_r: collection.get('dd7a4db5-4261-4ac4-9583-0572e7f39f66').get('last_value'),
+          temp_l: collection.get('29119285-2428-4863-b630-9b5aa095de13').get('last_value'),
+          temp_r: collection.get('03073703-3509-40f2-ba89-d85361c4021b').get('last_value'),
+          waterst_l: collection.get('49108710-6c58-4e31-ac2d-3c4933040439').get('last_value'),
+          waterst_r: collection.get('9dfdc3f7-88f7-4ff0-a671-b4094ac12b7a').get('last_value')
         });
 
         widgetcollectionview.collection.reset();
