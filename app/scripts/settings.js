@@ -14,7 +14,7 @@ var settings = {
     rasters_url: api + 'rasters/',
     alarms_url: api + 'alarms/',
     status_url: api + 'timeseries/late/?page_size=100',
-    collages_url: api + 'collages/?page_size=100',
+    collages_url: api + 'collages/?page_size=100&ordering=name',
     workspace_url: api + 'workspaces/?page_size=100',
     layers_url: api + 'layers/',
     account_url: api + 'account/',
