@@ -511,8 +511,8 @@ $(document).ajaxStop(function () {
 */
 
 $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
-    // Aborted request are not an error.
-    if (thrownError !== 'abort') {
+    // Aborted requests are not an error.
+    if (thrownError !== 'abort' || thrownError !== 'UNKNOWN STATUS CODE') {
         $('.top-right').notify({
             type: 'error',
             message: {
