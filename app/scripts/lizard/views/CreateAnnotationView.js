@@ -115,6 +115,7 @@ Lizard.Views.CreateAnnotationView = function(relation){
 
       xhr.open('POST', settings.annotations_url, true);
 
+      xhr.withCredentials = true;
       xhr.send(formData);
 
     });
