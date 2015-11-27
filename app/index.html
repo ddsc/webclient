@@ -965,10 +965,11 @@
     </script>
 
     <script type="text/template" id="dashboard-list">
-      <h4>Dashboards:</h4>
-      <b><a href="#dashboard">DMC-systeem</a></b><br>
-      <!--<a href="#">DAM</a><br>-->
-      <!--<a href="#">Grechtdijk</a>-->
+      <h4>Dashboards: </h4>
+      <ul style="margin:0;padding:0;">
+        <li><a id="dmc" class="<%= (active === 'omzd') ? 'active' : '' %>">Ommelandse Zeedijk</a></li>
+        <li><a id="gd" class="<%= (active === 'gd') ? 'active' : '' %>">Grechtdijk</a></li>
+      </ul>
     </script>
 
     <script type="text/template" id="graph-widget">

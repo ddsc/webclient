@@ -696,6 +696,11 @@ span.lazy {
   padding: 10px;
 }
 
+.widget a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 div.widget span.tlabel {
   display: block;
   float: left;
