@@ -124,7 +124,8 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
     buildQueryUrlParams: function () {
         var bbox = this.mapCanvas ? this.mapCanvas.getBounds().toBBoxString() : null;
         return {
-            in_bbox: bbox
+            in_bbox: bbox,
+            page_size: 0
         };
     },
     updateAnnotations: function (e) {
@@ -155,12 +156,12 @@ Lizard.Views.AnnotationsView = Backbone.Marionette.ItemView.extend({
         })
         .done(function (response, textStatus, jqXHR) {
             self.model.set({
-                annotationsCount: response.count,
-                annotations: response.results.length !== 0 ? response.results : null
+                annotationsCount: response.length,
+                annotations: response.length !== 0 ? response : null
             });
             // hack: update the toggler as well
-            $('.annotation .badge').text(response.count !== 0 ? response.count : '–');
-            self.updateAnnotationsLayer(response.results);
+            $('.annotation .badge').text(response.length !== 0 ? response.length : '–');
+            self.updateAnnotationsLayer(response);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Error while retrieving annotations.');
