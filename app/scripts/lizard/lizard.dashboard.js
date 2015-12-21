@@ -1,13 +1,13 @@
 Lizard.Dashboard = {};
 
 Lizard.Dashboard.omzdDefinition = {
-    debiet_l: 'D856946F-FEB6-4536-A878-AF55C32CD96C',
-    debiet_r: 'DD7A4DB5-4261-4AC4-9583-0572E7F39F66',
-    buitendruk: '5C8D7780-14C8-4237-9BCA-73849E7990B7',
-    temp_l: '29119285-2428-4863-B630-9B5AA095DE13',
-    temp_r: '03073703-3509-40F2-BA89-D85361C4021B',
-    waterst_r: '49108710-6C58-4E31-AC2D-3C4933040439',
-    waterst_l: '9DFDC3F7-88F7-4FF0-A671-B4094AC12B7A',
+    debiet_l: 'd856946f-feb6-4536-a878-af55c32cd96c',
+    debiet_r: 'dd7a4db5-4261-4ac4-9583-0572e7f39f66',
+    buitendruk: '5c8d7780-14c8-4237-9bca-73849e7990b7',
+    temp_l: '29119285-2428-4863-b630-9b5aa095de13',
+    temp_r: '03073703-3509-40f2-ba89-d85361c4021b',
+    waterst_r: '49108710-6c58-4e31-ac2d-3c4933040439',
+    waterst_l: '9dfdc3f7-88f7-4ff0-a671-b4094ac12b7a',
     activeDashboard: 'omzd'
 };
 
@@ -16,8 +16,8 @@ Lizard.Dashboard.gdDefinition = {
     debiet_r: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
     buitendruk: '47c844fc-1eaa-453c-89cd-a3b59437e2f9',
     temp_l: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
-    temp_r: '03073703-3509-40F2-BA89-D85361C4021B',
-    waterst_r: '49108710-6C58-4E31-AC2D-3C4933040439',
+    temp_r: '03073703-3509-40f2-ba89-d85361c4021b',
+    waterst_r: '49108710-6c58-4e31-ac2d-3c4933040439',
     waterst_l: '1c3e914e-af13-4f6c-9b96-7ffb7a0797d6',
     activeDashboard: 'gd'
 };
