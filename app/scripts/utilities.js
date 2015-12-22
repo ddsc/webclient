@@ -513,6 +513,7 @@ $(document).ajaxStop(function () {
 $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
     if (thrownError === 'abort' || thrownError === 'UNKNOWN STATUS CODE') {
         // Aborted requests are not an error.
+        // console.log('ik kom hier');
     } else {
         $('.top-right').notify({
             type: 'error',

@@ -22,13 +22,16 @@ Lizard.Dashboard.gdDefinition = {
     activeDashboard: 'gd'
 };
 
-var urlFunc = function (dmcDef) {
+var urlFunc = function (dmcDef) {        
         var url = settings.timeseries_url + "?uuid=";
         var keys = Object.keys(dmcDef);
         for (var i = 0; keys.length > i; i++) {
-            url += dmcDef[keys[i]] + ",";
+            if(keys[i] !== 'activeDashboard') {
+                url += dmcDef[keys[i]] + ",";
+            }
         }
         return url;
+    
     };
 
 
@@ -181,7 +184,9 @@ Lizard.Dashboard.DefaultLayout = Backbone.Marionette.Layout.extend({
         var timeseries = [];
         var keys = Object.keys(dmcDef);
         for (var i = 0; keys.length > i; i++) {
-            timeseries.push(settings.timeseries_url + dmcDef[keys[i]]);
+            if(keys[i] !== 'activeDashboard') {
+                timeseries.push(settings.timeseries_url + dmcDef[keys[i]]);
+            }
         }
         return timeseries;
     },
@@ -218,7 +223,9 @@ Lizard.Dashboard.dashboard = function() {
     var timeseries = [];
     var keys = Object.keys(Lizard.Dashboard.omzdDefinition);
     for (var i = 0; keys.length > i; i++) {
-        timeseries.push(settings.timeseries_url + Lizard.Dashboard.omzdDefinition[keys[i]]);
+        if(keys[i] !== 'activeDashboard') {        
+            timeseries.push(settings.timeseries_url + Lizard.Dashboard.omzdDefinition[keys[i]]);
+        }
     }
 
     Lizard.Dashboard.renderWidget(dmc, timeseries, Lizard.Dashboard.omzdDefinition);
