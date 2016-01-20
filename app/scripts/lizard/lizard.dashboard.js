@@ -13,12 +13,13 @@ Lizard.Dashboard.omzdDefinition = {
 
 Lizard.Dashboard.gdDefinition = {
     debiet_l: '5e7fe983-5839-44f4-a6c0-da3171aba7eb',
-    debiet_r: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
+    //debiet_r: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
     buitendruk: '47c844fc-1eaa-453c-89cd-a3b59437e2f9',
-    temp_l: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
-    temp_r: '03073703-3509-40f2-ba89-d85361c4021b',
-    waterst_r: '49108710-6c58-4e31-ac2d-3c4933040439',
+    //temp_l: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
+    //temp_r: '03073703-3509-40f2-ba89-d85361c4021b',
+    //waterst_r: '49108710-6c58-4e31-ac2d-3c4933040439',
     waterst_l: '1c3e914e-af13-4f6c-9b96-7ffb7a0797d6',
+    debiet_cum_l: '6a2c3135-0bc1-4927-a2eb-c1ed613fc070',
     activeDashboard: 'gd'
 };
 
@@ -50,6 +51,14 @@ Lizard.Dashboard.gd_dmc = Backbone.Collection.extend({
     model: Lizard.Models.Timeserie
 });
 
+function get_last_value_or_slash(col, timeserie_key) {
+    if (col.get(timeserie_key) == undefined) {
+        return Number.NaN;
+    } else {
+        return col.get(timeserie_key).get('last_value');
+    }
+}
+
 Lizard.Dashboard.renderWidget = function(dmcCollection, timeseries, options) {
 
 
@@ -67,12 +76,14 @@ Lizard.Dashboard.renderWidget = function(dmcCollection, timeseries, options) {
             cache: false,
             success: function(collection) {
                 var values = new Backbone.Model({
-                    debiet_l: collection.get(options.debiet_l).get('last_value'),
-                    debiet_r: collection.get(options.debiet_r).get('last_value'),
-                    temp_l: collection.get(options.temp_l).get('last_value'),
-                    temp_r: collection.get(options.temp_r).get('last_value'),
-                    waterst_l: collection.get(options.waterst_l).get('last_value'),
-                    waterst_r: collection.get(options.waterst_r).get('last_value')
+                    debiet_l: get_last_value_or_slash(collection, options.debiet_l),
+                    debiet_r: get_last_value_or_slash(collection, options.debiet_r),
+                    temp_l: get_last_value_or_slash(collection, options.temp_l),
+                    temp_r: get_last_value_or_slash(collection, options.temp_r),
+                    waterst_l: get_last_value_or_slash(collection, options.waterst_l),
+                    waterst_r: get_last_value_or_slash(collection, options.waterst_r),
+                    debiet_cum_l: get_last_value_or_slash(collection, options.debiet_cum_l),
+                    debiet_cum_r: get_last_value_or_slash(collection, options.debiet_cum_r)
                 });
 
                 widgetcollectionview.collection.reset();
@@ -146,10 +157,10 @@ Lizard.Dashboard.renderWidget = function(dmcCollection, timeseries, options) {
                         size_x: 3,
                         size_y: 2,
                         gaugeId: 5,
-                        title: 'Debiet links',
-                        label: 'm3',
-                        value: values.get('debiet_l'),
-                        max: 5000
+                        title: 'Dag debiet links',
+                        label: 'liter',
+                        value: values.get('debiet_cum_l'),
+                        max: 60000
                     }),
                     new Lizard.Models.Widget({
                         col: 10,
@@ -157,10 +168,10 @@ Lizard.Dashboard.renderWidget = function(dmcCollection, timeseries, options) {
                         size_x: 3,
                         size_y: 2,
                         gaugeId: 7,
-                        title: 'Debiet rechts',
+                        title: 'Dag debiet rechts',
                         label: 'liter',
-                        value: values.get('debiet_r'),
-                        max: 5000
+                        value: values.get('debiet_cum_r'),
+                        max: 60000
                     })
                 ]);
 
